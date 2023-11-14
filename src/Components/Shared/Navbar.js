@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import cn from 'classnames';
 import ResViewLogo from '../../Resources/Images/ResViewLogo.jpg';
 import { Icon } from './Icon';
@@ -8,10 +8,6 @@ import { ThemeContext } from '../../Context';
 
 const SunOrMoon = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
-
-  useEffect(() => {
-    console.log('theme', theme);
-  }, [theme]);
 
   return (
     <Tooltip
@@ -43,9 +39,11 @@ const SunOrMoon = () => {
 const Navbar = () => {
   return (
     <>
-      <nav class='mx-auto w-full max-w-screen-xl rounded-xl border border-white/80 bg-white bg-opacity-80 py-2 px-8 text-white shadow-md backdrop-blur-2xl backdrop-saturate-200 lg:px-8 lg:py-4 flex items-center justify-between'>
-        <div className='flex items-center justify-center'>
-          <a href='/' className='mr-4'>
+      <div class='w-full max-w-screen-xl rounded-xl bg-white bg-opacity-80 py-2 px-8 text-white shadow-md lg:px-8 lg:py-4 flex items-center justify-between flex-initial'>
+        <div
+          className='flex items-center justify-start gap-x-4 w-full'
+        >
+          <a href='/'>
             <img
               src={ResViewLogo}
               alt='ResDb View Logo'
@@ -56,8 +54,9 @@ const Navbar = () => {
             ResDb <span className='italic text-blue-200'>Visualizer</span>
           </div>
         </div>
-        <div className='flex items-center justify-center gap-x-9'>
-          <SunOrMoon />
+        <div
+          className='flex items-center justify-center gap-x-24 w-full'
+        >
           <Tooltip title='Visualizer' enterDelay={500}>
             <a href='/' className='cursor-pointer'>
               <Icon fill={"#8f9299"} height={"1.9em"} path={linearGraphIcon} />
@@ -74,7 +73,10 @@ const Navbar = () => {
             </a>
           </Tooltip>
         </div>
-      </nav>
+        <div className='w-full flex items-center justify-end'>
+          <SunOrMoon />
+        </div>
+      </div>
     </>
   );
 }

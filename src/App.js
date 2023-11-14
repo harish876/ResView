@@ -1,23 +1,47 @@
-import { useState } from 'react';
 import Navbar from './Components/Shared/Navbar';
 import './Styles/App.css';
-import { ThemeContext, ThemeProvider } from './Context';
-
+import { AllProviders } from './Context';
+import Visualizer from './Components/Pages/Visualizer';
+import Team from './Components/Pages/Team';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import Loader from './Components/Shared/Loader';
 
 const PreSynthApp = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className='App'>
-      <Navbar />
-      <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-    </div>
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <Navbar />
+          <Router>
+            <Routes>
+              {/* TODO: Change the path for the visualizer below */}
+              <Route path='/pages/visualizer' element={<Visualizer />} />
+              <Route path='/pages/team' element={<Team />} />
+            </Routes>
+          </Router>
+        </>
+      )}
+    </>
   );
 }
 
 function App(){
   return (
-      <ThemeProvider>
+      <AllProviders>
         <PreSynthApp />
-      </ThemeProvider>
+      </AllProviders>
   );
 };
 
