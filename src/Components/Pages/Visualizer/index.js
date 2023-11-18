@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ButtonRow from './Components/Buttons'
+import ButtonRow from "../../Shared/Buttons";
 import Dropdown from './Components/Dropdown'
 
 const Visualizer = () => {
