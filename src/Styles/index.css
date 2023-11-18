@@ -6,8 +6,8 @@
 :root {
     --main-dark-color: #189788;
     --main-light-color: #26D8C4;
+    --background-color: #FAF9F6;
 }
-
 
 body {
   margin: 0;
@@ -16,6 +16,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
 }
 
 code {

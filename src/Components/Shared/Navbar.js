@@ -58,7 +58,7 @@ const Navbar = memo(() => {
   const CURRENT_PAGE = window.location.href.split('/')[4];
   return (
     <>
-      <div class='w-full max-w-screen-xl rounded-xl bg-white bg-opacity-80 py-2 px-8 text-white shadow-md lg:px-8 lg:py-4 flex items-center justify-between flex-initial'>
+      <div class='w-full max-w-screen-xl rounded-xl bg-white py-2 px-8 text-white shadow-md lg:px-8 lg:py-4 flex items-center justify-between flex-initial fixed z-20'>
         <div
           className='flex items-center justify-start gap-x-4 w-full'
         >

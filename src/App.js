@@ -26,7 +26,7 @@ const PreSynthApp = () => {
           <Router>
             <Navbar />
             <Routes>
-              <Route path='/pages/visualizer' element={<Visualizer />} />
+              <Route path='/pages/visualizer' element={<Visualizer  />} />
               <Route path='/pages/team' element={<Team />} />
               <Route index element={<Navigate to="/pages/visualizer" />} />
             </Routes>

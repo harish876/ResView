@@ -1,8 +1,10 @@
 import React from 'react'
 
-const Card = () => {
+const Card = ({ name, title, socials, profilePic }) => {
   return (
-    <div>Card</div>
+    <div className='w-full h-200p bg-white rounded-md shadow-md'>
+      {name}
+    </div>
   )
 }
 
