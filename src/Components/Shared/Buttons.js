@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { GraphViewContext } from '../../../../Context';
+import { GraphViewContext } from '../../Context';
 import cn from 'classnames';
 import { Tooltip } from '@mui/material';
 

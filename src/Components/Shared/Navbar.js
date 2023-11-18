@@ -1,12 +1,17 @@
-import React, { useContext, useEffect } from 'react'
+import React, { memo, useContext } from 'react'
 import cn from 'classnames';
 import ResViewLogo from '../../Resources/Images/ResViewLogo.jpg';
 import { Icon } from './Icon';
-import { linearGraphIcon, teamIcon, sunIcon, moonIcon } from '../../Resources/Icons';
+import { linearGraphIcon, teamIcon, sunIcon, moonIcon, blogIcon } from '../../Resources/Icons';
 import { Tooltip } from '@mui/material';
 import { ThemeContext } from '../../Context';
+import { COLOR_LIGHT, ICON_DEFAULT_COLOR, SUN_COLOR } from './Constants';
 
-const SunOrMoon = () => {
+const navbarPageActiveColor = (currentPage, pageName) => {
+  return currentPage === pageName ? COLOR_LIGHT : ICON_DEFAULT_COLOR
+};
+
+const SunOrMoon = memo(() => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
@@ -27,16 +32,30 @@ const SunOrMoon = () => {
         onClick={toggleTheme}
       >
         {!theme ? (
-          <Icon fill={"#fdb813"} height={"1.4em"} path={sunIcon} />
+          <Icon fill={SUN_COLOR} height={"1.4em"} path={sunIcon} />
         ) : (
-          <Icon fill={"#8f9299"} height={"1.4em"} path={moonIcon} />
+          <Icon fill={ICON_DEFAULT_COLOR} height={"1.4em"} path={moonIcon} />
         )}
       </div>
     </Tooltip>
   );
-};
+});
 
-const Navbar = () => {
+const NavLink = ({ title, currentPage, page, icon, iconHeight, iconViewBox }) => (
+  <Tooltip title={title} enterDelay={500}>
+    <a href={`/pages/${page}`} className='cursor-pointer'>
+      <Icon 
+        fill={navbarPageActiveColor(currentPage, page)} 
+        height={iconHeight} 
+        path={icon} 
+        viewBox={iconViewBox}
+      />
+    </a>
+  </Tooltip>
+);
+
+const Navbar = memo(() => {
+  const CURRENT_PAGE = window.location.href.split('/')[4];
   return (
     <>
       <div class='w-full max-w-screen-xl rounded-xl bg-white bg-opacity-80 py-2 px-8 text-white shadow-md lg:px-8 lg:py-4 flex items-center justify-between flex-initial'>
@@ -57,21 +76,28 @@ const Navbar = () => {
         <div
           className='flex items-center justify-center gap-x-24 w-full'
         >
-          <Tooltip title='Visualizer' enterDelay={500}>
-            <a href='/' className='cursor-pointer'>
-              <Icon fill={"#8f9299"} height={"1.9em"} path={linearGraphIcon} />
-            </a>
-          </Tooltip>
-          <Tooltip title='Our Team' enterDelay={500}>
-            <a href='/pages/team' className='cursor-pointer'>
-              <Icon
-                fill={"#8f9299"}
-                height={"1.8em"}
-                path={teamIcon}
-                viewBox={"0 0 640 512"}
-              />
-            </a>
-          </Tooltip>
+          <NavLink 
+            title={'Visualizer'} 
+            currentPage={CURRENT_PAGE}
+            page={'visualizer'}
+            icon={linearGraphIcon}
+            iconHeight={'1.9em'}
+          />
+          <NavLink 
+            title={'Our Team'} 
+            currentPage={CURRENT_PAGE}
+            page={'team'}
+            icon={teamIcon}
+            iconHeight={'1.8em'}
+            iconViewBox={'0 0 640 512'}
+          />
+          <NavLink 
+            title={'Blog'} 
+            currentPage={CURRENT_PAGE}
+            page={'blog'}
+            icon={blogIcon}
+            iconHeight={'1.8em'}
+          />
         </div>
         <div className='w-full flex items-center justify-end'>
           <SunOrMoon />
@@ -79,6 +105,6 @@ const Navbar = () => {
       </div>
     </>
   );
-}
+});
 
 export default Navbar

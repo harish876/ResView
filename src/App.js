@@ -3,19 +3,19 @@ import './Styles/App.css';
 import { AllProviders } from './Context';
 import Visualizer from './Components/Pages/Visualizer';
 import Team from './Components/Pages/Team';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import Loader from './Components/Shared/Loader';
 
 const PreSynthApp = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 2000);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   return (
     <>
@@ -23,12 +23,12 @@ const PreSynthApp = () => {
         <Loader />
       ) : (
         <>
-          <Navbar />
           <Router>
+            <Navbar />
             <Routes>
-              {/* TODO: Change the path for the visualizer below */}
               <Route path='/pages/visualizer' element={<Visualizer />} />
               <Route path='/pages/team' element={<Team />} />
+              <Route index element={<Navigate to="/pages/visualizer" />} />
             </Routes>
           </Router>
         </>
