@@ -81,6 +81,7 @@ module.exports = {
           175: "#282728",
           180: "#f1f2f2",
           185: "#304150",
+          190: "#FAF9F6"
         },
         green: {
           20: "#EAFFF4",
@@ -468,6 +469,7 @@ module.exports = {
         "96p": "96px",
         "100p": "100px",
         "150p": "150px",
+        "200p": "200px",
         "360p": "360px",
         "800p": "800px",
         "450p": "450px",
@@ -485,6 +487,7 @@ module.exports = {
         "43p": "43px",
         "100p": "100px",
         "150p": "150px",
+        "200p": "200px",
         "300p": "300px",
         "350p": "350px",
         "375p": "375px",
@@ -493,7 +496,8 @@ module.exports = {
         "420p": "420px",
         "455p": "455px",
         "460p": "460px",
-        "880p": "880px"
+        "880p": "880px",
+        "920p": "920px"
       },
       zIndex: {
         "neg-1": "-1",
@@ -522,5 +526,6 @@ module.exports = {
   variants: {
     transitionProperty: ["responsive", "motion-safe", "motion-reduce"],
   },
-  plugins: [],
+  plugins: [
+  ],
 };
