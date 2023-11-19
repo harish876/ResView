@@ -33,13 +33,13 @@ const Visualizer = () => {
   
   return (
     <Wrapper>
-        <div className="mt-[2em] mb-4 mx-8">
+        <div className="mt-[2em] mb-4 mx-8" data-aos='fade-in'>
             <ButtonRow />
         </div>
-        <div className="my-18p mx-5p text-22p text-blue-190">
+        <div className="my-18p mx-5p text-22p text-blue-190" data-aos='fade-in'>
           {graphToTitle[graph]}
         </div>
-        {graph === 'PBFT' && <div className="my-4 mx-8">
+        {graph === 'PBFT' && <div className="my-4 mx-8" data-aos='fade-in'>
             <Dropdown length={4} />
         </div>}
         {/* TODO: Check the data-aos declaration below */}
