@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import ButtonRow from "../../Shared/Buttons";
+import ButtonRow from "./Components/Buttons";
 import Dropdown from './Components/Dropdown'
 import Wrapper from "../../Shared/Wrapper";
 import PbftGraph from "./Components/PbftGraph";
@@ -33,7 +33,7 @@ const Visualizer = () => {
   
   return (
     <Wrapper>
-        <div className="mt-[4em] mb-4 mx-8">
+        <div className="mt-[2em] mb-4 mx-8">
             <ButtonRow />
         </div>
         <div className="my-18p mx-5p text-22p text-blue-190">
@@ -43,7 +43,7 @@ const Visualizer = () => {
             <Dropdown length={4} />
         </div>}
         {/* TODO: Check the data-aos declaration below */}
-        <div className='w-95per h-450p rounded-md py-3 px-2 shadow-md flex justify-center items-center rounded-md bg-white my-3 dark:border-1p dark:border-solid dark:border-gray-50 dark:bg-blue-300' data-aos='zoom-in'>
+        <div className='w-95per h-450p rounded-md py-3 px-2 shadow-md flex justify-center items-center rounded-md bg-white my-3 dark:border-1p dark:border-solid dark:border-gray-50 dark:bg-blue-300' data-aos='fade-in'>
           {GRAPH_CHANGE[graph]}
         </div>
     </Wrapper>

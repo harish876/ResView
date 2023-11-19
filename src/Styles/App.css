@@ -517,6 +517,9 @@ video {
 .mb-4 {
   margin-bottom: 1rem;
 }
+.mt-\[2em\] {
+  margin-top: 2em;
+}
 .mt-\[4em\] {
   margin-top: 4em;
 }
@@ -732,14 +735,6 @@ code {
 
 svg:hover {
   fill: #26D8C4;
-}
-
-.svg-hover-light svg:hover {
-  fill: #fdb813
-}
-
-.svg-hover-dark svg:hover {
-  fill: #fdb813
 }
 
 .loader {

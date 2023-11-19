@@ -32,14 +32,6 @@ svg:hover {
   fill: #26D8C4;
 }
 
-.svg-hover-light svg:hover {
-  fill: #fdb813
-}
-
-.svg-hover-dark svg:hover {
-  fill: #fdb813
-}
-
 .loader {
   display: flex;
   align-items: center;
