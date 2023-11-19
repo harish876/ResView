@@ -18,7 +18,7 @@ const PbftGraph = ({  }) => {
     <div className='flex flex-col items-center justify-center'>
         <div className="flex items-center justify-center gap-x-[5em]">
             {arr0.map((element, index) => (
-                <div className="text-16p text-black bold" key={index}>
+                <div className="text-16p text-black bold dark:text-white" key={index}>
                     {element}
                 </div>
             ))}
@@ -37,7 +37,7 @@ const PbftGraph = ({  }) => {
 
             >
                 {arr1.map((element, index) => (
-                    <div key={index} className='rounded-full bg-black w-5p h-5p'>
+                    <div key={index} className='rounded-full bg-black dark:bg-white w-5p h-5p'>
 
                     </div>
                 ))}

@@ -11,8 +11,8 @@ const navbarPageActiveColor = (currentPage, pageName) => {
   return currentPage === pageName ? COLOR_LIGHT : ICON_DEFAULT_COLOR
 };
 
-const SunOrMoon = memo(() => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+const LightOrDark = memo(() => {
+  const { theme, toggleLightTheme, toggleDarkTheme } = useContext(ThemeContext);
 
   return (
     <Tooltip
@@ -29,7 +29,7 @@ const SunOrMoon = memo(() => {
             "svg-hover-dark": theme,
           }
         )}
-        onClick={toggleTheme}
+        onClick={!theme ? toggleDarkTheme : toggleLightTheme}
       >
         {!theme ? (
           <Icon fill={SUN_COLOR} height={"1.4em"} path={sunIcon} />
@@ -58,7 +58,7 @@ const Navbar = memo(() => {
   const CURRENT_PAGE = window.location.href.split('/')[4];
   return (
     <>
-      <div class='w-full max-w-screen-xl rounded-xl bg-white py-2 px-8 text-white shadow-md lg:px-8 lg:py-4 flex items-center justify-between flex-initial fixed z-20'>
+      <div class='w-full max-w-screen-xl rounded-xl bg-white py-2 px-8 text-white shadow-md lg:px-8 lg:py-4 flex items-center justify-between flex-initial fixed z-20 dark:border-1p dark:border-solid dark:border-gray-50 dark:bg-blue-300'>
         <div
           className='flex items-center justify-start gap-x-4 w-full'
         >
@@ -66,10 +66,10 @@ const Navbar = memo(() => {
             <img
               src={ResViewLogo}
               alt='ResDb View Logo'
-              className='h-50p w-72p rounded-md'
+              className='h-40p w-60p rounded-md'
             />
           </a>
-          <div className='text-blue-190 text-24p font-sans font-bold'>
+          <div className='text-blue-190 text-20p font-sans font-bold'>
             ResDb <span className='italic text-blue-200'>Visualizer</span>
           </div>
         </div>
@@ -81,14 +81,14 @@ const Navbar = memo(() => {
             currentPage={CURRENT_PAGE}
             page={'visualizer'}
             icon={linearGraphIcon}
-            iconHeight={'1.9em'}
+            iconHeight={'1.5em'}
           />
           <NavLink 
             title={'Our Team'} 
             currentPage={CURRENT_PAGE}
             page={'team'}
             icon={teamIcon}
-            iconHeight={'1.8em'}
+            iconHeight={'1.4em'}
             iconViewBox={'0 0 640 512'}
           />
           <NavLink 
@@ -96,11 +96,11 @@ const Navbar = memo(() => {
             currentPage={CURRENT_PAGE}
             page={'blog'}
             icon={blogIcon}
-            iconHeight={'1.8em'}
+            iconHeight={'1.4em'}
           />
         </div>
         <div className='w-full flex items-center justify-end'>
-          <SunOrMoon />
+          <LightOrDark />
         </div>
       </div>
     </>

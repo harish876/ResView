@@ -43,7 +43,7 @@ const Visualizer = () => {
             <Dropdown length={4} />
         </div>}
         {/* TODO: Check the data-aos declaration below */}
-        <div className='w-95per h-450p rounded-md py-3 px-2 border-1p border-solid border-gray-50 shadow-md flex justify-center items-center rounded-md bg-white my-3' data-aos='zoom-in'>
+        <div className='w-95per h-450p rounded-md py-3 px-2 shadow-md flex justify-center items-center rounded-md bg-white my-3 dark:border-1p dark:border-solid dark:border-gray-50 dark:bg-blue-300' data-aos='zoom-in'>
           {GRAPH_CHANGE[graph]}
         </div>
     </Wrapper>

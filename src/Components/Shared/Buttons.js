@@ -32,7 +32,7 @@ const Button = ({ title }) => {
 
 const ButtonRow = () => {
   return (
-    <div className='flex items-center justify-center gap-x-7 bg-white rounded-md shadow-md w-350p py-3 px-2 border-1p border-solid border-gray-50'>{buttonRow.length > 0 && (
+    <div className='flex items-center justify-center gap-x-7 bg-white rounded-md shadow-md w-350p py-3 px-2 dark:border-1p dark:border-solid dark:border-gray-50 dark:bg-blue-300'>{buttonRow.length > 0 && (
       buttonRow.map((graphType, index) => <Button key={index} title={graphType} />) 
     )}</div>
   );

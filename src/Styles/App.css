@@ -535,9 +535,6 @@ video {
 .h-450p {
   height: 450px;
 }
-.h-50p {
-  height: 50px;
-}
 .h-5p {
   height: 5px;
 }
@@ -553,8 +550,8 @@ video {
 .w-5p {
   width: 5px;
 }
-.w-72p {
-  width: 72px;
+.w-60p {
+  width: 60px;
 }
 .w-80p {
   width: 80px;
@@ -625,19 +622,9 @@ video {
 .border {
   border-width: 1px;
 }
-.border-1p {
-  border-width: 1px;
-}
-.border-solid {
-  border-style: solid;
-}
 .border-blue-190 {
   --tw-border-opacity: 1;
   border-color: rgb(24 151 136 / var(--tw-border-opacity));
-}
-.border-gray-50 {
-  --tw-border-opacity: 1;
-  border-color: rgb(249 250 251 / var(--tw-border-opacity));
 }
 .bg-black {
   --tw-bg-opacity: 1;
@@ -680,11 +667,11 @@ video {
 .text-18p {
   font-size: 18px;
 }
+.text-20p {
+  font-size: 20px;
+}
 .text-22p {
   font-size: 22px;
-}
-.text-24p {
-  font-size: 24px;
 }
 .font-bold {
   font-weight: 700;
@@ -721,9 +708,12 @@ video {
 :root {
     --main-dark-color: #189788;
     --main-light-color: #26D8C4;
-    --background-color: #FAF9F6;
+    --background-color: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
+[data-theme="dark"] {
+  --background-color: radial-gradient(circle at 24.1% 65.8%, rgb(25, 25, 25) 0%, rgb(0, 0, 0) 95.4%);
+}
 
 body {
   margin: 0;
@@ -732,12 +722,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--background-color);
+  background-image: var(--background-color);
+  transition: background-image 1s;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 svg:hover {
@@ -831,6 +821,34 @@ svg:hover {
 }
 
 .hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+:is([data-theme="dark"] .dark\:border-1p) {
+  border-width: 1px;
+}
+
+:is([data-theme="dark"] .dark\:border-solid) {
+  border-style: solid;
+}
+
+:is([data-theme="dark"] .dark\:border-gray-50) {
+  --tw-border-opacity: 1;
+  border-color: rgb(249 250 251 / var(--tw-border-opacity));
+}
+
+:is([data-theme="dark"] .dark\:bg-blue-300) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(10 10 10 / var(--tw-bg-opacity));
+}
+
+:is([data-theme="dark"] .dark\:bg-white) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+:is([data-theme="dark"] .dark\:text-white) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }

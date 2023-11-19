@@ -9,6 +9,7 @@
 
 
 module.exports = {
+  darkMode: ['class','[data-theme="dark"]'],
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
@@ -135,6 +136,7 @@ module.exports = {
           180: "#0563C1",
           190: "#189788",
           200: "#26D8C4",
+          300: "#0a0a0a",
         },
         yellow: {
           10: "#fffbec",

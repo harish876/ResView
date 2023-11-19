@@ -6,7 +6,11 @@
 :root {
     --main-dark-color: #189788;
     --main-light-color: #26D8C4;
-    --background-color: #FAF9F6;
+    --background-color: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+[data-theme="dark"] {
+  --background-color: radial-gradient(circle at 24.1% 65.8%, rgb(25, 25, 25) 0%, rgb(0, 0, 0) 95.4%);
 }
 
 body {
@@ -16,12 +20,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--background-color);
+  background-image: var(--background-color);
+  transition: background-image 1s;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 svg:hover {

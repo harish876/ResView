@@ -7,15 +7,21 @@ export const ThemeContext = createContext({
 });
 
 const ThemeProvider = ({ children } ) => {
-  const [theme, setTheme] = useState(false);
+  const [theme, setTheme] = useState(true);
   const { Provider } = ThemeContext;
 
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (!prevTheme ? true : false));
+  const toggleDarkTheme = () => {
+    setTheme(true);
+    localStorage.setItem("theme", "dark");
+  };
+
+  const toggleLightTheme = () => {
+    setTheme(false);
+    localStorage.setItem("theme", "light");
   };
 
   return (
-    <Provider value={{ theme, toggleTheme }} >
+    <Provider value={{ theme, toggleDarkTheme, toggleLightTheme }} >
         {children}
     </Provider>
     
