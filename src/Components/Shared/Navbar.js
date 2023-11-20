@@ -70,7 +70,7 @@ const Navbar = memo(() => {
             />
           </a>
           <div className='text-blue-190 text-20p font-sans font-bold'>
-            ResDb <span className='italic text-blue-200'>Visualizer</span>
+            Res <span className='italic text-blue-200'>Viz</span>
           </div>
         </div>
         <div

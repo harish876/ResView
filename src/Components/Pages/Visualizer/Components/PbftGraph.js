@@ -1,6 +1,5 @@
 import { ResponsiveBump } from '@nivo/bump'
 
-
 const PbftGraph = ({  }) => {
 
     // ? Names of the steps 
@@ -34,7 +33,7 @@ const PbftGraph = ({  }) => {
                 style={{ 
                     gap: '8em'
                 }}
-
+                key={index}
             >
                 {arr1.map((element, index) => (
                     <div key={index} className='rounded-full bg-black dark:bg-white w-5p h-5p'>

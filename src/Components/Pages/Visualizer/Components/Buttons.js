@@ -22,7 +22,7 @@ const Button = ({ title }) => {
           "text-22p border border-2p border-blue-190 text-blue-190 font-sans h-40p w-80p cursor-pointer rounded-md flex items-center justify-center hover:bg-blue-200 hover:text-white hover:border-blue-200",
           { "bg-blue-190 text-white": graph === title }
         )}
-        onClick={() => toggleGraphChange(title ?? "PBFT")}
+        onClick={() => toggleGraphChange(title || "PBFT")}
       >
         {title ?? ""}
       </div>
