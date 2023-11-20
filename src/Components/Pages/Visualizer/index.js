@@ -4,6 +4,7 @@ import Dropdown from './Components/Dropdown'
 import Wrapper from "../../Shared/Wrapper";
 import PbftGraph from "./Components/PbftGraph";
 import { GraphViewContext } from "../../../Context";
+import TestingGraph from "./Components/TestingGraphs";
 
 // TODO: Remove the below Unknown dummy component once the other graphs are built and remove it from GRAPH_CHANGE object
 const Dummy = () => {
@@ -25,11 +26,15 @@ const Visualizer = () => {
 
   const { graph } = useContext(GraphViewContext);
 
-  const GRAPH_CHANGE = useMemo(() => ({
-    'PBFT': <PbftGraph />,
-    'C&C': <Dummy />,
-    '?': <Dummy />
-  }), []);
+  const GRAPH_CHANGE = useMemo(
+    () => ({
+      // PBFT: <PbftGraph />,
+      PBFT: <TestingGraph />,
+      "C&C": <Dummy />,
+      "?": <Dummy />,
+    }),
+    []
+  );
   
   return (
     <Wrapper>
@@ -42,8 +47,8 @@ const Visualizer = () => {
         {graph === 'PBFT' && <div className="my-4 mx-8" data-aos='fade-in'>
             <Dropdown length={4} />
         </div>}
-        {/* TODO: Check the data-aos declaration below */}
-        <div className='w-95per h-450p rounded-md py-3 px-2 shadow-md flex justify-center items-center rounded-md bg-white my-3 dark:border-1p dark:border-solid dark:border-gray-50 dark:bg-blue-300' data-aos='fade-in'>
+        {/* // ! DO NOT TOUCH THE BELOW COMPONENT !!!!!! */}
+        <div className='w-95per h-450p py-3 px-2 shadow-md flex justify-center items-center rounded-md bg-white my-3 dark:border-1p dark:border-solid dark:border-gray-50 dark:bg-blue-300' data-aos='fade-in'>
           {GRAPH_CHANGE[graph]}
         </div>
     </Wrapper>
