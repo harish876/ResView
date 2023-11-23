@@ -3,16 +3,17 @@ import './Styles/App.css';
 import { AllProviders, ThemeContext } from './Context';
 import Visualizer from './Components/Pages/Visualizer';
 import Team from './Components/Pages/Team';
-import Blog from './Components/Pages/Blog';
+import Home from './Components/Pages/Home';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { Suspense, useContext, useState } from 'react';
 import Loader from './Components/Shared/Loader';
 import Footer from './Components/Shared/Footer';
+import NotFound from './Components/Shared/NotFound';
 
 const PreSynthApp = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { theme, toggleLightTheme, toggleDarkTheme } = useContext(ThemeContext);
+  const { toggleLightTheme, toggleDarkTheme } = useContext(ThemeContext);
 
   // useEffect(() => {
   //   const timer = setTimeout(() => {
@@ -40,9 +41,9 @@ const PreSynthApp = () => {
             <Routes>
               <Route path='/pages/visualizer' element={<Visualizer  />} />
               <Route path='/pages/team' element={<Team />} />
-              <Route path='/pages/blog' element={<Blog />} />
-              {/* <Route path='*' element={<Visualizer  />} /> */}
-              <Route index element={<Navigate to="/pages/visualizer" />} />
+              <Route path='/pages/home' element={<Home />} />
+              <Route path='*' element={<NotFound  />} />
+              <Route index element={<Navigate to="/pages/home" />} />
             </Routes>
             <Footer />
           </Router>

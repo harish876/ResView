@@ -1,17 +1,17 @@
-import React, { memo, useContext } from "react";
-import cn from "classnames";
-import ResViewLogo from "../../Resources/Images/ResViewLogo.jpg";
-import { Icon } from "./Icon";
-import {
-  linearGraphIcon,
-  teamIcon,
-  sunIcon,
-  moonIcon,
-  blogIcon,
-} from "../../Resources/Icons";
 import { Tooltip } from "@mui/material";
+import cn from "classnames";
+import React, { memo, useContext } from "react";
 import { ThemeContext } from '../../Context';
+import {
+  homeIcon,
+  linearGraphIcon,
+  moonIcon,
+  sunIcon,
+  teamIcon
+} from "../../Resources/Icons";
+import ResViewLogo from "../../Resources/Images/ResViewLogo.jpg";
 import { COLOR_LIGHT, ICON_DEFAULT_COLOR, SUN_COLOR } from "./Constants";
+import { Icon } from "./Icon";
 
 const navbarPageActiveColor = (currentPage, pageName) => {
   return currentPage === pageName ? COLOR_LIGHT : ICON_DEFAULT_COLOR;
@@ -86,6 +86,14 @@ const Navbar = memo(() => {
         </div>
         <div className='flex items-center justify-center gap-x-24 w-full'>
           <NavLink
+            title={"Home"}
+            currentPage={CURRENT_PAGE}
+            page={"home"}
+            icon={homeIcon}
+            iconHeight={"1.4em"}
+            iconViewBox={"0 0 640 512"}
+          />
+          <NavLink
             title={"Visualizer"}
             currentPage={CURRENT_PAGE}
             page={"visualizer"}
@@ -99,13 +107,6 @@ const Navbar = memo(() => {
             icon={teamIcon}
             iconHeight={"1.4em"}
             iconViewBox={"0 0 640 512"}
-          />
-          <NavLink
-            title={"Blog"}
-            currentPage={CURRENT_PAGE}
-            page={"blog"}
-            icon={blogIcon}
-            iconHeight={"1.4em"}
           />
         </div>
         <div className='w-full flex items-center justify-end'>
