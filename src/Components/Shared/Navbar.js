@@ -1,14 +1,20 @@
-import React, { memo, useContext } from 'react'
-import cn from 'classnames';
-import ResViewLogo from '../../Resources/Images/ResViewLogo.jpg';
-import { Icon } from './Icon';
-import { linearGraphIcon, teamIcon, sunIcon, moonIcon, blogIcon } from '../../Resources/Icons';
-import { Tooltip } from '@mui/material';
+import React, { memo, useContext } from "react";
+import cn from "classnames";
+import ResViewLogo from "../../Resources/Images/ResViewLogo.jpg";
+import { Icon } from "./Icon";
+import {
+  linearGraphIcon,
+  teamIcon,
+  sunIcon,
+  moonIcon,
+  blogIcon,
+} from "../../Resources/Icons";
+import { Tooltip } from "@mui/material";
 import { ThemeContext } from '../../Context';
-import { COLOR_LIGHT, ICON_DEFAULT_COLOR, SUN_COLOR } from './Constants';
+import { COLOR_LIGHT, ICON_DEFAULT_COLOR, SUN_COLOR } from "./Constants";
 
 const navbarPageActiveColor = (currentPage, pageName) => {
-  return currentPage === pageName ? COLOR_LIGHT : ICON_DEFAULT_COLOR
+  return currentPage === pageName ? COLOR_LIGHT : ICON_DEFAULT_COLOR;
 };
 
 const LightOrDark = memo(() => {
@@ -41,13 +47,20 @@ const LightOrDark = memo(() => {
   );
 });
 
-const NavLink = ({ title, currentPage, page, icon, iconHeight, iconViewBox }) => (
+const NavLink = ({
+  title,
+  currentPage,
+  page,
+  icon,
+  iconHeight,
+  iconViewBox,
+}) => (
   <Tooltip title={title} enterDelay={500}>
     <a href={`/pages/${page}`} className='cursor-pointer'>
-      <Icon 
-        fill={navbarPageActiveColor(currentPage, page)} 
-        height={iconHeight} 
-        path={icon} 
+      <Icon
+        fill={navbarPageActiveColor(currentPage, page)}
+        height={iconHeight}
+        path={icon}
         viewBox={iconViewBox}
       />
     </a>
@@ -55,13 +68,11 @@ const NavLink = ({ title, currentPage, page, icon, iconHeight, iconViewBox }) =>
 );
 
 const Navbar = memo(() => {
-  const CURRENT_PAGE = window.location.href.split('/')[4];
+  const CURRENT_PAGE = window.location.href.split("/")[4];
   return (
     <>
       <div class='w-full max-w-screen-xl rounded-xl bg-white py-2 px-8 text-white shadow-md lg:px-8 lg:py-4 flex items-center justify-between flex-initial fixed z-20 dark:border-1p dark:border-solid dark:border-gray-50 dark:bg-blue-300'>
-        <div
-          className='flex items-center justify-start gap-x-4 w-full'
-        >
+        <div className='flex items-center justify-start gap-x-4 w-full'>
           <a href='/'>
             <img
               src={ResViewLogo}
@@ -70,33 +81,31 @@ const Navbar = memo(() => {
             />
           </a>
           <div className='text-blue-190 text-20p font-sans font-bold'>
-            Res <span className='italic text-blue-200'>Viz</span>
+            Res <span className='italic text-blue-200'>View</span>
           </div>
         </div>
-        <div
-          className='flex items-center justify-center gap-x-24 w-full'
-        >
-          <NavLink 
-            title={'Visualizer'} 
+        <div className='flex items-center justify-center gap-x-24 w-full'>
+          <NavLink
+            title={"Visualizer"}
             currentPage={CURRENT_PAGE}
-            page={'visualizer'}
+            page={"visualizer"}
             icon={linearGraphIcon}
-            iconHeight={'1.5em'}
+            iconHeight={"1.5em"}
           />
-          <NavLink 
-            title={'Our Team'} 
+          <NavLink
+            title={"Our Team"}
             currentPage={CURRENT_PAGE}
-            page={'team'}
+            page={"team"}
             icon={teamIcon}
-            iconHeight={'1.4em'}
-            iconViewBox={'0 0 640 512'}
+            iconHeight={"1.4em"}
+            iconViewBox={"0 0 640 512"}
           />
-          <NavLink 
-            title={'Blog'} 
+          <NavLink
+            title={"Blog"}
             currentPage={CURRENT_PAGE}
-            page={'blog'}
+            page={"blog"}
             icon={blogIcon}
-            iconHeight={'1.4em'}
+            iconHeight={"1.4em"}
           />
         </div>
         <div className='w-full flex items-center justify-end'>
@@ -107,4 +116,4 @@ const Navbar = memo(() => {
   );
 });
 
-export default Navbar
+export default Navbar;
