@@ -7,6 +7,7 @@ import Blog from './Components/Pages/Blog';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { Suspense, useContext, useState } from 'react';
 import Loader from './Components/Shared/Loader';
+import Footer from './Components/Shared/Footer';
 
 const PreSynthApp = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -43,6 +44,7 @@ const PreSynthApp = () => {
               {/* <Route path='*' element={<Visualizer  />} /> */}
               <Route index element={<Navigate to="/pages/visualizer" />} />
             </Routes>
+            <Footer />
           </Router>
         </>
       )}

@@ -481,8 +481,17 @@ video {
 .fixed {
   position: fixed;
 }
+.absolute {
+  position: absolute;
+}
 .relative {
   position: relative;
+}
+.bottom-0 {
+  bottom: 0px;
+}
+.right-0 {
+  right: 0px;
 }
 .z-10 {
   z-index: 10;
@@ -506,13 +515,13 @@ video {
   margin-top: 18px;
   margin-bottom: 18px;
 }
-.my-3 {
-  margin-top: 0.75rem;
-  margin-bottom: 0.75rem;
-}
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+.my-\[2em\] {
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 .mb-4 {
   margin-bottom: 1rem;
@@ -532,11 +541,11 @@ video {
 .h-200p {
   height: 200px;
 }
+.h-250p {
+  height: 250px;
+}
 .h-40p {
   height: 40px;
-}
-.h-450p {
-  height: 450px;
 }
 .h-5p {
   height: 5px;
@@ -547,11 +556,14 @@ video {
 .h-screen {
   height: 100vh;
 }
-.max-h-180p {
-  max-height: 180px;
+.w-200p {
+  width: 200px;
 }
 .w-350p {
   width: 350px;
+}
+.w-40p {
+  width: 40px;
 }
 .w-5p {
   width: 5px;
@@ -565,17 +577,21 @@ video {
 .w-920p {
   width: 920px;
 }
-.w-95per {
-  width: 95%;
-}
 .w-full {
   width: 100%;
 }
 .w-screen {
   width: 100vw;
 }
+.max-w-200p {
+  max-width: 200px;
+}
 .flex-initial {
   flex: 0 1 auto;
+}
+.rotate-45 {
+  --tw-rotate: 45deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .cursor-pointer {
   cursor: pointer;
@@ -601,6 +617,9 @@ video {
 .justify-between {
   justify-content: space-between;
 }
+.justify-evenly {
+  justify-content: space-evenly;
+}
 .gap-\[5em\] {
   gap: 5em;
 }
@@ -610,11 +629,20 @@ video {
 .gap-x-4 {
   column-gap: 1rem;
 }
+.gap-x-6 {
+  column-gap: 1.5rem;
+}
 .gap-x-7 {
   column-gap: 1.75rem;
 }
+.gap-x-8 {
+  column-gap: 2rem;
+}
 .gap-x-\[5em\] {
   column-gap: 5em;
+}
+.gap-y-4 {
+  row-gap: 1rem;
 }
 .truncate {
   overflow: hidden;
@@ -633,9 +661,19 @@ video {
 .border {
   border-width: 1px;
 }
+.border-1p {
+  border-width: 1px;
+}
+.border-solid {
+  border-style: solid;
+}
 .border-blue-190 {
   --tw-border-opacity: 1;
   border-color: rgb(24 151 136 / var(--tw-border-opacity));
+}
+.border-gray-100 {
+  --tw-border-opacity: 1;
+  border-color: rgb(119 119 119 / var(--tw-border-opacity));
 }
 .bg-black {
   --tw-bg-opacity: 1;
@@ -649,16 +687,13 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
-.object-cover {
-  object-fit: cover;
-}
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
-.px-5p {
-  padding-left: 5px;
-  padding-right: 5px;
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 .px-8 {
   padding-left: 2rem;
@@ -676,12 +711,26 @@ video {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
 }
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.py-\[-6em\] {
+  padding-top: -6em;
+  padding-bottom: -6em;
+}
 .py-\[6em\] {
   padding-top: 6em;
   padding-bottom: 6em;
 }
 .font-sans {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+.text-12p {
+  font-size: 12px;
+}
+.text-14p {
+  font-size: 14px;
 }
 .text-16p {
   font-size: 16px;
@@ -729,6 +778,13 @@ video {
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.transition {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
 :root {
@@ -826,6 +882,12 @@ svg:hover {
   100% {
     transform: rotate(405deg);
   }
+}
+
+.hover\:scale-105:hover {
+  --tw-scale-x: 1.05;
+  --tw-scale-y: 1.05;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .hover\:border-blue-200:hover {
