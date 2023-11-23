@@ -1,5 +1,4 @@
-import React from 'react'
-import Wrapper from './Wrapper';
+import React from 'react';
 
 const Footer = () => {
   return (

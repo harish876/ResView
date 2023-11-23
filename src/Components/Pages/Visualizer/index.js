@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import ButtonRow from "./Components/Ancilliary/Buttons";
-import Dropdown from "./Components/Ancilliary/Dropdown";
+import ButtonRow from "./Components/Ancillary/Buttons";
+import Dropdown from "./Components/Ancillary/Dropdown";
 import Wrapper from "../../Shared/Wrapper";
 import PbftGraph from "./Components/Graphs/PbftGraph";
 import TestingGraph from "./Components/Graphs/TestingGraphs";
@@ -9,7 +9,7 @@ import { Resizable } from "re-resizable";
 import { GraphResizerContext, GraphViewContext } from "../../../Context";
 import { Icon } from "../../Shared/Icon";
 import { anglesRightIcon } from "../../../Resources/Icons";
-import TypeSelector from "./Components/Ancilliary/TypeSelector";
+import TypeSelector from "./Components/Ancillary/TypeSelector";
 
 // TODO: Remove the below Unknown dummy component once the other graphs are built and remove it from GRAPH_CHANGE object
 const Dummy = () => {
