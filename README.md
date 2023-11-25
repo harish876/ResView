@@ -32,6 +32,8 @@ DO NOT MERGE unless approved by me.
 
 [Saiparanav](https://github.com/Saipranav-Kotamreddy)
 
+[Nikita B. Emberi](https://github.com/NikitaEmberi/)
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
