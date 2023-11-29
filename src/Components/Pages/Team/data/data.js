@@ -7,7 +7,7 @@ export const data = [
       ig: "https://instagram.com/aunsh___",
       linkedIn: "https://instagram.com/in/aunsh",
     },
-    profilePic: "",
+    profilePic: "https://i.postimg.cc/3NVyH6R8/SPKR.jpg",
   },
   {
     name: "Aunsh Bandivadekar",
