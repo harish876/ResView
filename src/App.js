@@ -1,6 +1,6 @@
 import Navbar from './Components/Shared/Navbar';
 import './Styles/App.css';
-import { AllProviders, ThemeContext } from './Context';
+import { AllProviders } from './Context';
 import Visualizer from './Components/Pages/Visualizer';
 import Team from './Components/Pages/Team';
 import Home from './Components/Pages/Home';
@@ -9,6 +9,7 @@ import { Suspense, useContext, useState } from 'react';
 import Loader from './Components/Shared/Loader';
 import Footer from './Components/Shared/Footer';
 import NotFound from './Components/Shared/NotFound';
+import { ThemeContext } from './Context/theme';
 
 const PreSynthApp = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +36,6 @@ const PreSynthApp = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <>
           <Router>
             <Navbar />
             <Routes>
@@ -47,7 +47,6 @@ const PreSynthApp = () => {
             </Routes>
             <Footer />
           </Router>
-        </>
       )}
     </>
   );

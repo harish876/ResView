@@ -7,6 +7,8 @@ const index = () => {
 
   const onMessage = (newData)=>{
     messageHistory = newData;
+
+    console.log(messageHistory, 'MESSAGE HISTORY')
   };
 
   return (

@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
-import useWebSocket, { ReadyState } from "react-use-websocket";
+import React, { useEffect, useRef } from "react";
+import useWebSocket from "react-use-websocket";
 
 export const WebSocketDemo = ({onMessage}) => {
   //Public API that will echo messages sent to it back to the client

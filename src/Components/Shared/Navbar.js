@@ -1,7 +1,6 @@
 import { Tooltip } from "@mui/material";
 import cn from "classnames";
 import React, { memo, useContext } from "react";
-import { ThemeContext } from '../../Context';
 import {
   homeIcon,
   linearGraphIcon,
@@ -12,6 +11,7 @@ import {
 import ResViewLogo from "../../Resources/Images/ResViewLogo.jpg";
 import { COLOR_LIGHT, ICON_DEFAULT_COLOR, SUN_COLOR } from "./Constants";
 import { Icon } from "./Icon";
+import { ThemeContext } from "../../Context/theme";
 
 const navbarPageActiveColor = (currentPage, pageName) => {
   return currentPage === pageName ? COLOR_LIGHT : ICON_DEFAULT_COLOR;
