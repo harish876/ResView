@@ -535,6 +535,9 @@ video {
   margin-top: 4em;
   margin-bottom: 4em;
 }
+.mb-10p {
+  margin-bottom: 10px;
+}
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -568,6 +571,11 @@ video {
 .h-5p {
   height: 5px;
 }
+
+.h-720p {
+  height: 720px;
+}
+
 .h-full {
   height: 100%;
 }
@@ -936,6 +944,11 @@ svg:hover {
 .hover\:text-blue-190:hover {
   --tw-text-opacity: 1;
   color: rgb(24 151 136 / var(--tw-text-opacity));
+}
+
+.hover\:text-blue-200:hover {
+  --tw-text-opacity: 1;
+  color: rgb(38 216 196 / var(--tw-text-opacity));
 }
 
 .hover\:text-white:hover {
