@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Wrapper from '../../Shared/Wrapper'
 // TODO: Remove the below import and entire components after demo is done
 import { WebSocketDemo } from '../../../Socket'
@@ -23,9 +23,19 @@ const ScrollBelow = () => {
 };
 
 const index = () => {
+  let messageHistory={};
+
+  const onMessage = (newData)=>{
+    messageHistory = newData;
+
+    console.log(messageHistory, 'MESSAGE HISTORY')
+  };
+
   return (
     <Wrapper customWidth={"w-full"} style={{ border: "1px solid red" }}>
-      <div className='h-720p w-full'></div>
+      <div className='h-720p w-full text-black dark:text-white text-22p'>
+        <WebSocketDemo onMessage={onMessage} />
+      </div>
       <div>
         <ScrollBelow />
       </div>

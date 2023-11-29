@@ -3,7 +3,7 @@ import { ResponsiveLine } from "@nivo/line";
 import { ccData } from "../data/data";
 import { useContext, useEffect, useState } from "react";
 import Loader from "../../../../Shared/Loader";
-import { GraphViewContext } from "../../../../../Context";
+import { GraphViewContext } from "../../../../../Context/graph";
 
 const theme = {
   axis: {
