@@ -68,13 +68,6 @@ const index = () => {
 
   return (
     <Wrapper customWidth={"w-full"} style={{ border: "1px solid red" }}>
-      <div className='h-720p w-full text-black dark:text-white text-22p'>
-        <WebSocketDemo onMessage={onMessage} />
-      </div>
-      <div>
-        <button onClick={sendPost}>Test Set Transaction</button>
-        <button onClick={sendGet}>Test Get Transaction</button>
-      </div>
       <div>
         <ScrollBelow />
       </div>

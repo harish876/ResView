@@ -1,5 +1,5 @@
 import { Resizable } from "re-resizable";
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { GraphResizerContext, GraphViewContext } from "../../../Context/graph";
 import { anglesRightIcon } from "../../../Resources/Icons";
 import { Icon } from "../../Shared/Icon";
@@ -9,6 +9,9 @@ import Dropdown from "./Components/Ancillary/Dropdown";
 import TypeSelector from "./Components/Ancillary/TypeSelector";
 import CandC from "./Components/Graphs/CandC";
 import TestingGraph from "./Components/Graphs/TestingGraphs";
+import axios from 'axios';
+import { WebSocketDemo } from '../../../Socket'
+
 
 // TODO: Remove the below Unknown dummy component once the other graphs are built and remove it from GRAPH_CHANGE object
 const Dummy = () => {
@@ -24,6 +27,48 @@ const mvtTitles = {
 const Visualizer = () => {
   const { graph, mvtGraphNo } = useContext(GraphViewContext);
   const { boxValues, setBoxValues } = useContext(GraphResizerContext);
+
+  const [messageHistory, setMessageHistory]= useState({});
+
+  const onMessage = (newData)=>{
+    setMessageHistory(newData);
+
+    console.log(messageHistory, 'MESSAGE HISTORY')
+  };
+
+  const sendGet = async () => {
+    let key = 'key1';
+    let url = 'http://127.0.0.1:18000/v1/transactions/' + key;
+    try{
+      const response= await axios.get(url);
+      console.log("Get response: ", response.data);
+    }
+    catch(error){
+      console.error("Error: ", error);
+    }
+  };
+
+  const sendPost = async () => {
+    let key = 'key1';
+    let value = 'value1';
+    let data = {"id": key, "value": value};
+    let url = 'http://127.0.0.1:18000/v1/transactions/commit';
+    try{
+      const response = await axios.post(
+        url,
+        JSON.stringify(data),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }
+      );
+      console.log("Get response: ", response.data);
+    }
+    catch(error){
+      console.error("Error: ", error);
+    }
+  };
 
   // TODO: Fill the below ? with appropriate title and its full form
   const graphToTitle = useMemo(
@@ -47,6 +92,14 @@ const Visualizer = () => {
 
   return (
     <Wrapper>
+      <div>
+        <WebSocketDemo onMessage={onMessage} />
+      </div>
+      <div>
+        <button className="bg-white" onClick={sendPost}>Test Set Transaction</button>
+        {'\n'}
+        <button className="bg-white" onClick={sendGet}>Test Get Transaction</button>
+      </div>
       <div className='mt-[2em] mb-4 mx-8'>
         <ButtonRow />
       </div>
