@@ -23,7 +23,7 @@ export const WebSocketDemo = ({onMessage}) => {
 
     const updateSocketData = () => {
       addMessage(lastJsonMessage);
-      onMessage(allMessages);
+      onMessage(allMessages.current);
     };
 
     useEffect(() => {

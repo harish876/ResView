@@ -30,7 +30,7 @@ DO NOT MERGE unless approved by me.
 
 [aunshx](https://github.com/aunshx/)
 
-[Saiparanav](https://github.com/Saipranav-Kotamreddy)
+[Saipranav](https://github.com/Saipranav-Kotamreddy)
 
 [Nikita B. Emberi](https://github.com/NikitaEmberi/)
 
