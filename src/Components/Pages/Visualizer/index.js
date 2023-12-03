@@ -1,5 +1,5 @@
 import { Resizable } from "re-resizable";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useMemo, useState, useEffect } from "react";
 import { GraphResizerContext, GraphViewContext } from "../../../Context/graph";
 import { anglesRightIcon } from "../../../Resources/Icons";
 import { Icon } from "../../Shared/Icon";
@@ -29,12 +29,51 @@ const Visualizer = () => {
   const { boxValues, setBoxValues } = useContext(GraphResizerContext);
 
   const [messageHistory, setMessageHistory]= useState({});
+  const [currentTransaction, setCurrentTransaction] = useState(0);
+  const [prepareData, setPrepareData] = useState([]);
+  const [commit, setCommitData] = useState([]);
 
   const onMessage = (newData)=>{
     setMessageHistory(newData);
+    setCurrentTransaction(Object.keys(messageHistory).length);
 
     console.log(messageHistory, 'MESSAGE HISTORY')
   };
+
+  useEffect(() => {
+    if(!(currentTransaction in messageHistory)){
+      setPrepareData([]);
+      setCommitData([]);
+      console.log(currentTransaction, " Not in messageHistory")
+    }
+    else{
+      const transactionData = messageHistory[currentTransaction];
+      console.log(transactionData)
+      let startTime=0;
+      let pre_prepare_times=[];
+      let all_prepare_times=[];
+      Object.keys(transactionData).map((key) => {
+        if(transactionData[key].primary_id!==transactionData[key].replica_id){
+          pre_prepare_times.push(Math.floor(transactionData[key].propose_pre_prepare_time/10000)%100000);
+        }
+        let replica_timestamps=[];
+        transactionData[key]["prepare_message_timestamps"].map((time) => {
+          replica_timestamps.push(Math.floor(time/10000)%100000);
+        });
+        all_prepare_times.push(replica_timestamps);
+      });
+      console.log("Pre_prepare time: ", pre_prepare_times);
+      console.log("All timestamps: ", all_prepare_times);
+      startTime = Math.min(...pre_prepare_times);
+      console.log(startTime);
+      for(let i=0; i<all_prepare_times.length; i++){
+        for(let j=0; j<all_prepare_times.length; j++){
+          all_prepare_times[i][j]=all_prepare_times[i][j]-startTime;
+        }
+      }
+      console.log("Updated timestamps: ", all_prepare_times);
+    }
+  }, [messageHistory, currentTransaction]);
 
   const sendGet = async () => {
     let key = 'key1';
