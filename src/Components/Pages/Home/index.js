@@ -5,6 +5,7 @@ import { WebSocketDemo } from '../../../Socket'
 import homePageBackground from '../../../Resources/Images/homePageBackground.png'
 import { Icon } from '../../Shared/Icon';
 import { anglesDownIcon } from '../../../Resources/Icons';
+import axios from 'axios';
 
 const ScrollBelow = () => {
   return (
@@ -31,10 +32,48 @@ const index = () => {
     console.log(messageHistory, 'MESSAGE HISTORY')
   };
 
+  const sendGet = async () => {
+    let key = 'key1';
+    let url = 'http://127.0.0.1:18000/v1/transactions/' + key;
+    try{
+      const response= await axios.get(url);
+      console.log("Get response: ", response.data);
+    }
+    catch(error){
+      console.error("Error: ", error);
+    }
+  };
+
+  const sendPost = async () => {
+    let key = 'key1';
+    let value = 'value1';
+    let data = {"id": key, "value": value};
+    let url = 'http://127.0.0.1:18000/v1/transactions/commit';
+    try{
+      const response = await axios.post(
+        url,
+        JSON.stringify(data),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }
+      );
+      console.log("Get response: ", response.data);
+    }
+    catch(error){
+      console.error("Error: ", error);
+    }
+  };
+
   return (
     <Wrapper customWidth={"w-full"} style={{ border: "1px solid red" }}>
       <div className='h-720p w-full text-black dark:text-white text-22p'>
         <WebSocketDemo onMessage={onMessage} />
+      </div>
+      <div>
+        <button onClick={sendPost}>Test Set Transaction</button>
+        <button onClick={sendGet}>Test Get Transaction</button>
       </div>
       <div>
         <ScrollBelow />
