@@ -18,11 +18,12 @@ const Dummy = () => {
   return <div className='text-18p my-4 mx-4 text-red-50'>Dummy</div>;
 };
 
-const mvtTitles = {
-  1: "Commit Messages vs Time Graph",
-  2: "Prepare Messages vs Time Graph",
-};
+const colorList = ["hsl(148, 70%, 50%)", "hsl(200, 70%, 50%)", "hsl(171, 70%, 50%)", "hsl(313, 70%, 50%)"];
 
+const mvtTitles = {
+  1: "Prepare Messages vs Time Graph",
+  2: "Commit Messages vs Time Graph",
+};
 
 const Visualizer = () => {
   const { graph, mvtGraphNo } = useContext(GraphViewContext);
@@ -30,8 +31,8 @@ const Visualizer = () => {
 
   const [messageHistory, setMessageHistory]= useState({});
   const [currentTransaction, setCurrentTransaction] = useState(0);
-  const [prepareData, setPrepareData] = useState([]);
-  const [commit, setCommitData] = useState([]);
+  const [messageChartData, setMessageChartData] = useState([]);
+  const [labels, setLabels] = useState([]);
 
   const onMessage = (newData)=>{
     setMessageHistory(newData);
@@ -42,36 +43,87 @@ const Visualizer = () => {
 
   useEffect(() => {
     if(!(currentTransaction in messageHistory)){
-      setPrepareData([]);
-      setCommitData([]);
+      setMessageChartData([[],[]])
       console.log(currentTransaction, " Not in messageHistory")
     }
     else{
       const transactionData = messageHistory[currentTransaction];
       console.log(transactionData)
       let startTime=0;
+      let firstPrepareTime=0;
       let pre_prepare_times=[];
+      let prepare_times=[];
       let all_prepare_times=[];
+      let all_commit_times=[];
+      let label_list=[];
+
       Object.keys(transactionData).map((key) => {
+        label_list.push("Replica " + key);
         if(transactionData[key].primary_id!==transactionData[key].replica_id){
-          pre_prepare_times.push(Math.floor(transactionData[key].propose_pre_prepare_time/10000)%100000);
+          pre_prepare_times.push(Math.floor(transactionData[key].propose_pre_prepare_time/10000));
         }
-        let replica_timestamps=[];
+        prepare_times.push(Math.floor(transactionData[key].prepare_time/10000));
+        let replica_prepare_timestamps=[];
+        let replica_commit_timestamps=[];
         transactionData[key]["prepare_message_timestamps"].map((time) => {
-          replica_timestamps.push(Math.floor(time/10000)%100000);
+          replica_prepare_timestamps.push(Math.floor(time/10000));
         });
-        all_prepare_times.push(replica_timestamps);
+        transactionData[key]["commit_message_timestamps"].map((time) => {
+          replica_commit_timestamps.push(Math.floor(time/10000));
+        });
+        all_prepare_times.push(replica_prepare_timestamps);
+        all_commit_times.push(replica_commit_timestamps);
       });
+
       console.log("Pre_prepare time: ", pre_prepare_times);
       console.log("All timestamps: ", all_prepare_times);
       startTime = Math.min(...pre_prepare_times);
+      firstPrepareTime = Math.min(...prepare_times);
       console.log(startTime);
+
+      let prepareChartData=[];
+      let commitChartData=[];
       for(let i=0; i<all_prepare_times.length; i++){
-        for(let j=0; j<all_prepare_times.length; j++){
-          all_prepare_times[i][j]=all_prepare_times[i][j]-startTime;
+        let lineData=[{x:0, y:0}];
+        for(let j=0; j<all_prepare_times[i].length; j++){
+          lineData.push({x: all_prepare_times[i][j]-startTime, y: j});
+          lineData.push({x: all_prepare_times[i][j]-startTime, y: j+1});
         }
+        prepareChartData.push(lineData);
       }
-      console.log("Updated timestamps: ", all_prepare_times);
+      for(let i=0; i<all_commit_times.length; i++){
+        let lineData=[{x:0, y:0}];
+        for(let j=0; j<all_commit_times[i].length; j++){
+          lineData.push({x: all_commit_times[i][j]-firstPrepareTime, y: j});
+          lineData.push({x: all_commit_times[i][j]-firstPrepareTime, y: j+1});
+        }
+        commitChartData.push(lineData);
+      }
+
+      console.log("Prepare Chart Data: ", prepareChartData);
+      console.log("Commit Chart Data: ", commitChartData);
+
+      let preparePoints = [];
+      for(let i=0; i<label_list.length; i++){
+        let data = {
+          id: label_list[i],
+          color: colorList[i],
+          data: prepareChartData[i],
+        };
+        preparePoints.push(data);
+      }
+      let commitPoints = [];
+      for(let i=0; i<label_list.length; i++){
+        let data = {
+          id: label_list[i],
+          color: colorList[i],
+          data: commitChartData[i],
+        };
+        commitPoints.push(data);
+      }
+      let pointData={1:preparePoints, 2:commitPoints};
+      console.log("Graph: ", pointData);
+      setMessageChartData(pointData);
     }
   }, [messageHistory, currentTransaction]);
 
@@ -123,10 +175,10 @@ const Visualizer = () => {
     () => ({
       // PBFT: <PbftGraph />,
       PBFT: <TestingGraph />,
-      MvT: <CandC />,
+      MvT: <CandC labels={labels} points={messageChartData[mvtGraphNo]}/>,
       "?": <Dummy />,
     }),
-    []
+    [labels, messageChartData, mvtGraphNo]
   );
 
   return (

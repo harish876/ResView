@@ -22,7 +22,8 @@ const secondTheme = {
   fontSize: "140px",
 };
 
-const CandC = () => {
+
+const CandC = ({labels, points}) => {
     const [isLoading, setIsLoading] = useState(false);
     const { cAndCGraphNumber } = useContext(GraphViewContext);
 
@@ -34,22 +35,31 @@ const CandC = () => {
   //   return () => clearTimeout(timer);
   // }, []);
 
+  console.log("CCData: ", ccData);
+  console.log(points);
   return (
     <>
         {isLoading ? (
             <Loader />
         ) : (
             <ResponsiveLine
-    data={ccData}
+    data={points}
     margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-    xScale={{ type: "point" }}
+    xScale={{
+      type: "linear",
+      min: "auto",
+      max: "auto",
+      stacked: false,
+      reverse: false,
+    }}
     yScale={{
       type: "linear",
       min: "auto",
       max: "auto",
-      stacked: true,
+      stacked: false,
       reverse: false,
     }}
+    xFormat=' >-.2f'
     yFormat=' >-.2f'
     axisTop={null}
     axisRight={null}
@@ -70,7 +80,7 @@ const CandC = () => {
       legendOffset: -40,
       legendPosition: "middle",
     }}
-    enablePoints={false}
+    enablePoints={true}
     pointSize={10}
     pointColor={{ theme: "background" }}
     pointBorderWidth={2}
