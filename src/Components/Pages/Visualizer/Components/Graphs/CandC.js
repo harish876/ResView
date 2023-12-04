@@ -23,7 +23,7 @@ const secondTheme = {
 };
 
 
-const CandC = ({labels, points}) => {
+const CandC = ({points}) => {
     const [isLoading, setIsLoading] = useState(false);
     const { cAndCGraphNumber } = useContext(GraphViewContext);
 
@@ -35,7 +35,6 @@ const CandC = ({labels, points}) => {
   //   return () => clearTimeout(timer);
   // }, []);
 
-  console.log("CCData: ", ccData);
   console.log(points);
   return (
     <>
@@ -67,7 +66,7 @@ const CandC = ({labels, points}) => {
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
-      legend: "Prepare Time",
+      legend: "Time Since Replica Started Accepting Messages(10^-5 seconds)",
       legendOffset: 36,
       legendPosition: "middle",
       fontColor: '#fff'

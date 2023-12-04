@@ -25,6 +25,8 @@ const mvtTitles = {
   2: "Commit Messages vs Time Graph",
 };
 
+
+
 const Visualizer = () => {
   const { graph, mvtGraphNo } = useContext(GraphViewContext);
   const { boxValues, setBoxValues } = useContext(GraphResizerContext);
@@ -32,8 +34,15 @@ const Visualizer = () => {
   const [messageHistory, setMessageHistory]= useState({});
   const [currentTransaction, setCurrentTransaction] = useState(0);
   const [messageChartData, setMessageChartData] = useState([]);
-  const [labels, setLabels] = useState([]);
+  const [labelToggle, setLabelToggle] = useState({"Replica 1":true, "Replica 2":true, "Replica 3":true, "Replica 4":true});
 
+  const toggle_line = (label) => {
+    console.log("Toggling ", labelToggle);
+    let labels = labelToggle;
+    labels[label]=!(labels[label]);
+    setLabelToggle(labels);
+    console.log("NEw bool is ", labelToggle);
+  };
   const onMessage = (newData)=>{
     setMessageHistory(newData);
     setCurrentTransaction(Object.keys(messageHistory).length);
@@ -104,28 +113,47 @@ const Visualizer = () => {
       console.log("Commit Chart Data: ", commitChartData);
 
       let preparePoints = [];
+      let data = {};
       for(let i=0; i<label_list.length; i++){
-        let data = {
-          id: label_list[i],
-          color: colorList[i],
-          data: prepareChartData[i],
-        };
+        if(!labelToggle[label_list[i]]){
+          data = {
+            id: label_list[i],
+            color: colorList[i],
+            data: [],
+          };
+        }
+        else{
+          data = {
+            id: label_list[i],
+            color: colorList[i],
+            data: prepareChartData[i],
+          };
+        }
         preparePoints.push(data);
       }
       let commitPoints = [];
       for(let i=0; i<label_list.length; i++){
-        let data = {
-          id: label_list[i],
-          color: colorList[i],
-          data: commitChartData[i],
-        };
+        if(!labelToggle[label_list[i]]){
+          data = {
+            id: label_list[i],
+            color: colorList[i],
+            data: [],
+          };
+        }
+        else{
+          data = {
+            id: label_list[i],
+            color: colorList[i],
+            data: commitChartData[i],
+          };
+        }
         commitPoints.push(data);
       }
       let pointData={1:preparePoints, 2:commitPoints};
       console.log("Graph: ", pointData);
       setMessageChartData(pointData);
     }
-  }, [messageHistory, currentTransaction]);
+  }, [messageHistory, currentTransaction, labelToggle]);
 
   const sendGet = async () => {
     let key = 'key1';
@@ -175,10 +203,10 @@ const Visualizer = () => {
     () => ({
       // PBFT: <PbftGraph />,
       PBFT: <TestingGraph />,
-      MvT: <CandC labels={labels} points={messageChartData[mvtGraphNo]}/>,
+      MvT: <CandC points={messageChartData[mvtGraphNo]}/>,
       "?": <Dummy />,
     }),
-    [labels, messageChartData, mvtGraphNo]
+    [messageChartData, mvtGraphNo]
   );
 
   return (
@@ -190,6 +218,15 @@ const Visualizer = () => {
         <button className="bg-white" onClick={sendPost}>Test Set Transaction</button>
         {'\n'}
         <button className="bg-white" onClick={sendGet}>Test Get Transaction</button>
+      </div>
+      <div>
+        <button className="bg-white" onClick={() =>toggle_line("Replica 1")}>Toggle Replica 1 Line</button>
+        {'\n'}
+        <button className="bg-white" onClick={() =>toggle_line("Replica 2")}>Toggle Replica 2 Line</button>
+        {'\n'}
+        <button className="bg-white" onClick={() =>toggle_line("Replica 3")}>Toggle Replica 3 Line</button>
+        {'\n'}
+        <button className="bg-white" onClick={() =>toggle_line("Replica 4")}>Toggle Replica 4 Line</button>
       </div>
       <div className='mt-[2em] mb-4 mx-8'>
         <ButtonRow />
