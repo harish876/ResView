@@ -14,6 +14,7 @@ import TestingGraph from "./Components/Graphs/TestingGraphs";
 import axios from 'axios';
 import { WebSocketDemo } from '../../../Socket'
 
+
 const colorList = ["hsl(148, 70%, 50%)", "hsl(200, 70%, 50%)", "hsl(171, 70%, 50%)", "hsl(313, 70%, 50%)"];
 
 const mvtTitles = {
@@ -49,12 +50,21 @@ const Visualizer = () => {
     updateGraph();
   };
 
+  const sendMessage = (replicaNumber) => {
+    const ws_list = ['22001', '22002', '22003', '22004'];  
+    const sendWs = new WebSocket('ws://localhost:'+ws_list[replicaNumber]);
+    sendWs.onopen = () => {
+      sendWs.send("Message");
+    }
+  }
+
   const toggle_faulty= (label) => {
     setLabelToggleFaulty((prevLabels) => {
       const updatedLabels = { ...prevLabels };
       updatedLabels[label] = !updatedLabels[label];
       return updatedLabels;
     });
+    sendMessage(parseInt(label.slice(-1)-1));
     updateGraph();
   };
   const onMessage = (newData)=>{
@@ -217,15 +227,6 @@ const Visualizer = () => {
     <Wrapper>
       <div>
         <WebSocketDemo onMessage={onMessage} />
-      </div>
-      <div>
-        <button className="bg-white" onClick={() =>toggle_line("Replica 1")}>Toggle Replica 1 Line</button>
-        {'\n'}
-        <button className="bg-white" onClick={() =>toggle_line("Replica 2")}>Toggle Replica 2 Line</button>
-        {'\n'}
-        <button className="bg-white" onClick={() =>toggle_line("Replica 3")}>Toggle Replica 3 Line</button>
-        {'\n'}
-        <button className="bg-white" onClick={() =>toggle_line("Replica 4")}>Toggle Replica 4 Line</button>
       </div>
       <div className='mt-[2em] mb-4 mx-8'>
         <ButtonRow />
