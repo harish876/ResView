@@ -35,7 +35,6 @@ const CandC = ({points}) => {
   //   return () => clearTimeout(timer);
   // }, []);
 
-  console.log(points);
   return (
     <>
         {isLoading ? (

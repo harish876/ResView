@@ -19,6 +19,9 @@ const TransactionForm = ({selectTransaction, sendSet, sendGet}) => {
       console.log("key: ", key);
       sendGet(key);
     }
+    setCustomTransaction('');
+    setKey('');
+    setValue('');
   }
 
   return (
@@ -72,18 +75,18 @@ const TransactionForm = ({selectTransaction, sendSet, sendGet}) => {
       {transactionType === 'get' && (
         <div className="mb-4">
           <label className="block text-xl mb-2">Key:</label>
-          <input type="text" name="key" onChange={(e) => setKey(e.target.value)} className="bg-gray-700 border border-gray-600 px-4 py-2 rounded-md text-white" />
+          <input type="text" name="key" value={key} onChange={(e) => setKey(e.target.value)} className="bg-gray-700 border border-gray-600 px-4 py-2 rounded-md text-white" />
         </div>
       )}
       {transactionType === 'set' && (
         <>
           <div className="mb-4">
             <label className="block text-xl mb-2">Key:</label>
-            <input type="text" name="key" onChange={(e) => setKey(e.target.value)} className="bg-gray-700 border border-gray-600 px-4 py-2 rounded-md text-white" />
+            <input type="text" name="key" value={key} onChange={(e) => setKey(e.target.value)} className="bg-gray-700 border border-gray-600 px-4 py-2 rounded-md text-white" />
           </div>
           <div className="mb-4">
             <label className="block text-xl mb-2">Value:</label>
-            <input type="text" name="value" onChange={(e) => setValue(e.target.value)} className="bg-gray-700 border border-gray-600 px-4 py-2 rounded-md text-white" />
+            <input type="text" name="value" value={value} onChange={(e) => setValue(e.target.value)} className="bg-gray-700 border border-gray-600 px-4 py-2 rounded-md text-white" />
           </div>
         </>
       )}

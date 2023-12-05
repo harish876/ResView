@@ -14,12 +14,6 @@ import TestingGraph from "./Components/Graphs/TestingGraphs";
 import axios from 'axios';
 import { WebSocketDemo } from '../../../Socket'
 
-
-// TODO: Remove the below Unknown dummy component once the other graphs are built and remove it from GRAPH_CHANGE object
-const Dummy = () => {
-  return <div className='text-18p my-4 mx-4 text-red-50'>Dummy</div>;
-};
-
 const colorList = ["hsl(148, 70%, 50%)", "hsl(200, 70%, 50%)", "hsl(171, 70%, 50%)", "hsl(313, 70%, 50%)"];
 
 const mvtTitles = {
@@ -38,31 +32,36 @@ const Visualizer = () => {
   const [messageChartData, setMessageChartData] = useState([]);
   const [labelToggle, setLabelToggle] = useState({"Replica 1":true, "Replica 2":true, "Replica 3":true, "Replica 4":true});
   const [labelToggleFaulty, setLabelToggleFaulty] = useState({"Replica 1":false, "Replica 2":false, "Replica 3":false, "Replica 4":false});
+  const [resetGraph, setResetGraph] = useState(0);
+
+  const updateGraph = () => {
+    let value = resetGraph;
+    value=value+1;
+    setResetGraph(value);
+  }
 
   const toggle_line = (label) => {
     setLabelToggle((prevLabels) => {
-      console.log("Toggling ", labelToggle);
       const updatedLabels = { ...prevLabels };
       updatedLabels[label] = !updatedLabels[label];
-      console.log("NEw bool is ", labelToggle);
       return updatedLabels;
     });
+    updateGraph();
   };
 
   const toggle_faulty= (label) => {
     setLabelToggleFaulty((prevLabels) => {
-      console.log("Toggling ", labelToggleFaulty);
       const updatedLabels = { ...prevLabels };
       updatedLabels[label] = !updatedLabels[label];
-      console.log("NEw bool is ", labelToggleFaulty);
       return updatedLabels;
     });
+    updateGraph();
   };
   const onMessage = (newData)=>{
     setMessageHistory(newData);
     setCurrentTransaction(Object.keys(messageHistory).length);
 
-    console.log(messageHistory, 'MESSAGE HISTORY')
+    console.log(messageHistory, 'MESSAGE HISTORY');
   };
 
   useEffect(() => {
@@ -98,12 +97,8 @@ const Visualizer = () => {
         all_prepare_times.push(replica_prepare_timestamps);
         all_commit_times.push(replica_commit_timestamps);
       });
-
-      console.log("Pre_prepare time: ", pre_prepare_times);
-      console.log("All timestamps: ", all_prepare_times);
       startTime = Math.min(...pre_prepare_times);
       firstPrepareTime = Math.min(...prepare_times);
-      console.log(startTime);
 
       let prepareChartData=[];
       let commitChartData=[];
@@ -123,9 +118,6 @@ const Visualizer = () => {
         }
         commitChartData.push(lineData);
       }
-
-      console.log("Prepare Chart Data: ", prepareChartData);
-      console.log("Commit Chart Data: ", commitChartData);
 
       let preparePoints = [];
       let data = {};
@@ -168,7 +160,7 @@ const Visualizer = () => {
       console.log("Graph: ", pointData);
       setMessageChartData(pointData);
     }
-  }, [messageHistory, currentTransaction, labelToggle]);
+  }, [messageHistory, currentTransaction, labelToggle, resetGraph]);
 
   const sendGet = async (key) => {
     let url = 'http://127.0.0.1:18000/v1/transactions/' + key;
