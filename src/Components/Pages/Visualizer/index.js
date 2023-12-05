@@ -9,6 +9,7 @@ import Dropdown from "./Components/Ancillary/Dropdown";
 import TypeSelector from "./Components/Ancillary/TypeSelector";
 import CandC from "./Components/Graphs/MvT";
 import TestingGraph from "./Components/Graphs/TestingGraphs";
+import PbftGraph from "./Components/Graphs/PbftGraph";
 
 // TODO: Remove the below Unknown dummy component once the other graphs are built and remove it from GRAPH_CHANGE object
 const Dummy = () => {
@@ -37,8 +38,7 @@ const Visualizer = () => {
 
   const GRAPH_CHANGE = useMemo(
     () => ({
-      // PBFT: <PbftGraph />,
-      PBFT: <TestingGraph />,
+      PBFT: <PbftGraph />,
       MvT: <CandC />,
       "?": <Dummy />,
     }),
@@ -56,17 +56,17 @@ const Visualizer = () => {
         </div>
       )}
       <div
-        className='my-18p mx-5p text-22p text-blue-190'
+        className='my-18p mx-5p text-24p text-blue-190'
         data-aos='fade-in'
         data-aos-delay={200}
       >
         {graphToTitle[graph]}
       </div>
-      {graph === "PBFT" && (
+      {/* {graph === "PBFT" && (
         <div className='my-4 mx-8' data-aos='fade-in' data-aos-delay={200}>
           <Dropdown length={4} />
         </div>
-      )}
+      )} */}
       {/* // ! DO NOT TOUCH THE BELOW COMPONENT !!!!!! */}
       <Resizable
         className='py-3 px-2 shadow-md flex justify-center items-center rounded-md bg-white my-[2em] dark:border-1p dark:border-solid dark:border-gray-50 dark:bg-blue-300 relative'
