@@ -13,286 +13,153 @@ const colors = [
   "#795548"
 ];
 
-const points = {
-  request: {
-    color: `${colors[0]}`,
-    start: [
-      {
+const ACTION_TYPE = ["request", "prePrepare", "prepare", "commit", "reply"];
+
+const generateConnections = (data, numberOfSteps, xCoords, yCoords) => {
+    let points = {};
+
+    ACTION_TYPE.map((action, index) => (
+        points = {
+          ...points,
+          [action]: {
+            color: `${colors[index]}`,
+            start: [],
+            end: [],
+          },
+        }
+    ));
+
+    // REQUEST OBJECT
+    points.request.start.push({
         flag: true,
-        points: { x: 0, y: 0 },
-      },
-    ],
-    end: [
-      {
+        points: data[0]
+    })
+    points.request.end.push({
+      flag: true,
+      points: data[numberOfSteps+2],
+    });
+
+
+    // PRE-PREPARE OBJECT
+    points.prePrepare.start.push({
         flag: true,
-        points: { x: 200, y: 220 },
-      },
-    ],
-  },
-  prePrepare: {
-    color: `${colors[1]}`,
-    start: [
-      {
+        points: points.request.end[0].points
+    })
+
+    for(let i=2; i<yCoords.length; i++){
+        points.prePrepare.end.push({
+            flag: true,
+            points: {
+                x: xCoords[2],
+                y: yCoords[i]
+            }
+        })
+    }
+
+    // PREPARE OBJECT
+    points.prePrepare.end.map((element, index) => (
+        points.prepare.start.push(element.points)
+    ))
+
+    for(let i=0; i<points.prepare.start.length; i++) points.prepare.end.push([]);
+
+    for(let i=0; i<numberOfSteps-2; i++){
+        for(let j=1; j<yCoords.length; j++){
+          if (points.prepare.start[i].y !== yCoords[j]) {
+              points.prepare.end[i].push({
+                flag: true,
+                points: {
+                  x: xCoords[3],
+                  y: yCoords[j],
+                },
+              });
+          }
+        }
+    }
+
+    // COMMIT OBJECT
+    for(let i=1; i<yCoords.length; i++){
+        points.commit.start.push({
+            x: xCoords[3],
+            y: yCoords[i]
+        })
+    }
+
+    for (let i = 0; i < points.commit.start.length; i++) points.commit.end.push([]);
+
+    for (let i = 0; i < numberOfSteps - 1; i++) {
+      for (let j = 1; j < yCoords.length; j++) {
+        if (points.commit.start[i].y !== yCoords[j]) {
+          points.commit.end[i].push({
+            flag: true,
+            points: {
+              x: xCoords[4],
+              y: yCoords[j],
+            },
+          });
+        }
+      }
+    }
+
+    // REPLY OBJECT
+    points.reply.end.push({
+      flag: true,
+      points: data[numberOfSteps],
+    });
+
+    for (let i = 1; i < yCoords.length; i++) {
+      points.reply.start.push({
         flag: true,
-        points: { x: 200, y: 220 },
-      },
-    ],
-    end: [
-      {
-        flag: true,
-        points: { x: 400, y: 440 },
-      },
-      {
-        flag: true,
-        points: { x: 400, y: 660 },
-      },
-      {
-        flag: true,
-        points: { x: 400, y: 880 },
-      },
-    ],
-  },
-  prepare: {
-    color: `${colors[2]}`,
-    start: [
-      { x: 400, y: 440 },
-      { x: 400, y: 660 },
-      { x: 400, y: 880 },
-    ],
-    end: [
-      [
-        {
-          flag: true,
-          points: { x: 600, y: 220 },
+        points: {
+          x: xCoords[4],
+          y: yCoords[i],
         },
-        {
-          flag: true,
-          points: { x: 600, y: 660 },
-        },
-        {
-          flag: true,
-          points: { x: 600, y: 880 },
-        },
-      ],
-      [
-        {
-          flag: true,
-          points: { x: 600, y: 220 },
-        },
-        {
-          flag: true,
-          points: { x: 600, y: 440 },
-        },
-        {
-          flag: true,
-          points: { x: 600, y: 880 },
-        },
-      ],
-      [
-        {
-          flag: true,
-          points: { x: 600, y: 220 },
-        },
-        {
-          flag: true,
-          points: { x: 600, y: 440 },
-        },
-        {
-          flag: true,
-          points: { x: 600, y: 660 },
-        },
-      ],
-    ],
-  },
-  commit: {
-    color: `${colors[3]}`,
-    start: [
-      { x: 600, y: 220 },
-      { x: 600, y: 440 },
-      { x: 600, y: 660 },
-      { x: 600, y: 880 },
-    ],
-    end: [
-      [
-        {
-          flag: true,
-          points: { x: 800, y: 440 },
-        },
-        {
-          flag: true,
-          points: { x: 800, y: 660 },
-        },
-        {
-          flag: true,
-          points: { x: 800, y: 880 },
-        },
-      ],
-      [
-        {
-          flag: true,
-          points: { x: 800, y: 220 },
-        },
-        {
-          flag: true,
-          points: { x: 800, y: 660 },
-        },
-        {
-          flag: true,
-          points: { x: 800, y: 880 },
-        },
-      ],
-      [
-        {
-          flag: true,
-          points: { x: 800, y: 440 },
-        },
-        {
-          flag: true,
-          points: { x: 800, y: 220 },
-        },
-        {
-          flag: true,
-          points: { x: 800, y: 880 },
-        },
-      ],
-      [
-        {
-          flag: true,
-          points: { x: 800, y: 440 },
-        },
-        {
-          flag: true,
-          points: { x: 800, y: 660 },
-        },
-        {
-          flag: true,
-          points: { x: 800, y: 220 },
-        },
-      ],
-    ],
-  },
-  reply: {
-    color: `${colors[4]}`,
-    start: [
-      {
-        flag: true,
-        points: { x: 800, y: 220 },
-      },
-      {
-        flag: true,
-        points: { x: 800, y: 440 },
-      },
-      {
-        flag: true,
-        points: { x: 800, y: 660 },
-      },
-      {
-        flag: true,
-        points: { x: 800, y: 880 },
-      },
-    ],
-    end: [
-      {
-        flag: true,
-        points: { x: 1000, y: 0 },
-      },
-    ],
-  },
+      });
+    }
+
+    return { points };
 };
 
-const verticalLineOne = [
-  { x: 0, y: 0 },
-  { x: 0, y: 220 },
-  { x: 0, y: 440 },
-  { x: 0, y: 660 },
-  { x: 0, y: 880 },
-];
 
-const verticalLineTwo = [
-  { x: 200, y: 0 },
-  { x: 200, y: 220 },
-  { x: 200, y: 440 },
-  { x: 200, y: 660 },
-  { x: 200, y: 880 },
-];
+const generateLines = (data, numberOfSteps) => {
+    let verticalLines = [],
+      horizontalLines = [];
 
-const verticalLineThree = [
-  { x: 400, y: 0 },
-  { x: 400, y: 220 },
-  { x: 400, y: 440 },
-  { x: 400, y: 660 },
-  { x: 400, y: 880 },
-];
+    let xCoords = [];
+    let yCoords = [];
 
-const verticalLineFour = [
-  { x: 600, y: 0 },
-  { x: 600, y: 220 },
-  { x: 600, y: 440 },
-  { x: 600, y: 660 },
-  { x: 600, y: 880 },
-];
+    for (let i = 0; i <= numberOfSteps; i++) {
+      xCoords.push(data[i].x);
+    }
 
-const verticalLineFive = [
-  { x: 800, y: 0 },
-  { x: 800, y: 220 },
-  { x: 800, y: 440 },
-  { x: 800, y: 660 },
-  { x: 800, y: 880 },
-];
+    for (let i = 0; i < data.length; i += (numberOfSteps+1)) {
+      yCoords.push(data[i].y);
+    }
 
-const verticalLineSix = [
-  { x: 1000, y: 0 },
-  { x: 1000, y: 220 },
-  { x: 1000, y: 440 },
-  { x: 1000, y: 660 },
-  { x: 1000, y: 880 },
-];
+    for(let i=0; i<xCoords.length; i++){
+        let arr = [];
+        for(let j=0; j<yCoords.length; j++){
+            arr.push({
+                x: xCoords[i],
+                y: yCoords[j]
+            })
+        }
+        verticalLines.push(arr);
+    }
+    
+    for (let i = 0; i < yCoords.length; i++) {
+      let arr = [];
+      for (let j = 0; j < xCoords.length; j++) {
+        arr.push({
+          x: xCoords[j],
+          y: yCoords[i],
+        });
+      }
+      horizontalLines.push(arr);
+    }
 
-
-const horizontalLineOne = [
-  { x: 0, y: 0 },
-  { x: 200, y: 0 },
-  { x: 400, y: 0 },
-  { x: 600, y: 0 },
-  { x: 800, y: 0 },
-  { x: 1000, y: 0 },
-];
-
-const horizontalLineTwo = [
-  { x: 0, y: 220 },
-  { x: 200, y: 220 },
-  { x: 400, y: 220 },
-  { x: 600, y: 220 },
-  { x: 800, y: 220 },
-  { x: 1000, y: 220 },
-];
-
-const horizontalLineThree = [
-  { x: 0, y: 440 },
-  { x: 200, y: 440 },
-  { x: 400, y: 440 },
-  { x: 600, y: 440 },
-  { x: 800, y: 440 },
-  { x: 1000, y: 440 },
-];
-
-const horizontalLineFour = [
-  { x: 0, y: 660 },
-  { x: 200, y: 660 },
-  { x: 400, y: 660 },
-  { x: 600, y: 660 },
-  { x: 800, y: 660 },
-  { x: 1000, y: 660 },
-];
-
-const horizontalLineFive = [
-  { x: 0, y: 880 },
-  { x: 200, y: 880 },
-  { x: 400, y: 880 },
-  { x: 600, y: 880 },
-  { x: 800, y: 880 },
-  { x: 1000, y: 880 },
-];
+    return { verticalLines, horizontalLines, xCoords, yCoords };
+};
 
 const generatePoints = (
   width,
@@ -300,7 +167,7 @@ const generatePoints = (
   margin = 0,
   padding = 0,
   numberOfReplicas = 4,
-  numberOfSteps = 6
+  numberOfSteps = 5
 ) => {
   const xStart = Math.floor(margin / 2) + Math.floor(padding / 2);
   const yStart = Math.floor(margin / 2) + Math.floor(padding / 2);
@@ -310,8 +177,8 @@ const generatePoints = (
   const cummulativeH = height - (padding + margin);
   const cummulativeW = width - (padding + margin);
 
-  const distX = Math.floor(cummulativeH / numberOfReplicas);
-  const distY = Math.floor(cummulativeW / numberOfSteps);
+  const distX = Math.floor(cummulativeW / numberOfSteps);
+  const distY = Math.floor(cummulativeH / numberOfReplicas);
 
   let data = new Array((numberOfReplicas + 1) * numberOfTotalSteps).fill({
     x: 0,
@@ -351,29 +218,41 @@ const TITLES = [
 
 const TRANSDURATION = 750;
 
+const NUMBER_OF_STEPS = 5;
+
 const PbftGraph = () => {
   const { boxValues, setBoxValues } = useContext(GraphResizerContext);
   const { theme } = useContext(ThemeContext);
 
-  const ref = useRef(null);
+const ref = useRef(null);
+
 
   useEffect(() => {
     const data = generatePoints(
       1100,
       800,
       0,
-      0,
+      100,
       4,
-      5
+      NUMBER_OF_STEPS
     );
-    console.log('DATA', data);
+
+    const { xCoords, yCoords, verticalLines, horizontalLines } = generateLines(
+      data,
+      NUMBER_OF_STEPS
+    );
+
+    const { points } = generateConnections(
+      data,
+      NUMBER_OF_STEPS,
+      xCoords,
+      yCoords
+    );
+
     const svg = d3
       .select(ref.current)
       .attr("width", 1200)
       .attr("height", 800)
-    //   .classed("border-1p", true)
-    //   .classed("border-solid", true)
-    //   .classed("border-gray-100", true)
       .classed("flex", true)
       .classed("justify-center", true)
       .classed("items-center", true);
@@ -406,113 +285,27 @@ const PbftGraph = () => {
       .attr("fill", `${!theme ? "black" : "white"}`)
       .attr("d", "M 0 0 L 10 5 L 0 10 z");
 
-    // First dotted vertical line DVL1
-    svg
-      .append("path")
-      .attr("d", lineGen(verticalLineOne))
-      .attr("stroke", "gray")
-      .attr("fill", "none")
-      .attr("stroke-width", 0.2)
-      .attr("stroke-dasharray", "5,10");
+    // VERTICAL DOTTED LINES 
+    verticalLines.map((line, index) =>
+      svg
+        .append("path")
+        .attr("d", lineGen(line))
+        .attr("stroke", "gray")
+        .attr("fill", "none")
+        .attr("stroke-width", 0.2)
+        .attr("stroke-dasharray", "5,10")
+    );
 
-    // dotted vertical line DVL2
-    svg
-      .append("path")
-      .attr("d", lineGen(verticalLineTwo))
-      .attr("stroke", "gray")
-      .attr("fill", "none")
-      .attr("stroke-width", 0.2)
-      .attr("stroke-dasharray", "5,10");
-
-    // First dotted vertical line DVL3
-    svg
-      .append("path")
-      .attr("d", lineGen(verticalLineThree))
-      .attr("stroke", "gray")
-      .attr("fill", "none")
-      .attr("stroke-width", 0.2)
-      .attr("stroke-dasharray", "5,10");
-
-    // dotted vertical line DVL4
-    svg
-      .append("path")
-      .attr("d", lineGen(verticalLineFour))
-      .attr("stroke", "gray")
-      .attr("fill", "none")
-      .attr("stroke-width", 0.2)
-      .attr("stroke-dasharray", "5,10");
-
-    // First dotted vertical line DVL5
-    svg
-      .append("path")
-      .attr("d", lineGen(verticalLineFive))
-      .attr("stroke", "gray")
-      .attr("fill", "none")
-      .attr("stroke-width", 0.2)
-      .attr("stroke-dasharray", "5,10");
-
-    // dotted vertical line DVL6
-    svg
-      .append("path")
-      .attr("d", lineGen(verticalLineSix))
-      .attr("stroke", "gray")
-      .attr("fill", "none")
-      .attr("stroke-width", 0.2)
-      .attr("stroke-dasharray", "5,10");
-
-    // dotted vertical line DVL6
-    svg
-      .append("path")
-      .attr("d", lineGen(verticalLineSix))
-      .attr("stroke", "gray")
-      .attr("fill", "none")
-      .attr("stroke-width", 0.2)
-      .attr("stroke-dasharray", "5,10");
-
-    // dotted horizontal line DHL1
-    svg
-      .append("path")
-      .attr("d", lineGen(horizontalLineOne))
-      .attr("stroke", "gray")
-      .attr("fill", "none")
-      .attr("stroke-width", 0.2)
-      .attr("stroke-dasharray", "5,10");
-
-    // dotted horizontal line DHL2
-    svg
-      .append("path")
-      .attr("d", lineGen(horizontalLineTwo))
-      .attr("stroke", "gray")
-      .attr("fill", "none")
-      .attr("stroke-width", 0.2)
-      .attr("stroke-dasharray", "5,10");
-
-    // dotted horizontal line DHL3
-    svg
-      .append("path")
-      .attr("d", lineGen(horizontalLineThree))
-      .attr("stroke", "gray")
-      .attr("fill", "none")
-      .attr("stroke-width", 0.2)
-      .attr("stroke-dasharray", "5,10");
-
-    // dotted horizontal line DHL4
-    svg
-      .append("path")
-      .attr("d", lineGen(horizontalLineFour))
-      .attr("stroke", "gray")
-      .attr("fill", "none")
-      .attr("stroke-width", 0.2)
-      .attr("stroke-dasharray", "5,10");
-
-    // dotted horizontal line DHL5
-    svg
-      .append("path")
-      .attr("d", lineGen(horizontalLineFive))
-      .attr("stroke", "gray")
-      .attr("fill", "none")
-      .attr("stroke-width", 0.2)
-      .attr("stroke-dasharray", "5,10");
+    // HORIZONTAL DOTTED LINES
+    horizontalLines.map((line, index) =>
+        svg
+        .append("path")
+        .attr("d", lineGen(line))
+        .attr("stroke", "gray")
+        .attr("fill", "none")
+        .attr("stroke-width", 0.2)
+        .attr("stroke-dasharray", "5,10")
+    );
 
     // Title: Request
     svg
@@ -544,7 +337,10 @@ const PbftGraph = () => {
         end.flag &&
           svg
             .append("path")
-            .attr("d", lineGen([points.prePrepare.start[0].points, end.points]))
+            .attr(
+              "d",
+              lineGen([points.prePrepare.start[0].points, end.points])
+            )
             .attr("stroke", `${points.prePrepare.color}`)
             .attr("fill", "none")
             .attr("stroke-width", 1)
@@ -557,12 +353,11 @@ const PbftGraph = () => {
     });
 
     // PREPARE LINES 
-    points.prepare.start.map((pts, index) => {
-        return points.prepare.end[index].map((end, i) => {
-            end.flag &&
-              svg
+    points.prepare.start.map((start, index) => (
+        points.prepare.end[index].map((end, i) => {
+            return end.flag && svg
                 .append("path")
-                .attr("d", lineGen([points.prepare.start[index], end.points]))
+                .attr("d", lineGen([start, end.points]))
                 .attr("stroke", `${points.prepare.color}`)
                 .attr("fill", "none")
                 .attr("stroke-width", 1)
@@ -573,31 +368,29 @@ const PbftGraph = () => {
                 .delay(i * 100)
                 .style("opacity", 1);
         })
-    })
+    ))
 
-    // COMMIT LINES
-    points.commit.start.map((pts, index) => {
-      return points.commit.end[index].map((end, i) => {
-        end.flag &&
-          svg
-            .append("path")
-            .attr("d", lineGen([points.commit.start[index], end.points]))
-            .attr("stroke", `${points.commit.color}`)
-            .attr("fill", "none")
-            .attr("stroke-width", 1)
-            .attr("marker-end", "url(#arrow)")
-            .style("opacity", 0)
-            .transition()
-            .duration(TRANSDURATION + 200)
-            .delay(i * 100)
-            .style("opacity", 1);
-      });
-    });
+    // COMMIT LINES 
+    points.commit.start.map((start, index) => (
+        points.commit.end[index].map((end, i) => {
+            return end.flag && svg
+                .append("path")
+                .attr("d", lineGen([start, end.points]))
+                .attr("stroke", `${points.commit.color}`)
+                .attr("fill", "none")
+                .attr("stroke-width", 1)
+                .attr("marker-end", "url(#arrow)")
+                .style("opacity", 0)
+                .transition()
+                .duration(TRANSDURATION + 200)
+                .delay(i * 100)
+                .style("opacity", 1);
+        })
+    ))
 
     // REPLY LINES 
     points.reply.start.forEach((start, i) => {
-        start.flag &&
-          svg
+        return start.flag && svg
             .append("path")
             .attr("d", lineGen([start.points, points.reply.end[0].points]))
             .attr("stroke", `${points.reply.color}`)
@@ -610,9 +403,204 @@ const PbftGraph = () => {
             .delay(i * 100)
             .style("opacity", 1);
     });
+
   }, [theme, boxValues]);
 
-  return <svg ref={ref}></svg>;
+  return (
+    <div className='flex items-center justify-center p-4'>
+      <svg ref={ref}>
+      </svg>
+    </div>
+  );
 };
 
 export default PbftGraph;
+
+
+// ? POINTS DATA FOR REFERENCE FOR PLOTTING IS BELOW 
+// const points = {
+//   request: {
+//     color: `${colors[0]}`,
+//     start: [
+//       {
+//         flag: true,
+//         points: { x: 0, y: 0 },
+//       },
+//     ],
+//     end: [
+//       {
+//         flag: true,
+//         points: { x: 200, y: 220 },
+//       },
+//     ],
+//   },
+//   prePrepare: {
+//     color: `${colors[1]}`,
+//     start: [
+//       {
+//         flag: true,
+//         points: { x: 200, y: 220 },
+//       },
+//     ],
+//     end: [
+//       {
+//         flag: true,
+//         points: { x: 400, y: 440 },
+//       },
+//       {
+//         flag: true,
+//         points: { x: 400, y: 660 },
+//       },
+//       {
+//         flag: true,
+//         points: { x: 400, y: 880 },
+//       },
+//     ],
+//   },
+//   prepare: {
+//     color: `${colors[2]}`,
+//     start: [
+//       { x: 400, y: 440 },
+//       { x: 400, y: 660 },
+//       { x: 400, y: 880 },
+//     ],
+//     end: [
+//       [
+//         {
+//           flag: true,
+//           points: { x: 600, y: 220 },
+//         },
+//         {
+//           flag: true,
+//           points: { x: 600, y: 660 },
+//         },
+//         {
+//           flag: true,
+//           points: { x: 600, y: 880 },
+//         },
+//       ],
+//       [
+//         {
+//           flag: true,
+//           points: { x: 600, y: 220 },
+//         },
+//         {
+//           flag: true,
+//           points: { x: 600, y: 440 },
+//         },
+//         {
+//           flag: true,
+//           points: { x: 600, y: 880 },
+//         },
+//       ],
+//       [
+//         {
+//           flag: true,
+//           points: { x: 600, y: 220 },
+//         },
+//         {
+//           flag: true,
+//           points: { x: 600, y: 440 },
+//         },
+//         {
+//           flag: true,
+//           points: { x: 600, y: 660 },
+//         },
+//       ],
+//     ],
+//   },
+//   commit: {
+//     color: `${colors[3]}`,
+//     start: [
+//       { x: 600, y: 220 },
+//       { x: 600, y: 440 },
+//       { x: 600, y: 660 },
+//       { x: 600, y: 880 },
+//     ],
+//     end: [
+//       [
+//         {
+//           flag: true,
+//           points: { x: 800, y: 440 },
+//         },
+//         {
+//           flag: true,
+//           points: { x: 800, y: 660 },
+//         },
+//         {
+//           flag: true,
+//           points: { x: 800, y: 880 },
+//         },
+//       ],
+//       [
+//         {
+//           flag: true,
+//           points: { x: 800, y: 220 },
+//         },
+//         {
+//           flag: true,
+//           points: { x: 800, y: 660 },
+//         },
+//         {
+//           flag: true,
+//           points: { x: 800, y: 880 },
+//         },
+//       ],
+//       [
+//         {
+//           flag: true,
+//           points: { x: 800, y: 440 },
+//         },
+//         {
+//           flag: true,
+//           points: { x: 800, y: 220 },
+//         },
+//         {
+//           flag: true,
+//           points: { x: 800, y: 880 },
+//         },
+//       ],
+//       [
+//         {
+//           flag: true,
+//           points: { x: 800, y: 440 },
+//         },
+//         {
+//           flag: true,
+//           points: { x: 800, y: 660 },
+//         },
+//         {
+//           flag: true,
+//           points: { x: 800, y: 220 },
+//         },
+//       ],
+//     ],
+//   },
+//   reply: {
+//     color: `${colors[4]}`,
+//     start: [
+//       {
+//         flag: true,
+//         points: { x: 800, y: 220 },
+//       },
+//       {
+//         flag: true,
+//         points: { x: 800, y: 440 },
+//       },
+//       {
+//         flag: true,
+//         points: { x: 800, y: 660 },
+//       },
+//       {
+//         flag: true,
+//         points: { x: 800, y: 880 },
+//       },
+//     ],
+//     end: [
+//       {
+//         flag: true,
+//         points: { x: 1000, y: 0 },
+//       },
+//     ],
+//   },
+// };
