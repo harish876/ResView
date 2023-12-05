@@ -7,7 +7,7 @@ import Wrapper from "../../Shared/Wrapper";
 import ButtonRow from "./Components/Ancillary/Buttons";
 import Dropdown from "./Components/Ancillary/Dropdown";
 import TypeSelector from "./Components/Ancillary/TypeSelector";
-import CandC from "./Components/Graphs/CandC";
+import CandC from "./Components/Graphs/MvT";
 import TestingGraph from "./Components/Graphs/TestingGraphs";
 
 // TODO: Remove the below Unknown dummy component once the other graphs are built and remove it from GRAPH_CHANGE object
@@ -51,7 +51,7 @@ const Visualizer = () => {
         <ButtonRow />
       </div>
       {graph === "MvT" && (
-        <div className="my-4" data-aos='fade-in' data-aos-delay={100}>
+        <div className='my-4' data-aos='fade-in' data-aos-delay={100}>
           <TypeSelector />
         </div>
       )}
@@ -81,9 +81,11 @@ const Visualizer = () => {
         }}
       >
         {GRAPH_CHANGE[graph]}
-        <div className='absolute bottom-0 right-0 rotate-45'>
-          <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
-        </div>
+        {graph !== "PBFT" && (
+          <div className='absolute bottom-0 right-0 rotate-45'>
+            <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
+          </div>
+        )}
       </Resizable>
     </Wrapper>
   );
