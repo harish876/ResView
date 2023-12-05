@@ -170,8 +170,7 @@ const Visualizer = () => {
     }
   }, [messageHistory, currentTransaction, labelToggle]);
 
-  const sendGet = async () => {
-    let key = 'key1';
+  const sendGet = async (key) => {
     let url = 'http://127.0.0.1:18000/v1/transactions/' + key;
     try{
       const response= await axios.get(url);
@@ -182,9 +181,7 @@ const Visualizer = () => {
     }
   };
 
-  const sendPost = async () => {
-    let key = 'key1';
-    let value = 'value1';
+  const sendPost = async (key, value) => {
     let data = {"id": key, "value": value};
     let url = 'http://127.0.0.1:18000/v1/transactions/commit';
     try{
@@ -219,7 +216,7 @@ const Visualizer = () => {
       // PBFT: <PbftGraph />,
       PBFT: <TestingGraph />,
       MvT: <CandC points={messageChartData[mvtGraphNo]}/>,
-      "Form": <TransactionForm />,
+      "Form": <TransactionForm selectTransaction={setCurrentTransaction} sendSet={sendPost} sendGet={sendGet}/>,
     }),
     [messageChartData, mvtGraphNo]
   );
@@ -228,11 +225,6 @@ const Visualizer = () => {
     <Wrapper>
       <div>
         <WebSocketDemo onMessage={onMessage} />
-      </div>
-      <div>
-        <button className="bg-white" onClick={sendPost}>Test Set Transaction</button>
-        {'\n'}
-        <button className="bg-white" onClick={sendGet}>Test Get Transaction</button>
       </div>
       <div>
         <button className="bg-white" onClick={() =>toggle_line("Replica 1")}>Toggle Replica 1 Line</button>

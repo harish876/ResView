@@ -1,8 +1,25 @@
 import React, { useState } from 'react';
 
-const TransactionForm = () => {
+const TransactionForm = ({selectTransaction, sendSet, sendGet}) => {
   const [transactionType, setTransactionType] = useState('');
   const [customTransaction, setCustomTransaction] = useState('');
+  const [key, setKey] = useState('');
+  const [value, setValue] = useState('');
+
+  const performAction = () => {
+    if(transactionType==='select'){
+      console.log("Txn number: ",customTransaction);
+      selectTransaction(parseInt(customTransaction));
+    }
+    else if(transactionType === 'set'){
+      console.log("key: ", key, " Value:", value);
+      sendSet(key, value);
+    }
+    else if(transactionType === 'get'){
+      console.log("key: ", key);
+      sendGet(key);
+    }
+  }
 
   return (
     <div className="bg-gray-800 text-white p-20 rounded-lg w-350 mx-auto text-center">
@@ -28,6 +45,7 @@ const TransactionForm = () => {
             checked={transactionType === 'get'}
             onChange={() => {
               setTransactionType('get');
+              setKey('');
               setCustomTransaction(''); // Reset customTransaction when "Get Transaction" is selected
             }}
             className="mr-2"
@@ -41,6 +59,8 @@ const TransactionForm = () => {
             checked={transactionType === 'set'}
             onChange={() => {
               setTransactionType('set');
+              setKey('');
+              setValue('');
               setCustomTransaction(''); // Reset customTransaction when "Set Transaction" is selected
             }}
             className="mr-2"
@@ -52,18 +72,18 @@ const TransactionForm = () => {
       {transactionType === 'get' && (
         <div className="mb-4">
           <label className="block text-xl mb-2">Key:</label>
-          <input type="text" name="key" className="bg-gray-700 border border-gray-600 px-4 py-2 rounded-md text-white" />
+          <input type="text" name="key" onChange={(e) => setKey(e.target.value)} className="bg-gray-700 border border-gray-600 px-4 py-2 rounded-md text-white" />
         </div>
       )}
       {transactionType === 'set' && (
         <>
           <div className="mb-4">
             <label className="block text-xl mb-2">Key:</label>
-            <input type="text" name="key" className="bg-gray-700 border border-gray-600 px-4 py-2 rounded-md text-white" />
+            <input type="text" name="key" onChange={(e) => setKey(e.target.value)} className="bg-gray-700 border border-gray-600 px-4 py-2 rounded-md text-white" />
           </div>
           <div className="mb-4">
             <label className="block text-xl mb-2">Value:</label>
-            <input type="text" name="value" className="bg-gray-700 border border-gray-600 px-4 py-2 rounded-md text-white" />
+            <input type="text" name="value" onChange={(e) => setValue(e.target.value)} className="bg-gray-700 border border-gray-600 px-4 py-2 rounded-md text-white" />
           </div>
         </>
       )}
@@ -83,6 +103,7 @@ const TransactionForm = () => {
         <button
           type="submit"
           className="bg-teal-500 hover:bg-teal-600 border border-teal-600 px-6 py-3 rounded-md text-white text-xl transition duration-300"
+          onClick={performAction}
         >
           CONFIRM
         </button>
