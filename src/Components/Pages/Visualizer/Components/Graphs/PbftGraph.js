@@ -15,6 +15,14 @@ const colors = [
 
 const ACTION_TYPE = ["request", "prePrepare", "prepare", "commit", "reply"];
 
+const TITLES = ["REQUEST", "PRE-PREPARE", "PREPARE", "COMMIT", "REPLY"];
+
+const NODES = ["CLIENT", "REPLICA 1", "REPLICA 2", "REPLICA 3", "REPLICA 4"];
+
+const TRANSDURATION = 750;
+
+const NUMBER_OF_STEPS = 5;
+
 const generateConnections = (data, numberOfSteps, xCoords, yCoords) => {
     let points = {};
 
@@ -121,9 +129,9 @@ const generateConnections = (data, numberOfSteps, xCoords, yCoords) => {
 };
 
 const generateLabels = (xCoords, yCoords) => {
-  let labels = [];
+  let labelsX = [], labelsY = [];
 
-  if(xCoords.length < 2) return labels;
+  if(xCoords.length < 2 || yCoords.length < 2) return labelsX;
 
   for(let i=0; i<xCoords.length-1; i++){
     let obj = {
@@ -131,12 +139,20 @@ const generateLabels = (xCoords, yCoords) => {
       y: yCoords[0] - 20,
       title: `${TITLES[i]}`,
     };
-    labels.push(obj)
+    labelsX.push(obj)
   }
 
-  return { labels }
-};
+  for(let i=0; i<yCoords.length; i++){
+    let obj = {
+      x: xCoords[0]-50,
+      y: yCoords[i]+10,
+      title: `${NODES[i]}`,
+    };
+    labelsY.push(obj);
+  }
 
+  return { labelsX, labelsY };
+};
 
 const generateLines = (data, numberOfSteps) => {
     let verticalLines = [],
@@ -224,31 +240,18 @@ const generatePoints = (
   return newData;
 };
 
-const TITLES = [
-  "REQUEST",
-  "PRE-PREPARE",
-  "PREPARE",
-  "COMMIT",
-  "REPLY",
-];
-
-const TRANSDURATION = 750;
-
-const NUMBER_OF_STEPS = 5;
-
 const PbftGraph = () => {
   const { boxValues, setBoxValues } = useContext(GraphResizerContext);
   const { theme } = useContext(ThemeContext);
 
 const ref = useRef(null);
 
-
   useEffect(() => {
     const data = generatePoints(
-      1100,
+      1200,
       800,
-      100,
-      100,
+      0,
+      200,
       4,
       NUMBER_OF_STEPS
     );
@@ -265,10 +268,7 @@ const ref = useRef(null);
       yCoords
     );
 
-    const { labels } = generateLabels(
-      xCoords,
-      yCoords
-    )
+    const { labelsX, labelsY } = generateLabels(xCoords, yCoords);
 
     const svg = d3
       .select(ref.current)
@@ -292,10 +292,12 @@ const ref = useRef(null);
       .x((d) => d.x)
       .y((d) => d.y);
 
-    svg
+    // ARROW HEAD
+    ACTION_TYPE.forEach((action, index) => (
+      svg
       .append("defs")
       .append("marker")
-      .attr("id", "arrow")
+      .attr("id", `arrow-${action}`)
       .attr("viewBox", "0 0 10 10")
       .attr("refX", 10)
       .attr("refY", 5)
@@ -303,8 +305,9 @@ const ref = useRef(null);
       .attr("markerHeight", 6)
       .attr("orient", "auto-start-reverse")
       .append("path")
-      .attr("fill", `${!theme ? "black" : "white"}`)
-      .attr("d", "M 0 0 L 10 5 L 0 10 z");
+      .attr("fill", `${colors[index]}`)
+      .attr("d", "M 0 0 L 10 5 L 0 10 z")
+    ))
 
     // VERTICAL DOTTED LINES 
     verticalLines.forEach((line, index) =>
@@ -329,14 +332,24 @@ const ref = useRef(null);
     );
 
     // LABELS FOR EACH ACTION
-    labels.forEach((label) => (
+    labelsX.forEach((label) =>
       svg
-      .append("text")
-      .attr("transform", "translate(" + label.x + " ," + label.y + ")")
-      .attr("fill", "white")
-      .style("text-anchor", "middle")
-      .text(`${label.title}`)
-    ))
+        .append("text")
+        .attr("transform", "translate(" + label.x + " ," + label.y + ")")
+        .attr("fill", "white")
+        .style("text-anchor", "middle")
+        .text(`${label.title}`)
+    );
+
+    // LABELS FOR EACH NODE
+    labelsY.forEach((label) =>
+      svg
+        .append("text")
+        .attr("transform", "translate(" + label.x + " ," + label.y + ")")
+        .attr("fill", "white")
+        .style("text-anchor", "middle")
+        .text(`${label.title}`)
+    );
 
 
     // REQUEST LINES 
@@ -348,7 +361,7 @@ const ref = useRef(null);
             .attr("stroke", `${points.request.color}`)
             .attr("fill", "none")
             .attr("stroke-width", 1)
-            .attr("marker-end", "url(#arrow)")
+            .attr("marker-end", "url(#arrow-request)")
             .style("opacity", 0)
             .transition()
             .duration(TRANSDURATION)
@@ -361,14 +374,11 @@ const ref = useRef(null);
         end.flag &&
           svg
             .append("path")
-            .attr(
-              "d",
-              lineGen([points.prePrepare.start[0].points, end.points])
-            )
+            .attr("d", lineGen([points.prePrepare.start[0].points, end.points]))
             .attr("stroke", `${points.prePrepare.color}`)
             .attr("fill", "none")
             .attr("stroke-width", 1)
-            .attr("marker-end", "url(#arrow)")
+            .attr("marker-end", "url(#arrow-prePrepare)")
             .style("opacity", 0)
             .transition()
             .duration(TRANSDURATION + 200)
@@ -379,59 +389,68 @@ const ref = useRef(null);
     // PREPARE LINES 
     points.prepare.start.map((start, index) => (
         points.prepare.end[index].map((end, i) => {
-            return end.flag && svg
+            return (
+              end.flag &&
+              svg
                 .append("path")
                 .attr("d", lineGen([start, end.points]))
                 .attr("stroke", `${points.prepare.color}`)
                 .attr("fill", "none")
                 .attr("stroke-width", 1)
-                .attr("marker-end", "url(#arrow)")
+                .attr("marker-end", "url(#arrow-prepare)")
                 .style("opacity", 0)
                 .transition()
                 .duration(TRANSDURATION + 200)
                 .delay(i * 100)
-                .style("opacity", 1);
+                .style("opacity", 1)
+            );
         })
     ))
 
     // COMMIT LINES 
     points.commit.start.map((start, index) => (
         points.commit.end[index].map((end, i) => {
-            return end.flag && svg
+            return (
+              end.flag &&
+              svg
                 .append("path")
                 .attr("d", lineGen([start, end.points]))
                 .attr("stroke", `${points.commit.color}`)
                 .attr("fill", "none")
                 .attr("stroke-width", 1)
-                .attr("marker-end", "url(#arrow)")
+                .attr("marker-end", "url(#arrow-commit)")
                 .style("opacity", 0)
                 .transition()
                 .duration(TRANSDURATION + 200)
                 .delay(i * 100)
-                .style("opacity", 1);
+                .style("opacity", 1)
+            );
         })
     ))
 
     // REPLY LINES 
     points.reply.start.forEach((start, i) => {
-        return start.flag && svg
+        return (
+          start.flag &&
+          svg
             .append("path")
             .attr("d", lineGen([start.points, points.reply.end[0].points]))
             .attr("stroke", `${points.reply.color}`)
             .attr("fill", "none")
             .attr("stroke-width", 1)
-            .attr("marker-end", "url(#arrow)")
+            .attr("marker-end", "url(#arrow-reply)")
             .style("opacity", 0)
             .transition()
             .duration(TRANSDURATION + 400)
             .delay(i * 100)
-            .style("opacity", 1);
+            .style("opacity", 1)
+        );
     });
 
   }, [theme, boxValues]);
 
   return (
-    <div className='flex items-center justify-center p-4'>
+    <div className='flex items-center justify-center p-4 pl-[3rem]'>
       <svg ref={ref}>
       </svg>
     </div>
