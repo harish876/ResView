@@ -85,7 +85,7 @@ const generateConnections = (data, numberOfSteps, xCoords, yCoords) => {
         })
     }
 
-    for (let i = 0; i < points.commit.start.length; i++) points.commit.end.push([]);
+    for (const element of points.commit.start) points.commit.end.push([]);
 
     for (let i = 0; i < numberOfSteps - 1; i++) {
       for (let j = 1; j < yCoords.length; j++) {
@@ -120,6 +120,10 @@ const generateConnections = (data, numberOfSteps, xCoords, yCoords) => {
     return { points };
 };
 
+const generateLabels = (xCoords, yCoords) => {
+
+};
+
 
 const generateLines = (data, numberOfSteps) => {
     let verticalLines = [],
@@ -136,23 +140,23 @@ const generateLines = (data, numberOfSteps) => {
       yCoords.push(data[i].y);
     }
 
-    for(let i=0; i<xCoords.length; i++){
+    for(const eleX of xCoords){
         let arr = [];
-        for(let j=0; j<yCoords.length; j++){
-            arr.push({
-                x: xCoords[i],
-                y: yCoords[j]
-            })
+        for(const eleY of yCoords){
+           arr.push({
+             x: eleX,
+             y: eleY,
+           });
         }
         verticalLines.push(arr);
     }
-    
-    for (let i = 0; i < yCoords.length; i++) {
+
+    for (const eleY of yCoords) {
       let arr = [];
-      for (let j = 0; j < xCoords.length; j++) {
+      for (const eleX of xCoords) {
         arr.push({
-          x: xCoords[j],
-          y: yCoords[i],
+          x: eleX,
+          y: eleY,
         });
       }
       horizontalLines.push(arr);
@@ -286,7 +290,7 @@ const ref = useRef(null);
       .attr("d", "M 0 0 L 10 5 L 0 10 z");
 
     // VERTICAL DOTTED LINES 
-    verticalLines.map((line, index) =>
+    verticalLines.forEach((line, index) =>
       svg
         .append("path")
         .attr("d", lineGen(line))
@@ -297,7 +301,7 @@ const ref = useRef(null);
     );
 
     // HORIZONTAL DOTTED LINES
-    horizontalLines.map((line, index) =>
+    horizontalLines.forEach((line, index) =>
         svg
         .append("path")
         .attr("d", lineGen(line))
@@ -307,10 +311,10 @@ const ref = useRef(null);
         .attr("stroke-dasharray", "5,10")
     );
 
-    // Title: Request
+    // TODO: Change the title below
     svg
       .append("text")
-      .attr("transform", "translate(" + 130 + " ," + 50 + ")")
+      .attr("transform", "translate(" + 50 + " ," + 250 + ")")
       .attr("fill", "white")
       .style("text-anchor", "middle")
       .text("Request");
