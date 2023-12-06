@@ -23,7 +23,7 @@ const secondTheme = {
 };
 
 
-const CandC = ({points}) => {
+const MvT = ({points}) => {
     const [isLoading, setIsLoading] = useState(false);
     const { cAndCGraphNumber } = useContext(GraphViewContext);
 
@@ -117,4 +117,4 @@ const CandC = ({points}) => {
   );
 };
 
-export default CandC;
+export default MvT;

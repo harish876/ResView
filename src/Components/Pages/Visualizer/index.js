@@ -8,9 +8,9 @@ import ButtonRow from "./Components/Ancillary/Buttons";
 import GraphButtonRow from "./Components/Ancillary/GraphButtons";
 import Dropdown from "./Components/Ancillary/Dropdown";
 import TypeSelector from "./Components/Ancillary/TypeSelector";
-import CandC from "./Components/Graphs/CandC";
+import MvT from "./Components/Graphs/MvT";
 import TransactionForm from "./Components/Graphs/Form";
-import TestingGraph from "./Components/Graphs/TestingGraphs";
+import PbftGraph from "./Components/Graphs/PbftGraph";
 import axios from 'axios';
 import { WebSocketDemo } from '../../../Socket'
 
@@ -215,9 +215,8 @@ const Visualizer = () => {
 
   const GRAPH_CHANGE = useMemo(
     () => ({
-      // PBFT: <PbftGraph />,
-      PBFT: <TestingGraph />,
-      MvT: <CandC points={messageChartData[mvtGraphNo]}/>,
+      PBFT: <PbftGraph />,
+      MvT: <MvT points={messageChartData[mvtGraphNo]}/>,
       "Form": <TransactionForm selectTransaction={setCurrentTransaction} sendSet={sendPost} sendGet={sendGet}/>,
     }),
     [messageChartData, mvtGraphNo]
@@ -232,7 +231,7 @@ const Visualizer = () => {
         <ButtonRow />
       </div>
       {graph === "MvT" && (
-        <div className="my-4" data-aos='fade-in' data-aos-delay={100}>
+        <div className='my-4' data-aos='fade-in' data-aos-delay={100}>
           <TypeSelector />
           <div className='mt-2 bg-white rounded-md shadow-md w-full py-3 px-2 dark:border-1p dark:border-solid dark:border-gray-50 dark:bg-blue-300'>
           <div className='text-20p text-center text-blue-190 p-2 '>Select Replica To be Faulty: </div>
@@ -319,17 +318,17 @@ const Visualizer = () => {
         </div>
       )}
       <div
-        className='my-18p mx-5p text-22p text-blue-190'
+        className='my-18p mx-5p text-24p text-blue-190'
         data-aos='fade-in'
         data-aos-delay={200}
       >
         {graphToTitle[graph]}
       </div>
-      {graph === "PBFT" && (
+      {/* {graph === "PBFT" && (
         <div className='my-4 mx-8' data-aos='fade-in' data-aos-delay={200}>
           <Dropdown length={4} />
         </div>
-      )}
+      )} */}
       {/* // ! DO NOT TOUCH THE BELOW COMPONENT !!!!!! */}
       <Resizable
         className='py-3 px-2 shadow-md flex justify-center items-center rounded-md bg-white my-[2em] dark:border-1p dark:border-solid dark:border-gray-50 dark:bg-blue-300 relative'
@@ -344,9 +343,11 @@ const Visualizer = () => {
         }}
       >
         {GRAPH_CHANGE[graph]}
-        <div className='absolute bottom-0 right-0 rotate-45'>
-          <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
-        </div>
+        {graph !== "PBFT" && (
+          <div className='absolute bottom-0 right-0 rotate-45'>
+            <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
+          </div>
+        )}
       </Resizable>
     </Wrapper>
   );

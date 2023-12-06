@@ -8,8 +8,8 @@ export const GraphResizerContext = createContext({
 export const GraphResizerProvider = ({ children }) => {
   const { Provider } = GraphResizerContext;
   const [boxValues, setBoxValues] = useState({
-    width: 920,
-    height: 600,
+    width: 1200,
+    height: 800,
   });
 
   return <Provider value={{ boxValues, setBoxValues }}>{children}</Provider>;
