@@ -568,14 +568,9 @@ video {
 .h-50p {
   height: 50px;
 }
-.h-5p {
-  height: 5px;
-}
-
 .h-720p {
   height: 720px;
 }
-
 .h-full {
   height: 100%;
 }
@@ -593,9 +588,6 @@ video {
 }
 .w-40p {
   width: 40px;
-}
-.w-5p {
-  width: 5px;
 }
 .w-60p {
   width: 60px;
@@ -620,6 +612,9 @@ video {
 }
 .rotate-45 {
   --tw-rotate: 45deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .cursor-pointer {
@@ -667,9 +662,6 @@ video {
 .gap-x-8 {
   column-gap: 2rem;
 }
-.gap-x-\[5em\] {
-  column-gap: 5em;
-}
 .gap-y-4 {
   row-gap: 1rem;
 }
@@ -707,10 +699,6 @@ video {
   --tw-border-opacity: 1;
   border-color: rgb(119 119 119 / var(--tw-border-opacity));
 }
-.bg-black {
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
-}
 .bg-blue-190 {
   --tw-bg-opacity: 1;
   background-color: rgb(24 151 136 / var(--tw-bg-opacity));
@@ -718,6 +706,9 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+.p-4 {
+  padding: 1rem;
 }
 .px-2 {
   padding-left: 0.5rem;
@@ -755,6 +746,9 @@ video {
   padding-top: 6em;
   padding-bottom: 6em;
 }
+.pl-\[3rem\] {
+  padding-left: 3rem;
+}
 .font-sans {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
@@ -764,9 +758,6 @@ video {
 .text-14p {
   font-size: 14px;
 }
-.text-16p {
-  font-size: 16px;
-}
 .text-18p {
   font-size: 18px;
 }
@@ -775,6 +766,9 @@ video {
 }
 .text-22p {
   font-size: 22px;
+}
+.text-24p {
+  font-size: 24px;
 }
 .text-30p {
   font-size: 30px;
@@ -972,11 +966,6 @@ svg:hover {
 :is([data-theme="dark"] .dark\:bg-blue-300) {
   --tw-bg-opacity: 1;
   background-color: rgb(10 10 10 / var(--tw-bg-opacity));
-}
-
-:is([data-theme="dark"] .dark\:bg-white) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 :is([data-theme="dark"] .dark\:text-white) {

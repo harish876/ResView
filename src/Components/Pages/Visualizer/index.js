@@ -5,10 +5,8 @@ import { anglesRightIcon } from "../../../Resources/Icons";
 import { Icon } from "../../Shared/Icon";
 import Wrapper from "../../Shared/Wrapper";
 import ButtonRow from "./Components/Ancillary/Buttons";
-import Dropdown from "./Components/Ancillary/Dropdown";
 import TypeSelector from "./Components/Ancillary/TypeSelector";
-import CandC from "./Components/Graphs/MvT";
-import TestingGraph from "./Components/Graphs/TestingGraphs";
+import MvT from "./Components/Graphs/MvT";
 import PbftGraph from "./Components/Graphs/PbftGraph";
 
 // TODO: Remove the below Unknown dummy component once the other graphs are built and remove it from GRAPH_CHANGE object
@@ -24,7 +22,8 @@ const mvtTitles = {
 
 const Visualizer = () => {
   const { graph, mvtGraphNo } = useContext(GraphViewContext);
-  const { boxValues, setBoxValues } = useContext(GraphResizerContext);
+  const { boxValues, setBoxValues, setResizing } =
+    useContext(GraphResizerContext);
 
   // TODO: Fill the below ? with appropriate title and its full form
   const graphToTitle = useMemo(
@@ -39,7 +38,7 @@ const Visualizer = () => {
   const GRAPH_CHANGE = useMemo(
     () => ({
       PBFT: <PbftGraph />,
-      MvT: <CandC />,
+      MvT: <MvT />,
       "?": <Dummy />,
     }),
     []
@@ -74,18 +73,18 @@ const Visualizer = () => {
         data-aos-delay={300}
         size={{ width: boxValues.width, height: boxValues.height }}
         onResizeStop={(e, direction, ref, d) => {
+          setResizing(false);
           setBoxValues({
             width: boxValues.width + d.width,
             height: boxValues.height + d.height,
           });
         }}
+        onResizeStart={(e, d, r) => setResizing(true)}
       >
         {GRAPH_CHANGE[graph]}
-        {graph !== "PBFT" && (
-          <div className='absolute bottom-0 right-0 rotate-45'>
-            <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
-          </div>
-        )}
+        <div className='absolute bottom-0 right-0 rotate-45'>
+          <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
+        </div>
       </Resizable>
     </Wrapper>
   );
