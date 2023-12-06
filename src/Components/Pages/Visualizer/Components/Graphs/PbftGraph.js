@@ -18,7 +18,7 @@ const ACTION_TYPE = ["request", "prePrepare", "prepare", "commit", "reply"];
 const generateConnections = (data, numberOfSteps, xCoords, yCoords) => {
     let points = {};
 
-    ACTION_TYPE.map((action, index) => (
+    ACTION_TYPE.forEach((action, index) => (
         points = {
           ...points,
           [action]: {
@@ -61,7 +61,7 @@ const generateConnections = (data, numberOfSteps, xCoords, yCoords) => {
         points.prepare.start.push(element.points)
     ))
 
-    for(let i=0; i<points.prepare.start.length; i++) points.prepare.end.push([]);
+    for(const element of points.prepare.start) points.prepare.end.push([]);
 
     for(let i=0; i<numberOfSteps-2; i++){
         for(let j=1; j<yCoords.length; j++){
@@ -121,7 +121,20 @@ const generateConnections = (data, numberOfSteps, xCoords, yCoords) => {
 };
 
 const generateLabels = (xCoords, yCoords) => {
+  let labels = [];
 
+  if(xCoords.length < 2) return labels;
+
+  for(let i=0; i<xCoords.length-1; i++){
+    let obj = {
+      x: Math.floor((xCoords[i] + xCoords[i + 1]) / 2),
+      y: yCoords[0] - 20,
+      title: `${TITLES[i]}`,
+    };
+    labels.push(obj)
+  }
+
+  return { labels }
 };
 
 
@@ -213,7 +226,6 @@ const generatePoints = (
 
 const TITLES = [
   "REQUEST",
-  "PROPOSE",
   "PRE-PREPARE",
   "PREPARE",
   "COMMIT",
@@ -235,7 +247,7 @@ const ref = useRef(null);
     const data = generatePoints(
       1100,
       800,
-      0,
+      100,
       100,
       4,
       NUMBER_OF_STEPS
@@ -252,6 +264,11 @@ const ref = useRef(null);
       xCoords,
       yCoords
     );
+
+    const { labels } = generateLabels(
+      xCoords,
+      yCoords
+    )
 
     const svg = d3
       .select(ref.current)
@@ -311,13 +328,16 @@ const ref = useRef(null);
         .attr("stroke-dasharray", "5,10")
     );
 
-    // TODO: Change the title below
-    svg
+    // LABELS FOR EACH ACTION
+    labels.forEach((label) => (
+      svg
       .append("text")
-      .attr("transform", "translate(" + 50 + " ," + 250 + ")")
+      .attr("transform", "translate(" + label.x + " ," + label.y + ")")
       .attr("fill", "white")
       .style("text-anchor", "middle")
-      .text("Request");
+      .text(`${label.title}`)
+    ))
+
 
     // REQUEST LINES 
     points.request.end.forEach((end, i) => {
