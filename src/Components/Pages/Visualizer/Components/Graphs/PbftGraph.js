@@ -336,7 +336,7 @@ const ref = useRef(null);
       svg
         .append("text")
         .attr("transform", "translate(" + label.x + " ," + label.y + ")")
-        .attr("fill", "white")
+        .attr("fill", "#c4c4c4")
         .style("text-anchor", "middle")
         .text(`${label.title}`)
     );
@@ -346,7 +346,7 @@ const ref = useRef(null);
       svg
         .append("text")
         .attr("transform", "translate(" + label.x + " ," + label.y + ")")
-        .attr("fill", "white")
+        .attr("fill", "#c4c4c4")
         .style("text-anchor", "middle")
         .text(`${label.title}`)
     );
