@@ -117,4 +117,115 @@ const MvT = ({points}) => {
   );
 };
 
+export const MvTGraphManipulator = ({
+  labelToggleFaulty,
+  labelToggle,
+  toggleFaulty,
+  toggleLine,
+}) => {
+  return (
+    <div className='mt-2 bg-white rounded-md shadow-md w-full py-3 px-2 dark:border-1p dark:border-solid dark:border-gray-50 dark:bg-blue-300'>
+      <div className='text-20p text-center text-blue-190 p-2 '>
+        Select Replica To be Faulty:{" "}
+      </div>
+      <div className='flex gap-x-7 justify-center'>
+        <button
+          className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${
+            labelToggleFaulty["Replica 1"]
+              ? "bg-red-500 text-white"
+              : "text-blue-190"
+          }`}
+          onClick={() => toggleFaulty("Replica 1")}
+        >
+          Replica 1
+        </button>
+
+        <button
+          className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${
+            labelToggleFaulty["Replica 2"]
+              ? "bg-red-500 text-white"
+              : "text-blue-190"
+          }`}
+          onClick={() => toggleFaulty("Replica 2")}
+        >
+          Replica 2
+        </button>
+
+        <button
+          className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${
+            labelToggleFaulty["Replica 3"]
+              ? "bg-red-500 text-white"
+              : "text-blue-190"
+          }`}
+          onClick={() => toggleFaulty("Replica 3")}
+        >
+          Replica 3
+        </button>
+
+        <button
+          className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${
+            labelToggleFaulty["Replica 4"]
+              ? "bg-red-500 text-white"
+              : "text-blue-190"
+          }`}
+          onClick={() => toggleFaulty("Replica 4")}
+        >
+          Replica 4
+        </button>
+      </div>
+
+      <div className='text-20p text-center text-blue-190 p-2 '>
+        Toggle Line Graph:{" "}
+      </div>
+
+      <div className='flex gap-x-7'>
+        {/* Replica Buttons */}
+        <button
+          className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${
+            labelToggle["Replica 1"]
+              ? "bg-blue-190 text-white"
+              : "text-blue-190"
+          }`}
+          onClick={() => toggleLine("Replica 1")}
+        >
+          Replica 1
+        </button>
+
+        <button
+          className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${
+            labelToggle["Replica 2"]
+              ? "bg-blue-190 text-white"
+              : "text-blue-190"
+          }`}
+          onClick={() => toggleLine("Replica 2")}
+        >
+          Replica 2
+        </button>
+
+        <button
+          className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${
+            labelToggle["Replica 3"]
+              ? "bg-blue-190 text-white"
+              : "text-blue-190"
+          }`}
+          onClick={() => toggleLine("Replica 3")}
+        >
+          Replica 3
+        </button>
+
+        <button
+          className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${
+            labelToggle["Replica 4"]
+              ? "bg-blue-190 text-white"
+              : "text-blue-190"
+          }`}
+          onClick={() => toggleLine("Replica 4")}
+        >
+          Replica 4
+        </button>
+      </div>
+    </div>
+  );
+};
+
 export default MvT;

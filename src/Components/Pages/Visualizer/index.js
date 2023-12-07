@@ -1,18 +1,16 @@
+import axios from 'axios';
 import { Resizable } from "re-resizable";
-import React, { useContext, useMemo, useState, useEffect } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { GraphResizerContext, GraphViewContext } from "../../../Context/graph";
 import { anglesRightIcon } from "../../../Resources/Icons";
+import { WebSocketDemo } from '../../../Socket';
 import { Icon } from "../../Shared/Icon";
 import Wrapper from "../../Shared/Wrapper";
 import ButtonRow from "./Components/Ancillary/Buttons";
-import GraphButtonRow from "./Components/Ancillary/GraphButtons";
-import Dropdown from "./Components/Ancillary/Dropdown";
 import TypeSelector from "./Components/Ancillary/TypeSelector";
-import MvT from "./Components/Graphs/MvT";
 import TransactionForm from "./Components/Graphs/Form";
+import MvT, { MvTGraphManipulator } from "./Components/Graphs/MvT";
 import PbftGraph from "./Components/Graphs/PbftGraph";
-import axios from 'axios';
-import { WebSocketDemo } from '../../../Socket'
 
 
 const colorList = ["hsl(148, 70%, 50%)", "hsl(200, 70%, 50%)", "hsl(171, 70%, 50%)", "hsl(313, 70%, 50%)"];
@@ -42,7 +40,7 @@ const Visualizer = () => {
     setResetGraph(value);
   }
 
-  const toggle_line = (label) => {
+  const toggleLine = (label) => {
     setLabelToggle((prevLabels) => {
       const updatedLabels = { ...prevLabels };
       updatedLabels[label] = !updatedLabels[label];
@@ -59,7 +57,7 @@ const Visualizer = () => {
     }
   }
 
-  const toggle_faulty= (label) => {
+  const toggleFaulty= (label) => {
     setLabelToggleFaulty((prevLabels) => {
       const updatedLabels = { ...prevLabels };
       updatedLabels[label] = !updatedLabels[label];
@@ -91,7 +89,7 @@ const Visualizer = () => {
       let all_commit_times=[];
       let label_list=[];
 
-      Object.keys(transactionData).map((key) => {
+      Object.keys(transactionData).forEach((key) => {
         label_list.push("Replica " + key);
         if(transactionData[key].primary_id!==transactionData[key].replica_id){
           pre_prepare_times.push(Math.floor(transactionData[key].propose_pre_prepare_time/10000));
@@ -113,19 +111,19 @@ const Visualizer = () => {
 
       let prepareChartData=[];
       let commitChartData=[];
-      for(let i=0; i<all_prepare_times.length; i++){
+      for(const element of all_prepare_times){
         let lineData=[{x:0, y:0}];
-        for(let j=0; j<all_prepare_times[i].length; j++){
-          lineData.push({x: all_prepare_times[i][j]-startTime, y: j});
-          lineData.push({x: all_prepare_times[i][j]-startTime, y: j+1});
+        for(let j=0; j<element.length; j++){
+          lineData.push({x: element[j]-startTime, y: j});
+          lineData.push({x: element[j]-startTime, y: j+1});
         }
         prepareChartData.push(lineData);
       }
-      for(let i=0; i<all_commit_times.length; i++){
+      for(const element of all_commit_times){
         let lineData=[{x:0, y:0}];
-        for(let j=0; j<all_commit_times[i].length; j++){
-          lineData.push({x: all_commit_times[i][j]-firstPrepareTime, y: j});
-          lineData.push({x: all_commit_times[i][j]-firstPrepareTime, y: j+1});
+        for(let j=0; j<element.length; j++){
+          lineData.push({x: element[j]-firstPrepareTime, y: j});
+          lineData.push({x: element[j]-firstPrepareTime, y: j+1});
         }
         commitChartData.push(lineData);
       }
@@ -234,88 +232,6 @@ const Visualizer = () => {
       {graph === "MvT" && (
         <div className='my-4' data-aos='fade-in' data-aos-delay={100}>
           <TypeSelector />
-          <div className='mt-2 bg-white rounded-md shadow-md w-full py-3 px-2 dark:border-1p dark:border-solid dark:border-gray-50 dark:bg-blue-300'>
-          <div className='text-20p text-center text-blue-190 p-2 '>Select Replica To be Faulty: </div>
-            <div className="flex gap-x-7 justify-center">
-            <button
-                className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${
-                  labelToggleFaulty["Replica 1"] ? "bg-red-500 text-white" : "text-blue-190"
-                }`}
-                onClick={() => toggle_faulty("Replica 1")}
-              >
-                Replica 1
-              </button>
-
-              <button
-                className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${
-                  labelToggleFaulty["Replica 2"] ? "bg-red-500 text-white" : "text-blue-190"
-                }`}
-                onClick={() => toggle_faulty("Replica 2")}
-              >
-                Replica 2
-              </button>
-
-              <button
-                className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${
-                  labelToggleFaulty["Replica 3"] ? "bg-red-500 text-white" : "text-blue-190"
-                }`}
-                onClick={() => toggle_faulty("Replica 3")}
-              >
-                Replica 3
-              </button>
-
-              <button
-                className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${
-                  labelToggleFaulty["Replica 4"] ? "bg-red-500 text-white" : "text-blue-190"
-                }`}
-                onClick={() => toggle_faulty("Replica 4")}
-              >
-                Replica 4
-              </button>
-            </div>
-
-            <div className='text-20p text-center text-blue-190 p-2 '>Toggle Line Graph: </div>
-
-            <div className="flex gap-x-7">
-              {/* Replica Buttons */}
-              <button
-                className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${
-                  labelToggle["Replica 1"] ? "bg-blue-190 text-white" : "text-blue-190"
-                }`}
-                onClick={() => toggle_line("Replica 1")}
-              >
-                Replica 1
-              </button>
-
-              <button
-                className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${
-                  labelToggle["Replica 2"] ? "bg-blue-190 text-white" : "text-blue-190"
-                }`}
-                onClick={() => toggle_line("Replica 2")}
-              >
-                Replica 2
-              </button>
-
-
-              <button
-                className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${
-                  labelToggle["Replica 3"] ? "bg-blue-190 text-white" : "text-blue-190"
-                }`}
-                onClick={() => toggle_line("Replica 3")}
-              >
-                Replica 3
-              </button>
-
-              <button
-                className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${
-                  labelToggle["Replica 4"] ? "bg-blue-190 text-white" : "text-blue-190"
-                }`}
-                onClick={() => toggle_line("Replica 4")}
-              >
-                Replica 4
-              </button>
-            </div>
-          </div>
         </div>
       )}
       <div
@@ -325,12 +241,6 @@ const Visualizer = () => {
       >
         {graphToTitle[graph]}
       </div>
-      {/* {graph === "PBFT" && (
-        <div className='my-4 mx-8' data-aos='fade-in' data-aos-delay={200}>
-          <Dropdown length={4} />
-        </div>
-      )} */}
-      {/* // ! DO NOT TOUCH THE BELOW COMPONENT !!!!!! */}
       <Resizable
         className='py-3 px-2 shadow-md flex justify-center items-center rounded-md bg-white my-[2em] dark:border-1p dark:border-solid dark:border-gray-50 dark:bg-blue-300 relative'
         data-aos='fade-in'
@@ -350,8 +260,20 @@ const Visualizer = () => {
           <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
         </div>
       </Resizable>
+      {graph === "MvT" && (
+        <div className='mt-4 mb-4'>
+          <MvTGraphManipulator
+            toggleFaulty={toggleFaulty}
+            toggleLine={toggleLine}
+            labelToggleFaulty={labelToggleFaulty}
+            labelToggle={labelToggle}
+          />
+        </div>
+      )}
     </Wrapper>
   );
 };
+
+
 
 export default Visualizer;
