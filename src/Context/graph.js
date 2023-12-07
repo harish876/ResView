@@ -1,8 +1,9 @@
 import React, { createContext, useState } from "react";
 
 export const GraphResizerContext = createContext({
-  width: 920,
-  height: 650,
+  width: 1200,
+  height: 800,
+  resizing: false
 });
 
 export const GraphResizerProvider = ({ children }) => {
@@ -11,8 +12,13 @@ export const GraphResizerProvider = ({ children }) => {
     width: 1200,
     height: 800,
   });
+  const [resizing, setResizing] = useState(false);
 
-  return <Provider value={{ boxValues, setBoxValues }}>{children}</Provider>;
+  return (
+    <Provider value={{ boxValues, setBoxValues, resizing, setResizing }}>
+      {children}
+    </Provider>
+  );
 };
 
 // CONTEXT FOR THE GRAPH VIEW

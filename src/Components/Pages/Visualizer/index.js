@@ -26,7 +26,8 @@ const mvtTitles = {
 
 const Visualizer = () => {
   const { graph, mvtGraphNo } = useContext(GraphViewContext);
-  const { boxValues, setBoxValues } = useContext(GraphResizerContext);
+  const { boxValues, setBoxValues, setResizing } =
+    useContext(GraphResizerContext);
 
   const [messageHistory, setMessageHistory]= useState({});
   const [currentTransaction, setCurrentTransaction] = useState(0);
@@ -336,18 +337,18 @@ const Visualizer = () => {
         data-aos-delay={300}
         size={{ width: boxValues.width, height: boxValues.height }}
         onResizeStop={(e, direction, ref, d) => {
+          setResizing(false);
           setBoxValues({
             width: boxValues.width + d.width,
             height: boxValues.height + d.height,
           });
         }}
+        onResizeStart={(e, d, r) => setResizing(true)}
       >
         {GRAPH_CHANGE[graph]}
-        {graph !== "PBFT" && (
-          <div className='absolute bottom-0 right-0 rotate-45'>
-            <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
-          </div>
-        )}
+        <div className='absolute bottom-0 right-0 rotate-45'>
+          <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
+        </div>
       </Resizable>
     </Wrapper>
   );
