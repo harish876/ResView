@@ -99,3 +99,54 @@ svg:hover {
     transform: rotate(405deg);
   }
 }
+
+
+/* Add this to your CSS file or style block */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Add an additional class for styling the cursor */
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 13ch;
+  }
+}
+
+/* Apply the typewriter animation to the title */
+.typewriter {
+  display: inline-block;
+  overflow: hidden;
+  border-right: 0.15em solid white; /* Adjust border color and size as needed */
+  white-space: nowrap;
+  margin: 0;
+  animation: typewriter 3s steps(20) forwards infinite alternate;
+}
+
+@keyframes titlewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 16ch;
+  }
+}
+
+/* Apply the typewriter animation to the title */
+.titlewriter {
+  display: inline-block;
+  overflow: hidden;
+  border-right: 0.15em solid white; /* Adjust border color and size as needed */
+  white-space: nowrap;
+  margin: 0;
+  animation: titlewriter 3s steps(20) forwards infinite alternate;
+}
+
