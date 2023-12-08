@@ -70,17 +70,17 @@ const Visualizer = () => {
     setMessageHistory(newData);
     setCurrentTransaction(Object.keys(messageHistory).length);
 
-    console.log(messageHistory, 'MESSAGE HISTORY');
+    // console.log(messageHistory, 'MESSAGE HISTORY');
   };
 
   useEffect(() => {
     if(!(currentTransaction in messageHistory)){
       setMessageChartData([[],[]])
-      console.log(currentTransaction, " Not in messageHistory")
+      // console.log(currentTransaction, " Not in messageHistory")
     }
     else{
       const transactionData = messageHistory[currentTransaction];
-      console.log(transactionData)
+      console.log("TRANSACTION",transactionData)
       let startTime=0;
       let firstPrepareTime=0;
       let pre_prepare_times=[];
@@ -175,10 +175,10 @@ const Visualizer = () => {
     let url = 'http://127.0.0.1:18000/v1/transactions/' + key;
     try{
       const response= await axios.get(url);
-      console.log("Get response: ", response.data);
+      // console.log("Get response: ", response.data);
     }
     catch(error){
-      console.error("Error: ", error);
+      // console.error("Error: ", error);
     }
   };
 
@@ -195,10 +195,10 @@ const Visualizer = () => {
           }
         }
       );
-      console.log("Get response: ", response.data);
+      // console.log("Get response: ", response.data);
     }
     catch(error){
-      console.error("Error: ", error);
+      // console.error("Error: ", error);
     }
   };
 
@@ -214,11 +214,17 @@ const Visualizer = () => {
 
   const GRAPH_CHANGE = useMemo(
     () => ({
-      PBFT: <PbftGraph />,
-      MvT: <MvT points={messageChartData[mvtGraphNo]}/>,
-      "Form": <TransactionForm selectTransaction={setCurrentTransaction} sendSet={sendPost} sendGet={sendGet}/>,
+      PBFT: <PbftGraph messageHistory={messageHistory} />,
+      MvT: <MvT points={messageChartData[mvtGraphNo]} />,
+      Form: (
+        <TransactionForm
+          selectTransaction={setCurrentTransaction}
+          sendSet={sendPost}
+          sendGet={sendGet}
+        />
+      ),
     }),
-    [messageChartData, mvtGraphNo]
+    [messageChartData, mvtGraphNo, messageHistory]
   );
 
   return (
