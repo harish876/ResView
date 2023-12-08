@@ -39,6 +39,99 @@ const dummy = {
       prepare_time: 1701956096776394000,
       primary_id: 1,
       propose_pre_prepare_time: 1701956096769596400,
+      replica_id: 2,
+      txn_commands: ["GET"],
+      txn_keys: ["test"],
+      txn_number: 17,
+      txn_values: [""],
+      reply_time: 1702001829632,
+    },
+    2: {
+      commit_message_timestamps: [
+        1701956096777775600, 1701956096781659100, 1701956096788349400,
+        1701956096788360400,
+      ],
+      commit_time: 1701956096788358400,
+      execution_time: 1701956096789154300,
+      ip: "127.0.0.1",
+      port: 10002,
+      prepare_message_timestamps: [
+        1701956096771574300, 1701956096776823800, 1701956096777767000,
+      ],
+      prepare_time: 1701956096776841500,
+      primary_id: 1,
+      propose_pre_prepare_time: 1701956096767388700,
+      replica_id: 1,
+      txn_commands: ["GET"],
+      txn_keys: ["test"],
+      txn_number: 17,
+      txn_values: [""],
+      reply_time: 1702001829629,
+    },
+    3: {
+      commit_message_timestamps: [
+        1701956096777398000, 1701956096781702400, 1701956096787757600,
+        1701956096787947500,
+      ],
+      commit_time: 1701956096787769900,
+      execution_time: 1701956096788227600,
+      ip: "127.0.0.1",
+      port: 10003,
+      prepare_message_timestamps: [
+        1701956096772535600, 1701956096777049000, 1701956096777068300,
+        1701956096777263900,
+      ],
+      prepare_time: 1701956096777074400,
+      primary_id: 1,
+      propose_pre_prepare_time: 1701956096767121700,
+      replica_id: 3,
+      txn_commands: ["GET"],
+      txn_keys: ["test"],
+      txn_number: 17,
+      txn_values: [""],
+      reply_time: 1702001829631,
+    },
+    4: {
+      commit_message_timestamps: [
+        1701956096777512700, 1701956096782015500, 1701956096786524200,
+        1701956096786591700,
+      ],
+      commit_time: 1701956096786530000,
+      execution_time: 1701956096786978000,
+      ip: "127.0.0.1",
+      port: 10004,
+      prepare_message_timestamps: [
+        1701956096772492300, 1701956096776289500, 1701956096776371200,
+        1701956096777435000,
+      ],
+      prepare_time: 1701956096776375000,
+      primary_id: 1,
+      propose_pre_prepare_time: 1701956096767122200,
+      replica_id: 4,
+      txn_commands: ["GET"],
+      txn_keys: ["test"],
+      txn_number: 17,
+      txn_values: [""],
+      reply_time: 1702001829630,
+    },
+  },
+  18: {
+    1: {
+      commit_message_timestamps: [
+        1701956096777352000, 1701956096782048300, 1701956096786494200,
+        1701956096786495200,
+      ],
+      commit_time: 1701956096786501400,
+      execution_time: 1701956096786658600,
+      ip: "127.0.0.1",
+      port: 10001,
+      prepare_message_timestamps: [
+        1701956096771379200, 1701956096776308700, 1701956096776386300,
+        1701956096777278200,
+      ],
+      prepare_time: 1701956096776394000,
+      primary_id: 1,
+      propose_pre_prepare_time: 1701956096769596400,
       replica_id: 1,
       txn_commands: ["GET"],
       txn_keys: ["test"],
@@ -121,24 +214,21 @@ const TRANSDURATION = 750;
 
 const NUMBER_OF_STEPS = 5;
 
-const computePrimary = (messageHistory) => {
-  let transactions = [];
+const computeDataDetails = (data) => {
+  let transactions = new Set();
   let primaryInd = -1;
 
-  for (const property in messageHistory) {
-    transactions.push(property);
+  for (const property in data) {
+    transactions.add(parseInt(property));
   }
 
-  for(let i=0; i<transactions.length; i++){
-    for(const [key, value] of Object.entries(messageHistory[transactions[i]])){
-        if(value.primary_id === value.replica_id) primaryInd = key;
-    }
+  for (const [key, value] of Object.entries(data)) {
+    if (value.primary_id === value.replica_id) primaryInd = key;
   }
 
   let primaryIndex = parseInt(primaryInd);
 
-  return { primaryIndex };
-
+  return { primaryIndex, transactions };
 };
 
 const primaryIndexToPoint = {
@@ -153,11 +243,15 @@ const generateConnections = (
   numberOfSteps,
   xCoords,
   yCoords,
-  messageHistory
+  messageHistory,
+  transactionNumber = 17
 ) => {
   let points = {};
 
-  const { primaryIndex } = computePrimary(messageHistory);
+  const currentData = messageHistory[transactionNumber];
+
+  const { primaryIndex, transactions } =
+    computeDataDetails(currentData);
 
   ACTION_TYPE.forEach(
     (action, index) =>
@@ -172,7 +266,6 @@ const generateConnections = (
   );
 
   let currentPrimaryPointIndex = primaryIndexToPoint[primaryIndex]
-
   // REQUEST OBJECT
   points.request.start.push({
     flag: true,
@@ -182,13 +275,12 @@ const generateConnections = (
     flag: true,
     points: data[numberOfSteps + currentPrimaryPointIndex],
   });
-
   // PRE-PREPARE OBJECT
   points.prePrepare.start.push({
     flag: true,
     points: points.request.end[0].points,
   });
-  
+
   for (let i = 1; i < yCoords.length; i++) {
     if (primaryIndex === i) continue;
     points.prePrepare.end.push({
@@ -200,16 +292,24 @@ const generateConnections = (
     });
   }
 
-  console.log("END", points.prePrepare.end);
-
+  let yCoordToReplicas = {};
+  
+  for (let i = 1; i < yCoords.length; i++) {
+    yCoordToReplicas = {
+      ...yCoordToReplicas,
+      [yCoords[i]]: i,
+    };
+  }
   // PREPARE OBJECT
-  points.prePrepare.end.map((element, index) =>
-    points.prepare.start.push(element.points)
-  );
+  points.prePrepare.end.forEach((element, index) => {
+    if (transactions.has(yCoordToReplicas[element.points.y])) {
+      points.prepare.start.push(element.points);
+    }
+  });
 
   for (const element of points.prepare.start) points.prepare.end.push([]);
 
-  for (let i = 0; i < numberOfSteps - 2; i++) {
+  for (let i = 0; i < points.prepare.start.length; i++) {
     for (let j = 1; j < yCoords.length; j++) {
       if (points.prepare.start[i].y !== yCoords[j]) {
         points.prepare.end[i].push({
@@ -222,18 +322,19 @@ const generateConnections = (
       }
     }
   }
-
   // COMMIT OBJECT
   for (let i = 1; i < yCoords.length; i++) {
-    points.commit.start.push({
-      x: xCoords[3],
-      y: yCoords[i],
-    });
+    if(transactions.has(i)){
+      points.commit.start.push({
+        x: xCoords[3],
+        y: yCoords[i],
+      });
+    }
   }
 
   for (const element of points.commit.start) points.commit.end.push([]);
 
-  for (let i = 0; i < numberOfSteps - 1; i++) {
+  for (let i = 0; i < points.commit.start.length; i++) {
     for (let j = 1; j < yCoords.length; j++) {
       if (points.commit.start[i].y !== yCoords[j]) {
         points.commit.end[i].push({
@@ -246,7 +347,6 @@ const generateConnections = (
       }
     }
   }
-
   // REPLY OBJECT
   points.reply.end.push({
     flag: true,
@@ -254,15 +354,16 @@ const generateConnections = (
   });
 
   for (let i = 1; i < yCoords.length; i++) {
-    points.reply.start.push({
-      flag: true,
-      points: {
-        x: xCoords[4],
-        y: yCoords[i],
-      },
-    });
+    if(transactions.has(i)){
+      points.reply.start.push({
+        flag: true,
+        points: {
+          x: xCoords[4],
+          y: yCoords[i],
+        },
+      });
+    }
   }
-
   return { points };
 };
 
@@ -378,15 +479,31 @@ const generatePoints = (
   return newData;
 };
 
+const generateTransactionIds = (data) => {
+  let transactionIds = [];
+
+  for (const property in data) {
+    transactionIds.push(parseInt(property));
+  }
+
+  console.log(transactionIds);
+
+  return { transactionIds };
+};
+
 const PbftGraph = ({ messageHistory }) => {
   const { boxValues, resizing, setResizing } = useContext(GraphResizerContext);
   const { width, height } = boxValues;
   const { theme } = useContext(ThemeContext);
 
+  // TODO: Make the below messageHistory instead of dummy
+  const { transactionIds } = generateTransactionIds(dummy);
+
+  const [transactionNumber, setTransactionNumber] = useState(transactionIds[0]);
+
   const ref = useRef(null);
 
   const debouncedRender = useCallback(() => {
-    console.log("Message History", messageHistory);
     const data = generatePoints(
       width,
       height,
@@ -401,13 +518,13 @@ const PbftGraph = ({ messageHistory }) => {
       NUMBER_OF_STEPS
     );
 
-    // Gotta make changes over here depending on the Message History which will be passed
     const { points } = generateConnections(
       data,
       NUMBER_OF_STEPS,
       xCoords,
       yCoords,
-      dummy
+      dummy,
+      transactionNumber
     );
 
     const { labelsX, labelsY } = generateLabels(xCoords, yCoords);
