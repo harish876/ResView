@@ -253,6 +253,8 @@ const generateConnections = (
   const { primaryIndex, transactions } =
     computeDataDetails(currentData);
 
+  console.log(transactions);
+
   ACTION_TYPE.forEach(
     (action, index) =>
       (points = {
@@ -491,15 +493,15 @@ const generateTransactionIds = (data) => {
   return { transactionIds };
 };
 
-const PbftGraph = ({ messageHistory }) => {
+const PbftGraph = ({ messageHistory, transactionNumber }) => {
   const { boxValues, resizing, setResizing } = useContext(GraphResizerContext);
   const { width, height } = boxValues;
   const { theme } = useContext(ThemeContext);
 
   // TODO: Make the below messageHistory instead of dummy
-  const { transactionIds } = generateTransactionIds(dummy);
+  //const { transactionIds } = generateTransactionIds(messageHistory);
 
-  const [transactionNumber, setTransactionNumber] = useState(transactionIds[0]);
+  //const [transactionNumber, setTransactionNumber] = useState(transactionIds[0]);
 
   const ref = useRef(null);
 
@@ -523,7 +525,7 @@ const PbftGraph = ({ messageHistory }) => {
       NUMBER_OF_STEPS,
       xCoords,
       yCoords,
-      dummy,
+      messageHistory,
       transactionNumber
     );
 

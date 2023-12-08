@@ -502,6 +502,9 @@ video {
 .m-1 {
   margin: 0.25rem;
 }
+.m-2 {
+  margin: 0.5rem;
+}
 .mx-5p {
   margin-left: 5px;
   margin-right: 5px;
@@ -592,6 +595,9 @@ video {
 .h-screen {
   height: 100vh;
 }
+.w-1\/2 {
+  width: 50%;
+}
 .w-100p {
   width: 100px;
 }
@@ -619,6 +625,12 @@ video {
 .max-w-200p {
   max-width: 200px;
 }
+.max-w-md {
+  max-width: 28rem;
+}
+.max-w-sm {
+  max-width: 24rem;
+}
 .flex-initial {
   flex: 0 1 auto;
 }
@@ -638,6 +650,9 @@ video {
 .flex-col {
   flex-direction: column;
 }
+.flex-wrap {
+  flex-wrap: wrap;
+}
 .items-center {
   align-items: center;
 }
@@ -652,6 +667,9 @@ video {
 }
 .justify-between {
   justify-content: space-between;
+}
+.justify-around {
+  justify-content: space-around;
 }
 .justify-evenly {
   justify-content: space-evenly;
@@ -697,6 +715,9 @@ video {
 .border {
   border-width: 1px;
 }
+.border-2 {
+  border-width: 2px;
+}
 .border-\[2px\] {
   border-width: 2px;
 }
@@ -739,6 +760,9 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
+.object-cover {
+  object-fit: cover;
+}
 .p-2 {
   padding: 0.5rem;
 }
@@ -747,6 +771,9 @@ video {
 }
 .p-4 {
   padding: 1rem;
+}
+.p-6 {
+  padding: 1.5rem;
 }
 .px-2 {
   padding-left: 0.5rem;
@@ -791,6 +818,9 @@ video {
 .text-center {
   text-align: center;
 }
+.text-justify {
+  text-align: justify;
+}
 .font-sans {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
@@ -812,6 +842,10 @@ video {
 .text-24p {
   font-size: 24px;
 }
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
 .text-30p {
   font-size: 30px;
 }
@@ -824,6 +858,10 @@ video {
 }
 .text-48p {
   font-size: 48px;
+}
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 .text-xl {
   font-size: 1.25rem;
@@ -873,6 +911,9 @@ video {
 }
 .duration-300 {
   transition-duration: 300ms;
+}
+.ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 :root {
@@ -972,65 +1013,102 @@ svg:hover {
   }
 }
 
+
+/* Add this to your CSS file or style block */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Add an additional class for styling the cursor */
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 13ch;
+  }
+}
+
+/* Apply the typewriter animation to the title */
+.typewriter {
+  display: inline-block;
+  overflow: hidden;
+  border-right: 0.15em solid white; /* Adjust border color and size as needed */
+  white-space: nowrap;
+  margin: 0;
+  animation: typewriter 3s steps(20) forwards infinite alternate;
+}
+
+@keyframes titlewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 16ch;
+  }
+}
+
+/* Apply the typewriter animation to the title */
+.titlewriter {
+  display: inline-block;
+  overflow: hidden;
+  border-right: 0.15em solid white; /* Adjust border color and size as needed */
+  white-space: nowrap;
+  margin: 0;
+  animation: titlewriter 3s steps(20) forwards infinite alternate;
+}
 .hover\:scale-105:hover {
   --tw-scale-x: 1.05;
   --tw-scale-y: 1.05;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-
 .hover\:border-blue-200:hover {
   --tw-border-opacity: 1;
   border-color: rgb(38 216 196 / var(--tw-border-opacity));
 }
-
 .hover\:bg-blue-200:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(38 216 196 / var(--tw-bg-opacity));
 }
-
 .hover\:bg-teal-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(13 148 136 / var(--tw-bg-opacity));
 }
-
 .hover\:text-blue-190:hover {
   --tw-text-opacity: 1;
   color: rgb(24 151 136 / var(--tw-text-opacity));
 }
-
 .hover\:text-blue-200:hover {
   --tw-text-opacity: 1;
   color: rgb(38 216 196 / var(--tw-text-opacity));
 }
-
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
-
 :is([data-theme="dark"] .dark\:border-1p) {
   border-width: 1px;
 }
-
 :is([data-theme="dark"] .dark\:border-solid) {
   border-style: solid;
 }
-
 :is([data-theme="dark"] .dark\:border-gray-50) {
   --tw-border-opacity: 1;
   border-color: rgb(249 250 251 / var(--tw-border-opacity));
 }
-
 :is([data-theme="dark"] .dark\:bg-blue-300) {
   --tw-bg-opacity: 1;
   background-color: rgb(10 10 10 / var(--tw-bg-opacity));
 }
-
 :is([data-theme="dark"] .dark\:text-white) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
-
 @media (max-width: 1080px) {
 
   .lg\:px-8 {
@@ -1043,3 +1121,4 @@ svg:hover {
     padding-bottom: 1rem;
   }
 }
+

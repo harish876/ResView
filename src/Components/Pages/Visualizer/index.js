@@ -74,7 +74,7 @@ const Visualizer = () => {
   };
 
   useEffect(() => {
-    if(!(currentTransaction in messageHistory)){
+    if(!(currentTransaction in messageHistory) || messageHistory[currentTransaction].current_time<0){
       setMessageChartData([[],[]])
       // console.log(currentTransaction, " Not in messageHistory")
     }
@@ -214,7 +214,7 @@ const Visualizer = () => {
 
   const GRAPH_CHANGE = useMemo(
     () => ({
-      PBFT: <PbftGraph messageHistory={messageHistory} />,
+      PBFT: <PbftGraph messageHistory={messageHistory} transactionNumber={currentTransaction}/>,
       MvT: <MvT points={messageChartData[mvtGraphNo]} />,
       Form: (
         <TransactionForm
