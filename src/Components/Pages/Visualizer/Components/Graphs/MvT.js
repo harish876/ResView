@@ -1,9 +1,8 @@
 
 import { ResponsiveLine } from "@nivo/line";
-import { ccData } from "../data/data";
-import { useContext, useEffect, useState } from "react";
-import Loader from "../../../../Shared/Loader";
+import { useContext, useState } from "react";
 import { GraphViewContext } from "../../../../../Context/graph";
+import Loader from "../../../../Shared/Loader";
 
 const theme = {
   axis: {
