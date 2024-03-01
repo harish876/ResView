@@ -1,8 +1,8 @@
-# ResViz - (ResDB Visualizer)
+# ResView - (ResDB Visualizer)
 
 ![Logo](https://i.postimg.cc/C59hDQ4v/Res-View-Logo.jpg)
 
-ResViz is a visualizer based on the Resilient Db fabric to show transaction visualizations.
+ResView is a visualizer based on the Resilient Db fabric to show transaction visualizations.
 
 ## Get Prepared
 
@@ -63,10 +63,6 @@ DO NOT MERGE unless approved by me.
 ## Authors
 
 [aunshx](https://github.com/aunshx/)
-
-[Saipranav](https://github.com/Saipranav-Kotamreddy)
-
-[Nikita B. Emberi](https://github.com/NikitaEmberi/)
 
 ## License
 
