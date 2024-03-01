@@ -12,6 +12,7 @@ import ResViewLogo from "../../Resources/Images/ResViewLogo.jpg";
 import { COLOR_LIGHT, ICON_DEFAULT_COLOR, SUN_COLOR } from "./Constants";
 import { Icon } from "./Icon";
 import { ThemeContext } from "../../Context/theme";
+import _ from "lodash";
 
 const navbarPageActiveColor = (currentPage, pageName) => {
   return currentPage === pageName ? COLOR_LIGHT : ICON_DEFAULT_COLOR;
@@ -56,40 +57,55 @@ const NavLink = ({
   iconViewBox,
 }) => (
   <Tooltip title={title} enterDelay={500}>
-    <a href={`/pages/${page}`} className='cursor-pointer'>
-      <Icon
+    <a href={`/pages/${page}`} className={cn(
+      'cursor-pointer font-bold text-gray-900 dark:text-white',
+      {'dark:bg-green-80 bg-green-40 px-2 py-1 rounded-lg transition': currentPage==page},
+    )}>
+      {/* <Icon
         fill={navbarPageActiveColor(currentPage, page)}
         height={iconHeight}
         path={icon}
         viewBox={iconViewBox}
-      />
+      /> */}
+      {_.capitalize(page)}
     </a>
   </Tooltip>
 );
 
 const Navbar = memo(() => {
+  const { theme } = useContext(ThemeContext);
   const CURRENT_PAGE = window.location.href.split("/")[4];
+  const logo = theme ? 'https://i.postimg.cc/jd6PkhDs/Res-View-Logo-Dark.png' : 'https://i.postimg.cc/Y0dMy9mf/Copy-of-Untitled-Design-removebg-preview.png';
   return (
     <>
-      <div class='w-full max-w-screen-xl rounded-xl bg-white py-2 px-8 text-white shadow-md lg:px-8 lg:py-4 flex items-center justify-between flex-initial fixed z-20 dark:border-1p dark:border-solid dark:border-gray-50 dark:bg-blue-300'>
-        <div className='flex items-center justify-start gap-x-4 w-full'>
+      <div class='w-full py-2 px-8 text-white lg:px-8 lg:py-4 flex items-center justify-between flex-initial fixed z-20'>
+        <div className='flex items-center justify-center gap-x-2 w-full'>
           <a href='/'>
             <img
-              src={ResViewLogo}
+              src={logo}
               alt='ResDb View Logo'
-              className='h-40p w-60p rounded-md'
+              className='h-35p w-35p'
             />
           </a>
           <div className='text-blue-190 text-20p font-sans font-bold'>
-            Res <span className='italic text-blue-200'>View</span>
+            <span class="text-2xl font-bold text-gray-900 dark:text-white">ResView</span>
           </div>
         </div>
-        <div className='flex items-center justify-center gap-x-24 w-full'>
+        <div></div>
+        <div className='flex items-center justify-center gap-x-12 w-full'>
           <NavLink
             title={"Home"}
             currentPage={CURRENT_PAGE}
             page={"home"}
             icon={homeIcon}
+            iconHeight={"1.4em"}
+            iconViewBox={"0 0 640 512"}
+          />
+          <NavLink
+            title={"Our Team"}
+            currentPage={CURRENT_PAGE}
+            page={"team"}
+            icon={teamIcon}
             iconHeight={"1.4em"}
             iconViewBox={"0 0 640 512"}
           />
@@ -100,16 +116,6 @@ const Navbar = memo(() => {
             icon={linearGraphIcon}
             iconHeight={"1.5em"}
           />
-          <NavLink
-            title={"Our Team"}
-            currentPage={CURRENT_PAGE}
-            page={"team"}
-            icon={teamIcon}
-            iconHeight={"1.4em"}
-            iconViewBox={"0 0 640 512"}
-          />
-        </div>
-        <div className='w-full flex items-center justify-end'>
           <LightOrDark />
         </div>
       </div>
