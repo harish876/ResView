@@ -6,12 +6,14 @@
 :root {
     --main-dark-color: #189788;
     --main-light-color: #26D8C4;
-    --background-color: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --background-color: linear-gradient(160deg, rgba(240, 242, 245, 1) 0%,
+      rgba(209, 223, 255, 1) 51%,
+      rgba(213, 225, 255, 1) 100%);
 }
 
 [data-theme="dark"] {
-  --background-color: linear-gradient(100deg,rgba(18, 33, 58, 1) 0%,
-    rgba(17, 26, 49, 1) 50%,
+  --background-color: linear-gradient(160deg,rgba(23, 46, 84, 1) 0%,
+    rgba(17, 26, 49, 1) 31%,
     rgba(15, 23, 42, 1) 100%);
 }
 

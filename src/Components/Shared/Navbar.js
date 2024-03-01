@@ -13,6 +13,7 @@ import { COLOR_LIGHT, ICON_DEFAULT_COLOR, SUN_COLOR } from "./Constants";
 import { Icon } from "./Icon";
 import { ThemeContext } from "../../Context/theme";
 import _ from "lodash";
+import { NavbarToggleContext } from "../../Context/navbarToggle";
 
 const navbarPageActiveColor = (currentPage, pageName) => {
   return currentPage === pageName ? COLOR_LIGHT : ICON_DEFAULT_COLOR;
@@ -74,11 +75,16 @@ const NavLink = ({
 
 const Navbar = memo(() => {
   const { theme } = useContext(ThemeContext);
+  const { borderToggle } = useContext(NavbarToggleContext);
+
   const CURRENT_PAGE = window.location.href.split("/")[4];
   const logo = theme ? 'https://i.postimg.cc/jd6PkhDs/Res-View-Logo-Dark.png' : 'https://i.postimg.cc/Y0dMy9mf/Copy-of-Untitled-Design-removebg-preview.png';
   return (
     <>
-      <div class='w-full py-2 px-8 text-white lg:px-8 lg:py-4 flex items-center justify-between flex-initial fixed z-20'>
+      <div class={cn(
+        'w-full py-[1em] px-8 text-white lg:px-8 lg:py-4 flex items-center justify-between flex-initial fixed top-0 z-20',
+        {'border-b-2 dark:bg-blue-400 bg-blue-20 border-gray-900 dark:border-white transition': borderToggle}
+      )}>
         <div className='flex items-center justify-center gap-x-2 w-full'>
           <a href='/'>
             <img
