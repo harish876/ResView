@@ -115,6 +115,11 @@ const Navbar = memo(() => {
             iconHeight={"1.4em"}
             iconViewBox={"0 0 640 512"}
           />
+          <a href={`https://medium.com/@aunsh/resview-a-pbft-visualizer-based-on-the-resilientdb-blockchain-fabric-3ffaeb2aaee5`} target="_blank" rel="noreferrer nofollow" className={cn(
+            'cursor-pointer font-bold text-gray-900 dark:text-white'
+          )}>
+            Blog
+          </a>
           <NavLink
             title={"Visualizer"}
             currentPage={CURRENT_PAGE}

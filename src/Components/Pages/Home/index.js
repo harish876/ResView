@@ -1,13 +1,15 @@
 import React from 'react';
-import Wrapper from '../../Shared/Wrapper';
+import Wrapper, { ParticleWrapper } from '../../Shared/Wrapper';
 // TODO: Remove the below import and entire components after demo is done
-import { anglesDownIcon } from '../../../Resources/Icons';
-import { Icon } from '../../Shared/Icon';
-import pbft from '../../../Resources/Images/pbft.PNG';
 import blockchain from '../../../Resources/Images/blockchain.jpeg';
+import pbft from '../../../Resources/Images/pbft.PNG';
+import { DEFAULT_IMAGE } from '../../../Constants';
+import Card from './Components/Card';
+import { homePageCardDetails } from './data';
 
-const ScrollBelow = () => {
-  const cardStyle = {
+const ResViewOld = () => {
+
+    const cardStyle = {
     backgroundColor: '#333', // Example card color
     color: 'white',
     flex: '1',
@@ -43,12 +45,9 @@ const ScrollBelow = () => {
     height: '400px',
   };
 
-
-  
   return (
-    <div className='flex flex-col items-center justify-center hover:text-blue-200 cursor-pointer text-gray dark:text-white'>
-  
-    <div className="flex"> {/* Image on the Left Side */} 
+    <>
+      <div className="flex"> {/* Image on the Left Side */} 
       <div className="w-1/2 p-2">
           <img src={blockchain} alt="Example" className="object-cover w-full h-full"/>
         </div> 
@@ -115,31 +114,92 @@ const ScrollBelow = () => {
         <p className="text-white w-full text-justify">All replicas, primary included, respond to the client by confirming the transaction.</p>
       </div>
     </div>
+    </>
+  );
+};
 
 
 
+const Home = () => {
+  
+  return (
+    <Wrapper>
+      <div aria-hidden="true" class="absolute inset-0 grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20">
+        <div class="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:from-blue-700"></div>
+        <div class="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600"></div>
+      </div>
+      <div className='flex flex-col items-center justify-center text-gray dark:text-white'>
+      <div class="relative pt-20 ml-auto">
+            <div class="lg:w-2/3 text-center mx-auto">
 
-    {/* <div className='text-20p bold mb-10p'>Scroll</div> */}
-    {/* <div>
-    //     <Icon
-    //       path={anglesDownIcon}
-    //       fill={"gray"}
-    //       height={"1.8em"}
-    //       viewBox={"0 0 448 512"}
-    //     />
-    //   </div> */}
+                <div class="text-gray-900 dark:text-white font-bold text-6xl md:text-6xl xl:text-7xl">Visualizer for a new age blockchain.</div>
+
+                <p class="mt-8 px-[6em] text-gray-700 dark:text-gray-300">A novel dashboard metric of a blockchain database system, offering new users and learners a clear visualization of a complex technology.</p>
+                <div class="mt-16 flex items-center justify-center gap-y-4 gap-x-[4em]">
+                    <a
+                      href="/pages/visualizer"
+                      class="relative flex h-11 w-135p items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border before:border-transparent before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max"
+                    >
+                      <span
+                        class="relative text-base font-semibold text-primary dark:text-white"
+                        >Visualizer</span
+                      >
+                    </a>
+                    <a
+                      href="https://medium.com/@aunsh/resview-a-pbft-visualizer-based-on-the-resilientdb-blockchain-fabric-3ffaeb2aaee5"
+                      target='_blank'
+                      rel='noreferrer nofollow'
+                      class="relative flex h-11 w-135p items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border before:border-transparent before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max"
+                    >
+                      <span
+                        class="relative text-base font-semibold text-primary dark:text-white"
+                        >Learn More</span
+                      >
+                    </a>
+                    
+                </div>
+                <div class="py-8 mt-16 px-2 border-y border-gray-900 dark:border-white sm:flex flex items-center justify-between">
+                    <div class="text-center">
+                        <h6 class="text-lg font-semibold text-gray-700 dark:text-white">The lowest price</h6>
+                        <p class="mt-2 text-gray-500">Some text here</p>
+                    </div>
+                    <div class="text-center">
+                        <h6 class="text-lg font-semibold text-gray-700 dark:text-white">The fastest on the market</h6>
+                        <p class="mt-2 text-gray-500">Some text here</p>
+                    </div>
+                    <div class="text-center">
+                        <h6 class="text-lg font-semibold text-gray-700 dark:text-white">The most loved</h6>
+                        <p class="mt-2 text-gray-500">Some text here</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 flex flex-col items-center justify-center">
+              {homePageCardDetails.length > 0 && (
+                homePageCardDetails.map(({image, alt, title, subTitle, description, tech, link}, index) => (
+                  <Card
+                    key={index}
+                    image={image}
+                    alt={alt}
+                    title={title}
+                    link={link}
+                    subTitle={subTitle}
+                    description={description}
+                    tech={tech}
+                  />
+                ))
+              )}
+            </div>
+        </div>
     </div>
+    </Wrapper>
   );
 };
 
 const index = () => {
-
   return (
-    <Wrapper customWidth={"w-full"} style={{ border: "1px solid red" }}>
-      <div>
-        <ScrollBelow />
-      </div>
-    </Wrapper>
+    <ParticleWrapper>
+      <Home />
+    </ParticleWrapper>
   );
 }
 

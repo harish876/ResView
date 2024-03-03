@@ -31,7 +31,7 @@ const LinkIcon = ({ link, social }) => {
 const Card = ({ element }) => {
   const { name, title, socials, profilePic, quote } = element;
   return (
-    <div className='w-full h-250p bg-white text-black rounded-md shadow-md dark:border-1p grid grid-cols-2 gap-x-4 dark:border-solid dark:border-gray-50 dark:bg-blue-300 dark:text-white px-4 py-6 hover:scale-105 transition'>
+    <div className='w-full h-250p bg-white text-black rounded-md shadow-md dark:border-2p grid grid-cols-2 gap-x-4 dark:border-solid dark:border-gray-50 dark:bg-blue-500 dark:text-white px-4 py-6 hover:scale-105 transition'>
       <div className='w-full h-full flex items-center justify-center'>
         <img
           src={profilePic || defaultProfileImage}

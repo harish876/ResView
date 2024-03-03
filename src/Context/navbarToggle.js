@@ -26,7 +26,7 @@ export const NavbarToggleProvider = ({ children }) => {
         }
         const options = {
         root: null,
-        threshold: 0.2,
+        threshold: 0,
         };
         bToggle.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {

@@ -8,13 +8,13 @@ const Footer = () => {
         Handcrafted with &#10084; by{" "}
         <span className='hover:text-blue-190'>
             <a href='/pages/team'>
-            The Res <span className='italic'>View</span> Team
+            The ResViewTeam
             </a>
         </span>
         </div>
         <div className='text-12p text-gray-100 bold my-4p'>@ UC Davis</div>
         <div className='text-12p text-gray-100 bold'>
-        v1.1 &middot; &copy; 2023 &middot; All rights reserved
+        v2.0.1 &middot; &copy; 2023-2024 &middot; All rights reserved
         </div>
     </div>
     </div>
