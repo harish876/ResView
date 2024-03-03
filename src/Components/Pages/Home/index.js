@@ -6,6 +6,7 @@ import pbft from '../../../Resources/Images/pbft.PNG';
 import { DEFAULT_IMAGE } from '../../../Constants';
 import Card from './Components/Card';
 import { homePageCardDetails } from './data';
+import Features from './Graphs';
 
 const ResViewOld = () => {
 
@@ -125,8 +126,8 @@ const Home = () => {
   return (
     <Wrapper>
       <div aria-hidden="true" class="absolute inset-0 grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20">
-        <div class="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:from-blue-700"></div>
-        <div class="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600"></div>
+        <div class="blur-[200px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:from-blue-700"></div>
+        <div class="blur-[200px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600"></div>
       </div>
       <div className='flex flex-col items-center justify-center text-gray dark:text-white'>
       <div class="relative pt-20 ml-auto">
@@ -175,21 +176,8 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <div class="mt-12 flex flex-col items-center justify-center">
-              {homePageCardDetails.length > 0 && (
-                homePageCardDetails.map(({image, alt, title, subTitle, description, tech, link}, index) => (
-                  <Card
-                    key={index}
-                    image={image}
-                    alt={alt}
-                    title={title}
-                    link={link}
-                    subTitle={subTitle}
-                    description={description}
-                    tech={tech}
-                  />
-                ))
-              )}
+            <div className="mt-24">
+              <Features />
             </div>
         </div>
     </div>

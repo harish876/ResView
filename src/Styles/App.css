@@ -772,6 +772,9 @@ video {
 .border-2p {
   border-width: 2px;
 }
+.border-3p {
+  border-width: 3px;
+}
 .border-\[2px\] {
   border-width: 2px;
 }
@@ -788,6 +791,10 @@ video {
 .border-blue-190 {
   --tw-border-opacity: 1;
   border-color: rgb(24 151 136 / var(--tw-border-opacity));
+}
+.border-gray-170 {
+  --tw-border-opacity: 1;
+  border-color: rgb(46 46 46 / var(--tw-border-opacity));
 }
 .border-gray-600 {
   --tw-border-opacity: 1;
@@ -839,18 +846,13 @@ video {
 .bg-gradient-to-r {
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
-.from-blue-550 {
-  --tw-gradient-from: #025888 var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(2 88 136 / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+.bg-none {
+  background-image: none;
 }
 .from-cyan-400 {
   --tw-gradient-from: #22d3ee var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(34 211 238 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-.to-blue-600 {
-  --tw-gradient-to: #002071 var(--tw-gradient-to-position);
 }
 .to-purple-400 {
   --tw-gradient-to: #c084fc var(--tw-gradient-to-position);
@@ -879,6 +881,10 @@ video {
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+.px-3p {
+  padding-left: 3px;
+  padding-right: 3px;
 }
 .px-4 {
   padding-left: 1rem;
@@ -912,6 +918,10 @@ video {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
 }
+.py-3p {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -934,6 +944,9 @@ video {
 }
 .pt-20 {
   padding-top: 5rem;
+}
+.text-left {
+  text-align: left;
 }
 .text-center {
   text-align: center;
@@ -1002,6 +1015,9 @@ video {
 .font-bold {
   font-weight: 700;
 }
+.font-normal {
+  font-weight: 400;
+}
 .font-semibold {
   font-weight: 600;
 }
@@ -1031,6 +1047,10 @@ video {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
 }
+.text-gray-600 {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity));
+}
 .text-gray-700 {
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity));
@@ -1055,8 +1075,8 @@ video {
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-.blur-\[106px\] {
-  --tw-blur: blur(106px);
+.blur-\[200px\] {
+  --tw-blur: blur(200px);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 .transition {
@@ -1158,158 +1178,6 @@ svg:hover {
   top: -6px;
   right: -8px;
   box-shadow: 0 0 20px var(--main-light-color);
-}
-
-@keyframes animateC {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes animate {
-  0% {
-    transform: rotate(45deg);
-  }
-
-  100% {
-    transform: rotate(405deg);
-  }
-}
-
-
-/* Add this to your CSS file or style block */
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-/* Add an additional class for styling the cursor */
-@keyframes typewriter {
-  from {
-    width: 0;
-  }
-  to {
-    width: 13ch;
-  }
-}
-
-/* Apply the typewriter animation to the title */
-.typewriter {
-  display: inline-block;
-  overflow: hidden;
-  border-right: 0.15em solid white; /* Adjust border color and size as needed */
-  white-space: nowrap;
-  margin: 0;
-  animation: typewriter 3s steps(20) forwards infinite alternate;
-}
-
-@keyframes titlewriter {
-  from {
-    width: 0;
-  }
-  to {
-    width: 16ch;
-  }
-}
-
-/* Apply the typewriter animation to the title */
-.titlewriter {
-  display: inline-block;
-  overflow: hidden;
-  border-right: 0.15em solid white; /* Adjust border color and size as needed */
-  white-space: nowrap;
-  margin: 0;
-  animation: titlewriter 3s steps(20) forwards infinite alternate;
-}
-
-
-.card-container {
-  width: 750px;
-  height: 300px;
-  margin: 3em 0 5em 0;
-}
-
-.card-container .grid .image-container .image img:hover,
-.card-container .invert-grid .image-container .image img:hover {
-  box-shadow: 0px 0px 20px 0px rgb(120, 188, 234);
-  transition: .2s ease-in-out;
-}
-
-.card-container .grid .details-container,
-.card-container .invert-grid .details-container {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.card-container .grid .details-container .title {
-  font-size: 1.4em;
-  position: absolute;
-  top: 30px;
-  right: 5px;
-}
-
-.card-container .invert-grid .details-container .title {
-  font-size: 1.4em;
-  position: absolute;
-  top: 30px;
-  left: 5px;
-}
-
-.card-container .grid .details-container .title .name,
-.card-container .invert-grid .details-container .title .name {
-  color: var(--light-dark-font-color);
-}
-
-.card-container .grid .details-container .title .name:hover,
-.card-container .invert-grid .details-container .title .name:hover {
-  color: var(--logo-color);
-}
-
-.card-container .grid .details-container .title .sub-title,
-.card-container .invert-grid .details-container .title .sub-title {
-  color: var(--grey-color);
-  font-size: 0.45em;
-  margin-top: -0.5em;
-  cursor: context-menu;
-}
-
-.card-container .grid .details-container .description {
-  color: var(--grey-color);
-  font-size: 0.78em;
-  margin-top: 1em;
-  position: absolute;
-  top: 30%;
-  right: 5px;
-  width: 100%;
-  height: 85px;
-  padding: 1em 1em;
-  background-color: var(--card-color);
-  border-radius: 10px;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-}
-
-.card-container .invert-grid .details-container .description {
-  color: var(--grey-color);
-  font-size: 0.78em;
-  margin-top: 1em;
-  position: absolute;
-  top: 30%;
-  left: 5px;
-  width: 120%;
-  height: 85px;
-  padding: 1em 1em;
-  background-color: var(--card-color);
-  border-radius: 10px;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .before\:absolute::before {
@@ -1418,6 +1286,15 @@ svg:hover {
   border-style: solid;
 }
 
+:is([data-theme="dark"] .dark\:border-none) {
+  border-style: none;
+}
+
+:is([data-theme="dark"] .dark\:border-blue-600) {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 32 113 / var(--tw-border-opacity));
+}
+
 :is([data-theme="dark"] .dark\:border-gray-50) {
   --tw-border-opacity: 1;
   border-color: rgb(249 250 251 / var(--tw-border-opacity));
@@ -1448,10 +1325,24 @@ svg:hover {
   background-color: rgb(7 132 102 / var(--tw-bg-opacity));
 }
 
+:is([data-theme="dark"] .dark\:bg-gradient-to-r) {
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+
+:is([data-theme="dark"] .dark\:from-blue-600) {
+  --tw-gradient-from: #002071 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(0 32 113 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 :is([data-theme="dark"] .dark\:from-blue-700) {
   --tw-gradient-from: #1d4ed8 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(29 78 216 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+:is([data-theme="dark"] .dark\:to-blue-550) {
+  --tw-gradient-to: #025888 var(--tw-gradient-to-position);
 }
 
 :is([data-theme="dark"] .dark\:to-indigo-600) {
