@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { homePageCardDetails } from './data'
-import Card from './Components/Card'
-import Title from '../../Shared/Title'
-import { linearGraphIcon } from '../../../Resources/Icons'
-import { ThemeContext } from '../../../Context/theme'
+import Card from './Card'
+import Title from '../../../Shared/Title'
+import { linearGraphIcon } from '../../../../Resources/Icons'
+import { ThemeContext } from '../../../../Context/theme'
 
 const Graphs = () => {
   const { theme } = useContext(ThemeContext);

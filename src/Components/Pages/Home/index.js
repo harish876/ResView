@@ -4,8 +4,8 @@ import Wrapper, { ParticleWrapper } from '../../Shared/Wrapper';
 import blockchain from '../../../Resources/Images/blockchain.jpeg';
 import pbft from '../../../Resources/Images/pbft.PNG';
 import { DEFAULT_IMAGE } from '../../../Constants';
-import Card from './Components/Card';
-import { homePageCardDetails } from './data';
+import Card from './Graphs/Card';
+import { homePageCardDetails } from './Graphs/data';
 import Features from './Graphs';
 
 const ResViewOld = () => {
