@@ -1,5 +1,5 @@
 // TODO: Change the data once you get the details of your team members 
-export const data = [
+export const currentTeam = [
   {
     name: "Saipranav Kotamreddy",
     title: "Project Lead & BE Developer",
@@ -19,7 +19,10 @@ export const data = [
     ],
     profilePic: "https://i.postimg.cc/MZRbqn4Y/aunshPic.jpg",
     quote: "Veni Vidi Vici",
-  },
+  }
+];
+
+export const pastMembers = [
   {
     name: "Nikita B. Emberi",
     title: "Frontend Developer",
@@ -50,4 +53,4 @@ export const data = [
     ],
     profilePic: "https://i.postimg.cc/9MPYx03x/harshini.jpg",
   },
-];
+]

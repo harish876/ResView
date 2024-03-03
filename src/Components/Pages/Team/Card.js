@@ -28,7 +28,7 @@ const LinkIcon = ({ link, social }) => {
   );
 };
 
-const Card = ({ element }) => {
+export const CurrentTeamCard = ({ element }) => {
   const { name, title, socials, profilePic, quote } = element;
   return (
     <div className='w-full h-250p bg-white text-black rounded-md shadow-md dark:border-2p grid grid-cols-2 gap-x-4 dark:border-solid dark:border-gray-50 dark:bg-blue-500 dark:text-white px-4 py-6 hover:scale-105 transition'>
@@ -40,7 +40,7 @@ const Card = ({ element }) => {
         />
       </div>
       <div className='py-10p flex flex-col items-center justify-evenly gap-y-4'>
-        <div className='truncate text-20p bold text-black max-w-200p dark:text-white'>
+        <div className='truncate text-20p bold text-black max-w-200p dark:text-white font-bold'>
           {name}
         </div>
         <div className='text-14p'>{title}</div>
@@ -60,4 +60,22 @@ const Card = ({ element }) => {
   );
 };
 
-export default Card
+export const PastMembersCard = ({ element }) => {
+  const { name, profilePic, } = element;
+  return (
+    <div className='w-full h-auto bg-white text-black rounded-md shadow-md dark:border-2p flex flex-col gap-x-4 dark:border-solid dark:border-gray-50 dark:bg-blue-500 dark:text-white px-4 py-6 hover:scale-105 transition'>
+      <div className='w-full h-full flex items-center justify-center rounded-lg'>
+        <img
+          src={profilePic || defaultProfileImage}
+          alt={`Profile pic of ${name}`}
+          className='object-contain rounded-lg h-135p w-150p'
+        />
+      </div>
+      <div className='py-10p flex flex-col items-center justify-evenly gap-y-4 mt-4'>
+        <div className='truncate text-20p bold text-black max-w-200p dark:text-white'>
+          {name}
+        </div>
+      </div>
+    </div>
+  );
+};

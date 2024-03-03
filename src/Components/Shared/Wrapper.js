@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import ParticleBackground from 'react-particle-backgrounds'
+import { ThemeContext } from '../../Context/theme'
 
-const settings = {
+let settingsBasic = {
   canvas: {
       canvasFillSpace: true,
       useBouncyWalls: false
     },
     particle: {
-      particleCount: 50,
+      particleCount: 80,
       color: "#fff",
       minSize: 1,
       maxSize: 4
@@ -35,6 +36,16 @@ const Wrapper = ({ children }) => {
 }
 
 export const ParticleWrapper = ({ children }) => {
+  const { theme } = useContext(ThemeContext);
+  const settings = theme ? settingsBasic : {
+    ...settingsBasic,
+    particle: {
+      particleCount: 80,
+      color: "#0d98db",
+      minSize: 1,
+      maxSize: 4
+    }
+  }
   return (
   <div className='relative'>
         <div className='absolute -z-10 h-full w-full'>

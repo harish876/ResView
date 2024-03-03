@@ -44,6 +44,7 @@ module.exports = {
         "1p": "1px",
         "2p": "2px",
         "3p": "3px",
+        "4p": "4px",
         "6p": "6px",
       },
       boxShadow: {
@@ -347,6 +348,8 @@ module.exports = {
         "300p-1fr": "300px 1fr",
         "16p-1fr": "16px 1fr",
         "3-max-content": "repeat(3, minmax(0, max-content))",
+        "1.5-1fr": "1.5fr 1fr",
+        "1-1.5fr": "1fr 1.5fr"
       },
       gridTemplateRows: {
         10: "repeat(10, 1fr);",
@@ -506,6 +509,7 @@ module.exports = {
         "420p": "420px",
         "455p": "455px",
         "460p": "460px",
+        "750p": "750px",
         "880p": "880px",
         "920p": "920px"
       },
