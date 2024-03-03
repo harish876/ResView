@@ -30,7 +30,7 @@ const DescriptionElement = ({ link, title, description }) => {
               rel='noopener noreferrer nofollow'
               aria-label={title}
             >
-              <CardSkeleton value={title} classes={'text-30p font-bold p-2'} />
+              <CardSkeleton value={title} classes={'text-26p font-bold p-2'} />
             </a>
             <CardSkeleton value={description} classes={'text-18p p-4 font-normal text-left'} />
         </div>

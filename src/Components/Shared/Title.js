@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Icon } from './Icon'
+import { ThemeContext } from '../../Context/theme';
 
-const Title = ({ title, icon, iconFill, iconHeight, iconViewBox }) => {
+const Title = ({ title, icon, iconHeight, iconViewBox }) => {
+  const { theme } = useContext(ThemeContext);
+
+  const iconFill = theme ? 'white' : '#2e2e2e';
   return (
     <div className='flex items-center justify-center gap-x-2 border-b-4 border-blue-550 mb-16'>
         {icon && (

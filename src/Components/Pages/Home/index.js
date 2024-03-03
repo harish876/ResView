@@ -1,12 +1,10 @@
 import React from 'react';
-import Wrapper, { ParticleWrapper } from '../../Shared/Wrapper';
+import Wrapper from '../../Shared/Wrapper';
 // TODO: Remove the below import and entire components after demo is done
 import blockchain from '../../../Resources/Images/blockchain.jpeg';
 import pbft from '../../../Resources/Images/pbft.PNG';
-import { DEFAULT_IMAGE } from '../../../Constants';
-import Card from './Graphs/Card';
-import { homePageCardDetails } from './Graphs/data';
-import Features from './Graphs';
+import Graphs from './Graphs';
+import What from './What';
 
 const ResViewOld = () => {
 
@@ -177,7 +175,10 @@ const Home = () => {
                 </div>
             </div>
             <div className="mt-24">
-              <Features />
+              <What />
+            </div>
+            <div className="mt-24">
+              <Graphs />
             </div>
         </div>
     </div>
