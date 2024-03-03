@@ -53,9 +53,9 @@ const Card = ({
   };
 
   return (
-    <div className='card-container'>
-      <div className='grid'>
-        <div className={`w-full h-300p rounded-lg p-2 ${CARD_BG_GRAD} `}>
+    <div className='mt-2 mb-2 mx-0 w-750p'>
+      <div className='grid grid-cols-1.5-1fr gap-x-4'>
+        <div className={`w-full h-300p rounded-lg p-2 ${CARD_BG_GRAD} `} style={{ border: '1px solid red' }}>
           <a
             href={link}
             target={"_blank"}
@@ -82,9 +82,9 @@ const Card = ({
             </div>
           </a>
         </div>
-        <div className='details-container'>
+        <div className='' style={{ border: '1px solid blue' }}>
           <div
-            className='title app'
+            className=''
             style={{
               alignItems: "flex-end",
             }}
@@ -95,35 +95,11 @@ const Card = ({
               rel='noopener noreferrer nofollow'
               aria-label={title}
             >
-              <div className='name'>{title}</div>
+              <div className=''>{title}</div>
             </a>
-            <div className='sub-title'>{subTitle}</div>
+            <div className=''>{subTitle}</div>
           </div>
-          <div className='description flex_left'>{description}</div>
-          <div className='tech-stack flex_right'>
-            {tech.length > 0 &&
-              tech.map((element, index) => (
-                <div className='tech' key={index}>
-                  {element}
-                </div>
-              ))}
-          </div>
-          <div className='icons flex_right'>
-            <div className='expand-button flex_middle'>
-                <div style={{ marginRight: "0.4em" }}>Expand Project</div>
-                Icon
-              </div>
-            <div className='icon' style={{ marginRight: "0" }}>
-                <a
-                  href={link}
-                  target={"_blank"}
-                  rel='noopener noreferrer nofollow'
-                  aria-label={title}
-                >
-                  Icon
-                </a>
-              </div>
-          </div>
+          <div className=''>{description}</div>
         </div>
       </div>
     </div>

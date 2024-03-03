@@ -505,9 +505,6 @@ video {
 .z-10 {
   z-index: 10;
 }
-.z-2 {
-  z-index: 2;
-}
 .z-20 {
   z-index: 20;
 }
@@ -516,6 +513,10 @@ video {
 }
 .m-2 {
   margin: 0.5rem;
+}
+.mx-0 {
+  margin-left: 0px;
+  margin-right: 0px;
 }
 .mx-5p {
   margin-left: 5px;
@@ -649,6 +650,9 @@ video {
 .w-40p {
   width: 40px;
 }
+.w-750p {
+  width: 750px;
+}
 .w-80p {
   width: 80px;
 }
@@ -682,6 +686,12 @@ video {
 }
 .cursor-pointer {
   cursor: pointer;
+}
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.grid-cols-1\.5-1fr {
+  grid-template-columns: 1.5fr 1fr;
 }
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1227,23 +1237,6 @@ svg:hover {
   margin: 3em 0 5em 0;
 }
 
-.card-container .grid {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  column-gap: 10px;
-  height: 100%;
-}
-
-.card-container .invert-grid {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  column-gap: 10px;
-  height: 100%;
-}
-
-
 .card-container .grid .image-container .image img:hover,
 .card-container .invert-grid .image-container .image img:hover {
   box-shadow: 0px 0px 20px 0px rgb(120, 188, 234);
@@ -1296,7 +1289,7 @@ svg:hover {
   position: absolute;
   top: 30%;
   right: 5px;
-  width: 120%;
+  width: 100%;
   height: 85px;
   padding: 1em 1em;
   background-color: var(--card-color);
@@ -1319,84 +1312,6 @@ svg:hover {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
-.card-container .grid .details-container .tech-stack {
-  position: absolute;
-  right: 5px;
-  width: 100%;
-  height: 20px;
-  top: 70%;
-  font-size: 0.7em;
-  color: var(--grey-color);
-}
-
-.card-container .invert-grid .details-container .tech-stack {
-  position: absolute;
-  left: 5px;
-  width: 100%;
-  height: 20px;
-  top: 70%;
-  font-size: 0.7em;
-  color: var(--grey-color);
-}
-
-.card-container .grid .details-container .tech-stack .tech,
-.card-container .invert-grid .details-container .tech-stack .tech {
-  margin: 0 0.3em;
-  text-align: center;
-}
-
-.card-container .grid .details-container .icons {
-  position: absolute;
-  top: 85%;
-  right: 5px;
-}
-
-.card-container .invert-grid .details-container .icons {
-  position: absolute;
-  top: 85%;
-  left: 5px;
-}
-
-.card-container .grid .details-container .icons .icon,
-.card-container .invert-grid .details-container .icons .icon {
-  color: var(--grey-color);
-  cursor: pointer;
-  margin: 0 1.5em 0 0;
-}
-
-.card-container .grid .details-container .icons .icon:hover,
-.card-container .invert-grid .details-container .icons .icon:hover {
-  color: var(--logo-color);
-}
-
-.card-container .grid .details-container .icons .expand-button,
-.card-container .invert-grid .details-container .icons .expand-button {
-  color: var(--grey-color);
-  cursor: pointer;
-  margin: 0 2.5em 0.4em 0;
-  font-size: 0.6em;
-  border: 1px solid var(--grey-color);
-  padding: 0.2em 0.5em 0.2em 0.5em;
-  border-radius: 10px;
-}
-
-.card-container .grid .details-container .icons .expand-button:hover,
-.card-container .invert-grid .details-container .icons .expand-button:hover {
-  color: var(--logo-color);
-  border-color: var(--logo-color);
-}
-
-.card-container .grid .details-container .icons .icon a,
-.card-container .invert-grid .details-container .icons .icon a {
-  color: var(--grey-color);
-  cursor: pointer;
-}
-
-.card-container .invert-grid .details-container .icons .icon a:hover,
-.card-container .grid .details-container .icons .icon a:hover {
-  color: var(--logo-color);
-}
-
 .before\:absolute::before {
   content: var(--tw-content);
   position: absolute;
@@ -1417,9 +1332,10 @@ svg:hover {
   border-width: 1px;
 }
 
-.before\:border-transparent::before {
+.before\:border-blue-500::before {
   content: var(--tw-content);
-  border-color: transparent;
+  --tw-border-opacity: 1;
+  border-color: rgb(15 23 42 / var(--tw-border-opacity));
 }
 
 .before\:bg-gradient-to-b::before {

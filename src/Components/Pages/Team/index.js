@@ -20,9 +20,9 @@ const Team = () => {
 
 const index = () => {
   return (
-    <ParticleWrapper>
+    // <ParticleWrapper>
       <Team />
-    </ParticleWrapper>
+    // </ParticleWrapper>
   );
 }
 

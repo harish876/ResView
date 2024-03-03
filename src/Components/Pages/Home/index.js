@@ -132,13 +132,14 @@ const Home = () => {
       <div class="relative pt-20 ml-auto">
             <div class="lg:w-2/3 text-center mx-auto">
 
-                <div class="text-gray-900 dark:text-white font-bold text-6xl md:text-6xl xl:text-7xl">Visualizer for a new age blockchain.</div>
+                <div class="text-gray-900 dark:text-white font-bold text-6xl md:text-6xl xl:text-7xl">Visualizer for a new age blockchain fabric.</div>
 
-                <p class="mt-8 px-[6em] text-gray-700 dark:text-gray-300">A novel dashboard metric of a blockchain database system, offering new users and learners a clear visualization of a complex technology.</p>
+                <p class="mt-8 px-[6em] text-gray-700 dark:text-gray-300 text-18p">A novel dashboard metric of a blockchain database system, offering new users and learners a clear visualization of a complex technology.</p>
                 <div class="mt-16 flex items-center justify-center gap-y-4 gap-x-[4em]">
                     <a
                       href="/pages/visualizer"
-                      class="relative flex h-11 w-135p items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border before:border-transparent before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max"
+                      class="relative flex h-11 w-135p items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border before:border-blue-500 before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 
+                      dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max"
                     >
                       <span
                         class="relative text-base font-semibold text-primary dark:text-white"
@@ -149,7 +150,8 @@ const Home = () => {
                       href="https://medium.com/@aunsh/resview-a-pbft-visualizer-based-on-the-resilientdb-blockchain-fabric-3ffaeb2aaee5"
                       target='_blank'
                       rel='noreferrer nofollow'
-                      class="relative flex h-11 w-135p items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border before:border-transparent before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max"
+                      class="relative flex h-11 w-135p items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border before:border-blue-500 before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 
+                      dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max"
                     >
                       <span
                         class="relative text-base font-semibold text-primary dark:text-white"
@@ -197,9 +199,9 @@ const Home = () => {
 
 const index = () => {
   return (
-    <ParticleWrapper>
+    // <ParticleWrapper>
       <Home />
-    </ParticleWrapper>
+    // </ParticleWrapper>
   );
 }
 
