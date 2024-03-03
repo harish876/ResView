@@ -40,7 +40,7 @@ export const CurrentTeamCard = ({ element }) => {
         />
       </div>
       <div className='py-10p flex flex-col items-center justify-evenly gap-y-4'>
-        <div className='truncate text-20p bold text-black max-w-200p dark:text-white'>
+        <div className='truncate text-20p bold text-black max-w-200p dark:text-white font-bold'>
           {name}
         </div>
         <div className='text-14p'>{title}</div>
@@ -72,7 +72,7 @@ export const PastMembersCard = ({ element }) => {
         />
       </div>
       <div className='py-10p flex flex-col items-center justify-evenly gap-y-4 mt-4'>
-        <div className='truncate text-20p bold text-black max-w-200p dark:text-white font-bold'>
+        <div className='truncate text-20p bold text-black max-w-200p dark:text-white'>
           {name}
         </div>
       </div>
