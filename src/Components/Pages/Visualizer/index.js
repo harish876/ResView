@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Resizable } from "re-resizable";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { GraphResizerContext, GraphViewContext } from "../../../Context/graph";
-import { anglesRightIcon } from "../../../Resources/Icons";
+import { anglesRightIcon, eyeIcon } from "../../../Resources/Icons";
 import { WebSocketDemo } from '../../../Socket';
 import { Icon } from "../../Shared/Icon";
 import Wrapper from "../../Shared/Wrapper";
@@ -11,7 +11,8 @@ import TypeSelector from "./Components/Ancillary/TypeSelector";
 import TransactionForm from "./Components/Graphs/Form";
 import MvT, { MvTGraphManipulator } from "./Components/Graphs/MvT";
 import PbftGraph from "./Components/Graphs/PbftGraph";
-import TransactionSelect from './Components/TransactionSelect';
+import Input from './Components/Input';
+import Title from '../../Shared/Title';
 
 
 const colorList = ["hsl(148, 70%, 50%)", "hsl(200, 70%, 50%)", "hsl(171, 70%, 50%)", "hsl(313, 70%, 50%)"];
@@ -28,16 +29,16 @@ const Visualizer = () => {
   const { boxValues, setBoxValues, setResizing } =
     useContext(GraphResizerContext);
 
-  const [messageHistory, setMessageHistory]= useState({});
+  const [messageHistory, setMessageHistory] = useState({});
   const [currentTransaction, setCurrentTransaction] = useState(0);
   const [messageChartData, setMessageChartData] = useState([]);
-  const [labelToggle, setLabelToggle] = useState({"Replica 1":true, "Replica 2":true, "Replica 3":true, "Replica 4":true});
-  const [labelToggleFaulty, setLabelToggleFaulty] = useState({"Replica 1":false, "Replica 2":false, "Replica 3":false, "Replica 4":false});
+  const [labelToggle, setLabelToggle] = useState({ "Replica 1": true, "Replica 2": true, "Replica 3": true, "Replica 4": true });
+  const [labelToggleFaulty, setLabelToggleFaulty] = useState({ "Replica 1": false, "Replica 2": false, "Replica 3": false, "Replica 4": false });
   const [resetGraph, setResetGraph] = useState(0);
 
   const updateGraph = () => {
     let value = resetGraph;
-    value=value+1;
+    value = value + 1;
     setResetGraph(value);
   }
 
@@ -51,23 +52,23 @@ const Visualizer = () => {
   };
 
   const sendMessage = (replicaNumber) => {
-    const ws_list = ['22001', '22002', '22003', '22004'];  
-    const sendWs = new WebSocket('ws://localhost:'+ws_list[replicaNumber]);
+    const ws_list = ['22001', '22002', '22003', '22004'];
+    const sendWs = new WebSocket('ws://localhost:' + ws_list[replicaNumber]);
     sendWs.onopen = () => {
       sendWs.send("Message");
     }
   }
 
-  const toggleFaulty= (label) => {
+  const toggleFaulty = (label) => {
     setLabelToggleFaulty((prevLabels) => {
       const updatedLabels = { ...prevLabels };
       updatedLabels[label] = !updatedLabels[label];
       return updatedLabels;
     });
-    sendMessage(parseInt(label.slice(-1)-1));
+    sendMessage(parseInt(label.slice(-1) - 1));
     updateGraph();
   };
-  const onMessage = (newData)=>{
+  const onMessage = (newData) => {
     setMessageHistory(newData);
     setCurrentTransaction(Object.keys(messageHistory).length);
 
@@ -75,34 +76,34 @@ const Visualizer = () => {
   };
 
   useEffect(() => {
-    if(!(currentTransaction in messageHistory) || messageHistory[currentTransaction].current_time<0){
-      setMessageChartData([[],[]])
+    if (!(currentTransaction in messageHistory) || messageHistory[currentTransaction].current_time < 0) {
+      setMessageChartData([[], []])
       // console.log(currentTransaction, " Not in messageHistory")
     }
-    else{
+    else {
       const transactionData = messageHistory[currentTransaction];
-      console.log("TRANSACTION",transactionData)
-      let startTime=0;
-      let firstPrepareTime=0;
-      let pre_prepare_times=[];
-      let prepare_times=[];
-      let all_prepare_times=[];
-      let all_commit_times=[];
-      let label_list=[];
+      console.log("TRANSACTION", transactionData)
+      let startTime = 0;
+      let firstPrepareTime = 0;
+      let pre_prepare_times = [];
+      let prepare_times = [];
+      let all_prepare_times = [];
+      let all_commit_times = [];
+      let label_list = [];
 
       Object.keys(transactionData).forEach((key) => {
         label_list.push("Replica " + key);
-        if(transactionData[key].primary_id!==transactionData[key].replica_id){
-          pre_prepare_times.push(Math.floor(transactionData[key].propose_pre_prepare_time/10000));
+        if (transactionData[key].primary_id !== transactionData[key].replica_id) {
+          pre_prepare_times.push(Math.floor(transactionData[key].propose_pre_prepare_time / 10000));
         }
-        prepare_times.push(Math.floor(transactionData[key].prepare_time/10000));
-        let replica_prepare_timestamps=[];
-        let replica_commit_timestamps=[];
+        prepare_times.push(Math.floor(transactionData[key].prepare_time / 10000));
+        let replica_prepare_timestamps = [];
+        let replica_commit_timestamps = [];
         transactionData[key]["prepare_message_timestamps"].map((time) => {
-          replica_prepare_timestamps.push(Math.floor(time/10000));
+          replica_prepare_timestamps.push(Math.floor(time / 10000));
         });
         transactionData[key]["commit_message_timestamps"].map((time) => {
-          replica_commit_timestamps.push(Math.floor(time/10000));
+          replica_commit_timestamps.push(Math.floor(time / 10000));
         });
         all_prepare_times.push(replica_prepare_timestamps);
         all_commit_times.push(replica_commit_timestamps);
@@ -110,36 +111,36 @@ const Visualizer = () => {
       startTime = Math.min(...pre_prepare_times);
       firstPrepareTime = Math.min(...prepare_times);
 
-      let prepareChartData=[];
-      let commitChartData=[];
-      for(const element of all_prepare_times){
-        let lineData=[{x:0, y:0}];
-        for(let j=0; j<element.length; j++){
-          lineData.push({x: element[j]-startTime, y: j});
-          lineData.push({x: element[j]-startTime, y: j+1});
+      let prepareChartData = [];
+      let commitChartData = [];
+      for (const element of all_prepare_times) {
+        let lineData = [{ x: 0, y: 0 }];
+        for (let j = 0; j < element.length; j++) {
+          lineData.push({ x: element[j] - startTime, y: j });
+          lineData.push({ x: element[j] - startTime, y: j + 1 });
         }
         prepareChartData.push(lineData);
       }
-      for(const element of all_commit_times){
-        let lineData=[{x:0, y:0}];
-        for(let j=0; j<element.length; j++){
-          lineData.push({x: element[j]-firstPrepareTime, y: j});
-          lineData.push({x: element[j]-firstPrepareTime, y: j+1});
+      for (const element of all_commit_times) {
+        let lineData = [{ x: 0, y: 0 }];
+        for (let j = 0; j < element.length; j++) {
+          lineData.push({ x: element[j] - firstPrepareTime, y: j });
+          lineData.push({ x: element[j] - firstPrepareTime, y: j + 1 });
         }
         commitChartData.push(lineData);
       }
 
       let preparePoints = [];
       let data = {};
-      for(let i=0; i<label_list.length; i++){
-        if(!labelToggle[label_list[i]]){
+      for (let i = 0; i < label_list.length; i++) {
+        if (!labelToggle[label_list[i]]) {
           data = {
             id: label_list[i],
             color: colorList[i],
             data: [],
           };
         }
-        else{
+        else {
           data = {
             id: label_list[i],
             color: colorList[i],
@@ -149,15 +150,15 @@ const Visualizer = () => {
         preparePoints.push(data);
       }
       let commitPoints = [];
-      for(let i=0; i<label_list.length; i++){
-        if(!labelToggle[label_list[i]]){
+      for (let i = 0; i < label_list.length; i++) {
+        if (!labelToggle[label_list[i]]) {
           data = {
             id: label_list[i],
             color: colorList[i],
             data: [],
           };
         }
-        else{
+        else {
           data = {
             id: label_list[i],
             color: colorList[i],
@@ -166,7 +167,7 @@ const Visualizer = () => {
         }
         commitPoints.push(data);
       }
-      let pointData={1:preparePoints, 2:commitPoints};
+      let pointData = { 1: preparePoints, 2: commitPoints };
       console.log("Graph: ", pointData);
       setMessageChartData(pointData);
     }
@@ -174,19 +175,19 @@ const Visualizer = () => {
 
   const sendGet = async (key) => {
     let url = 'http://127.0.0.1:18000/v1/transactions/' + key;
-    try{
-      const response= await axios.get(url);
+    try {
+      const response = await axios.get(url);
       // console.log("Get response: ", response.data);
     }
-    catch(error){
+    catch (error) {
       // console.error("Error: ", error);
     }
   };
 
   const sendPost = async (key, value) => {
-    let data = {"id": key, "value": value};
+    let data = { "id": key, "value": value };
     let url = 'http://127.0.0.1:18000/v1/transactions/commit';
-    try{
+    try {
       const response = await axios.post(
         url,
         JSON.stringify(data),
@@ -198,7 +199,7 @@ const Visualizer = () => {
       );
       // console.log("Get response: ", response.data);
     }
-    catch(error){
+    catch (error) {
       // console.error("Error: ", error);
     }
   };
@@ -215,7 +216,7 @@ const Visualizer = () => {
 
   const GRAPH_CHANGE = useMemo(
     () => ({
-      PBFT: <PbftGraph messageHistory={messageHistory} transactionNumber={currentTransaction}/>,
+      PBFT: <PbftGraph messageHistory={messageHistory} transactionNumber={currentTransaction} />,
       MvT: <MvT points={messageChartData[mvtGraphNo]} />,
       Form: (
         <TransactionForm
@@ -230,6 +231,9 @@ const Visualizer = () => {
 
   return (
     <Wrapper>
+      <div className="mt-6">
+        <Title title={'Visualizer'} icon={eyeIcon} iconViewBox={'0 0 576 512'} titleFontSize={''} />
+      </div>
       <div>
         <WebSocketDemo onMessage={onMessage} />
       </div>
@@ -242,7 +246,7 @@ const Visualizer = () => {
         </div>
       )}
       {/* TODO: Change the below TransactionSelect Component */}
-      <TransactionSelect />
+      <Input />
       <div
         className='my-18p mx-5p text-24p text-blue-190'
         data-aos='fade-in'
