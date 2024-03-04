@@ -9,7 +9,7 @@
 
 
 module.exports = {
-  darkMode: ['class','[data-theme="dark"]'],
+  darkMode: ['class', '[data-theme="dark"]'],
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
@@ -517,7 +517,8 @@ module.exports = {
         "neg-1": "-1",
         1: "1",
         1000: "1000",
-        2:"2"
+        2: "2",
+        10: "10"
       },
       inset: {
         "370p": "370px",
@@ -541,6 +542,6 @@ module.exports = {
     transitionProperty: ["responsive", "motion-safe", "motion-reduce"],
   },
   plugins: [
-    
+
   ],
 };

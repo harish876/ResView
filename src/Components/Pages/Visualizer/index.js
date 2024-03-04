@@ -11,6 +11,7 @@ import TypeSelector from "./Components/Ancillary/TypeSelector";
 import TransactionForm from "./Components/Graphs/Form";
 import MvT, { MvTGraphManipulator } from "./Components/Graphs/MvT";
 import PbftGraph from "./Components/Graphs/PbftGraph";
+import TransactionSelect from './Components/TransactionSelect';
 
 
 const colorList = ["hsl(148, 70%, 50%)", "hsl(200, 70%, 50%)", "hsl(171, 70%, 50%)", "hsl(313, 70%, 50%)"];
@@ -240,6 +241,8 @@ const Visualizer = () => {
           <TypeSelector />
         </div>
       )}
+      {/* TODO: Change the below TransactionSelect Component */}
+      <TransactionSelect />
       <div
         className='my-18p mx-5p text-24p text-blue-190'
         data-aos='fade-in'
