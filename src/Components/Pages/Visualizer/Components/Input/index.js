@@ -53,8 +53,8 @@ const Input = () => {
             </div>
             {viewDictionary[view]}
             {(view > -1 && view < 3) && (
-                <div className='mt-3'>
-                    <SubmitButton title={'Confirm'} />
+                <div className='mt-5p'>
+                    <SubmitButton title={'Confirm'} loading={false} />
                 </div>
             )}
         </div>
