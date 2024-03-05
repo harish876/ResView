@@ -127,6 +127,15 @@ const Navbar = memo(() => {
             icon={linearGraphIcon}
             iconHeight={"1.5em"}
           />
+
+          {/* // ! IMPORTANT: DELETE THE BELOW AFTER VISUALZER IS COMPLETE */}
+          <NavLink
+            title={"Dashboard"}
+            currentPage={CURRENT_PAGE}
+            page={"dashboard"}
+            icon={linearGraphIcon}
+            iconHeight={"1.5em"}
+          />
           <LightOrDark />
         </div>
       </div>

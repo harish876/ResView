@@ -11,6 +11,7 @@ import Footer from './Components/Shared/Footer';
 import NotFound from './Components/Shared/NotFound';
 import { ThemeContext } from './Context/theme';
 import { NavbarToggleContext } from './Context/navbarToggle';
+import Dashboard from './Components/Pages/Dashboard';
 
 const BorderToggleRef = () => {
   const { bToggleElement } = useContext(NavbarToggleContext);
@@ -52,6 +53,10 @@ const PreSynthApp = () => {
               <Route path='/pages/visualizer' element={<Visualizer  />} />
               <Route path='/pages/team' element={<Team />} />
               <Route path='/pages/home' element={<Home />} />
+
+              {/* // TODO: REMOVE THE BELOW AND DELETE THE DASHBOARD FOLDER AFTER VISUALIZER IS COMPLETE */}
+              <Route path='/pages/dashboard' element={<Dashboard />} />
+
               <Route path='*' element={<NotFound  />} />
               <Route index element={<Navigate to="/pages/home" />} />
             </Routes>
