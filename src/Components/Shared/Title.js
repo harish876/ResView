@@ -7,7 +7,7 @@ const Title = ({ title, icon, iconHeight, iconViewBox }) => {
 
   const iconFill = theme ? 'white' : '#2e2e2e';
   return (
-    <div className='flex items-center justify-center gap-x-2 border-b-4 border-blue-550 mb-16'>
+    <div className='flex items-center justify-center gap-x-2 border-b-4 border-blue-550'>
         {icon && (
             <div className='mt-2p'>
                 <Icon
@@ -24,5 +24,13 @@ const Title = ({ title, icon, iconHeight, iconViewBox }) => {
     </div>
   )
 }
+
+export const Subtitle = ({ subtitle }) => {
+    return (
+        <div className='text-16p text-center dark:text-white text-gray-170 w-750p'>
+            {subtitle}
+        </div>
+    );
+};
 
 export default Title

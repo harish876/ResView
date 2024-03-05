@@ -10,3 +10,22 @@ export const DROPDOWN_OPTS = [
 ]
 
 export const DEFAULT_TRANS_SELECT_STR = 'Select Transaction Action';
+
+export const COLORS_PBFT_GRAPH = [
+    "#2196F3",
+    "#9C27B0",
+    "#FFC107",
+    "#00BCD4",
+    "#4CAF50",
+    "#795548"
+];
+
+export const ACTION_TYPE_PBFT_GRAPH = ["request", "prePrepare", "prepare", "commit", "reply"];
+
+export const TITLES_PBFT_GRAPH = ["REQUEST", "PRE-PREPARE", "PREPARE", "COMMIT", "REPLY"];
+
+export const NODES_PBFT_GRAPH = ["CLIENT", "REPLICA 1", "REPLICA 2", "REPLICA 3", "REPLICA 4"];
+
+export const TRANSDURATION_PBFT_GRAPH = 750;
+
+export const NUMBER_OF_STEPS_PBFT_GRAPH = 5;

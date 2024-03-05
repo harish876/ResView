@@ -5,214 +5,8 @@ import { GraphResizerContext } from "../../../../../Context/graph";
 import { ThemeContext } from "../../../../../Context/theme";
 import { height } from "@mui/system";
 import Loader from "../../../../Shared/Loader";
-
-const colors = [
-  "#2196F3", 
-  "#9C27B0",  
-  "#FFC107",
-  "#00BCD4",
-  "#4CAF50",
-  "#795548"
-];
-
-const ACTION_TYPE = ["request", "prePrepare", "prepare", "commit", "reply"];
-
-const TITLES = ["REQUEST", "PRE-PREPARE", "PREPARE", "COMMIT", "REPLY"];
-
-const NODES = ["CLIENT", "REPLICA 1", "REPLICA 2", "REPLICA 3", "REPLICA 4"];
-
-const dummy = {
-  17: {
-    1: {
-      commit_message_timestamps: [
-        1701956096777352000, 1701956096782048300, 1701956096786494200,
-        1701956096786495200,
-      ],
-      commit_time: 1701956096786501400,
-      execution_time: 1701956096786658600,
-      ip: "127.0.0.1",
-      port: 10001,
-      prepare_message_timestamps: [
-        1701956096771379200, 1701956096776308700, 1701956096776386300,
-        1701956096777278200,
-      ],
-      prepare_time: 1701956096776394000,
-      primary_id: 1,
-      propose_pre_prepare_time: 1701956096769596400,
-      replica_id: 2,
-      txn_commands: ["GET"],
-      txn_keys: ["test"],
-      txn_number: 17,
-      txn_values: [""],
-      reply_time: 1702001829632,
-    },
-    2: {
-      commit_message_timestamps: [
-        1701956096777775600, 1701956096781659100, 1701956096788349400,
-        1701956096788360400,
-      ],
-      commit_time: 1701956096788358400,
-      execution_time: 1701956096789154300,
-      ip: "127.0.0.1",
-      port: 10002,
-      prepare_message_timestamps: [
-        1701956096771574300, 1701956096776823800, 1701956096777767000,
-      ],
-      prepare_time: 1701956096776841500,
-      primary_id: 1,
-      propose_pre_prepare_time: 1701956096767388700,
-      replica_id: 1,
-      txn_commands: ["GET"],
-      txn_keys: ["test"],
-      txn_number: 17,
-      txn_values: [""],
-      reply_time: 1702001829629,
-    },
-    3: {
-      commit_message_timestamps: [
-        1701956096777398000, 1701956096781702400, 1701956096787757600,
-        1701956096787947500,
-      ],
-      commit_time: 1701956096787769900,
-      execution_time: 1701956096788227600,
-      ip: "127.0.0.1",
-      port: 10003,
-      prepare_message_timestamps: [
-        1701956096772535600, 1701956096777049000, 1701956096777068300,
-        1701956096777263900,
-      ],
-      prepare_time: 1701956096777074400,
-      primary_id: 1,
-      propose_pre_prepare_time: 1701956096767121700,
-      replica_id: 3,
-      txn_commands: ["GET"],
-      txn_keys: ["test"],
-      txn_number: 17,
-      txn_values: [""],
-      reply_time: 1702001829631,
-    },
-    4: {
-      commit_message_timestamps: [
-        1701956096777512700, 1701956096782015500, 1701956096786524200,
-        1701956096786591700,
-      ],
-      commit_time: 1701956096786530000,
-      execution_time: 1701956096786978000,
-      ip: "127.0.0.1",
-      port: 10004,
-      prepare_message_timestamps: [
-        1701956096772492300, 1701956096776289500, 1701956096776371200,
-        1701956096777435000,
-      ],
-      prepare_time: 1701956096776375000,
-      primary_id: 1,
-      propose_pre_prepare_time: 1701956096767122200,
-      replica_id: 4,
-      txn_commands: ["GET"],
-      txn_keys: ["test"],
-      txn_number: 17,
-      txn_values: [""],
-      reply_time: 1702001829630,
-    },
-  },
-  18: {
-    1: {
-      commit_message_timestamps: [
-        1701956096777352000, 1701956096782048300, 1701956096786494200,
-        1701956096786495200,
-      ],
-      commit_time: 1701956096786501400,
-      execution_time: 1701956096786658600,
-      ip: "127.0.0.1",
-      port: 10001,
-      prepare_message_timestamps: [
-        1701956096771379200, 1701956096776308700, 1701956096776386300,
-        1701956096777278200,
-      ],
-      prepare_time: 1701956096776394000,
-      primary_id: 1,
-      propose_pre_prepare_time: 1701956096769596400,
-      replica_id: 1,
-      txn_commands: ["GET"],
-      txn_keys: ["test"],
-      txn_number: 17,
-      txn_values: [""],
-      reply_time: 1702001829632,
-    },
-    2: {
-      commit_message_timestamps: [
-        1701956096777775600, 1701956096781659100, 1701956096788349400,
-        1701956096788360400,
-      ],
-      commit_time: 1701956096788358400,
-      execution_time: 1701956096789154300,
-      ip: "127.0.0.1",
-      port: 10002,
-      prepare_message_timestamps: [
-        1701956096771574300, 1701956096776823800, 1701956096777767000,
-      ],
-      prepare_time: 1701956096776841500,
-      primary_id: 1,
-      propose_pre_prepare_time: 1701956096767388700,
-      replica_id: 2,
-      txn_commands: ["GET"],
-      txn_keys: ["test"],
-      txn_number: 17,
-      txn_values: [""],
-      reply_time: 1702001829629,
-    },
-    3: {
-      commit_message_timestamps: [
-        1701956096777398000, 1701956096781702400, 1701956096787757600,
-        1701956096787947500,
-      ],
-      commit_time: 1701956096787769900,
-      execution_time: 1701956096788227600,
-      ip: "127.0.0.1",
-      port: 10003,
-      prepare_message_timestamps: [
-        1701956096772535600, 1701956096777049000, 1701956096777068300,
-        1701956096777263900,
-      ],
-      prepare_time: 1701956096777074400,
-      primary_id: 1,
-      propose_pre_prepare_time: 1701956096767121700,
-      replica_id: 3,
-      txn_commands: ["GET"],
-      txn_keys: ["test"],
-      txn_number: 17,
-      txn_values: [""],
-      reply_time: 1702001829631,
-    },
-    4: {
-      commit_message_timestamps: [
-        1701956096777512700, 1701956096782015500, 1701956096786524200,
-        1701956096786591700,
-      ],
-      commit_time: 1701956096786530000,
-      execution_time: 1701956096786978000,
-      ip: "127.0.0.1",
-      port: 10004,
-      prepare_message_timestamps: [
-        1701956096772492300, 1701956096776289500, 1701956096776371200,
-        1701956096777435000,
-      ],
-      prepare_time: 1701956096776375000,
-      primary_id: 1,
-      propose_pre_prepare_time: 1701956096767122200,
-      replica_id: 4,
-      txn_commands: ["GET"],
-      txn_keys: ["test"],
-      txn_number: 17,
-      txn_values: [""],
-      reply_time: 1702001829630,
-    },
-  },
-};
-
-const TRANSDURATION = 750;
-
-const NUMBER_OF_STEPS = 5;
+import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NODES_PBFT_GRAPH, NUMBER_OF_STEPS_PBFT_GRAPH, TITLES_PBFT_GRAPH, TRANSDURATION_PBFT_GRAPH } from "../../../../../Constants";
+import { dummyData } from "../data/data";
 
 const computeDataDetails = (data) => {
   let transactions = new Set();
@@ -255,12 +49,12 @@ const generateConnections = (
 
   console.log(transactions);
 
-  ACTION_TYPE.forEach(
+  ACTION_TYPE_PBFT_GRAPH.forEach(
     (action, index) =>
       (points = {
         ...points,
         [action]: {
-          color: `${colors[index]}`,
+          color: `${COLORS_PBFT_GRAPH[index]}`,
           start: [],
           end: [],
         },
@@ -366,7 +160,7 @@ const generateConnections = (
       });
     }
   }
-  return { points };
+  return { points, primaryIndex };
 };
 
 const generateLabels = (xCoords, yCoords) => {
@@ -378,7 +172,7 @@ const generateLabels = (xCoords, yCoords) => {
     let obj = {
       x: Math.floor((xCoords[i] + xCoords[i + 1]) / 2),
       y: yCoords[0] - 20,
-      title: `${TITLES[i]}`,
+      title: `${TITLES_PBFT_GRAPH[i]}`,
     };
     labelsX.push(obj)
   }
@@ -387,7 +181,7 @@ const generateLabels = (xCoords, yCoords) => {
     let obj = {
       x: xCoords[0]-50,
       y: yCoords[i]+5,
-      title: `${NODES[i]}`,
+      title: `${NODES_PBFT_GRAPH[i]}`,
     };
     labelsY.push(obj);
   }
@@ -493,15 +287,18 @@ const generateTransactionIds = (data) => {
   return { transactionIds };
 };
 
-const PbftGraph = ({ messageHistory, transactionNumber }) => {
+const PbftGraph = ({ 
+  messageHistory, 
+  // TODO: Uncomment the below after connecting to the BE
+  // transactionNumber 
+}) => {
   const { boxValues, resizing, setResizing } = useContext(GraphResizerContext);
   const { width, height } = boxValues;
   const { theme } = useContext(ThemeContext);
 
-  // TODO: Make the below messageHistory instead of dummy
-  //const { transactionIds } = generateTransactionIds(messageHistory);
-
-  //const [transactionNumber, setTransactionNumber] = useState(transactionIds[0]);
+  // TODO: Comment the below two lines after connecting to the BE
+  const { transactionIds } = generateTransactionIds(dummyData);
+  const [transactionNumber, setTransactionNumber] = useState(transactionIds[0]);
 
   const ref = useRef(null);
 
@@ -512,20 +309,21 @@ const PbftGraph = ({ messageHistory, transactionNumber }) => {
       0,
       Math.floor(height / 4),
       4,
-      NUMBER_OF_STEPS
+      NUMBER_OF_STEPS_PBFT_GRAPH
     );
 
     const { xCoords, yCoords, verticalLines, horizontalLines } = generateLines(
       data,
-      NUMBER_OF_STEPS
+      NUMBER_OF_STEPS_PBFT_GRAPH
     );
 
-    const { points } = generateConnections(
+    const { points, primaryIndex } = generateConnections(
       data,
-      NUMBER_OF_STEPS,
+      NUMBER_OF_STEPS_PBFT_GRAPH,
       xCoords,
       yCoords,
-      messageHistory,
+      // TODO: Change dummyData to messageHistory after connecting to BE
+      dummyData,
       transactionNumber
     );
 
@@ -554,7 +352,7 @@ const PbftGraph = ({ messageHistory, transactionNumber }) => {
       .y((d) => d.y);
 
     // ARROW HEAD
-    ACTION_TYPE.forEach((action, index) =>
+    ACTION_TYPE_PBFT_GRAPH.forEach((action, index) =>
       svg
         .append("defs")
         .append("marker")
@@ -566,7 +364,7 @@ const PbftGraph = ({ messageHistory, transactionNumber }) => {
         .attr("markerHeight", 6)
         .attr("orient", "auto-start-reverse")
         .append("path")
-        .attr("fill", `${colors[index]}`)
+        .attr("fill", `${COLORS_PBFT_GRAPH[index]}`)
         .attr("d", "M 0 0 L 10 5 L 0 10 z")
     );
 
@@ -603,14 +401,37 @@ const PbftGraph = ({ messageHistory, transactionNumber }) => {
     );
 
     // LABELS FOR EACH NODE
-    labelsY.forEach((label) =>
-      svg
+    labelsY.forEach((label, index) =>{
+      const labelText = svg
         .append("text")
         .attr("transform", "translate(" + label.x + " ," + label.y + ")")
-        .attr("fill", "#c4c4c4")
         .style("text-anchor", "middle")
         .text(`${label.title}`)
-    );
+        .attr("fill", "#c4c4c4")
+
+      if(index === primaryIndex){
+          svg
+            .append("rect")
+            .attr("x", label.x - 42.5) // Adjust the x position of the border
+            .attr("y", label.y - 20) // Adjust the y position of the border
+            .attr("width", 85) // Set the width of the border
+            .attr("height", 40) // Set the height of the border
+            .attr("fill", "none")
+            .attr("stroke", "#fc453f") // Set the border color
+            .attr("stroke-width", 1) // Set the border width
+            .attr("rx", 10) // Set the horizontal border radius
+            .attr("ry", 10); // Set the vertical border radius
+
+          svg
+            .append("text")
+            .attr("transform", "translate(" + label.x + " ," + (label.y + 15) + ")")
+            .attr("fill", "#fc453f") // Set the subtitle color
+            .style("text-anchor", "middle")
+            .style("font-size", "12px") // Set the subtitle font size
+            .text("Primary"); // Set the subtitle text
+      }
+      return labelText;
+    });
 
     // REQUEST LINES
     points.request.end.forEach((end, i) => {
@@ -624,7 +445,7 @@ const PbftGraph = ({ messageHistory, transactionNumber }) => {
           .attr("marker-end", "url(#arrow-request)")
           .style("opacity", 0)
           .transition()
-          .duration(TRANSDURATION)
+          .duration(TRANSDURATION_PBFT_GRAPH)
           .delay(i * 100)
           .style("opacity", 1);
     });
@@ -641,7 +462,7 @@ const PbftGraph = ({ messageHistory, transactionNumber }) => {
           .attr("marker-end", "url(#arrow-prePrepare)")
           .style("opacity", 0)
           .transition()
-          .duration(TRANSDURATION + 200)
+          .duration(TRANSDURATION_PBFT_GRAPH + 200)
           .delay(i * 200)
           .style("opacity", 1);
     });
@@ -660,7 +481,7 @@ const PbftGraph = ({ messageHistory, transactionNumber }) => {
             .attr("marker-end", "url(#arrow-prepare)")
             .style("opacity", 0)
             .transition()
-            .duration(TRANSDURATION + 200)
+            .duration(TRANSDURATION_PBFT_GRAPH + 200)
             .delay(i * 300)
             .style("opacity", 1)
         );
@@ -681,7 +502,7 @@ const PbftGraph = ({ messageHistory, transactionNumber }) => {
             .attr("marker-end", "url(#arrow-commit)")
             .style("opacity", 0)
             .transition()
-            .duration(TRANSDURATION + 200)
+            .duration(TRANSDURATION_PBFT_GRAPH + 200)
             .delay(i * 400)
             .style("opacity", 1)
         );
@@ -701,7 +522,7 @@ const PbftGraph = ({ messageHistory, transactionNumber }) => {
           .attr("marker-end", "url(#arrow-reply)")
           .style("opacity", 0)
           .transition()
-          .duration(TRANSDURATION + 400)
+          .duration(TRANSDURATION_PBFT_GRAPH + 400)
           .delay(i * 500)
           .style("opacity", 1)
       );

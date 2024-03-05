@@ -12,7 +12,7 @@ import TransactionForm from "./Components/Graphs/Form";
 import MvT, { MvTGraphManipulator } from "./Components/Graphs/MvT";
 import PbftGraph from "./Components/Graphs/PbftGraph";
 import Input from './Components/Input';
-import Title from '../../Shared/Title';
+import Title, { Subtitle } from '../../Shared/Title';
 
 
 const colorList = ["hsl(148, 70%, 50%)", "hsl(200, 70%, 50%)", "hsl(171, 70%, 50%)", "hsl(313, 70%, 50%)"];
@@ -216,8 +216,13 @@ const Visualizer = () => {
 
   const GRAPH_CHANGE = useMemo(
     () => ({
-      PBFT: <PbftGraph messageHistory={messageHistory} transactionNumber={currentTransaction} />,
-      MvT: <MvT points={messageChartData[mvtGraphNo]} />,
+      PBFT: <PbftGraph 
+              messageHistory={messageHistory} 
+              transactionNumber={currentTransaction} 
+            />,
+      MvT: <MvT 
+              points={messageChartData[mvtGraphNo]} 
+            />,
       Form: (
         <TransactionForm
           selectTransaction={setCurrentTransaction}
@@ -231,12 +236,13 @@ const Visualizer = () => {
 
   return (
     <Wrapper>
-      <div className="mt-6">
+      <div className="mt-6 mb-6">
         <Title title={'Visualizer'} icon={eyeIcon} iconViewBox={'0 0 576 512'} titleFontSize={''} />
       </div>
       <div>
-        <WebSocketDemo onMessage={onMessage} />
+        <Subtitle subtitle={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat vitae, dolor illo harum consequatur ea, temporibus, corrupti iure veniam esse quisquam ut quidem dignissimos quasi. Quas totam temporibus'} />
       </div>
+      <WebSocketDemo onMessage={onMessage} />
       <div className='mt-[2em] mb-4 mx-8'>
         <ButtonRow />
       </div>
@@ -245,8 +251,10 @@ const Visualizer = () => {
           <TypeSelector />
         </div>
       )}
+
       {/* TODO: Change the below TransactionSelect Component */}
       <Input />
+
       <div
         className='my-18p mx-5p text-24p text-blue-190'
         data-aos='fade-in'
