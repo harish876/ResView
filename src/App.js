@@ -5,7 +5,7 @@ import Visualizer from './Components/Pages/Visualizer';
 import Team from './Components/Pages/Team';
 import Home from './Components/Pages/Home';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { Suspense, useContext, useState, useRef, useCallback } from 'react';
+import { Suspense, useContext, useState, useRef, useCallback, useEffect } from 'react';
 import Loader from './Components/Shared/Loader';
 import Footer from './Components/Shared/Footer';
 import NotFound from './Components/Shared/NotFound';
@@ -25,12 +25,12 @@ const PreSynthApp = () => {
   const { borderToggle } = useContext(NavbarToggleContext);
   const { toggleLightTheme, toggleDarkTheme } = useContext(ThemeContext);
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 2000);
-  //   return () => clearTimeout(timer);
-  // }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   if (localStorage.getItem("theme") === "light") {
     toggleLightTheme();
