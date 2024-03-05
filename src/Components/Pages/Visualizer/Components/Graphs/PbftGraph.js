@@ -1,11 +1,9 @@
-import React, { useRef, useEffect, useContext, useState, useCallback } from "react";
 import * as d3 from "d3";
 import { line } from "d3-shape";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NODES_PBFT_GRAPH, NUMBER_OF_STEPS_PBFT_GRAPH, TITLES_PBFT_GRAPH, TRANSDURATION_PBFT_GRAPH } from "../../../../../Constants";
 import { GraphResizerContext } from "../../../../../Context/graph";
 import { ThemeContext } from "../../../../../Context/theme";
-import { height } from "@mui/system";
-import Loader from "../../../../Shared/Loader";
-import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NODES_PBFT_GRAPH, NUMBER_OF_STEPS_PBFT_GRAPH, TITLES_PBFT_GRAPH, TRANSDURATION_PBFT_GRAPH } from "../../../../../Constants";
 import { dummyData } from "../data/data";
 
 const computeDataDetails = (data) => {
