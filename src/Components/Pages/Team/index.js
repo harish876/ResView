@@ -8,7 +8,7 @@ import { teamIcon } from '../../../Resources/Icons';
 const Team = () => {
   return (
     <Wrapper>
-      <div className="mt-8">
+      <div className="mt-8 mb-16">
         <Title title={'Current Team'} icon={teamIcon} iconViewBox={'0 0 640 512'} titleFontSize={''} />
       </div>
       <div className='mb-4 mx-8 grid grid-cols-2 gap-16 w-full h-full'>

@@ -42,31 +42,4 @@ const ButtonRow = () => {
   );
 };
 
-// TODO: DO the below code later
-// export const RadialButtons = ({ title }) => {
-//   const { graph, toggleGraphChange } = useContext(GraphViewContext);
-
-//   return (
-//     <div
-//       className={cn(
-//         "text-22p border border-2p border-blue-190 text-blue-190 font-sans h-40p w-80p cursor-pointer rounded-full flex items-center justify-center hover:bg-blue-200 hover:text-white hover:border-blue-200",
-//         { "bg-blue-190 text-white": graph === title }
-//       )}
-//       onClick={() => toggleGraphChange(title || "PBFT")}
-//     >
-//       {title || ''}
-//     </div>
-//   );
-// };
-
-// const RadialButtonRow = () => {
-//   const [whichGraph, setWhichGraph] = useState('one');
-
-//   return (
-//     <div>
-
-//     </div>
-//   );
-// };
-
 export default ButtonRow;

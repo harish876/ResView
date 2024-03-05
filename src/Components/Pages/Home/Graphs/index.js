@@ -8,7 +8,9 @@ const Graphs = () => {
 
   return (
     <div className="flex flex-col items-center jusitfy-center">
+      <div className='mb-16'>
         <Title title={'Graphs'} icon={linearGraphIcon} />
+        </div>
         <div class="flex flex-col items-center justify-center gap-y-24">
             {homePageCardDetails.length > 0 && (
             homePageCardDetails.map(({image, alt, title, description, link}, index) => (

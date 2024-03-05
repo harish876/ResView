@@ -1,5 +1,5 @@
 import React from 'react';
-import Wrapper from '../../Shared/Wrapper';
+import Wrapper, { ParticleWrapper } from '../../Shared/Wrapper';
 // TODO: Remove the below import and entire components after demo is done
 import blockchain from '../../../Resources/Images/blockchain.jpeg';
 import pbft from '../../../Resources/Images/pbft.PNG';
@@ -131,13 +131,15 @@ const Home = () => {
       <div class="relative pt-20 ml-auto">
             <div class="lg:w-2/3 text-center mx-auto">
 
-                <div class="text-gray-900 dark:text-white font-bold text-6xl md:text-6xl xl:text-7xl">Visualizer for a new age blockchain fabric.</div>
+                <div class="text-gray-900 dark:text-white font-bold text-6xl md:text-6xl xl:text-7xl">Visualizer for new age blockchain fabrics.</div>
 
-                <p class="mt-8 px-[6em] text-gray-700 dark:text-gray-300 text-18p">A novel dashboard metric of a blockchain database system, offering new users and learners a clear visualization of a complex technology.</p>
+                <p class="mt-8 px-[6em] text-gray-700 dark:text-gray-300 text-20p">Metrics? KPIs? You name it and we have it. Visualize your blockchain like never before. Novel dashboards for novel blockchains.
+              {/* A novel dashboard metric of a blockchain database system, offering new users and learners a clear visualization of a complex technology */}
+              </p>
                 <div class="mt-16 flex items-center justify-center gap-y-4 gap-x-[4em]">
                     <a
                       href="/pages/visualizer"
-                      class="relative flex h-11 w-135p items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border before:border-blue-500 before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 
+                      class="relative flex h-11 w-135p items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border-3p before:border-blue-500 before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 
                       dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max"
                     >
                       <span
@@ -149,7 +151,7 @@ const Home = () => {
                       href="https://medium.com/@aunsh/resview-a-pbft-visualizer-based-on-the-resilientdb-blockchain-fabric-3ffaeb2aaee5"
                       target='_blank'
                       rel='noreferrer nofollow'
-                      class="relative flex h-11 w-135p items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border before:border-blue-500 before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 
+                      class="relative flex h-11 w-135p items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border-3p before:border-blue-500 before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 
                       dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max"
                     >
                       <span
@@ -159,18 +161,18 @@ const Home = () => {
                     </a>
                     
                 </div>
-                <div class="py-8 mt-16 px-2 border-y border-gray-900 dark:border-white sm:flex flex items-center justify-between">
+                <div class="py-8 mt-16 px-2 border-y-3p border-gray-900 dark:border-white sm:flex flex items-center justify-between">
                     <div class="text-center">
-                        <h6 class="text-lg font-semibold text-gray-700 dark:text-white">The lowest price</h6>
-                        <p class="mt-2 text-gray-500">Some text here</p>
+                        <h6 class="text-lg font-semibold text-gray-700 dark:text-white">Super Fast & Cheap</h6>
+                        <p class="mt-2 text-gray-500">Intensively optimiazed computation</p>
                     </div>
                     <div class="text-center">
-                        <h6 class="text-lg font-semibold text-gray-700 dark:text-white">The fastest on the market</h6>
-                        <p class="mt-2 text-gray-500">Some text here</p>
+                        <h6 class="text-lg font-semibold text-gray-700 dark:text-white">Wide range integration</h6>
+                        <p class="mt-2 text-gray-500">All the blocks no fuss!</p>
                     </div>
                     <div class="text-center">
-                        <h6 class="text-lg font-semibold text-gray-700 dark:text-white">The most loved</h6>
-                        <p class="mt-2 text-gray-500">Some text here</p>
+                        <h6 class="text-lg font-semibold text-gray-700 dark:text-white">Seeing is believing</h6>
+                        <p class="mt-2 text-gray-500">Check out all BC actions</p>
                     </div>
                 </div>
             </div>
@@ -188,9 +190,12 @@ const Home = () => {
 
 const index = () => {
   return (
-    // <ParticleWrapper>
+    <>
+      {/* <ParticleWrapper>
+        <Home />
+      </ParticleWrapper> */}
       <Home />
-    // </ParticleWrapper>
+    </>
   );
 }
 
