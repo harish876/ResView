@@ -330,6 +330,30 @@ const connectionRender = (lineData, lineColor, dotColor, duration, delay, lineGe
     });
 }
 
+const labelPrimaryNode = (svg, label) => {
+  svg
+    .append("rect")
+    .attr("x", label.x - 42.5)
+    .attr("y", label.y - 20)
+    .attr("width", 85)
+    .attr("height", 40)
+    .attr("fill", "none")
+    .attr("stroke", "#fc453f")
+    .attr("stroke-width", 1)
+    .attr("rx", 10)
+    .attr("ry", 10);
+
+  svg
+    .append("text")
+    .attr("transform", "translate(" + label.x + " ," + (label.y + 15) + ")")
+    .attr("fill", "#fc453f")
+    .style("text-anchor", "middle")
+    .style("font-size", "12px")
+    .text("Primary");
+
+  return svg;
+};
+
 const PbftGraph = ({ 
   messageHistory, 
   // TODO: Uncomment the below after connecting to the BE
@@ -452,27 +476,7 @@ const PbftGraph = ({
         .text(`${label.title}`)
         .attr("fill", "#c4c4c4")
 
-      if(index === primaryIndex){
-          svg
-            .append("rect")
-            .attr("x", label.x - 42.5)
-            .attr("y", label.y - 20)
-            .attr("width", 85)
-            .attr("height", 40)
-            .attr("fill", "none")
-            .attr("stroke", "#fc453f")
-            .attr("stroke-width", 1)
-            .attr("rx", 10)
-            .attr("ry", 10);
-
-          svg
-            .append("text")
-            .attr("transform", "translate(" + label.x + " ," + (label.y + 15) + ")")
-            .attr("fill", "#fc453f")
-            .style("text-anchor", "middle")
-            .style("font-size", "12px") 
-            .text("Primary");
-      }
+      if (index === primaryIndex) labelPrimaryNode(svg, label);
       return labelText;
     });
 
@@ -526,7 +530,7 @@ const PbftGraph = ({
   }, [messageHistory]);
 
   return (
-    <div className='relative w-full h-full p-4'>
+    <div className='relative w-full h-full pl-4 pr-2 pb-6'>
       {resizing ? (
         <div class='loader'>
           <div>PBFT</div>
@@ -542,7 +546,7 @@ const PbftGraph = ({
 export default PbftGraph;
 
 
-// ? POINTS DATA FOR REFERENCE FOR PLOTTING IS BELOW 
+// ! POINTS DATA FOR REFERENCE FOR PLOTTING IS BELOW DO NOT DELETE IT!!!
 // const points = {
 //   request: {
 //     color: `${colors[0]}`,

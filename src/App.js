@@ -50,7 +50,8 @@ const PreSynthApp = () => {
             <Navbar borderToggle={borderToggle} />
             <BorderToggleRef />
             <Routes>
-              <Route path='/pages/visualizer' element={<Visualizer  />} />
+              {/* // TODO: Uncomment the below after dashboard is removed */}
+              {/* <Route path='/pages/visualizer' element={<Visualizer  />} /> */}
               <Route path='/pages/team' element={<Team />} />
               <Route path='/pages/home' element={<Home />} />
 

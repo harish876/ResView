@@ -3,10 +3,15 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from "react";
 import { GraphResizerContext, GraphViewContext } from "../../../Context/graph";
-import { eyeIcon } from "../../../Resources/Icons";
+import { anglesRightIcon, eyeIcon } from "../../../Resources/Icons";
 import { WebSocketDemo } from '../../../Socket';
 import Title, { Subtitle } from '../../Shared/Title';
-import Wrapper from "../../Shared/Wrapper";
+import Wrapper, { ParticleWrapper } from "../../Shared/Wrapper";
+import Input from '../Visualizer/Components/Input';
+import PbftGraph from '../Visualizer/Components/Graphs/PbftGraph';
+import { Icon } from '../../Shared/Icon';
+import ResizableContainer from './Resizable';
+import { LinkButton } from '../../Shared/Buttons';
 
 const colorList = ["hsl(148, 70%, 50%)", "hsl(200, 70%, 50%)", "hsl(171, 70%, 50%)", "hsl(313, 70%, 50%)"];
 
@@ -198,9 +203,45 @@ const Dashboard = () => {
           <div>
               <Subtitle subtitle={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat vitae, dolor illo harum consequatur ea, temporibus, corrupti iure veniam esse quisquam ut quidem dignissimos quasi. Quas totam temporibus'} />
           </div>
-          <WebSocketDemo onMessage={onMessage} />
+          {/* <WebSocketDemo onMessage={onMessage} /> */}
+          {/* TODO: Change the below TransactionSelect Component */}
+          <div className="my-8">
+              <Input />
+          </div>
+          <div className="my-2 flex items-center jusitfy-center gap-x-16">
+              <LinkButton title={'PBFT Graph'} link={'/pages/dashboard'} scrollId={'pbft-graph'} />
+              <LinkButton title={'Messages v Time Graph'} link={'/pages/dashboard'} scrollId={'mvt-graph'} />
+          </div>
+          <div className="my-8" id='pbft-graph'>
+              <ResizableContainer>
+                  <div className='dark:text-gray-300 text-gray-700 font-bold text-lg mb-[-1em]'>
+                    Practical Byzantine Fault Tolerance
+                  </div>
+                  <PbftGraph
+                      messageHistory={messageHistory}
+                      transactionNumber={currentTransaction}
+                  />
+                  <div className='absolute bottom-0 right-0 rotate-45'>
+                      <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
+                  </div>
+              </ResizableContainer>
+          </div>
+          <div id="mvt-graph">
+            
+          </div>
     </Wrapper>
   )
 }
 
-export default Dashboard
+const index = () => {
+    return (
+        <>
+            {/* <ParticleWrapper>
+                <Dashboard />
+            </ParticleWrapper> */}
+            <Dashboard />
+        </>
+    );
+}
+
+export default index
