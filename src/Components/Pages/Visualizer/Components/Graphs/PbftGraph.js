@@ -1,11 +1,9 @@
-import React, { useRef, useEffect, useContext, useState, useCallback } from "react";
 import * as d3 from "d3";
 import { line } from "d3-shape";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NODES_PBFT_GRAPH, NUMBER_OF_STEPS_PBFT_GRAPH, TITLES_PBFT_GRAPH, TRANSDURATION_PBFT_GRAPH } from "../../../../../Constants";
 import { GraphResizerContext } from "../../../../../Context/graph";
 import { ThemeContext } from "../../../../../Context/theme";
-import { height } from "@mui/system";
-import Loader from "../../../../Shared/Loader";
-import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NODES_PBFT_GRAPH, NUMBER_OF_STEPS_PBFT_GRAPH, TITLES_PBFT_GRAPH, TRANSDURATION_PBFT_GRAPH } from "../../../../../Constants";
 import { dummyData } from "../data/data";
 
 const computeDataDetails = (data) => {
@@ -287,6 +285,51 @@ const generateTransactionIds = (data) => {
   return { transactionIds };
 };
 
+const connectionRender = (lineData, lineColor, dotColor, duration, delay, lineGen, svg, arrow) => {
+  // Append the line
+  var line = svg.append("path")
+    .attr("d", lineGen(lineData))
+    .attr("stroke", lineColor)
+    .attr("fill", "none")
+    .attr("stroke-width", 1)
+    .attr("marker-end", `url(#arrow-&${arrow})`)
+    .style("opacity", 0); // Initially hide the line
+
+  // Transition the line to be visible
+  line.transition()
+    .duration(duration / 2) // Show line first, then move the dots
+    .delay(delay)
+    .style("opacity", 1)
+    .on("end", function () {
+      // Append the dot at the start point of the line
+      var dot = svg.append("circle")
+        .attr("r", 5) // Adjust the radius as needed
+        .attr("fill", `${dotColor}`) // Adjust the color as needed
+        .attr("cx", lineData[0][0])
+        .attr("cy", lineData[0][1])
+        .style("opacity", 0); // Initially hide the dot
+
+      // Transition the dot along the line
+      dot.transition()
+        .duration(duration / 2) // Move the dots after showing the line
+        .style("opacity", 1)
+        .attrTween("cx", function () {
+          return function (t) {
+            // Calculate the position of the dot along the line
+            var interpolatedPoint = line.node().getPointAtLength(t * line.node().getTotalLength());
+            return interpolatedPoint.x;
+          };
+        })
+        .attrTween("cy", function () {
+          return function (t) {
+            // Calculate the position of the dot along the line
+            var interpolatedPoint = line.node().getPointAtLength(t * line.node().getTotalLength());
+            return interpolatedPoint.y;
+          };
+        });
+    });
+}
+
 const PbftGraph = ({ 
   messageHistory, 
   // TODO: Uncomment the below after connecting to the BE
@@ -412,78 +455,47 @@ const PbftGraph = ({
       if(index === primaryIndex){
           svg
             .append("rect")
-            .attr("x", label.x - 42.5) // Adjust the x position of the border
-            .attr("y", label.y - 20) // Adjust the y position of the border
-            .attr("width", 85) // Set the width of the border
-            .attr("height", 40) // Set the height of the border
+            .attr("x", label.x - 42.5)
+            .attr("y", label.y - 20)
+            .attr("width", 85)
+            .attr("height", 40)
             .attr("fill", "none")
-            .attr("stroke", "#fc453f") // Set the border color
-            .attr("stroke-width", 1) // Set the border width
-            .attr("rx", 10) // Set the horizontal border radius
-            .attr("ry", 10); // Set the vertical border radius
+            .attr("stroke", "#fc453f")
+            .attr("stroke-width", 1)
+            .attr("rx", 10)
+            .attr("ry", 10);
 
           svg
             .append("text")
             .attr("transform", "translate(" + label.x + " ," + (label.y + 15) + ")")
-            .attr("fill", "#fc453f") // Set the subtitle color
+            .attr("fill", "#fc453f")
             .style("text-anchor", "middle")
-            .style("font-size", "12px") // Set the subtitle font size
-            .text("Primary"); // Set the subtitle text
+            .style("font-size", "12px") 
+            .text("Primary");
       }
       return labelText;
     });
 
     // REQUEST LINES
     points.request.end.forEach((end, i) => {
-      end.flag &&
-        svg
-          .append("path")
-          .attr("d", lineGen([points.request.start[0].points, end.points]))
-          .attr("stroke", `${points.request.color}`)
-          .attr("fill", "none")
-          .attr("stroke-width", 1)
-          .attr("marker-end", "url(#arrow-request)")
-          .style("opacity", 0)
-          .transition()
-          .duration(TRANSDURATION_PBFT_GRAPH)
-          .delay(i * 100)
-          .style("opacity", 1);
+      if (end.flag) {
+        console.log('REQUEST POINTS', points.request.color);
+        connectionRender([points.request.start[0].points, end.points], points.request.color, 'gray', TRANSDURATION_PBFT_GRAPH + 1000, i * 2000, lineGen, svg, 'request');
+      }
     });
 
     // PRE-PREPARE LINES
     points.prePrepare.end.forEach((end, i) => {
-      end.flag &&
-        svg
-          .append("path")
-          .attr("d", lineGen([points.prePrepare.start[0].points, end.points]))
-          .attr("stroke", `${points.prePrepare.color}`)
-          .attr("fill", "none")
-          .attr("stroke-width", 1)
-          .attr("marker-end", "url(#arrow-prePrepare)")
-          .style("opacity", 0)
-          .transition()
-          .duration(TRANSDURATION_PBFT_GRAPH + 200)
-          .delay(i * 200)
-          .style("opacity", 1);
+      if (end.flag) {
+        connectionRender([points.prePrepare.start[0].points, end.points], points.prePrepare.color, 'gray', TRANSDURATION_PBFT_GRAPH + 2000, i * 2000, lineGen, svg, 'prePrepare');
+      }
     });
 
     // PREPARE LINES
     points.prepare.start.map((start, index) =>
       points.prepare.end[index].map((end, i) => {
         return (
-          end.flag &&
-          svg
-            .append("path")
-            .attr("d", lineGen([start, end.points]))
-            .attr("stroke", `${points.prepare.color}`)
-            .attr("fill", "none")
-            .attr("stroke-width", 1)
-            .attr("marker-end", "url(#arrow-prepare)")
-            .style("opacity", 0)
-            .transition()
-            .duration(TRANSDURATION_PBFT_GRAPH + 200)
-            .delay(i * 300)
-            .style("opacity", 1)
+            end.flag && connectionRender([start, end.points], points.prepare.color, 'gray', TRANSDURATION_PBFT_GRAPH + 3000, i * 3000, lineGen, svg, 'prepare')
         );
       })
     );
@@ -492,19 +504,7 @@ const PbftGraph = ({
     points.commit.start.map((start, index) =>
       points.commit.end[index].map((end, i) => {
         return (
-          end.flag &&
-          svg
-            .append("path")
-            .attr("d", lineGen([start, end.points]))
-            .attr("stroke", `${points.commit.color}`)
-            .attr("fill", "none")
-            .attr("stroke-width", 1)
-            .attr("marker-end", "url(#arrow-commit)")
-            .style("opacity", 0)
-            .transition()
-            .duration(TRANSDURATION_PBFT_GRAPH + 200)
-            .delay(i * 400)
-            .style("opacity", 1)
+          end.flag && connectionRender([start, end.points], points.commit.color, 'gray', TRANSDURATION_PBFT_GRAPH + 4000, i * 4000, lineGen, svg, 'commit')
         );
       })
     );
@@ -512,19 +512,7 @@ const PbftGraph = ({
     // REPLY LINES
     points.reply.start.forEach((start, i) => {
       return (
-        start.flag &&
-        svg
-          .append("path")
-          .attr("d", lineGen([start.points, points.reply.end[0].points]))
-          .attr("stroke", `${points.reply.color}`)
-          .attr("fill", "none")
-          .attr("stroke-width", 1)
-          .attr("marker-end", "url(#arrow-reply)")
-          .style("opacity", 0)
-          .transition()
-          .duration(TRANSDURATION_PBFT_GRAPH + 400)
-          .delay(i * 500)
-          .style("opacity", 1)
+        start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, 'gray', TRANSDURATION_PBFT_GRAPH + 3000, i * 3000, lineGen, svg, 'reply')
       );
     });
   }, [theme, width, height]);
