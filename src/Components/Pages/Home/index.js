@@ -5,6 +5,7 @@ import blockchain from '../../../Resources/Images/blockchain.jpeg';
 import pbft from '../../../Resources/Images/pbft.PNG';
 import Graphs from './Graphs';
 import What from './What';
+import { LinkButton } from '../../Shared/Buttons';
 
 const ResViewOld = () => {
 
@@ -137,29 +138,8 @@ const Home = () => {
               {/* A novel dashboard metric of a blockchain database system, offering new users and learners a clear visualization of a complex technology */}
               </p>
                 <div class="mt-16 flex items-center justify-center gap-y-4 gap-x-[4em]">
-                    <a
-                      href="/pages/visualizer"
-                      class="relative flex h-11 w-135p items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border-3p before:border-blue-500 before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 
-                      dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max"
-                    >
-                      <span
-                        class="relative text-base font-semibold text-primary dark:text-white"
-                        >Visualizer</span
-                      >
-                    </a>
-                    <a
-                      href="https://medium.com/@aunsh/resview-a-pbft-visualizer-based-on-the-resilientdb-blockchain-fabric-3ffaeb2aaee5"
-                      target='_blank'
-                      rel='noreferrer nofollow'
-                      class="relative flex h-11 w-135p items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border-3p before:border-blue-500 before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 
-                      dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max"
-                    >
-                      <span
-                        class="relative text-base font-semibold text-primary dark:text-white"
-                        >Learn More</span
-                      >
-                    </a>
-                    
+                  <LinkButton title={'Visualizer'} link={'/pages/visualizer'} />
+                  <LinkButton title={'Learn More'} link={'https://medium.com/@aunsh/resview-a-pbft-visualizer-based-on-the-resilientdb-blockchain-fabric-3ffaeb2aaee5'} external={true} />
                 </div>
                 <div class="py-8 mt-16 px-2 border-y-3p border-gray-900 dark:border-white sm:flex flex items-center justify-between">
                     <div class="text-center">

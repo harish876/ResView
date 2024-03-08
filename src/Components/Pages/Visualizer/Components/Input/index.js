@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import TransactionSelect from './TransactionSelect'
 import BaseInput from './Inputs'
-import SubmitButton from './SubmitButton';
+import { SubmitButton } from '../../../../Shared/Buttons';
 
 const SelectTrans = () => {
     return (

@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.3.5 | MIT License | https://tailwindcss.com
+! tailwindcss v3.4.1 | MIT License | https://tailwindcss.com
 *//*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
@@ -26,15 +26,18 @@
 4. Use the user's configured `sans` font-family by default.
 5. Use the user's configured `sans` font-feature-settings by default.
 6. Use the user's configured `sans` font-variation-settings by default.
+7. Disable tap highlights on iOS
 */
 
-html {
+html,
+:host {
   line-height: 1.5; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */ /* 3 */
   tab-size: 4; /* 3 */
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
   font-feature-settings: normal; /* 5 */
   font-variation-settings: normal; /* 6 */
+  -webkit-tap-highlight-color: transparent; /* 7 */
 }
 
 /*
@@ -101,8 +104,10 @@ strong {
 }
 
 /*
-1. Use the user's configured `mono` font family by default.
-2. Correct the odd `em` font sizing in all browsers.
+1. Use the user's configured `mono` font-family by default.
+2. Use the user's configured `mono` font-feature-settings by default.
+3. Use the user's configured `mono` font-variation-settings by default.
+4. Correct the odd `em` font sizing in all browsers.
 */
 
 code,
@@ -110,7 +115,9 @@ kbd,
 samp,
 pre {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; /* 1 */
-  font-size: 1em; /* 2 */
+  font-feature-settings: normal; /* 2 */
+  font-variation-settings: normal; /* 3 */
+  font-size: 1em; /* 4 */
 }
 
 /*
@@ -521,6 +528,10 @@ video {
   margin-left: 0px;
   margin-right: 0px;
 }
+.mx-1 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
 .mx-5p {
   margin-left: 5px;
   margin-right: 5px;
@@ -537,13 +548,17 @@ video {
   margin-top: 18px;
   margin-bottom: 18px;
 }
+.my-1p {
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
-}
-.my-4p {
-  margin-top: 4px;
-  margin-bottom: 4px;
 }
 .my-8 {
   margin-top: 2rem;
@@ -560,6 +575,9 @@ video {
 .mb-16 {
   margin-bottom: 4rem;
 }
+.mb-1p {
+  margin-bottom: 1px;
+}
 .mb-2 {
   margin-bottom: 0.5rem;
 }
@@ -571,6 +589,9 @@ video {
 }
 .mb-8 {
   margin-bottom: 2rem;
+}
+.mb-\[-1em\] {
+  margin-bottom: -1em;
 }
 .me-2 {
   margin-inline-end: 0.5rem;
@@ -602,14 +623,14 @@ video {
 .mt-2p {
   margin-top: 2px;
 }
-.mt-3 {
-  margin-top: 0.75rem;
-}
 .mt-30p {
   margin-top: 30px;
 }
 .mt-4 {
   margin-top: 1rem;
+}
+.mt-5p {
+  margin-top: 5px;
 }
 .mt-6 {
   margin-top: 1.5rem;
@@ -680,8 +701,8 @@ video {
 .w-100p {
   width: 100px;
 }
-.w-135p {
-  width: 135px;
+.w-120p {
+  width: 120px;
 }
 .w-150p {
   width: 150px;
@@ -694,6 +715,9 @@ video {
 }
 .w-212p {
   width: 212px;
+}
+.w-220p {
+  width: 220px;
 }
 .w-250p {
   width: 250px;
@@ -874,9 +898,9 @@ video {
 .border-\[2px\] {
   border-width: 2px;
 }
-.border-y-2p {
-  border-top-width: 2px;
-  border-bottom-width: 2px;
+.border-y-3p {
+  border-top-width: 3px;
+  border-bottom-width: 3px;
 }
 .border-b-2 {
   border-bottom-width: 2px;
@@ -1072,6 +1096,15 @@ video {
   padding-top: 6em;
   padding-bottom: 6em;
 }
+.pb-6 {
+  padding-bottom: 1.5rem;
+}
+.pl-4 {
+  padding-left: 1rem;
+}
+.pr-2 {
+  padding-right: 0.5rem;
+}
 .pt-20 {
   padding-top: 5rem;
 }
@@ -1085,13 +1118,16 @@ video {
   text-align: justify;
 }
 .font-sans {
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 .text-12p {
   font-size: 12px;
 }
 .text-14p {
   font-size: 14px;
+}
+.text-16p {
+  font-size: 16px;
 }
 .text-18p {
   font-size: 18px;
@@ -1190,6 +1226,14 @@ video {
 .text-gray-200 {
   --tw-text-opacity: 1;
   color: rgb(229 231 235 / var(--tw-text-opacity));
+}
+.text-gray-300 {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 .text-gray-500 {
   --tw-text-opacity: 1;
@@ -1391,6 +1435,12 @@ svg:hover {
   border-color: rgb(15 23 42 / var(--tw-border-opacity));
 }
 
+.before\:border-gray-700::before {
+  content: var(--tw-content);
+  --tw-border-opacity: 1;
+  border-color: rgb(55 65 81 / var(--tw-border-opacity));
+}
+
 .before\:bg-gradient-to-b::before {
   content: var(--tw-content);
   background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
@@ -1498,11 +1548,6 @@ svg:hover {
   --tw-ring-color: rgb(29 78 216 / var(--tw-ring-opacity));
 }
 
-.focus\:ring-gray-100:focus {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(119 119 119 / var(--tw-ring-opacity));
-}
-
 .active\:duration-75:active {
   transition-duration: 75ms;
 }
@@ -1520,6 +1565,10 @@ svg:hover {
 
 :is([data-theme="dark"] .dark\:border-2p) {
   border-width: 2px;
+}
+
+:is([data-theme="dark"] .dark\:border-3p) {
+  border-width: 3px;
 }
 
 :is([data-theme="dark"] .dark\:border-solid) {
@@ -1653,21 +1702,10 @@ svg:hover {
   opacity: 0.2;
 }
 
-:is([data-theme="dark"] .dark\:before\:border-gray-700)::before {
-  content: var(--tw-content);
-  --tw-border-opacity: 1;
-  border-color: rgb(55 65 81 / var(--tw-border-opacity));
-}
-
 :is([data-theme="dark"] .dark\:before\:bg-gray-800)::before {
   content: var(--tw-content);
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
-}
-
-:is([data-theme="dark"] .dark\:hover\:border-gray-600:hover) {
-  --tw-border-opacity: 1;
-  border-color: rgb(75 85 99 / var(--tw-border-opacity));
 }
 
 :is([data-theme="dark"] .dark\:hover\:bg-blue-700:hover) {
@@ -1698,11 +1736,6 @@ svg:hover {
 :is([data-theme="dark"] .dark\:focus\:ring-blue-500:focus) {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(15 23 42 / var(--tw-ring-opacity));
-}
-
-:is([data-theme="dark"] .dark\:focus\:ring-gray-700:focus) {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(55 65 81 / var(--tw-ring-opacity));
 }
 
 @media (max-width: 640px) {
