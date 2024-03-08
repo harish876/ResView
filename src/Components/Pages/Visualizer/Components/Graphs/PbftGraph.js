@@ -286,48 +286,80 @@ const generateTransactionIds = (data) => {
 };
 
 const connectionRender = (lineData, lineColor, dotColor, duration, delay, lineGen, svg, arrow) => {
-  // Append the line
   var line = svg.append("path")
     .attr("d", lineGen(lineData))
+    .attr("id", `${lineData[0][1]}${lineData[0][0]}`)
     .attr("stroke", lineColor)
     .attr("fill", "none")
     .attr("stroke-width", 1)
     .attr("marker-end", `url(#arrow-&${arrow})`)
-    .style("opacity", 0); // Initially hide the line
+    .style("opacity", 0)
 
-  // Transition the line to be visible
+  // Define the tooltip div
+  var tooltip = d3.select(`#${lineData[0][1]}${lineData[0][0]}`)
+    .append("div")
+    .attr("class", "tooltip")
+    .attr("fill", "white")
+    .attr("height", "100px")
+    .attr("width", "100px")
+    .attr("stroke", "steelblue")
+    .style("opacity", 1);
+
+  // Append tooltip text
+  var tooltipText = "Tooltip text here"; 
+
   line.transition()
-    .duration(duration / 2) // Show line first, then move the dots
+    .duration(duration / 2)
     .delay(delay)
     .style("opacity", 1)
     .on("end", function () {
-      // Append the dot at the start point of the line
-      var dot = svg.append("circle")
-        .attr("r", 5) // Adjust the radius as needed
-        .attr("fill", `${dotColor}`) // Adjust the color as needed
+      let dot = svg.append("circle")
+        .attr("r", 5)
+        .attr("fill", `${dotColor}`)
         .attr("cx", lineData[0][0])
         .attr("cy", lineData[0][1])
-        .style("opacity", 0); // Initially hide the dot
+        .style("opacity", 0);
 
-      // Transition the dot along the line
       dot.transition()
-        .duration(duration / 2) // Move the dots after showing the line
+        .duration(duration / 2)
         .style("opacity", 1)
         .attrTween("cx", function () {
           return function (t) {
-            // Calculate the position of the dot along the line
             var interpolatedPoint = line.node().getPointAtLength(t * line.node().getTotalLength());
             return interpolatedPoint.x;
           };
         })
         .attrTween("cy", function () {
           return function (t) {
-            // Calculate the position of the dot along the line
             var interpolatedPoint = line.node().getPointAtLength(t * line.node().getTotalLength());
             return interpolatedPoint.y;
           };
         });
+    })
+
+  // Add event listeners to show/hide tooltip when hovering over the line
+  d3.select(`#${lineData[0][1]}${lineData[0][0]}`)
+  .on('mouseover', function (e, d) {
+    console.log('HELLO')
+    tooltip
+      .transition()
+      .duration(200)
+      .style("opacity", 1)
+  })
+    .on("mousemove", function (e,d) {
+      console.log('HELLO 2')
+      tooltip.html(tooltipText)
+        .style("left", (e.pageX) + "px")
+        .style("top", (e.pageY - 28) + "px");
+    })
+    .on("mouseout", function () {
+      console.log('HELLO 3')
+      tooltip.transition()
+        .duration(500)
+        .style("opacity", 0);
     });
+
+    
 }
 
 const labelPrimaryNode = (svg, label) => {
