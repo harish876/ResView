@@ -214,9 +214,6 @@ const Dashboard = () => {
           </div>
           <div className="my-8" id='pbft-graph'>
               <ResizableContainer>
-                  <div className='dark:text-gray-300 text-gray-700 font-bold text-lg mb-[-1em]'>
-                    Practical Byzantine Fault Tolerance
-                  </div>
                   <PBFT
                       messageHistory={messageHistory}
                       transactionNumber={currentTransaction}

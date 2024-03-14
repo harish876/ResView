@@ -5,6 +5,7 @@ import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NODES_PBFT_GRAPH, NUMBER_OF_
 import { GraphResizerContext } from "../../../../Context/graph";
 import { ThemeContext } from "../../../../Context/theme";
 import { dummyData } from "./data";
+import { useTimeout } from 'usehooks-ts'
 
 const computeDataDetails = (data) => {
     let transactions = new Set();
@@ -398,6 +399,7 @@ const PBFT = ({
     // TODO: Comment the below two lines after connecting to the BE
     const { transactionIds } = generateTransactionIds(dummyData);
     const [transactionNumber, setTransactionNumber] = useState(transactionIds[0]);
+    const [graphHide, setGraphHide] = useState(false);
 
     const ref = useRef(null);
 
@@ -516,7 +518,7 @@ const PBFT = ({
         points.request.end.forEach((end, i) => {
             if (end.flag) {
                 console.log('REQUEST POINTS', points.request.color);
-                connectionRender([points.request.start[0].points, end.points], points.request.color, 'gray', TRANSDURATION_PBFT_GRAPH + 1000, i * 2000, lineGen, svg, 'request');
+                connectionRender([points.request.start[0].points, end.points], points.request.color, 'gray', TRANSDURATION_PBFT_GRAPH, i * 2000, lineGen, svg, 'request');
             }
         });
 
@@ -528,29 +530,29 @@ const PBFT = ({
         });
 
         // PREPARE LINES
-        points.prepare.start.map((start, index) =>
-            points.prepare.end[index].map((end, i) => {
-                return (
-                    end.flag && connectionRender([start, end.points], points.prepare.color, 'gray', TRANSDURATION_PBFT_GRAPH + 3000, i * 3000, lineGen, svg, 'prepare')
-                );
-            })
-        );
+        // points.prepare.start.map((start, index) =>
+        //     points.prepare.end[index].map((end, i) => {
+        //         return (
+        //             end.flag && connectionRender([start, end.points], points.prepare.color, 'gray', TRANSDURATION_PBFT_GRAPH + 3000, i * 3000, lineGen, svg, 'prepare')
+        //         );
+        //     })
+        // );
 
-        // COMMIT LINES
-        points.commit.start.map((start, index) =>
-            points.commit.end[index].map((end, i) => {
-                return (
-                    end.flag && connectionRender([start, end.points], points.commit.color, 'gray', TRANSDURATION_PBFT_GRAPH + 4000, i * 4000, lineGen, svg, 'commit')
-                );
-            })
-        );
+        // // COMMIT LINES
+        // points.commit.start.map((start, index) =>
+        //     points.commit.end[index].map((end, i) => {
+        //         return (
+        //             end.flag && connectionRender([start, end.points], points.commit.color, 'gray', TRANSDURATION_PBFT_GRAPH + 4000, i * 4000, lineGen, svg, 'commit')
+        //         );
+        //     })
+        // );
 
-        // REPLY LINES
-        points.reply.start.forEach((start, i) => {
-            return (
-                start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, 'gray', TRANSDURATION_PBFT_GRAPH + 3000, i * 3000, lineGen, svg, 'reply')
-            );
-        });
+        // // REPLY LINES
+        // points.reply.start.forEach((start, i) => {
+        //     return (
+        //         start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, 'gray', TRANSDURATION_PBFT_GRAPH + 3000, i * 3000, lineGen, svg, 'reply')
+        //     );
+        // });
     }, [theme, width, height]);
 
     useEffect(() => {
@@ -561,7 +563,24 @@ const PBFT = ({
         console.log("MESSAGE HISTIRY", messageHistory);
     }, [messageHistory]);
 
+    const hideGraph = () => {
+        setGraphHide(graphHide => !graphHide);
+        setTimeout(() => {
+            hideGraph()
+        }, 5000)
+    }
+
     return (
+        <>
+        <div className="flex items-center justify-between gap-x-16">
+            <div />
+            <div className='dark:text-gray-300 text-gray-700 font-bold text-lg mb-[-1em]'>
+                Practical Byzantine Fault Tolerance
+            </div>
+                <div className="text-white" onClick={() => hideGraph()}>
+                Clear
+            </div>
+        </div> 
         <div className='relative w-full h-full pl-4 pr-2 pb-6'>
             {resizing ? (
                 <div class='loader'>
@@ -569,9 +588,12 @@ const PBFT = ({
                     <div class='inner' />
                 </div>
             ) : (
-                <svg ref={ref} className='absolute'></svg>
+                <>
+                    {!graphHide && <svg ref={ref} className='absolute'></svg>}
+                </>
             )}
         </div>
+        </>
     );
 };
 
