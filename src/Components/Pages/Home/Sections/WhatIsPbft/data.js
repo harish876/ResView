@@ -20,7 +20,7 @@ export const data  = [
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione consequatur inventore doloremque nesciunt ipsum ullam perspiciatis quae qui adipisci quod.'
     },
     {
-        title: 'Request',
+        title: 'Reply',
         subTitle: 'Place one to Place two',
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione consequatur inventore doloremque nesciunt ipsum ullam perspiciatis quae qui adipisci quod.'
     },

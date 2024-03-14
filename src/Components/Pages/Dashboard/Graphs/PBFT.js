@@ -530,29 +530,29 @@ const PBFT = ({
         });
 
         // PREPARE LINES
-        // points.prepare.start.map((start, index) =>
-        //     points.prepare.end[index].map((end, i) => {
-        //         return (
-        //             end.flag && connectionRender([start, end.points], points.prepare.color, 'gray', TRANSDURATION_PBFT_GRAPH + 3000, i * 3000, lineGen, svg, 'prepare')
-        //         );
-        //     })
-        // );
+        points.prepare.start.map((start, index) =>
+            points.prepare.end[index].map((end, i) => {
+                return (
+                    end.flag && connectionRender([start, end.points], points.prepare.color, 'gray', TRANSDURATION_PBFT_GRAPH + 3000, i * 3000, lineGen, svg, 'prepare')
+                );
+            })
+        );
 
-        // // COMMIT LINES
-        // points.commit.start.map((start, index) =>
-        //     points.commit.end[index].map((end, i) => {
-        //         return (
-        //             end.flag && connectionRender([start, end.points], points.commit.color, 'gray', TRANSDURATION_PBFT_GRAPH + 4000, i * 4000, lineGen, svg, 'commit')
-        //         );
-        //     })
-        // );
+        // COMMIT LINES
+        points.commit.start.map((start, index) =>
+            points.commit.end[index].map((end, i) => {
+                return (
+                    end.flag && connectionRender([start, end.points], points.commit.color, 'gray', TRANSDURATION_PBFT_GRAPH + 4000, i * 4000, lineGen, svg, 'commit')
+                );
+            })
+        );
 
-        // // REPLY LINES
-        // points.reply.start.forEach((start, i) => {
-        //     return (
-        //         start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, 'gray', TRANSDURATION_PBFT_GRAPH + 3000, i * 3000, lineGen, svg, 'reply')
-        //     );
-        // });
+        // REPLY LINES
+        points.reply.start.forEach((start, i) => {
+            return (
+                start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, 'gray', TRANSDURATION_PBFT_GRAPH + 3000, i * 3000, lineGen, svg, 'reply')
+            );
+        });
     }, [theme, width, height]);
 
     useEffect(() => {

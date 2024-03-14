@@ -9,9 +9,6 @@ const index = () => {
             <div className="mb-16">
                 <Title title={'Why ResView?'} icon={atomIcon} />
             </div>
-            <div class="flex flex-col items-center justify-center gap-y-24">
-                Some details
-            </div>
             <div>
                 <Timeline />
             </div>
