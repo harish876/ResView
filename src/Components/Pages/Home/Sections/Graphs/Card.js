@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { CARD_BG_GRAD } from "../../../../Constants";
 import classNames from "classnames";
+import { CARD_BG_GRAD } from "../../../../../Constants";
 
 const ImageElement = ({ link, title, image, alt }) => {
     return (

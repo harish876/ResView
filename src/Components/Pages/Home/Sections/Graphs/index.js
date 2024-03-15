@@ -1,8 +1,8 @@
 import React from 'react'
-import { linearGraphIcon } from '../../../../Resources/Icons'
-import Title from '../../../Shared/Title'
 import Card from './Card'
 import { homePageCardDetails } from './data'
+import Title from '../../../../Shared/Title'
+import { linearGraphIcon } from '../../../../../Resources/Icons'
 
 const Graphs = () => {
 

@@ -1,4 +1,4 @@
-import { DEFAULT_IMAGE } from "../../../../Constants";
+import { DEFAULT_IMAGE } from "../../../../../Constants";
 
 // ------ HOME PAGE CARD IMAGES -------
 export const homePageCardDetails = [

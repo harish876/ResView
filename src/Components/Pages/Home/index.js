@@ -3,8 +3,8 @@ import Wrapper, { ParticleWrapper } from '../../Shared/Wrapper';
 // TODO: Remove the below import and entire components after demo is done
 import blockchain from '../../../Resources/Images/blockchain.jpeg';
 import pbft from '../../../Resources/Images/pbft.PNG';
-import Graphs from './Graphs';
-import What from './What';
+import Graphs from './Sections/Graphs';
+import WhatIsPbft from './Sections/WhatIsPbft'
 import { LinkButton } from '../../Shared/Buttons';
 
 const ResViewOld = () => {
@@ -157,7 +157,7 @@ const Home = () => {
                 </div>
             </div>
             <div className="mt-24">
-              <What />
+            <WhatIsPbft />
             </div>
             <div className="mt-24">
               <Graphs />

@@ -8,10 +8,10 @@ import { WebSocketDemo } from '../../../Socket';
 import Title, { Subtitle } from '../../Shared/Title';
 import Wrapper, { ParticleWrapper } from "../../Shared/Wrapper";
 import Input from '../Visualizer/Components/Input';
-import PbftGraph from '../Visualizer/Components/Graphs/PbftGraph';
 import { Icon } from '../../Shared/Icon';
 import ResizableContainer from './Resizable';
 import { LinkButton } from '../../Shared/Buttons';
+import PBFT from './Graphs/PBFT';
 
 const colorList = ["hsl(148, 70%, 50%)", "hsl(200, 70%, 50%)", "hsl(171, 70%, 50%)", "hsl(313, 70%, 50%)"];
 
@@ -214,10 +214,7 @@ const Dashboard = () => {
           </div>
           <div className="my-8" id='pbft-graph'>
               <ResizableContainer>
-                  <div className='dark:text-gray-300 text-gray-700 font-bold text-lg mb-[-1em]'>
-                    Practical Byzantine Fault Tolerance
-                  </div>
-                  <PbftGraph
+                  <PBFT
                       messageHistory={messageHistory}
                       transactionNumber={currentTransaction}
                   />
