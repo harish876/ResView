@@ -174,7 +174,7 @@ const index = () => {
       <ParticleWrapper>
         <Home />
       </ParticleWrapper>
-      <Home />
+      {/* <Home /> */}
     </>
   );
 }
