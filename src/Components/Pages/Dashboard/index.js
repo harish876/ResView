@@ -233,10 +233,10 @@ const Dashboard = () => {
 const index = () => {
     return (
         <>
-            {/* <ParticleWrapper>
+            <ParticleWrapper>
                 <Dashboard />
-            </ParticleWrapper> */}
-            <Dashboard />
+            </ParticleWrapper>
+            {/* <Dashboard /> */}
         </>
     );
 }
