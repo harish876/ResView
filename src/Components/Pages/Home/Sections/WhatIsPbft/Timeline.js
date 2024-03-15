@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { data } from './data'
 import { Icon } from '../../../../Shared/Icon'
 import { anglesRightIcon, circleIcon, fiveIcon, fourIcon, oneIcon, threeIcon, twoIcon } from '../../../../../Resources/Icons'
+import { PBFT_IMAGE } from '../../../../../Constants'
 
 const indexToIcon = {
     1: [oneIcon, '0 0 256 512'],
@@ -43,10 +44,19 @@ const Component = ({ details, index, length }) => {
 };
 
 const Timeline = () => {
+    const [imageLoading, setImageLoading] = useState(true);
+
+    const imageLoaded = () => {
+        setImageLoading(false);
+    }
+
     return (
         <div className="flex flex-col items-center justify-center">
-            <div className='flex items-center justify-center w-full h-550p'>
-                Image
+            <div className='flex items-center justify-center w-full h-550p m-2 mb-16'>
+                <div style={{ display: imageLoading ? "block" : "none" }} className='py-3 px-2 shadow-md flex justify-center items-center rounded-md bg-white my-8 dark:border-3p dark:border-solid dark:border-gray-50 dark:bg-blue-500 w-full h-full'>
+                    Loading images
+                </div>
+                <img src={PBFT_IMAGE} alt="PBFT Consensus Protocol" className='py-3 px-2 shadow-md flex flex-col justify-center items-center rounded-md bg-white my-8 dark:border-3p dark:border-solid dark:border-gray-50 dark:bg-blue-500' onLoad={imageLoaded} style={{ display: imageLoading ? "none" : "block" }} />
             </div>
             <div className="items-center flex gap-x-8 mt-4">
                 {data.length > 0 && (

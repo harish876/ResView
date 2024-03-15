@@ -7,7 +7,7 @@ const index = () => {
     return (
         <div className="flex flex-col items-center jusitfy-center">
             <div className="mb-16">
-                <Title title={'Why ResView?'} icon={atomIcon} />
+                <Title title={'What is PBFT?'} icon={atomIcon} />
             </div>
             <div>
                 <Timeline />
