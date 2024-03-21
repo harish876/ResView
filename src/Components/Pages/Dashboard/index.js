@@ -60,14 +60,16 @@ const Dashboard = () => {
         sendMessage(parseInt(label.slice(-1) - 1));
         updateGraph();
     };
-    const onMessage = (newData) => {
-        setMessageHistory(newData);
-        setCurrentTransaction(Object.keys(messageHistory).length);
-
-        // console.log(messageHistory, 'MESSAGE HISTORY');
-    };
+    const onMessage = (newData, txn_number)=>{
+        setMessageHistory(JSON.parse(JSON.stringify(newData)));
+        setCurrentTransaction(txn_number);
+        
+        //console.log(messageHistory, 'MESSAGE HISTORY', newData);
+        //console.log(currentTransaction, 'CURRENT TRANSACTION', txn_number);
+      };
 
     useEffect(() => {
+        console.log("UPDATED: ", messageHistory);
         if (!(currentTransaction in messageHistory) || messageHistory[currentTransaction].current_time < 0) {
             setMessageChartData([[], []])
             // console.log(currentTransaction, " Not in messageHistory")
@@ -203,7 +205,7 @@ const Dashboard = () => {
           <div>
               <Subtitle subtitle={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat vitae, dolor illo harum consequatur ea, temporibus, corrupti iure veniam esse quisquam ut quidem dignissimos quasi. Quas totam temporibus'} />
           </div>
-          {/* <WebSocketDemo onMessage={onMessage} /> */}
+          { <WebSocketDemo onMessage={onMessage} /> }
           {/* TODO: Change the below TransactionSelect Component */}
           <div className="my-8">
               <Input />
@@ -216,7 +218,7 @@ const Dashboard = () => {
               <ResizableContainer>
                   <PBFT
                       messageHistory={messageHistory}
-                      transactionNumber={currentTransaction}
+                      realTransactionNumber={currentTransaction}
                   />
                   <div className='absolute bottom-0 right-0 rotate-45'>
                       <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />

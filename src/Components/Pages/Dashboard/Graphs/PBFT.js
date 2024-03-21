@@ -41,7 +41,12 @@ const generateConnections = (
 ) => {
     let points = {};
 
-    const currentData = messageHistory[transactionNumber];
+    //console.log("Number 2: ", transactionNumber)
+    console.log("DATA: ",messageHistory[transactionNumber])
+    let currentData = messageHistory[transactionNumber];
+    if(!currentData){
+        currentData=dummyData[17];
+    }
 
     const { primaryIndex, transactions } =
         computeDataDetails(currentData);
@@ -390,18 +395,20 @@ const labelPrimaryNode = (svg, label) => {
 const PBFT = ({
     messageHistory,
     // TODO: Uncomment the below after connecting to the BE
-    // transactionNumber 
+    realTransactionNumber 
 }) => {
     const { boxValues, resizing, setResizing } = useContext(GraphResizerContext);
     const { width, height } = boxValues;
     const { theme } = useContext(ThemeContext);
+    console.log("IN PBFT: ",messageHistory, " ", realTransactionNumber);
 
     // TODO: Comment the below two lines after connecting to the BE
     const { transactionIds } = generateTransactionIds(dummyData);
-    const [transactionNumber, setTransactionNumber] = useState(transactionIds[0]);
+    const [transactionNumber, setTransactionNumber] = useState(realTransactionNumber);
     const [graphHide, setGraphHide] = useState(false);
 
     const ref = useRef(null);
+    //console.log("Number: ", transactionNumber)
 
     const debouncedRender = useCallback(() => {
         const data = generatePoints(
@@ -424,8 +431,8 @@ const PBFT = ({
             xCoords,
             yCoords,
             // TODO: Change dummyData to messageHistory after connecting to BE
-            dummyData,
-            transactionNumber
+            messageHistory,
+            realTransactionNumber
         );
 
         const { labelsX, labelsY } = generateLabels(xCoords, yCoords);
