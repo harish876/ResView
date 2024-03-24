@@ -42,8 +42,9 @@ const generateConnections = (
     let points = {};
 
     //console.log("Number 2: ", transactionNumber)
-    console.log("DATA: ",messageHistory[transactionNumber])
+    //console.log("DATA: ",messageHistory[transactionNumber])
     let currentData = messageHistory[transactionNumber];
+    //If no data, using dummy data to avoid crash
     if(!currentData){
         currentData=dummyData[17];
     }
@@ -51,7 +52,7 @@ const generateConnections = (
     const { primaryIndex, transactions } =
         computeDataDetails(currentData);
 
-    console.log(transactions);
+    //console.log(transactions);
 
     ACTION_TYPE_PBFT_GRAPH.forEach(
         (action, index) =>
@@ -286,7 +287,7 @@ const generateTransactionIds = (data) => {
         transactionIds.push(parseInt(property));
     }
 
-    console.log(transactionIds);
+    //console.log(transactionIds);
 
     return { transactionIds };
 };
@@ -346,20 +347,20 @@ const connectionRender = (lineData, lineColor, dotColor, duration, delay, lineGe
     // Add event listeners to show/hide tooltip when hovering over the line
     d3.select(`#${lineData[0][1]}${lineData[0][0]}`)
         .on('mouseover', function (e, d) {
-            console.log('HELLO')
+            //console.log('HELLO')
             tooltip
                 .transition()
                 .duration(200)
                 .style("opacity", 1)
         })
         .on("mousemove", function (e, d) {
-            console.log('HELLO 2')
+            //console.log('HELLO 2')
             tooltip.html(tooltipText)
                 .style("left", (e.pageX) + "px")
                 .style("top", (e.pageY - 28) + "px");
         })
         .on("mouseout", function () {
-            console.log('HELLO 3')
+            //console.log('HELLO 3')
             tooltip.transition()
                 .duration(500)
                 .style("opacity", 0);
@@ -400,7 +401,7 @@ const PBFT = ({
     const { boxValues, resizing, setResizing } = useContext(GraphResizerContext);
     const { width, height } = boxValues;
     const { theme } = useContext(ThemeContext);
-    console.log("IN PBFT: ",messageHistory, " ", realTransactionNumber);
+    //console.log("IN PBFT: ",messageHistory, " ", realTransactionNumber);
 
     // TODO: Comment the below two lines after connecting to the BE
     const { transactionIds } = generateTransactionIds(dummyData);
@@ -567,7 +568,7 @@ const PBFT = ({
     }, [debouncedRender]);
 
     useEffect(() => {
-        console.log("MESSAGE HISTIRY", messageHistory);
+        //console.log("MESSAGE HISTIRY", messageHistory);
     }, [messageHistory]);
 
     const hideGraph = () => {

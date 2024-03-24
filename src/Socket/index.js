@@ -46,7 +46,7 @@ export const WebSocketDemo = ({onMessage}) => {
     if(receivedMessage===null){
       return;
     }
-    console.log(receivedMessage);
+    //console.log(receivedMessage);
     const reply= new Date().getTime();
     let newMessage = {
       ...receivedMessage,
@@ -62,7 +62,7 @@ export const WebSocketDemo = ({onMessage}) => {
         [replica_number]: newMessage,
       };
       updatedMessageList[txn_number]= txn_messages;
-      console.log("Received Message: ", updatedMessageList)
+      //console.log("Received Message: ", updatedMessageList)
       allMessages.current=updatedMessageList;
     }
     else{
@@ -70,7 +70,7 @@ export const WebSocketDemo = ({onMessage}) => {
         [replica_number]: newMessage,
       }
       updatedMessageList[txn_number]= txn_messages;
-      console.log("Received Message: ", updatedMessageList)
+      //console.log("Received Message: ", updatedMessageList)
       allMessages.current=updatedMessageList;
       transactionCount.current = transactionCount.current+1;
     }
@@ -97,8 +97,8 @@ export const WebSocketDemo = ({onMessage}) => {
     };
 
     const updateStatus = async () => {
-      console.log(keyList);
-      console.log(allMessages);
+      //console.log(keyList);
+      //console.log(allMessages);
       for(var i =0; i<4; i++){
         fetchData(i);
       }

@@ -69,14 +69,14 @@ const Dashboard = () => {
       };
 
     useEffect(() => {
-        console.log("UPDATED: ", messageHistory);
+        //console.log("UPDATED: ", messageHistory);
         if (!(currentTransaction in messageHistory) || messageHistory[currentTransaction].current_time < 0) {
             setMessageChartData([[], []])
             // console.log(currentTransaction, " Not in messageHistory")
         }
         else {
             const transactionData = messageHistory[currentTransaction];
-            console.log("TRANSACTION", transactionData)
+            //console.log("TRANSACTION", transactionData)
             let startTime = 0;
             let firstPrepareTime = 0;
             let pre_prepare_times = [];
@@ -162,7 +162,7 @@ const Dashboard = () => {
                 commitPoints.push(data);
             }
             let pointData = { 1: preparePoints, 2: commitPoints };
-            console.log("Graph: ", pointData);
+            //console.log("Graph: ", pointData);
             setMessageChartData(pointData);
         }
     }, [messageHistory, currentTransaction, labelToggle, resetGraph]);
@@ -208,7 +208,7 @@ const Dashboard = () => {
           { <WebSocketDemo onMessage={onMessage} /> }
           {/* TODO: Change the below TransactionSelect Component */}
           <div className="my-8">
-              <Input />
+              <Input chooseTransaction={setCurrentTransaction} sendGet={sendGet} sendPost={sendPost}/>
           </div>
           <div className="my-2 flex items-center jusitfy-center gap-x-16">
               <LinkButton title={'PBFT Graph'} link={'/pages/dashboard'} scrollId={'pbft-graph'} />
