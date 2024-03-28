@@ -164,7 +164,7 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
     return (
         <div className="flex flex-col">
             <FontVarTitle title={'Messages vs Time Graph'} />
-            <div className="flex items-center justify-center gap-x-16 mt-8 mb-4">
+            <div className="flex items-center justify-center gap-x-16 mt-8 mb-10">
                 <MvTSelectButton title={'Prepare Messages'} onClick={() => toggleMvtGraphNoChange(1)} graphNo={1} />
                 <MvTSelectButton title={'Commit Messages'} onClick={() => toggleMvtGraphNoChange(2)} graphNo={2} />
             </div>
@@ -185,7 +185,7 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
                     <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
                 </div>
             </ResizableContainer>
-            <div className='mb-4 flex items-center justify-center'>
+            <div className='mt-10 mb-4 flex items-center justify-center'>
                 <Manipulator
                     toggleFaulty={toggleFaulty}
                     toggleLine={toggleLine}

@@ -214,15 +214,17 @@ const Dashboard = () => {
             <div className="w-full">
                 <TransInfo />
             </div>
-            <div className="my-2 flex items-center jusitfy-center gap-x-16">
+            <div className="my-10 flex items-center jusitfy-center gap-x-16">
                 <LinkButton title={'PBFT Graph'} link={'/pages/dashboard'} scrollId={'pbft-graph'} />
                 <LinkButton title={'Messages v Time Graph'} link={'/pages/dashboard'} scrollId={'mvt-graph'} />
             </div>
-            <div className="my-16 w-full">
+            <div className="my-12 w-full">
                 <HRline />
             </div>
-            <div className="mb-16" id='pbft-graph'>
-                <FontVarTitle title={'Practical Byzantine Fault Tolerance Graph'} />
+            <div className="" id='pbft-graph'>
+                <div className="mb-8">
+                    <FontVarTitle title={'Practical Byzantine Fault Tolerance Graph'} />
+                </div>
                 <ResizableContainer>
                     <PBFT
                         messageHistory={messageHistory}
@@ -233,8 +235,10 @@ const Dashboard = () => {
                     </div>
                 </ResizableContainer>
             </div>
-            <HRline />
-            <div className="my-16" id="mvt-graph">
+            <div className="mt-24 mb-16 w-full">
+                <HRline />
+            </div>
+            <div className="" id="mvt-graph">
                 <Mvt
                     messageHistory={dummyData}
                     transactionNumber={currentTransaction}

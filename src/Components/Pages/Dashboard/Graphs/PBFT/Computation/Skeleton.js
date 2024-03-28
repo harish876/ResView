@@ -40,8 +40,6 @@ export const generateConnections = (
     const { primaryIndex, transactions } =
         computeDataDetails(currentData);
 
-    console.log(transactions);
-
     ACTION_TYPE_PBFT_GRAPH.forEach(
         (action, index) =>
         (points = {
