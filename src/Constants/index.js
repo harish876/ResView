@@ -22,6 +22,9 @@ export const COLORS_PBFT_GRAPH = [
     "#795548"
 ];
 
+export const COLORS_MVT_GRAPH = ["hsl(148, 70%, 50%)", "hsl(200, 70%, 50%)", "hsl(171, 70%, 50%)", "hsl(313, 70%, 50%)"];
+
+
 export const ACTION_TYPE_PBFT_GRAPH = ["request", "prePrepare", "prepare", "commit", "reply"];
 
 export const TITLES_PBFT_GRAPH = ["REQUEST", "PRE-PREPARE", "PREPARE", "COMMIT", "REPLY"];

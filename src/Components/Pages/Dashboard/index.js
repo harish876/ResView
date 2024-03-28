@@ -12,6 +12,8 @@ import { Icon } from '../../Shared/Icon';
 import ResizableContainer from './Resizable';
 import { LinkButton } from '../../Shared/Buttons';
 import PBFT from './Graphs/PBFT';
+import Mvt from './Graphs/Mvt';
+import { dummyData } from './Graphs/data';
 
 const colorList = ["hsl(148, 70%, 50%)", "hsl(200, 70%, 50%)", "hsl(171, 70%, 50%)", "hsl(313, 70%, 50%)"];
 
@@ -223,8 +225,11 @@ const Dashboard = () => {
                   </div>
               </ResizableContainer>
           </div>
-          <div id="mvt-graph">
-            
+          <div className="my-16" id="mvt-graph">
+              <Mvt
+                  messageHistory={dummyData}
+                  transactionNumber={currentTransaction}
+              />
           </div>
     </Wrapper>
   )
@@ -233,10 +238,10 @@ const Dashboard = () => {
 const index = () => {
     return (
         <>
-            <ParticleWrapper>
+            {/* <ParticleWrapper>
                 <Dashboard />
-            </ParticleWrapper>
-            {/* <Dashboard /> */}
+            </ParticleWrapper> */}
+            <Dashboard />
         </>
     );
 }
