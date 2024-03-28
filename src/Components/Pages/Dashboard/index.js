@@ -4,14 +4,17 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from "react";
 import { GraphResizerContext, GraphViewContext } from "../../../Context/graph";
 import { anglesRightIcon, eyeIcon } from "../../../Resources/Icons";
-import { WebSocketDemo } from '../../../Socket';
-import Title, { Subtitle } from '../../Shared/Title';
-import Wrapper, { ParticleWrapper } from "../../Shared/Wrapper";
-import Input from '../Visualizer/Components/Input';
-import { Icon } from '../../Shared/Icon';
-import ResizableContainer from './Resizable';
 import { LinkButton } from '../../Shared/Buttons';
+import { Icon } from '../../Shared/Icon';
+import Title, { FontVarTitle, Subtitle } from '../../Shared/Title';
+import Wrapper from "../../Shared/Wrapper";
+import Input from '../Visualizer/Components/Input';
+import Mvt from './Graphs/MVT';
 import PBFT from './Graphs/PBFT';
+import { dummyData } from './Graphs/data';
+import HRline from '../../Shared/HRline';
+import ResizableContainer from './ResizableContainer';
+import TransInfo from './TransInfo'
 
 const colorList = ["hsl(148, 70%, 50%)", "hsl(200, 70%, 50%)", "hsl(171, 70%, 50%)", "hsl(313, 70%, 50%)"];
 
@@ -195,39 +198,54 @@ const Dashboard = () => {
             // console.error("Error: ", error);
         }
     };
-  return (
-    <Wrapper>
-          <div className="mt-6 mb-6">
-              <Title title={'Visualizer'} icon={eyeIcon} iconViewBox={'0 0 576 512'} titleFontSize={''} />
-          </div>
-          <div>
-              <Subtitle subtitle={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat vitae, dolor illo harum consequatur ea, temporibus, corrupti iure veniam esse quisquam ut quidem dignissimos quasi. Quas totam temporibus'} />
-          </div>
-          {/* <WebSocketDemo onMessage={onMessage} /> */}
-          {/* TODO: Change the below TransactionSelect Component */}
-          <div className="my-8">
-              <Input />
-          </div>
-          <div className="my-2 flex items-center jusitfy-center gap-x-16">
-              <LinkButton title={'PBFT Graph'} link={'/pages/dashboard'} scrollId={'pbft-graph'} />
-              <LinkButton title={'Messages v Time Graph'} link={'/pages/dashboard'} scrollId={'mvt-graph'} />
-          </div>
-          <div className="my-8" id='pbft-graph'>
-              <ResizableContainer>
-                  <PBFT
-                      messageHistory={messageHistory}
-                      transactionNumber={currentTransaction}
-                  />
-                  <div className='absolute bottom-0 right-0 rotate-45'>
-                      <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
-                  </div>
-              </ResizableContainer>
-          </div>
-          <div id="mvt-graph">
-            
-          </div>
-    </Wrapper>
-  )
+    return (
+        <Wrapper>
+            <div className="mt-6 mb-6">
+                <Title title={'Visualizer'} icon={eyeIcon} iconViewBox={'0 0 576 512'} titleFontSize={''} />
+            </div>
+            <div>
+                <Subtitle subtitle={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat vitae, dolor illo harum consequatur ea, temporibus, corrupti iure veniam esse quisquam ut quidem dignissimos quasi. Quas totam temporibus'} />
+            </div>
+            {/* <WebSocketDemo onMessage={onMessage} /> */}
+            {/* TODO: Change the below TransactionSelect Component */}
+            <div className="my-8">
+                <Input />
+            </div>
+            <div className="w-full">
+                <TransInfo />
+            </div>
+            <div className="my-10 flex items-center jusitfy-center gap-x-16">
+                <LinkButton title={'PBFT Graph'} link={'/pages/dashboard'} scrollId={'pbft-graph'} />
+                <LinkButton title={'Messages v Time Graph'} link={'/pages/dashboard'} scrollId={'mvt-graph'} />
+            </div>
+            <div className="my-12 w-full">
+                <HRline />
+            </div>
+            <div className="" id='pbft-graph'>
+                <div className="mb-8">
+                    <FontVarTitle title={'Practical Byzantine Fault Tolerance Graph'} />
+                </div>
+                <ResizableContainer>
+                    <PBFT
+                        messageHistory={messageHistory}
+                        transactionNumber={currentTransaction}
+                    />
+                    <div className='absolute bottom-0 right-0 rotate-45'>
+                        <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
+                    </div>
+                </ResizableContainer>
+            </div>
+            <div className="mt-24 mb-16 w-full">
+                <HRline />
+            </div>
+            <div className="" id="mvt-graph">
+                <Mvt
+                    messageHistory={dummyData}
+                    transactionNumber={currentTransaction}
+                />
+            </div>
+        </Wrapper>
+    )
 }
 
 const index = () => {

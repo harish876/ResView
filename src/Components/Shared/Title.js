@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { Icon } from './Icon'
 import { ThemeContext } from '../../Context/theme';
+import classNames from 'classnames';
 
 const Title = ({ title, icon, iconHeight, iconViewBox }) => {
   const { theme } = useContext(ThemeContext);
@@ -29,6 +30,15 @@ export const Subtitle = ({ subtitle }) => {
     return (
         <div className='text-16p text-center dark:text-white text-gray-170 w-750p'>
             {subtitle}
+        </div>
+    );
+};
+
+export const FontVarTitle = ({ title, fontClass }) => {
+    const varFont = fontClass ? fontClass : 'text-22p';
+    return (
+        <div className={`dark:text-gray-300 text-gray-700 font-bold text-center ${varFont}`}>
+            {title}
         </div>
     );
 };
