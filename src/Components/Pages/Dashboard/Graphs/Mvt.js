@@ -246,7 +246,7 @@ const Mvt = ({ messageHistory, currentTransaction=17 }) => {
             <div className='dark:text-gray-300 text-gray-700 font-bold text-24p text-center'>
                 Messages vs Time Graph
             </div>
-            <div className="flex items-center justify-center gap-x-16 mt-6 mb-4">
+            <div className="flex items-center justify-center gap-x-16 mt-8 mb-4">
                 <MvTSelectButton title={'Prepare Messages'} onClick={() => toggleMvtGraphNoChange(1)} graphNo={1} />
                 <MvTSelectButton title={'Commit Messages'} onClick={() => toggleMvtGraphNoChange(2)} graphNo={2} />
             </div>
@@ -311,7 +311,7 @@ export const MvTGraphManipulator = ({
                         <ReplicaButton
                             title={title}
                             onClick={() => toggleLine(title)}
-                            faulty={labelToggle[title]}
+                            lineActive={labelToggle[title]}
                             lineToggle={true}
                             key={index}
                         />

@@ -214,7 +214,13 @@ const Dashboard = () => {
               <LinkButton title={'PBFT Graph'} link={'/pages/dashboard'} scrollId={'pbft-graph'} />
               <LinkButton title={'Messages v Time Graph'} link={'/pages/dashboard'} scrollId={'mvt-graph'} />
           </div>
-          <div className="mt-8 mb-16" id='pbft-graph'>
+          <div className="my-16 w-full">
+              <HRline />
+          </div>
+          <div className="mb-16" id='pbft-graph'>
+              <div className='dark:text-gray-300 text-gray-700 font-bold text-24p text-center'>
+                  Practical Byzantine Fault Tolerance Graph
+              </div>
               <ResizableContainer>
                   <PBFT
                       messageHistory={messageHistory}

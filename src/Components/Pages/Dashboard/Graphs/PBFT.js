@@ -574,9 +574,6 @@ const PBFT = ({
         <>
         <div className="flex items-center justify-between gap-x-16">
             <div />
-            <div className='dark:text-gray-300 text-gray-700 font-bold text-lg mb-[-1em]'>
-                Practical Byzantine Fault Tolerance
-            </div>
                 <div className="text-white" onClick={() => hideGraph()}>
                 Clear
             </div>
