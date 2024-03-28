@@ -140,13 +140,14 @@ const PBFT = ({
             return labelText;
         });
 
-        const svg2 = d3
-            .select(lineRef.current)
-            .attr("width", width)
-            .attr("height", height)
-            .classed("flex", true)
-            .classed("justify-center", true)
-            .classed("items-center", true);
+        if(!clear) {
+            const svg2 = d3
+                .select(lineRef.current)
+                .attr("width", width)
+                .attr("height", height)
+                .classed("flex", true)
+                .classed("justify-center", true)
+                .classed("items-center", true);
 
             // REQUEST LINES
             points.request.end.forEach((end, i) => {
@@ -187,27 +188,18 @@ const PBFT = ({
                     start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, 'gray', TRANSDURATION_PBFT_GRAPH + 3000, i * 3000, lineGen, svg2, 'reply')
                 );
             });
+        }
         
-    }, [theme, width, height]);
-
-    const clearSVG = () => {
-        const svgElement = document.getElementById('svg-one');
-        if (svgElement) {
-            console.log('SVG ELEMENT', svgElement)
-            svgElement.innerHTML = '';
-        }
-    };
+    }, [theme, width, height, clear]);
 
     useEffect(() => {
-        if (!clear) {
-            clearSVG();
             debouncedRender();
-        }
-    }, [clear, debouncedRender]);
+    }, [debouncedRender]);
 
-    useEffect(() => {
-        console.log("MESSAGE HISTIRY", messageHistory);
-    }, [messageHistory]);
+    // TODO: Check what the below does
+    // useEffect(() => {
+    //     console.log("MESSAGE HISTIRY", messageHistory);
+    // }, [messageHistory]);
 
     const onClear = () => {
         setClear(true);
