@@ -8,6 +8,7 @@ import ResizableContainer from "../Resizable";
 import { Icon } from "../../../Shared/Icon";
 import { anglesRightIcon } from "../../../../Resources/Icons";
 import { MvTSelectButton, ReplicaButton } from "../../../Shared/Buttons";
+import { FontVarTitle } from "../../../Shared/Title";
 
 const LABEL_TOGGLES = { "Replica 1": true, "Replica 2": true, "Replica 3": true, "Replica 4": true }
 
@@ -243,9 +244,7 @@ const Mvt = ({ messageHistory, currentTransaction=17 }) => {
 
     return (
         <div className="flex flex-col">
-            <div className='dark:text-gray-300 text-gray-700 font-bold text-24p text-center'>
-                Messages vs Time Graph
-            </div>
+            <FontVarTitle title={'Messages vs Time Graph'} />
             <div className="flex items-center justify-center gap-x-16 mt-8 mb-4">
                 <MvTSelectButton title={'Prepare Messages'} onClick={() => toggleMvtGraphNoChange(1)} graphNo={1} />
                 <MvTSelectButton title={'Commit Messages'} onClick={() => toggleMvtGraphNoChange(2)} graphNo={2} />
@@ -288,9 +287,7 @@ export const MvTGraphManipulator = ({
     return (
         <div className='mt-2 rounded-md shadow-md w-700p py-6 px-2 dark:border-1p dark:border-solid dark:border-gray-50 flex flex-col gap-y-6'>
             <div className="flex flex-col gap-y-4">
-                <div className='dark:text-gray-300 text-gray-700 font-bold text-18p text-center'>
-                    Select Replica To be Faulty:                
-                </div>
+                <FontVarTitle title={'Select Replica To be Faulty:'} fontClass={'text-18p'} />
                 <div className='flex gap-x-7 justify-center'>
                     {MVT_GRAPH_LABELS.length > 0 && MVT_GRAPH_LABELS.map((title, index) => (
                         <ReplicaButton
@@ -303,9 +300,7 @@ export const MvTGraphManipulator = ({
                 </div>
             </div>
             <div className="flex flex-col gap-y-4">
-                <div className='dark:text-gray-300 text-gray-700 font-bold text-18p text-center'>
-                    Toggle Line Graph:
-                </div>
+                <FontVarTitle title={'Toggle Line Graph:'} fontClass={'text-18p'} />
                 <div className='flex gap-x-7 justify-center'>
                     {MVT_GRAPH_LABELS.length > 0 && MVT_GRAPH_LABELS.map((title, index) => (
                         <ReplicaButton

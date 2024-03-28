@@ -6,7 +6,7 @@ import { GraphResizerContext, GraphViewContext } from "../../../Context/graph";
 import { anglesRightIcon, eyeIcon } from "../../../Resources/Icons";
 import { LinkButton } from '../../Shared/Buttons';
 import { Icon } from '../../Shared/Icon';
-import Title, { Subtitle } from '../../Shared/Title';
+import Title, { FontVarTitle, Subtitle } from '../../Shared/Title';
 import Wrapper from "../../Shared/Wrapper";
 import Input from '../Visualizer/Components/Input';
 import Mvt from './Graphs/Mvt';
@@ -218,9 +218,7 @@ const Dashboard = () => {
               <HRline />
           </div>
           <div className="mb-16" id='pbft-graph'>
-              <div className='dark:text-gray-300 text-gray-700 font-bold text-24p text-center'>
-                  Practical Byzantine Fault Tolerance Graph
-              </div>
+              <FontVarTitle title={'Practical Byzantine Fault Tolerance Graph'} />
               <ResizableContainer>
                   <PBFT
                       messageHistory={messageHistory}
