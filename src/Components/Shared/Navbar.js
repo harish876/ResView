@@ -60,7 +60,7 @@ const NavLink = ({
   <Tooltip title={title} enterDelay={500}>
     <a href={`/pages/${page}`} className={cn(
       'cursor-pointer font-bold text-gray-900 dark:text-white',
-      {'dark:bg-green-80 bg-green-40 px-2 py-1 rounded-lg transition': currentPage==page},
+      {'dark:bg-green-80 bg-green-40 px-2 py-1 rounded-lg transition': currentPage===page},
     )}>
       {/* <Icon
         fill={navbarPageActiveColor(currentPage, page)}

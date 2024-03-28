@@ -9,31 +9,17 @@ import { Icon } from "../../../Shared/Icon";
 import { anglesRightIcon } from "../../../../Resources/Icons";
 import { ReplicaButton } from "../../../Shared/Buttons";
 
-const theme = {
-    axis: {
-        textColor: "#fff",
-        fontSize: "140px",
-        tickColor: "#eee",
-    },
-    grid: {
-        stroke: "#fff",
-        strokeWidth: 1,
-    },
-};
+const LABEL_TOGGLES = { "Replica 1": true, "Replica 2": true, "Replica 3": true, "Replica 4": true }
 
-const secondTheme = {
-    textColor: "#fff",
-    fontSize: "140px",
-};
-
+const FAULT_TOGGLES = { "Replica 1": false, "Replica 2": false, "Replica 3": false, "Replica 4": false }
 
 // TODO: Change the value of currentTransaction when connecting to BE also pass messageHistory to the Mvt component in the index of Graphs  
 const Mvt = ({ messageHistory, currentTransaction=17, mvtGraphNo=1 }) => {
     const [points , setPoints] = useState();
     const [messageChartData, setMessageChartData] = useState([]);
 
-    const [labelToggle, setLabelToggle] = useState({ "Replica 1": true, "Replica 2": true, "Replica 3": true, "Replica 4": true });
-    const [labelToggleFaulty, setLabelToggleFaulty] = useState({ "Replica 1": false, "Replica 2": false, "Replica 3": false, "Replica 4": false });
+    const [labelToggle, setLabelToggle] = useState(LABEL_TOGGLES);
+    const [labelToggleFaulty, setLabelToggleFaulty] = useState(FAULT_TOGGLES);
 
     const [resetGraph, setResetGraph] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
@@ -275,7 +261,7 @@ export const MvTGraphManipulator = ({
     toggleLine,
 }) => {
     return (
-        <div className='mt-2 bg-white rounded-md shadow-md w-full py-3 px-2 dark:border-1p dark:border-solid dark:border-gray-50 dark:bg-blue-300'>
+        <div className='mt-2 rounded-md shadow-md w-full py-3 px-2 dark:border-1p dark:border-solid dark:border-gray-50'>
             <div className='text-20p text-center text-blue-190 p-2 '>
                 Select Replica To be Faulty:{" "}
             </div>
@@ -306,47 +292,31 @@ export const MvTGraphManipulator = ({
                 Toggle Line Graph:{" "}
             </div>
 
-            <div className='flex gap-x-7'>
-                {/* Replica Buttons */}
-                <button
-                    className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${labelToggle["Replica 1"]
-                            ? "bg-blue-190 text-white"
-                            : "text-blue-190"
-                        }`}
+            <div className='flex gap-x-7 justify-center'>
+                <ReplicaButton
+                    title={'Replica 1'}
                     onClick={() => toggleLine("Replica 1")}
-                >
-                    Replica 1
-                </button>
-
-                <button
-                    className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${labelToggle["Replica 2"]
-                            ? "bg-blue-190 text-white"
-                            : "text-blue-190"
-                        }`}
+                    lineActive={labelToggle["Replica 1"]}
+                    lineToggle={true}
+                />  
+                <ReplicaButton
+                    title={'Replica 2'}
                     onClick={() => toggleLine("Replica 2")}
-                >
-                    Replica 2
-                </button>
-
-                <button
-                    className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${labelToggle["Replica 3"]
-                            ? "bg-blue-190 text-white"
-                            : "text-blue-190"
-                        }`}
+                    lineActive={labelToggle["Replica 2"]}
+                    lineToggle={true}
+                />  
+                <ReplicaButton
+                    title={'Replica 3'}
                     onClick={() => toggleLine("Replica 3")}
-                >
-                    Replica 3
-                </button>
-
-                <button
-                    className={`text-20p p-2 m-1 border border-2p border-blue-190 font-sans h-40p w-450p cursor-pointer rounded-md flex items-center justify-center ${labelToggle["Replica 4"]
-                            ? "bg-blue-190 text-white"
-                            : "text-blue-190"
-                        }`}
+                    lineActive={labelToggle["Replica 3"]}
+                    lineToggle={true}
+                />  
+                <ReplicaButton
+                    title={'Replica 4'}
                     onClick={() => toggleLine("Replica 4")}
-                >
-                    Replica 4
-                </button>
+                    lineActive={labelToggle["Replica 4"]}
+                    lineToggle={true}
+                /> 
             </div>
         </div>
     );
