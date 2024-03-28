@@ -8,7 +8,7 @@ const LINK_BUTTON_CLASSES = "relative flex h-11 w-220p items-center justify-cent
 
 const REPLICA_BUTTON_CLASSES = "relative flex h-11 items-center justify-center px-6 before:absolute before:inset-0 before:border-3p before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max cursor-pointer"
 
-const ICON_BUTTON_CLASSES = "cursor-pointer relative flex h-10 items-center justify-center px-4 before:absolute before:inset-0 before:border-2p before:bg-gradient-to-b before:transition before:duration-200 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max before:rounded-md w-auto flex items-center justify-center gap-x-2 h-9 text-primary dark:text-white"
+const ICON_BUTTON_CLASSES = "relative flex h-10 items-center justify-center px-4 before:absolute before:inset-0 before:border-2p before:bg-gradient-to-b before:transition before:duration-200 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max before:rounded-md w-auto flex items-center justify-center gap-x-2 h-9 text-primary"
 
 export const LinkButton = ({ title, link, external, scrollId }) => {
     const handleClick = () => {
@@ -86,15 +86,16 @@ const ICON_BTTN_CLSS_HOVER = {
     'clear': 'dark:hover:before:border-red-700 before:hover:border-blue-500',
 } 
 
-export const IconButtons = ({ title, icon, onClick, children }) => {
+export const IconButtons = ({ title, onClick, children, disabled }) => {
     const handleClick = () => {
         onClick()
     };
+    const extraClass = disabled ? 'cursor-not-allowed dark:border-gray-700 dark:text-gray-700' : `${ICON_BTTN_CLSS_HOVER[title.toLowerCase()]} dark:text-white`;
     return (
         // TODO: Change the below true and false in cn
-        <div onClick={handleClick} className={`${ICON_BUTTON_CLASSES} ${ICON_BTTN_CLSS_HOVER[title.toLowerCase()]}`}>
+        <button onClick={handleClick} className={`${ICON_BUTTON_CLASSES} ${extraClass}`} disabled={disabled}>
             {children}
             <span className="relative text-base font-semibold">{title}</span>
-        </div>
+        </button>
     )
 };

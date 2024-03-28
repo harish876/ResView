@@ -212,11 +212,11 @@ const PBFT = ({
     return (
         <>
             <div className="flex items-center justify-between gap-x-16 mb-[-1em] mt-2">
-                <IconButtons title={'Play'} onClick={() => onPlay()}>
-                    <Icon path={playIcon} viewBox={'0 0 384 512'} height={'13px'} />
+                <IconButtons title={'Play'} onClick={() => onPlay()} disabled={!clear}>
+                    <Icon path={playIcon} viewBox={'0 0 384 512'} height={'13px'} fill={!clear ? '#374151' : '#fff'} />
                 </IconButtons>
-                <IconButtons title={'Clear'} onClick={() => onClear()}>
-                    <Icon path={cancelIcon} viewBox={'0 0 384 512'} height={'14px'} />
+                <IconButtons title={'Clear'} onClick={() => onClear()} disabled={clear}>
+                    <Icon path={cancelIcon} viewBox={'0 0 384 512'} height={'14px'} fill={clear ? '#374151' : '#fff'} />
                 </IconButtons>
             </div>
             <div className='relative w-full h-full pl-4 pr-2 pb-6'>
@@ -229,7 +229,7 @@ const PBFT = ({
                     <>
                         <svg id={'svg-one'} ref={ref} className='absolute'></svg>
                         {!clear && (
-                                <svg ref={lineRef} className='absolute'></svg>
+                            <svg ref={lineRef} className='absolute'></svg>
                         )}
                     </>
                 )}
