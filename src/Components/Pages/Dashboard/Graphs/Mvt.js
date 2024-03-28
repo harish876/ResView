@@ -242,11 +242,11 @@ const Mvt = ({ messageHistory, currentTransaction=17 }) => {
     }, [messageHistory, currentTransaction, labelToggle, resetGraph]);
 
     return (
-        <div>
+        <div className="flex flex-col">
             <div className='dark:text-gray-300 text-gray-700 font-bold text-24p text-center'>
                 Messages vs Time Graph
             </div>
-            <div className="flex items-center justify-center m-6 gap-x-16">
+            <div className="flex items-center justify-center gap-x-16 mt-6 mb-4">
                 <MvTSelectButton title={'Prepare Messages'} onClick={() => toggleMvtGraphNoChange(1)} graphNo={1} />
                 <MvTSelectButton title={'Commit Messages'} onClick={() => toggleMvtGraphNoChange(2)} graphNo={2} />
             </div>
@@ -267,7 +267,7 @@ const Mvt = ({ messageHistory, currentTransaction=17 }) => {
                 <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
             </div>
             </ResizableContainer>
-            <div className='mt-4 mb-4 flex items-center justify-center'>
+            <div className='mb-4 flex items-center justify-center'>
                 <MvTGraphManipulator
                     toggleFaulty={toggleFaulty}
                     toggleLine={toggleLine}

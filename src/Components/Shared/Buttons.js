@@ -47,14 +47,14 @@ export const ReplicaButton = ({ title, onClick, faulty, lineToggle, lineActive }
     )
 }
 
-export const MvTSelectButton = ({ title, onClick, faulty}) => {
+export const MvTSelectButton = ({ title, onClick, graphNo}) => {
     const { mvtGraphNo } = useContext(GraphViewContext);
 
     const handleClick = () => {
         onClick()
     };
     return (
-        <div onClick={handleClick} className={classNames(`${REPLICA_BUTTON_CLASSES} before:rounded-full w-200p`, { 'dark:before:bg-red-400 dark:before:border-red-700 before:border-red-500 before:bg-red-100': faulty, 'dark:before:bg-gray-800 dark:before:border-gray-700 before:border-blue-500 before:bg-primary/10': !faulty})}>
+        <div onClick={handleClick} className={classNames(`${REPLICA_BUTTON_CLASSES} before:rounded-full w-200p`, { 'dark:before:bg-gray-500 dark:before:border-gray-50 before:border-red-500 before:bg-red-100': graphNo === mvtGraphNo, 'dark:before:bg-gray-800 dark:before:border-gray-700 before:border-blue-500 before:bg-primary/10': graphNo !== mvtGraphNo })}>
             <span className="relative text-base font-semibold text-primary dark:text-white">{title}</span >
         </div>
     )
