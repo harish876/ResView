@@ -17,16 +17,17 @@ const PBFT = ({
     // TODO: Uncomment the below after connecting to the BE
     // transactionNumber 
 }) => {
-    const { boxValues, resizing, setResizing } = useContext(GraphResizerContext);
+    const { boxValues, resizing } = useContext(GraphResizerContext);
     const { width, height } = boxValues;
     const { theme } = useContext(ThemeContext);
 
     // TODO: Comment the below two lines after connecting to the BE
     const { transactionIds } = generateTransactionIds(dummyData);
     const [transactionNumber, setTransactionNumber] = useState(transactionIds[0]);
-    const [graphHide, setGraphHide] = useState(false);
+    const [clear, setClear] = useState(false);
 
     const ref = useRef(null);
+    const lineRef = useRef(null);
 
     const debouncedRender = useCallback(() => {
         const data = generatePoints(
@@ -139,69 +140,90 @@ const PBFT = ({
             return labelText;
         });
 
-        // REQUEST LINES
-        points.request.end.forEach((end, i) => {
-            if (end.flag) {
-                console.log('REQUEST POINTS', points.request.color);
-                connectionRender([points.request.start[0].points, end.points], points.request.color, 'gray', TRANSDURATION_PBFT_GRAPH, i * 2000, lineGen, svg, 'request');
-            }
-        });
+        const svg2 = d3
+            .select(lineRef.current)
+            .attr("width", width)
+            .attr("height", height)
+            .classed("flex", true)
+            .classed("justify-center", true)
+            .classed("items-center", true);
 
-        // PRE-PREPARE LINES
-        points.prePrepare.end.forEach((end, i) => {
-            if (end.flag) {
-                connectionRender([points.prePrepare.start[0].points, end.points], points.prePrepare.color, 'gray', TRANSDURATION_PBFT_GRAPH + 2000, i * 2000, lineGen, svg, 'prePrepare');
-            }
-        });
+            // REQUEST LINES
+            points.request.end.forEach((end, i) => {
+                if (end.flag) {
+                    console.log('REQUEST POINTS', points.request.color);
+                    connectionRender([points.request.start[0].points, end.points], points.request.color, 'gray', TRANSDURATION_PBFT_GRAPH, i * 2000, lineGen, svg2, 'request');
+                }
+            });
 
-        // PREPARE LINES
-        points.prepare.start.map((start, index) =>
-            points.prepare.end[index].map((end, i) => {
-                return (
-                    end.flag && connectionRender([start, end.points], points.prepare.color, 'gray', TRANSDURATION_PBFT_GRAPH + 3000, i * 3000, lineGen, svg, 'prepare')
-                );
-            })
-        );
+            // PRE-PREPARE LINES
+            points.prePrepare.end.forEach((end, i) => {
+                if (end.flag) {
+                    connectionRender([points.prePrepare.start[0].points, end.points], points.prePrepare.color, 'gray', TRANSDURATION_PBFT_GRAPH + 2000, i * 2000, lineGen, svg2, 'prePrepare');
+                }
+            });
 
-        // COMMIT LINES
-        points.commit.start.map((start, index) =>
-            points.commit.end[index].map((end, i) => {
-                return (
-                    end.flag && connectionRender([start, end.points], points.commit.color, 'gray', TRANSDURATION_PBFT_GRAPH + 4000, i * 4000, lineGen, svg, 'commit')
-                );
-            })
-        );
-
-        // REPLY LINES
-        points.reply.start.forEach((start, i) => {
-            return (
-                start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, 'gray', TRANSDURATION_PBFT_GRAPH + 3000, i * 3000, lineGen, svg, 'reply')
+            // PREPARE LINES
+            points.prepare.start.map((start, index) =>
+                points.prepare.end[index].map((end, i) => {
+                    return (
+                        end.flag && connectionRender([start, end.points], points.prepare.color, 'gray', TRANSDURATION_PBFT_GRAPH + 3000, i * 3000, lineGen, svg2, 'prepare')
+                    );
+                })
             );
-        });
+
+            // COMMIT LINES
+            points.commit.start.map((start, index) =>
+                points.commit.end[index].map((end, i) => {
+                    return (
+                        end.flag && connectionRender([start, end.points], points.commit.color, 'gray', TRANSDURATION_PBFT_GRAPH + 4000, i * 4000, lineGen, svg2, 'commit')
+                    );
+                })
+            );
+
+            // REPLY LINES
+            points.reply.start.forEach((start, i) => {
+                return (
+                    start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, 'gray', TRANSDURATION_PBFT_GRAPH + 3000, i * 3000, lineGen, svg2, 'reply')
+                );
+            });
+        
     }, [theme, width, height]);
 
+    const clearSVG = () => {
+        const svgElement = document.getElementById('svg-one');
+        if (svgElement) {
+            console.log('SVG ELEMENT', svgElement)
+            svgElement.innerHTML = '';
+        }
+    };
+
     useEffect(() => {
-        debouncedRender();
-    }, [debouncedRender]);
+        if (!clear) {
+            clearSVG();
+            debouncedRender();
+        }
+    }, [clear, debouncedRender]);
 
     useEffect(() => {
         console.log("MESSAGE HISTIRY", messageHistory);
     }, [messageHistory]);
 
-    const hideGraph = () => {
-        setGraphHide(graphHide => !graphHide);
-        setTimeout(() => {
-            hideGraph()
-        }, 5000)
+    const onClear = () => {
+        setClear(true);
+    }
+
+    const onPlay = () => {
+        setClear(false);
     }
 
     return (
         <>
             <div className="flex items-center justify-between gap-x-16 mb-[-1em] mt-2">
-                <IconButtons title={'Play'} onClick={() => hideGraph()}>
+                <IconButtons title={'Play'} onClick={() => onPlay()}>
                     <Icon path={playIcon} viewBox={'0 0 384 512'} height={'13px'} />
                 </IconButtons>
-                <IconButtons title={'Clear'} onClick={() => hideGraph()}>
+                <IconButtons title={'Clear'} onClick={() => onClear()}>
                     <Icon path={cancelIcon} viewBox={'0 0 384 512'} height={'14px'} />
                 </IconButtons>
             </div>
@@ -213,7 +235,10 @@ const PBFT = ({
                     </div>
                 ) : (
                     <>
-                        {!graphHide && <svg ref={ref} className='absolute'></svg>}
+                        <svg id={'svg-one'} ref={ref} className='absolute'></svg>
+                        {!clear && (
+                                <svg ref={lineRef} className='absolute'></svg>
+                        )}
                     </>
                 )}
             </div>
