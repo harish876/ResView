@@ -2,7 +2,7 @@
 export const currentTeam = [
   {
     name: "Saipranav Kotamreddy",
-    title: "Project Lead & BE Developer",
+    title: "BE Developer & Co-Architect",
     socials: {
       ig: "https://instagram.com/aunsh___",
       linkedIn: "https://instagram.com/in/aunsh",
@@ -11,7 +11,7 @@ export const currentTeam = [
   },
   {
     name: "Aunsh Bandivadekar",
-    title: "FE Developer & Architect",
+    title: "FE Developer & Co-Architect",
     socials: [
       "https://instagram.com/aunsh___",
       "https://linkedin.com/in/aunsh",
@@ -23,34 +23,46 @@ export const currentTeam = [
 ];
 
 export const pastMembers = [
+  {},
   {
-    name: "Nikita B. Emberi",
-    title: "Frontend Developer",
-    socials: [
-      "https://www.instagram.com/nikitaemberi/",
-      "https://www.linkedin.com/in/nikitaemberi/",
-      "https://github.com/NikitaEmberi/",
-    ],
-    profilePic: "https://i.postimg.cc/MKmv3BF2/nikita-resview.jpg",
-  },
-  {
-    name: "Madhumitha V.",
-    title: "Developer",
-    socials: [
-      "https://instagram.com/madhumitha1_?igshid=NzZlODBkYWE4Ng==",
-      "https://www.linkedin.com/in/vmadhuuu",
-      "https://github.com/vmadhuuu",
-    ],
-    profilePic: "https://i.postimg.cc/8zk9L8vQ/madhu.jpg",
-  },
-  {
-    name: "Sriharshini Dusi",
-    title: "Developer",
+    name: "Dr. Mohammad Sadoghi",
+    title: "Principal & Guide",
     socials: [
       "",
-      "",
-      " https://github.com/Sriharshinidusi",
+      "https://www.linkedin.com/in/mohammad-sadoghi/",
+      ""
     ],
-    profilePic: "https://i.postimg.cc/9MPYx03x/harshini.jpg",
+    profilePic: "https://i.postimg.cc/3JCxDmRH/sadoghi.jpg",
   },
+  {}
+  // {
+  //   name: "Nikita B. Emberi",
+  //   title: "Frontend Developer",
+  //   socials: [
+  //     "https://www.instagram.com/nikitaemberi/",
+  //     "https://www.linkedin.com/in/nikitaemberi/",
+  //     "https://github.com/NikitaEmberi/",
+  //   ],
+  //   profilePic: "https://i.postimg.cc/MKmv3BF2/nikita-resview.jpg",
+  // },
+  // {
+  //   name: "Madhumitha V.",
+  //   title: "Developer",
+  //   socials: [
+  //     "https://instagram.com/madhumitha1_?igshid=NzZlODBkYWE4Ng==",
+  //     "https://www.linkedin.com/in/vmadhuuu",
+  //     "https://github.com/vmadhuuu",
+  //   ],
+  //   profilePic: "https://i.postimg.cc/8zk9L8vQ/madhu.jpg",
+  // },
+  // {
+  //   name: "Sriharshini Dusi",
+  //   title: "Developer",
+  //   socials: [
+  //     "",
+  //     "",
+  //     " https://github.com/Sriharshinidusi",
+  //   ],
+  //   profilePic: "https://i.postimg.cc/9MPYx03x/harshini.jpg",
+  // },
 ]
