@@ -120,19 +120,19 @@ const Navbar = memo(() => {
           )}>
             Blog
           </a>
-          <NavLink
+          {/* <NavLink
             title={"Visualizer"}
             currentPage={CURRENT_PAGE}
             page={"visualizer"}
             icon={linearGraphIcon}
             iconHeight={"1.5em"}
-          />
+          /> */}
 
           {/* // ! IMPORTANT: DELETE THE BELOW AFTER VISUALZER IS COMPLETE */}
           <NavLink
-            title={"Dashboard"}
+            title={"Visualizer"}
             currentPage={CURRENT_PAGE}
-            page={"dashboard"}
+            page={"visualizer"}
             icon={linearGraphIcon}
             iconHeight={"1.5em"}
           />
