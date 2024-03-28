@@ -1,107 +1,26 @@
 
-import { ResponsiveLine } from "@nivo/line";
 import { useContext, useEffect, useState } from "react";
-import { COLORS_MVT_GRAPH } from "../../../../Constants";
-import { GraphResizerContext, GraphViewContext } from "../../../../Context/graph";
-import Loader from "../../../Shared/Loader";
-import ResizableContainer from "../Resizable";
-import { Icon } from "../../../Shared/Icon";
-import { anglesRightIcon } from "../../../../Resources/Icons";
-import { MvTSelectButton, ReplicaButton } from "../../../Shared/Buttons";
-import { FontVarTitle } from "../../../Shared/Title";
+import { COLORS_MVT_GRAPH } from "../../../../../Constants";
+import { GraphResizerContext, GraphViewContext } from "../../../../../Context/graph";
+import { anglesRightIcon } from "../../../../../Resources/Icons";
+import { MvTSelectButton } from "../../../../Shared/Buttons";
+import { Icon } from "../../../../Shared/Icon";
+import { FontVarTitle } from "../../../../Shared/Title";
+import ResizableContainer from "../../ResizableContainer";
+import Manipulator from "./Manipulator";
+import MvtGraph from "./Graph";
 
 const LABEL_TOGGLES = { "Replica 1": true, "Replica 2": true, "Replica 3": true, "Replica 4": true }
 
 const FAULT_TOGGLES = { "Replica 1": false, "Replica 2": false, "Replica 3": false, "Replica 4": false }
 
-const MVT_GRAPH_LABELS = ['Replica 1', 'Replica 2', 'Replica 3', 'Replica 4']
-
-const MvtGraph = ({ points }) => {
-    return (
-        <ResponsiveLine
-        points = {points}
-        // TODO: Uncomment the below code and remove the above data passing code 
-        // data={points}
-        margin = {{ top: 50, right: 110, bottom: 50, left: 60 }}
-        xScale = {{
-            type: "linear",
-                min: "auto",
-                    max: "auto",
-                        stacked: false,
-                            reverse: false,
-                            }}
-        yScale = {{
-            type: "linear",
-                min: "auto",
-                    max: "auto",
-                        stacked: false,
-                            reverse: false,
-                            }}
-        xFormat = ' >-.2f'
-        yFormat = ' >-.2f'
-        axisTop = { null}
-        axisRight = { null}
-        axisBottom = {{
-            tickSize: 5,
-                tickPadding: 5,
-                    tickRotation: 0,
-                        legend: "Time Since Replica Started Accepting Messages(10^-5 seconds)",
-                            legendOffset: 36,
-                                legendPosition: "middle",
-                                    fontColor: '#fff'
-        }}
-        axisLeft = {{
-            tickSize: 5,
-                tickPadding: 5,
-                    tickRotation: 0,
-                        legend: "Number of Messages",
-                            legendOffset: -40,
-                                legendPosition: "middle",
-                            }}
-        enablePoints = { true}
-        pointSize = { 10}
-        pointColor = {{ theme: "background" }}
-        pointBorderWidth = { 2}
-        pointBorderColor = {{ from: "serieColor" }}
-        pointLabelYOffset = {- 12}
-        useMesh = { true}
-        legends = {
-            [
-            {
-                anchor: "bottom-right",
-                direction: "column",
-                justify: false,
-                translateX: 100,
-                translateY: 0,
-                itemsSpacing: 0,
-                itemDirection: "left-to-right",
-                itemWidth: 80,
-                itemHeight: 20,
-                itemOpacity: 0.75,
-                symbolSize: 12,
-                symbolShape: "circle",
-                symbolBorderColor: "rgba(0, 0, 0, .5)",
-                effects: [
-                    {
-                        on: "hover",
-                        style: {
-                            itemBackground: "rgba(0, 0, 0, .03)",
-                            itemOpacity: 1,
-                        },
-                    },
-                ],
-            },
-        ]}
-    />
-    );
-}
 
 // TODO: Change the value of currentTransaction when connecting to BE also pass messageHistory to the Mvt component in the index of Graphs  
-const Mvt = ({ messageHistory, currentTransaction=17 }) => {
+const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
     const { boxValues, resizing, setResizing } = useContext(GraphResizerContext);
-    const { toggleMvtGraphNoChange } = useContext(GraphViewContext);
+    const { toggleMvtGraphNoChange, mvtGraphNo } = useContext(GraphViewContext);
 
-    const [points , setPoints] = useState();
+    const [points, setPoints] = useState();
     const [messageChartData, setMessageChartData] = useState([]);
 
     const [labelToggle, setLabelToggle] = useState(LABEL_TOGGLES);
@@ -258,16 +177,16 @@ const Mvt = ({ messageHistory, currentTransaction=17 }) => {
                         </div>
                     ) : (
                         <>
-                                {/* <MvtGraph points={messageChartData[mvtGraphNo]} /> */}
+                            {/* <MvtGraph points={messageChartData[mvtGraphNo]} /> */}
                         </>
                     )}
                 </div>
-            <div className='absolute bottom-0 right-0 rotate-45'>
-                <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
-            </div>
+                <div className='absolute bottom-0 right-0 rotate-45'>
+                    <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
+                </div>
             </ResizableContainer>
             <div className='mb-4 flex items-center justify-center'>
-                <MvTGraphManipulator
+                <Manipulator
                     toggleFaulty={toggleFaulty}
                     toggleLine={toggleLine}
                     labelToggleFaulty={labelToggleFaulty}
@@ -278,43 +197,5 @@ const Mvt = ({ messageHistory, currentTransaction=17 }) => {
     );
 };
 
-export const MvTGraphManipulator = ({
-    labelToggleFaulty,
-    labelToggle,
-    toggleFaulty,
-    toggleLine,
-}) => {
-    return (
-        <div className='mt-2 rounded-md shadow-md w-700p py-6 px-2 dark:border-1p dark:border-solid dark:border-gray-50 flex flex-col gap-y-6'>
-            <div className="flex flex-col gap-y-4">
-                <FontVarTitle title={'Select Replica To be Faulty:'} fontClass={'text-18p'} />
-                <div className='flex gap-x-7 justify-center'>
-                    {MVT_GRAPH_LABELS.length > 0 && MVT_GRAPH_LABELS.map((title, index) => (
-                        <ReplicaButton
-                            title={title}
-                            onClick={() => toggleFaulty(title)}
-                            faulty={labelToggleFaulty[title]}
-                            key={index}
-                        />
-                    ))}
-                </div>
-            </div>
-            <div className="flex flex-col gap-y-4">
-                <FontVarTitle title={'Toggle Line Graph:'} fontClass={'text-18p'} />
-                <div className='flex gap-x-7 justify-center'>
-                    {MVT_GRAPH_LABELS.length > 0 && MVT_GRAPH_LABELS.map((title, index) => (
-                        <ReplicaButton
-                            title={title}
-                            onClick={() => toggleLine(title)}
-                            lineActive={labelToggle[title]}
-                            lineToggle={true}
-                            key={index}
-                        />
-                    ))}
-                </div>
-            </div>
-        </div>
-    );
-};
 
 export default Mvt;
