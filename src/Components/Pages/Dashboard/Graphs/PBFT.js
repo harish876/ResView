@@ -6,6 +6,9 @@ import { GraphResizerContext } from "../../../../Context/graph";
 import { ThemeContext } from "../../../../Context/theme";
 import { dummyData } from "./data";
 import { useTimeout } from 'usehooks-ts'
+import { IconButtons } from "../../../Shared/Buttons";
+import { Icon } from "../../../Shared/Icon";
+import { anglesRightIcon, cancelIcon, playIcon } from "../../../../Resources/Icons";
 
 const computeDataDetails = (data) => {
     let transactions = new Set();
@@ -572,11 +575,13 @@ const PBFT = ({
 
     return (
         <>
-        <div className="flex items-center justify-between gap-x-16">
-            <div />
-                <div className="text-white" onClick={() => hideGraph()}>
-                Clear
-            </div>
+        <div className="flex items-center justify-between gap-x-16 mb-[-1em] mt-2">
+            <IconButtons title={'Play'} onClick={() => hideGraph()}>
+                    <Icon path={playIcon} viewBox={'0 0 384 512'} height={'13px'} />
+            </IconButtons>
+            <IconButtons title={'Clear'} onClick={() => hideGraph()}>
+                    <Icon path={cancelIcon} viewBox={'0 0 384 512'} height={'14px'} />
+            </IconButtons>
         </div> 
         <div className='relative w-full h-full pl-4 pr-2 pb-6'>
             {resizing ? (
