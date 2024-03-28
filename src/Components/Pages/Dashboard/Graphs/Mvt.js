@@ -261,62 +261,64 @@ export const MvTGraphManipulator = ({
     toggleLine,
 }) => {
     return (
-        <div className='mt-2 rounded-md shadow-md w-full py-3 px-2 dark:border-1p dark:border-solid dark:border-gray-50'>
-            <div className='text-20p text-center text-blue-190 p-2 '>
-                Select Replica To be Faulty:{" "}
+        <div className='mt-2 rounded-md shadow-md w-full py-6 px-2 dark:border-1p dark:border-solid dark:border-gray-50 flex flex-col gap-y-6'>
+            <div className="flex flex-col gap-y-4">
+                <div className='dark:text-gray-300 text-gray-700 font-bold text-18p text-center'>
+                    Select Replica To be Faulty:                
+                </div>
+                <div className='flex gap-x-7 justify-center'>
+                    <ReplicaButton
+                        title={'Replica 1'}
+                        onClick={() => toggleFaulty("Replica 1")}
+                        faulty={labelToggleFaulty["Replica 1"]}
+                    />
+                    <ReplicaButton
+                        title={'Replica 2'}
+                        onClick={() => toggleFaulty("Replica 2")}
+                        faulty={labelToggleFaulty["Replica 2"]}
+                    />
+                    <ReplicaButton
+                        title={'Replica 3'}
+                        onClick={() => toggleFaulty("Replica 3")}
+                        faulty={labelToggleFaulty["Replica 3"]}
+                    />
+                    <ReplicaButton
+                        title={'Replica 4'}
+                        onClick={() => toggleFaulty("Replica 4")}
+                        faulty={labelToggleFaulty["Replica 4"]}
+                    />
+                </div>
             </div>
-            <div className='flex gap-x-7 justify-center'>
-                <ReplicaButton 
-                    title={'Replica 1'}
-                    onClick={() => toggleFaulty("Replica 1")}
-                    faulty={labelToggleFaulty["Replica 1"]}
-                />
-                <ReplicaButton 
-                    title={'Replica 2'}
-                    onClick={() => toggleFaulty("Replica 2")}
-                    faulty={labelToggleFaulty["Replica 2"]}
-                />
-                <ReplicaButton 
-                    title={'Replica 3'}
-                    onClick={() => toggleFaulty("Replica 3")}
-                    faulty={labelToggleFaulty["Replica 3"]}
-                />
-                <ReplicaButton 
-                    title={'Replica 4'}
-                    onClick={() => toggleFaulty("Replica 4")}
-                    faulty={labelToggleFaulty["Replica 4"]}
-                />           
-            </div>
-
-            <div className='text-20p text-center text-blue-190 p-2 '>
-                Toggle Line Graph:{" "}
-            </div>
-
-            <div className='flex gap-x-7 justify-center'>
-                <ReplicaButton
-                    title={'Replica 1'}
-                    onClick={() => toggleLine("Replica 1")}
-                    lineActive={labelToggle["Replica 1"]}
-                    lineToggle={true}
-                />  
-                <ReplicaButton
-                    title={'Replica 2'}
-                    onClick={() => toggleLine("Replica 2")}
-                    lineActive={labelToggle["Replica 2"]}
-                    lineToggle={true}
-                />  
-                <ReplicaButton
-                    title={'Replica 3'}
-                    onClick={() => toggleLine("Replica 3")}
-                    lineActive={labelToggle["Replica 3"]}
-                    lineToggle={true}
-                />  
-                <ReplicaButton
-                    title={'Replica 4'}
-                    onClick={() => toggleLine("Replica 4")}
-                    lineActive={labelToggle["Replica 4"]}
-                    lineToggle={true}
-                /> 
+            <div className="flex flex-col gap-y-4">
+                <div className='dark:text-gray-300 text-gray-700 font-bold text-18p text-center'>
+                    Toggle Line Graph:
+                </div>
+                <div className='flex gap-x-7 justify-center'>
+                    <ReplicaButton
+                        title={'Replica 1'}
+                        onClick={() => toggleLine("Replica 1")}
+                        lineActive={labelToggle["Replica 1"]}
+                        lineToggle={true}
+                    />
+                    <ReplicaButton
+                        title={'Replica 2'}
+                        onClick={() => toggleLine("Replica 2")}
+                        lineActive={labelToggle["Replica 2"]}
+                        lineToggle={true}
+                    />
+                    <ReplicaButton
+                        title={'Replica 3'}
+                        onClick={() => toggleLine("Replica 3")}
+                        lineActive={labelToggle["Replica 3"]}
+                        lineToggle={true}
+                    />
+                    <ReplicaButton
+                        title={'Replica 4'}
+                        onClick={() => toggleLine("Replica 4")}
+                        lineActive={labelToggle["Replica 4"]}
+                        lineToggle={true}
+                    />
+                </div>
             </div>
         </div>
     );
