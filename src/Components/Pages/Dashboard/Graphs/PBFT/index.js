@@ -153,14 +153,14 @@ const PBFT = ({
             points.request.end.forEach((end, i) => {
                 if (end.flag) {
                     console.log('REQUEST POINTS', points.request.color);
-                    connectionRender([points.request.start[0].points, end.points], points.request.color, 'gray', TRANSDURATION_PBFT_GRAPH, i * 2000, lineGen, svg2, 'request');
+                    connectionRender([points.request.start[0].points, end.points], points.request.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * 1000, lineGen, svg2, 'request');
                 }
             });
 
             // PRE-PREPARE LINES
             points.prePrepare.end.forEach((end, i) => {
                 if (end.flag) {
-                    connectionRender([points.prePrepare.start[0].points, end.points], points.prePrepare.color, 'gray', TRANSDURATION_PBFT_GRAPH + 2000, i * 2000, lineGen, svg2, 'prePrepare');
+                    connectionRender([points.prePrepare.start[0].points, end.points], points.prePrepare.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * TRANSDURATION_PBFT_GRAPH + 1500, lineGen, svg2, 'prePrepare');
                 }
             });
 
@@ -168,7 +168,7 @@ const PBFT = ({
             points.prepare.start.map((start, index) =>
                 points.prepare.end[index].map((end, i) => {
                     return (
-                        end.flag && connectionRender([start, end.points], points.prepare.color, 'gray', TRANSDURATION_PBFT_GRAPH + 3000, i * 3000, lineGen, svg2, 'prepare')
+                        end.flag && connectionRender([start, end.points], points.prepare.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * TRANSDURATION_PBFT_GRAPH + 6000, lineGen, svg2, 'prepare')
                     );
                 })
             );
@@ -177,7 +177,7 @@ const PBFT = ({
             points.commit.start.map((start, index) =>
                 points.commit.end[index].map((end, i) => {
                     return (
-                        end.flag && connectionRender([start, end.points], points.commit.color, 'gray', TRANSDURATION_PBFT_GRAPH + 4000, i * 4000, lineGen, svg2, 'commit')
+                        end.flag && connectionRender([start, end.points], points.commit.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * TRANSDURATION_PBFT_GRAPH + 10500, lineGen, svg2, 'commit')
                     );
                 })
             );
@@ -185,7 +185,7 @@ const PBFT = ({
             // REPLY LINES
             points.reply.start.forEach((start, i) => {
                 return (
-                    start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, 'gray', TRANSDURATION_PBFT_GRAPH + 3000, i * 3000, lineGen, svg2, 'reply')
+                    start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * TRANSDURATION_PBFT_GRAPH + 14500, lineGen, svg2, 'reply')
                 );
             });
         }
