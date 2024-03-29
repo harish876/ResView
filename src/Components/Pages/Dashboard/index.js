@@ -1,5 +1,6 @@
 // !! IMPORTANT - DELETE THIS FOLDER AFTER VISUALIZER IS COMPLETE
 
+
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from "react";
 import { GraphResizerContext, GraphViewContext } from "../../../Context/graph";
@@ -11,19 +12,22 @@ import Wrapper from "../../Shared/Wrapper";
 import Input from '../Visualizer/Components/Input';
 import Mvt from './Graphs/MVT';
 import PBFT from './Graphs/PBFT';
-import { dummyData } from './Graphs/data';
 import HRline from '../../Shared/HRline';
 import ResizableContainer from './ResizableContainer';
 import TransInfo from './TransInfo'
 import { WebSocketDemo } from '../../../Socket';
 
+
 const colorList = ["hsl(148, 70%, 50%)", "hsl(200, 70%, 50%)", "hsl(171, 70%, 50%)", "hsl(313, 70%, 50%)"];
+
+
 
 
 const Dashboard = () => {
     const { graph, mvtGraphNo } = useContext(GraphViewContext);
     const { boxValues, setBoxValues, setResizing } =
         useContext(GraphResizerContext);
+
 
     const [messageHistory, setMessageHistory] = useState({});
     const [currentTransaction, setCurrentTransaction] = useState(0);
@@ -32,11 +36,13 @@ const Dashboard = () => {
     const [labelToggleFaulty, setLabelToggleFaulty] = useState({ "Replica 1": false, "Replica 2": false, "Replica 3": false, "Replica 4": false });
     const [resetGraph, setResetGraph] = useState(0);
 
+
     const updateGraph = () => {
         let value = resetGraph;
         value = value + 1;
         setResetGraph(value);
     }
+
 
     const toggleLine = (label) => {
         setLabelToggle((prevLabels) => {
@@ -47,6 +53,7 @@ const Dashboard = () => {
         updateGraph();
     };
 
+
     const sendMessage = (replicaNumber) => {
         const ws_list = ['22001', '22002', '22003', '22004'];
         const sendWs = new WebSocket('ws://localhost:' + ws_list[replicaNumber]);
@@ -54,6 +61,7 @@ const Dashboard = () => {
             sendWs.send("Message");
         }
     }
+
 
     const toggleFaulty = (label) => {
         setLabelToggleFaulty((prevLabels) => {
@@ -64,23 +72,25 @@ const Dashboard = () => {
         sendMessage(parseInt(label.slice(-1) - 1));
         updateGraph();
     };
-    const onMessage = (newData, txn_number)=>{
+   const onMessage = (newData, txn_number)=>{
         setMessageHistory(JSON.parse(JSON.stringify(newData)));
         setCurrentTransaction(txn_number);
-        
+       
         //console.log(messageHistory, 'MESSAGE HISTORY', newData);
         //console.log(currentTransaction, 'CURRENT TRANSACTION', txn_number);
       };
 
+
+
+
     useEffect(() => {
-        //console.log("UPDATED: ", messageHistory);
         if (!(currentTransaction in messageHistory) || messageHistory[currentTransaction].current_time < 0) {
             setMessageChartData([[], []])
             // console.log(currentTransaction, " Not in messageHistory")
         }
         else {
             const transactionData = messageHistory[currentTransaction];
-            //console.log("TRANSACTION", transactionData)
+            console.log("TRANSACTION", transactionData)
             let startTime = 0;
             let firstPrepareTime = 0;
             let pre_prepare_times = [];
@@ -88,6 +98,7 @@ const Dashboard = () => {
             let all_prepare_times = [];
             let all_commit_times = [];
             let label_list = [];
+
 
             Object.keys(transactionData).forEach((key) => {
                 label_list.push("Replica " + key);
@@ -109,6 +120,7 @@ const Dashboard = () => {
             startTime = Math.min(...pre_prepare_times);
             firstPrepareTime = Math.min(...prepare_times);
 
+
             let prepareChartData = [];
             let commitChartData = [];
             for (const element of all_prepare_times) {
@@ -127,6 +139,7 @@ const Dashboard = () => {
                 }
                 commitChartData.push(lineData);
             }
+
 
             let preparePoints = [];
             let data = {};
@@ -166,10 +179,11 @@ const Dashboard = () => {
                 commitPoints.push(data);
             }
             let pointData = { 1: preparePoints, 2: commitPoints };
-            //console.log("Graph: ", pointData);
+            console.log("Graph: ", pointData);
             setMessageChartData(pointData);
         }
     }, [messageHistory, currentTransaction, labelToggle, resetGraph]);
+
 
     const sendGet = async (key) => {
         let url = 'http://127.0.0.1:18000/v1/transactions/' + key;
@@ -181,6 +195,7 @@ const Dashboard = () => {
             // console.error("Error: ", error);
         }
     };
+
 
     const sendPost = async (key, value) => {
         let data = { "id": key, "value": value };
@@ -201,40 +216,56 @@ const Dashboard = () => {
             // console.error("Error: ", error);
         }
     };
-  return (
-    <Wrapper>
-          <div className="mt-6 mb-6">
-              <Title title={'Visualizer'} icon={eyeIcon} iconViewBox={'0 0 576 512'} titleFontSize={''} />
-          </div>
-          <div>
-              <Subtitle subtitle={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat vitae, dolor illo harum consequatur ea, temporibus, corrupti iure veniam esse quisquam ut quidem dignissimos quasi. Quas totam temporibus'} />
-          </div>
-          { <WebSocketDemo onMessage={onMessage} /> }
-          {/* TODO: Change the below TransactionSelect Component */}
-          <div className="my-8">
-              <Input chooseTransaction={setCurrentTransaction} sendGet={sendGet} sendPost={sendPost}/>
-          </div>
-          <div className="my-2 flex items-center jusitfy-center gap-x-16">
-              <LinkButton title={'PBFT Graph'} link={'/pages/dashboard'} scrollId={'pbft-graph'} />
-              <LinkButton title={'Messages v Time Graph'} link={'/pages/dashboard'} scrollId={'mvt-graph'} />
-          </div>
-          <div className="my-8" id='pbft-graph'>
-              <ResizableContainer>
-                  <PBFT
-                      messageHistory={messageHistory}
-                      realTransactionNumber={currentTransaction}
-                  />
-                  <div className='absolute bottom-0 right-0 rotate-45'>
-                      <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
-                  </div>
-              </ResizableContainer>
-          </div>
-          <div id="mvt-graph">
-            
-          </div>
-    </Wrapper>
-  )
+    return (
+        <Wrapper>
+            <div className="mt-6 mb-6">
+                <Title title={'Visualizer'} icon={eyeIcon} iconViewBox={'0 0 576 512'} titleFontSize={''} />
+            </div>
+            <div>
+                <Subtitle subtitle={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat vitae, dolor illo harum consequatur ea, temporibus, corrupti iure veniam esse quisquam ut quidem dignissimos quasi. Quas totam temporibus'} />
+            </div>
+            {<WebSocketDemo onMessage={onMessage} />}
+            {/* TODO: Change the below TransactionSelect Component */}
+            <div className="my-8">
+                <Input chooseTransaction={setCurrentTransaction} sendGet={sendGet} sendPost={sendPost}/>
+            </div>
+            <div className="w-full">
+                <TransInfo />
+            </div>
+            <div className="my-10 flex items-center jusitfy-center gap-x-16">
+                <LinkButton title={'PBFT Graph'} link={'/pages/dashboard'} scrollId={'pbft-graph'} />
+                <LinkButton title={'Messages v Time Graph'} link={'/pages/dashboard'} scrollId={'mvt-graph'} />
+            </div>
+            <div className="my-12 w-full">
+                <HRline />
+            </div>
+            <div className="" id='pbft-graph'>
+                <div className="mb-8">
+                    <FontVarTitle title={'Practical Byzantine Fault Tolerance Graph'} />
+                </div>
+                <ResizableContainer>
+                    <PBFT
+                        messageHistory={messageHistory}
+                        realTransactionNumber={currentTransaction}
+                    />
+                    <div className='absolute bottom-0 right-0 rotate-45'>
+                        <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
+                    </div>
+                </ResizableContainer>
+            </div>
+            <div className="mt-24 mb-16 w-full">
+                <HRline />
+            </div>
+            <div className="" id="mvt-graph">
+                <Mvt
+                    messageHistory={messageHistory}
+                    transactionNumber={currentTransaction}
+                />
+            </div>
+        </Wrapper>
+    )
 }
+
 
 const index = () => {
     return (
@@ -247,4 +278,8 @@ const index = () => {
     );
 }
 
+
 export default index
+
+
+

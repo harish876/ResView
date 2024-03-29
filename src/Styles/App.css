@@ -544,6 +544,14 @@ video {
   margin-left: auto;
   margin-right: auto;
 }
+.my-10 {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+.my-12 {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
 .my-16 {
   margin-top: 4rem;
   margin-bottom: 4rem;
@@ -555,10 +563,6 @@ video {
 .my-1p {
   margin-top: 1px;
   margin-bottom: 1px;
-}
-.my-2 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
 }
 .my-3 {
   margin-top: 0.75rem;

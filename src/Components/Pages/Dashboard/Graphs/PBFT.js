@@ -7,7 +7,6 @@ import { ThemeContext } from "../../../../Context/theme";
 import { dummyData } from "./data";
 import { useTimeout } from 'usehooks-ts'
 
-
 const computeDataDetails = (data) => {
     let transactions = new Set();
     let primaryInd = -1;
@@ -42,8 +41,8 @@ const generateConnections = (
 ) => {
     let points = {};
 
-    //console.log("Number 2: ", transactionNumber)
-    //console.log("DATA: ",messageHistory[transactionNumber])
+    console.log("Number 2: ", transactionNumber)
+    console.log("DATA: ",messageHistory)
     let currentData = messageHistory[transactionNumber];
     //If no data, using dummy data to avoid crash
     if(!currentData){
@@ -402,7 +401,7 @@ const PBFT = ({
     const { boxValues, resizing, setResizing } = useContext(GraphResizerContext);
     const { width, height } = boxValues;
     const { theme } = useContext(ThemeContext);
-    //console.log("IN PBFT: ",messageHistory, " ", realTransactionNumber);
+    console.log("IN PBFT: ",messageHistory, " ", realTransactionNumber);
 
     // TODO: Comment the below two lines after connecting to the BE
     const { transactionIds } = generateTransactionIds(dummyData);
