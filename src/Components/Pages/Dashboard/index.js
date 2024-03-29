@@ -15,6 +15,7 @@ import { dummyData } from './Graphs/data';
 import HRline from '../../Shared/HRline';
 import ResizableContainer from './ResizableContainer';
 import TransInfo from './TransInfo'
+import { WebSocketDemo } from '../../../Socket';
 
 const colorList = ["hsl(148, 70%, 50%)", "hsl(200, 70%, 50%)", "hsl(171, 70%, 50%)", "hsl(313, 70%, 50%)"];
 
