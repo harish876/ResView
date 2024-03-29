@@ -66,9 +66,7 @@ const Dashboard = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
-                    // Add any other headers if needed
                 },
-                // If you need to send any data in the request body, you can do it like this:
                 body: JSON.stringify({ key: String(label) })
             });
 
@@ -100,8 +98,7 @@ const Dashboard = () => {
         for (let i = 0; i < 4; i++) {
             let promise = fetchWithTimeout('http://localhost:1850' + String(i + 1) + '/get_status')
                 .then(response => {
-                    // Handle successful response
-                    return response.text(); // Return the body content as text
+                    return response.text(); 
                 })
                 .then(body => {
                     if (body === 'Not Faulty') {
@@ -109,7 +106,6 @@ const Dashboard = () => {
                     }
                 })
                 .catch(error => {
-                    // Handle error (including timeout error)
                     console.error('Error:', error);
                 });
     
@@ -118,17 +114,14 @@ const Dashboard = () => {
     
         Promise.all(promises)
             .then(() => {
-                console.log("RESULTS: ", results);
                 setReplicaStatus(results);
             });
     }
     useEffect(() => {
         const interval = setInterval(() => {
-          // Call your function here that you want to run every 10 seconds
           fetchReplicaStatuses();
-        }, 10000); // 10000 milliseconds = 10 seconds
+        }, 3000); // 3000 milliseconds = 3 seconds
     
-        // Clean up the interval to avoid memory leaks
         return () => clearInterval(interval);
       }, []);
 
@@ -311,7 +304,7 @@ const Dashboard = () => {
             <div className="" id="mvt-graph">
                 <Mvt
                     messageHistory={messageHistory}
-                    transactionNumber={currentTransaction}
+                    currentTransaction={currentTransaction}
                 />
             </div>
         </Wrapper>
