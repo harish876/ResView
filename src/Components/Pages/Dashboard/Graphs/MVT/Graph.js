@@ -3,9 +3,7 @@ import { ResponsiveLine } from "@nivo/line";
 const MvtGraph = ({ points }) => {
     return (
         <ResponsiveLine
-            points={points}
-            // TODO: Uncomment the below code and remove the above data passing code 
-            // data={points}
+            data={points}
             margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
             xScale={{
                 type: "linear",

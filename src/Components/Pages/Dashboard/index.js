@@ -236,8 +236,8 @@ const Dashboard = () => {
                 <TransInfo messageHistory={messageHistory} transactionNumber={currentTransaction} />
             </div>
             <div className="my-10 flex items-center jusitfy-center gap-x-16">
-                <LinkButton title={'PBFT Graph'} link={'/pages/dashboard'} scrollId={'pbft-graph'} />
-                <LinkButton title={'Messages v Time Graph'} link={'/pages/dashboard'} scrollId={'mvt-graph'} />
+                <LinkButton title={'PBFT Graph'} link={'/pages/visualizer'} scrollId={'pbft-graph'} />
+                <LinkButton title={'Messages v Time Graph'} link={'/pages/visualizer'} scrollId={'mvt-graph'} />
             </div>
             <div className="my-12 w-full">
                 <HRline />
