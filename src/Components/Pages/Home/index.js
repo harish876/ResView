@@ -171,10 +171,10 @@ const Home = () => {
 const index = () => {
   return (
     <>
-      {/* <ParticleWrapper>
+      <ParticleWrapper>
         <Home />
-      </ParticleWrapper> */}
-      <Home />
+      </ParticleWrapper>
+      {/* <Home /> */}
     </>
   );
 }

@@ -56,7 +56,7 @@ const PreSynthApp = () => {
               <Route path='/pages/home' element={<Home />} />
 
               {/* // TODO: REMOVE THE BELOW AND DELETE THE DASHBOARD FOLDER AFTER VISUALIZER IS COMPLETE */}
-              <Route path='/pages/dashboard' element={<Dashboard />} />
+              <Route path='/pages/visualizer' element={<Dashboard />} />
 
               <Route path='*' element={<NotFound  />} />
               <Route index element={<Navigate to="/pages/home" />} />

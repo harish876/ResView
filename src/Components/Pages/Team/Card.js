@@ -61,9 +61,9 @@ export const CurrentTeamCard = ({ element }) => {
 };
 
 export const PastMembersCard = ({ element }) => {
-  const { name, profilePic, } = element;
+  const { name, profilePic, title, socials } = element;
   return (
-    <div className='w-full h-auto bg-white text-black rounded-md shadow-md dark:border-2p flex flex-col gap-x-4 dark:border-solid dark:border-gray-50 dark:bg-blue-500 dark:text-white px-4 py-6 hover:scale-105 transition'>
+    <div className='w-full h-auto bg-white text-black rounded-md shadow-md dark:border-2p flex flex-col gap-x-2 dark:border-solid dark:border-gray-50 dark:bg-blue-500 dark:text-white px-2 py-4 hover:scale-105 transition'>
       <div className='w-full h-full flex items-center justify-center rounded-lg'>
         <img
           src={profilePic || defaultProfileImage}
@@ -72,8 +72,26 @@ export const PastMembersCard = ({ element }) => {
         />
       </div>
       <div className='py-10p flex flex-col items-center justify-evenly gap-y-4 mt-4'>
-        <div className='truncate text-20p bold text-black max-w-200p dark:text-white'>
+        <div className='truncate text-20p bold text-black max-w-250p dark:text-white'>
           {name}
+        </div>
+        <div className='truncate text-14p bold text-black max-w-250p dark:text-white'>
+          {title}
+        </div>
+        <div className='flex items-center justify-between gap-x-6'>
+          {socials.length > 0 &&
+            socials.map((element, index) => (
+              <div key={index}>
+                {element.length > 0 ? (
+                  <LinkIcon
+                    link={element}
+                    social={indexToSocial[index]}
+                  />
+                ) : (
+                  <></>
+                )}
+              </div>
+            ))}
         </div>
       </div>
     </div>

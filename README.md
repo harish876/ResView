@@ -1,8 +1,10 @@
-# ResView - (ResDB Visualizer)
+# ResView - (ResilientDB Visualizer)
 
-![Logo](https://i.postimg.cc/C59hDQ4v/Res-View-Logo.jpg)
+![Logo](https://i.postimg.cc/jd6PkhDs/Res-View-Logo-Dark.png)
 
 ResView is a visualizer based on the Resilient Db fabric to show transaction visualizations.
+
+#### Check out the [blog](https://aunsh.medium.com/resview-a-pbft-visualizer-based-on-the-resilientdb-blockchain-fabric-3ffaeb2aaee5) to know more!
 
 ## Get Prepared
 
@@ -63,6 +65,8 @@ DO NOT MERGE unless approved by me.
 ## Authors
 
 [aunshx](https://github.com/aunshx/)
+
+[saipranav](https://github.com/Saipranav-Kotamreddy/)
 
 ## License
 

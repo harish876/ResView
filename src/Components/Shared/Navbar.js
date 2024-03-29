@@ -60,7 +60,7 @@ const NavLink = ({
   <Tooltip title={title} enterDelay={500}>
     <a href={`/pages/${page}`} className={cn(
       'cursor-pointer font-bold text-gray-900 dark:text-white',
-      {'dark:bg-green-80 bg-green-40 px-2 py-1 rounded-lg transition': currentPage==page},
+      {'dark:bg-green-80 bg-green-40 px-2 py-1 rounded-lg transition': currentPage===page},
     )}>
       {/* <Icon
         fill={navbarPageActiveColor(currentPage, page)}
@@ -120,19 +120,19 @@ const Navbar = memo(() => {
           )}>
             Blog
           </a>
-          <NavLink
+          {/* <NavLink
             title={"Visualizer"}
             currentPage={CURRENT_PAGE}
             page={"visualizer"}
             icon={linearGraphIcon}
             iconHeight={"1.5em"}
-          />
+          /> */}
 
           {/* // ! IMPORTANT: DELETE THE BELOW AFTER VISUALZER IS COMPLETE */}
           <NavLink
-            title={"Dashboard"}
+            title={"Visualizer"}
             currentPage={CURRENT_PAGE}
-            page={"dashboard"}
+            page={"visualizer"}
             icon={linearGraphIcon}
             iconHeight={"1.5em"}
           />
