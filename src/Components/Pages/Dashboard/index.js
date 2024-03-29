@@ -53,31 +53,34 @@ const Dashboard = () => {
         updateGraph();
     };
 
-
-    const sendMessage = (replicaNumber) => {
-        const ws_list = ['22001', '22002', '22003', '22004'];
-        const sendWs = new WebSocket('ws://localhost:' + ws_list[replicaNumber]);
-        sendWs.onopen = () => {
-            sendWs.send("Message");
-        }
-    }
-
-
     const toggleFaulty = (label) => {
         setLabelToggleFaulty((prevLabels) => {
             const updatedLabels = { ...prevLabels };
             updatedLabels[label] = !updatedLabels[label];
             return updatedLabels;
         });
-        sendMessage(parseInt(label.slice(-1) - 1));
+
+        const setFaulty = async (label) => {
+            let response = await fetch('http://localhost:1850' + String(label) + '/make_faulty', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                    // Add any other headers if needed
+                },
+                // If you need to send any data in the request body, you can do it like this:
+                body: JSON.stringify({ key: String(label) })
+            });
+
+            console.log(response.json().stringify());
+        }
+
+        setFaulty(label);
+
         updateGraph();
     };
    const onMessage = (newData, txn_number)=>{
         setMessageHistory(JSON.parse(JSON.stringify(newData)));
         setCurrentTransaction(txn_number);
-       
-        //console.log(messageHistory, 'MESSAGE HISTORY', newData);
-        //console.log(currentTransaction, 'CURRENT TRANSACTION', txn_number);
       };
 
 

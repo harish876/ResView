@@ -49,7 +49,21 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
             updatedLabels[label] = !updatedLabels[label];
             return updatedLabels;
         });
-        sendMessage(parseInt(label.slice(-1) - 1));
+
+        const setFaulty = async (label) => {
+            console.log(label);
+            try {
+                let response = await fetch('http://localhost:1850' + String(label.charAt(label.length - 1)) + '/make_faulty');
+                
+
+                console.log(response.body());
+            } catch (error) {
+                //console.error('Error toggling faulty:', error);
+            }
+        }
+
+        setFaulty(label);
+
         updateGraph();
     };
 
