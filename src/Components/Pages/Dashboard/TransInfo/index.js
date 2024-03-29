@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { dummyData } from '../Graphs/data';
 import { computeDataDetails } from '../Graphs/PBFT/Computation/Skeleton';
 import { FontVarTitle } from '../../../Shared/Title';
@@ -10,11 +10,12 @@ import { cancelIcon, circleIcon, tickIcon } from '../../../../Resources/Icons';
 //  TODO: Change the messageHistory and transactionNumbers and pass the real values
 
 // TODO: Change the below computation
-const FAULTY_REPLICAS = [true, true, true, false]
+let FAULTY_REPLICAS = [false, false, false, false]
 
-const index = ({ primary, numberOfReplicas, messageHistory, transactionNumber=17 }) => {
+const index = ({ primary, numberOfReplicas, messageHistory, transactionNumber=17, status }) => {
     // TODO: Change the below from dummyData to messageHistory
 
+    
     let currentData = messageHistory[transactionNumber];
     if(!currentData){
         currentData=dummyData[17];
@@ -49,7 +50,7 @@ const index = ({ primary, numberOfReplicas, messageHistory, transactionNumber=17
         <div className="flex flex-col w-full my-3 gap-y-4">
             <FontVarTitle title={'Faultiness:'} fontClass={'text-18p'} />
             <div className="flex items-center justify-around">
-                  {FAULTY_REPLICAS.length > 0 && FAULTY_REPLICAS.map((value, index) => (
+                  {status.length > 0 && status.map((value, index) => (
                       <div className='text-18p flex items-center justify-center gap-x-3' key={index}>
                           <div>
                               {`Replica ${index + 1}`} :

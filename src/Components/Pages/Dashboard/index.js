@@ -35,6 +35,7 @@ const Dashboard = () => {
     const [labelToggle, setLabelToggle] = useState({ "Replica 1": true, "Replica 2": true, "Replica 3": true, "Replica 4": true });
     const [labelToggleFaulty, setLabelToggleFaulty] = useState({ "Replica 1": false, "Replica 2": false, "Replica 3": false, "Replica 4": false });
     const [resetGraph, setResetGraph] = useState(0);
+    const [replicaStatus, setReplicaStatus] = useState([false, false, false, false])
 
 
     const updateGraph = () => {
@@ -82,6 +83,54 @@ const Dashboard = () => {
         setMessageHistory(JSON.parse(JSON.stringify(newData)));
         setCurrentTransaction(txn_number);
       };
+
+    function fetchWithTimeout(url, options, timeout = 5000) {
+    return Promise.race([
+        fetch(url, options),
+        new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Timeout')), timeout)
+        )
+    ]);
+    }
+      
+    function fetchReplicaStatuses() {
+        let promises = [];
+        let results = [false, false, false, false];
+    
+        for (let i = 0; i < 4; i++) {
+            let promise = fetchWithTimeout('http://localhost:1850' + String(i + 1) + '/get_status')
+                .then(response => {
+                    // Handle successful response
+                    return response.text(); // Return the body content as text
+                })
+                .then(body => {
+                    if (body === 'Not Faulty') {
+                        results[i] = true;
+                    }
+                })
+                .catch(error => {
+                    // Handle error (including timeout error)
+                    console.error('Error:', error);
+                });
+    
+            promises.push(promise);
+        }
+    
+        Promise.all(promises)
+            .then(() => {
+                console.log("RESULTS: ", results);
+                setReplicaStatus(results);
+            });
+    }
+    useEffect(() => {
+        const interval = setInterval(() => {
+          // Call your function here that you want to run every 10 seconds
+          fetchReplicaStatuses();
+        }, 10000); // 10000 milliseconds = 10 seconds
+    
+        // Clean up the interval to avoid memory leaks
+        return () => clearInterval(interval);
+      }, []);
 
 
 
@@ -233,7 +282,7 @@ const Dashboard = () => {
                 <Input chooseTransaction={setCurrentTransaction} sendGet={sendGet} sendPost={sendPost}/>
             </div>
             <div className="w-full">
-                <TransInfo messageHistory={messageHistory} transactionNumber={currentTransaction} />
+                <TransInfo messageHistory={messageHistory} transactionNumber={currentTransaction} status={replicaStatus} />
             </div>
             <div className="my-10 flex items-center jusitfy-center gap-x-16">
                 <LinkButton title={'PBFT Graph'} link={'/pages/visualizer'} scrollId={'pbft-graph'} />
