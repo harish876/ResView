@@ -132,13 +132,13 @@ const Home = () => {
       <div class="relative pt-20 ml-auto">
             <div class="lg:w-2/3 text-center mx-auto">
 
-                <div class="text-gray-900 dark:text-white font-bold text-6xl md:text-6xl xl:text-7xl">Visualizer for new age blockchain fabrics.</div>
+                <div class="text-gray-900 dark:text-white font-bold text-5xl md:text-6xl xl:text-7xl">Visualizer for new age blockchain fabrics.</div>
 
                 <p class="mt-8 px-[6em] text-gray-700 dark:text-gray-300 text-20p">Metrics? KPIs? You name it and we have it. Visualize your blockchain like never before. Novel dashboards for novel blockchains.
               {/* A novel dashboard metric of a blockchain database system, offering new users and learners a clear visualization of a complex technology */}
               </p>
                 <div class="mt-16 flex items-center justify-center gap-y-4 gap-x-[4em]">
-                  <LinkButton title={'Visualizer'} link={'/pages/visualizer'} />
+                  <LinkButton title={'Visualizer'} link={'/pages/visualizer'} external={true} />
                   <LinkButton title={'Learn More'} link={'https://medium.com/@aunsh/resview-a-pbft-visualizer-based-on-the-resilientdb-blockchain-fabric-3ffaeb2aaee5'} external={true} />
                 </div>
                 <div class="py-8 mt-16 px-2 border-y-3p border-gray-900 dark:border-white sm:flex flex items-center justify-between">

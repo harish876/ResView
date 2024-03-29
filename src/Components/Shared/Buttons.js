@@ -43,7 +43,7 @@ export const ReplicaButton = ({ title, onClick, faulty, lineToggle, lineActive }
         onClick()
     };
     return (
-        <div onClick={handleClick} className={classNames(`${REPLICA_BUTTON_CLASSES} w-135p`, { 'dark:before:bg-red-400 dark:before:border-red-700 before:border-red-500 before:bg-red-100': faulty && !lineActive, 'dark:before:bg-gray-800 dark:before:border-gray-700 before:border-blue-500 before:bg-primary/10': !faulty && !lineActive, 'dark:before:bg-green-80 dark:before:border-green-700 before:border-green-500 before:bg-green-400': !faulty && lineActive },{ 'before:rounded-full': !lineToggle, 'before:rounded-md': lineToggle})}>
+        <div onClick={handleClick} className={classNames(`${REPLICA_BUTTON_CLASSES} w-135p`, { 'dark:before:bg-red-400 dark:before:border-red-700 before:border-red-500 before:bg-red-100': faulty && !lineActive, 'dark:before:bg-gray-800 dark:before:border-gray-700 before:border-blue-500 before:bg-primary/10': !faulty && !lineActive, 'dark:before:bg-green-900 dark:before:border-green-700 before:border-green-500 before:bg-green-400': !faulty && lineActive },{ 'before:rounded-full': !lineToggle, 'before:rounded-md': lineToggle})}>
             <span className="relative text-base font-semibold text-primary dark:text-white">{title}</span >
         </div>
     )
