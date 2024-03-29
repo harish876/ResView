@@ -233,7 +233,7 @@ const Dashboard = () => {
                 <Input chooseTransaction={setCurrentTransaction} sendGet={sendGet} sendPost={sendPost}/>
             </div>
             <div className="w-full">
-                <TransInfo />
+                <TransInfo messageHistory={messageHistory} transactionNumber={currentTransaction} />
             </div>
             <div className="my-10 flex items-center jusitfy-center gap-x-16">
                 <LinkButton title={'PBFT Graph'} link={'/pages/dashboard'} scrollId={'pbft-graph'} />

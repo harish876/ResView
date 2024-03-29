@@ -14,8 +14,11 @@ const FAULTY_REPLICAS = [true, true, true, false]
 
 const index = ({ primary, numberOfReplicas, messageHistory, transactionNumber=17 }) => {
     // TODO: Change the below from dummyData to messageHistory
-    const currentData = dummyData[transactionNumber];
 
+    let currentData = messageHistory[transactionNumber];
+    if(!currentData){
+        currentData=dummyData[17];
+    }
     const { primaryIndex, transactions } =
         computeDataDetails(currentData);
 
