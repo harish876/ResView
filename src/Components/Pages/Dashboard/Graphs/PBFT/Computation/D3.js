@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import hash from "object-hash";
 
 export const labelPrimaryNode = (svg, label) => {
     svg
@@ -25,9 +26,12 @@ export const labelPrimaryNode = (svg, label) => {
 };
 
 export const connectionRender = (lineData, lineColor, dotColor, duration, delay, lineGen, svg, arrow) => {
+
+    const divID = 'tooltip_' + hash([lineData[0].x , lineData[0].y , lineData[1].x , lineData[1].y]);
+
     var line = svg.append("path")
         .attr("d", lineGen(lineData))
-        .attr("id", `${lineData[0][1]}${lineData[0][0]}`)
+        .attr("id", `${divID}`)
         .attr("stroke", lineColor)
         .attr("fill", "none")
         .attr("stroke-width", 1)
@@ -35,14 +39,12 @@ export const connectionRender = (lineData, lineColor, dotColor, duration, delay,
         .style("opacity", 0)
 
     // Define the tooltip div
-    var tooltip = d3.select(`#${lineData[0][1]}${lineData[0][0]}`)
+    var tooltip = svg.append("foreignObject")
         .append("div")
+        .attr("id", `#${divID}`)
         .attr("class", "tooltip")
-        .attr("fill", "white")
-        .attr("height", "100px")
-        .attr("width", "100px")
-        .attr("stroke", "steelblue")
-        .style("opacity", 1);
+        .style("opacity", 0)
+        .attr("class", "absolute")
 
     // Append tooltip text
     var tooltipText = "Tooltip text here";
@@ -76,26 +78,21 @@ export const connectionRender = (lineData, lineColor, dotColor, duration, delay,
                 });
         })
 
-    // Add event listeners to show/hide tooltip when hovering over the line
-    d3.select(`#${lineData[0][1]}${lineData[0][0]}`)
+    d3.select(`#${divID}`)
         .on('mouseover', function (e, d) {
-            console.log('HELLO')
             tooltip
                 .transition()
                 .duration(200)
                 .style("opacity", 1)
         })
         .on("mousemove", function (e, d) {
-            console.log('HELLO 2')
             tooltip.html(tooltipText)
                 .style("left", (e.pageX) + "px")
                 .style("top", (e.pageY - 28) + "px");
         })
         .on("mouseout", function () {
-            console.log('HELLO 3')
             tooltip.transition()
                 .duration(500)
                 .style("opacity", 0);
         });
-
 }
