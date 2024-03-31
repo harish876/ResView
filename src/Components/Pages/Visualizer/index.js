@@ -82,7 +82,7 @@ const Visualizer = () => {
     }
     else {
       const transactionData = messageHistory[currentTransaction];
-      console.log("TRANSACTION", transactionData)
+      //console.log("TRANSACTION", transactionData)
       let startTime = 0;
       let firstPrepareTime = 0;
       let pre_prepare_times = [];
@@ -168,7 +168,7 @@ const Visualizer = () => {
         commitPoints.push(data);
       }
       let pointData = { 1: preparePoints, 2: commitPoints };
-      console.log("Graph: ", pointData);
+      //console.log("Graph: ", pointData);
       setMessageChartData(pointData);
     }
   }, [messageHistory, currentTransaction, labelToggle, resetGraph]);

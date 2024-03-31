@@ -1,3 +1,4 @@
+
 import * as d3 from "d3";
 import { line } from "d3-shape";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
@@ -15,15 +16,15 @@ import { generateConnections, generateLabels, generateLines, generatePoints, gen
 const PBFT = ({
     messageHistory,
     // TODO: Uncomment the below after connecting to the BE
-    // transactionNumber 
+    realTransactionNumber 
 }) => {
     const { boxValues, resizing } = useContext(GraphResizerContext);
     const { width, height } = boxValues;
     const { theme } = useContext(ThemeContext);
 
     // TODO: Comment the below two lines after connecting to the BE
-    const { transactionIds } = generateTransactionIds(dummyData);
-    const [transactionNumber, setTransactionNumber] = useState(transactionIds[0]);
+    //const { transactionIds } = generateTransactionIds(dummyData);
+    const [transactionNumber, setTransactionNumber] = useState(realTransactionNumber);
     const [clear, setClear] = useState(false);
 
     const ref = useRef(null);
@@ -50,8 +51,8 @@ const PBFT = ({
             xCoords,
             yCoords,
             // TODO: Change dummyData to messageHistory after connecting to BE
-            dummyData,
-            transactionNumber
+            messageHistory,
+            realTransactionNumber
         );
 
         const { labelsX, labelsY } = generateLabels(xCoords, yCoords);

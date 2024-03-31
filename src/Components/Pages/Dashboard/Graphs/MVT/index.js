@@ -49,7 +49,21 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
             updatedLabels[label] = !updatedLabels[label];
             return updatedLabels;
         });
-        sendMessage(parseInt(label.slice(-1) - 1));
+
+        const setFaulty = async (label) => {
+            console.log(label);
+            try {
+                let response = await fetch('http://localhost:1850' + String(label.charAt(label.length - 1)) + '/make_faulty');
+                
+
+                console.log(response.body());
+            } catch (error) {
+                //console.error('Error toggling faulty:', error);
+            }
+        }
+
+        setFaulty(label);
+
         updateGraph();
     };
 
@@ -103,16 +117,32 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
             for (const element of all_prepare_times) {
                 let lineData = [{ x: 0, y: 0 }];
                 for (let j = 0; j < element.length; j++) {
-                    lineData.push({ x: element[j] - startTime, y: j });
-                    lineData.push({ x: element[j] - startTime, y: j + 1 });
+                    if(element[j] - startTime>0){
+                        lineData.push({ x: element[j] - startTime, y: j });
+                        lineData.push({ x: element[j] - startTime, y: j + 1 });
+                    }
+                    else{
+                        if(j+1<element.length){
+                            lineData.push({ x: element[j+1] - startTime, y: j });
+                            lineData.push({ x: element[j+1] - startTime, y: j + 1 });
+                        }
+                    }
                 }
                 prepareChartData.push(lineData);
             }
             for (const element of all_commit_times) {
                 let lineData = [{ x: 0, y: 0 }];
                 for (let j = 0; j < element.length; j++) {
-                    lineData.push({ x: element[j] - firstPrepareTime, y: j });
-                    lineData.push({ x: element[j] - firstPrepareTime, y: j + 1 });
+                    if(element[j] - firstPrepareTime>0){
+                        lineData.push({ x: element[j] - firstPrepareTime, y: j });
+                        lineData.push({ x: element[j] - firstPrepareTime, y: j + 1 });
+                    }
+                    else{
+                        if(j+1<element.length){
+                            lineData.push({ x: element[j+1] - firstPrepareTime, y: j });
+                            lineData.push({ x: element[j+1] - firstPrepareTime, y: j + 1 });
+                        }
+                    }
                 }
                 commitChartData.push(lineData);
             }
@@ -155,6 +185,7 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
                 commitPoints.push(data);
             }
             let pointData = { 1: preparePoints, 2: commitPoints };
+            console.log("Point Data: ", pointData)
             setMessageChartData(pointData);
         }
     }, [messageHistory, currentTransaction, labelToggle, resetGraph]);
