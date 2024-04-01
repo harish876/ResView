@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TransactionSelect from './TransactionSelect';
 import { sendGet, sendPost } from '../../../../APIs';
+import { IconButtons } from '../../../Shared/Buttons';
 
 const Input = ({ chooseTransaction }) => {
 
@@ -43,7 +44,7 @@ const Input = ({ chooseTransaction }) => {
                     name="customTransaction"
                     value={customTransaction}
                     onChange={(e) => setCustomTransaction(e.target.value)}
-                    className="bg-gray-700 border border-gray-600 px-4 py-2 rounded-md text-white"
+                    className="dark:bg-gray-700 bg-gray-10 border-2p border-gray-600 dark:text-white text-gray-600 px-4 py-2 rounded-md"
                 />
             </>
         );
@@ -52,8 +53,8 @@ const Input = ({ chooseTransaction }) => {
     const SetTrans = () => {
         return (
             <div className='flex items-center justify-around gap-x-16'>
-                <input type="text" placeholder="key" name="key" value={key} onChange={(e) => setKey(e.target.value)} className="bg-gray-700 border border-gray-600 px-4 py-2 rounded-md text-white" />
-                <input type="text" placeholder="value" name="value" value={value} onChange={(e) => setValue(e.target.value)} className="bg-gray-700 border border-gray-600 px-4 py-2 rounded-md text-white" />
+                <input type="text" placeholder="key" name="key" value={key} onChange={(e) => setKey(e.target.value)} className="dark:bg-gray-700 bg-gray-10  border-2p border-gray-600 px-4 py-2 rounded-md dark:text-white text-gray-600" />
+                <input type="text" placeholder="value" name="value" value={value} onChange={(e) => setValue(e.target.value)} className="dark:bg-gray-700 bg-gray-10 border-2p border-gray-600 px-4 py-2 rounded-md dark:text-white text-gray-600" />
             </div>
         );
     };
@@ -61,11 +62,11 @@ const Input = ({ chooseTransaction }) => {
     const GetTrans = () => {
         return (
             <>
-                <input type="text" placeholder="key" name="key" value={key} onChange={(e) => setKey(e.target.value)} className="bg-gray-700 border border-gray-600 px-4 py-2 rounded-md text-white" />
+                <input type="text" placeholder="key" name="key" value={key} onChange={(e) => setKey(e.target.value)} className="dark:bg-gray-700 bg-gray-10 border-2p border-gray-600 dark:text-white text-gray-600 px-4 py-2 rounded-md" />
             </>
         );
     };
-    
+
     return (
         <div className='flex items-center justify-start gap-x-16'>
             <div className="my-8">
@@ -74,25 +75,19 @@ const Input = ({ chooseTransaction }) => {
             {(view === 0) && (
                 <div className="my-8">
                     <SelectTrans />
-                    <button type="submit" style={{ marginLeft: '60px' }} className='py-2.5 px-5 me-2 text-sm font-medium w-120p flex items-center justify-center bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center text-white' onClick={performAction}>
-                        Confirm
-                    </button>
+                    <IconButtons title={'Confirm'} onClick={performAction} />
                 </div>
             )}
             {(view === 1) && (
                 <div className="my-8">
                     <GetTrans />
-                    <button type="submit" style={{ marginLeft: '60px' }} className='py-2.5 px-5 me-2 text-sm font-medium w-120p flex items-center justify-center bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center text-white' onClick={performAction}>
-                        Confirm
-                    </button>
+                    <IconButtons title={'Confirm'} onClick={performAction} />
                 </div>
             )}
             {(view === 2) && (
                 <div className="my-8">
                     <SetTrans />
-                    <button type="submit" style={{ marginLeft: '60px' }} className='py-2.5 px-5 me-2 text-sm font-medium w-120p flex items-center justify-center bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center text-white' onClick={performAction}>
-                        Confirm
-                    </button>
+                    <IconButtons title={'Confirm'} onClick={performAction} />
                 </div>
             )}
         </div>

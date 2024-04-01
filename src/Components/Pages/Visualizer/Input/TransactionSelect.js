@@ -32,7 +32,7 @@ const TransactionSelect = ({ selectTransaction }) => {
                     <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                         {DROPDOWN_OPTS.length > 0 && (
                             DROPDOWN_OPTS.map((value, index) => (
-                                <li className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer" key={index} onClick={() => selectTrans(index)}>
+                                <li className="block px-4 py-2 hover:bg-gray-10 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer" key={index} onClick={() => selectTrans(index)}>
                                     {value}
                                 </li>
                             ))

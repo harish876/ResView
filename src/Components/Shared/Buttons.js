@@ -17,27 +17,27 @@ export const LinkButton = ({ title, link, external, scrollId }) => {
         const element = document.getElementById(scrollId);
         if (element) {
             element.scrollIntoView({
-                behavior: 'smooth', 
+                behavior: 'smooth',
                 block: 'start',
-                inline: 'nearest' 
+                inline: 'nearest'
             });
         }
     };
-  return (
-      <div onClick={scrollId ? handleClick : null} className={LINK_BUTTON_CLASSES}>
-        {external ? (
-            <a href={link} target='_blank' rel='noreferrer nofollow'>
-                <span className="relative text-base font-semibold text-primary dark:text-white">{title}</span >
-            </a>
-        ) : (
-            <Link
-              to = { link }
-            >
-              <span className = "relative text-base font-semibold text-primary dark:text-white">{ title }</span >
-          </Link >
-        )}
-    </div>
-  )
+    return (
+        <div onClick={scrollId ? handleClick : null} className={LINK_BUTTON_CLASSES}>
+            {external ? (
+                <a href={link} target='_blank' rel='noreferrer nofollow'>
+                    <span className="relative text-base font-semibold text-primary dark:text-white">{title}</span >
+                </a>
+            ) : (
+                <Link
+                    to={link}
+                >
+                    <span className="relative text-base font-semibold text-primary dark:text-white">{title}</span >
+                </Link >
+            )}
+        </div>
+    )
 }
 
 export const ReplicaButton = ({ title, onClick, faulty, lineToggle, lineActive }) => {
@@ -45,13 +45,13 @@ export const ReplicaButton = ({ title, onClick, faulty, lineToggle, lineActive }
         onClick()
     };
     return (
-        <div onClick={handleClick} className={classNames(`${REPLICA_BUTTON_CLASSES} w-135p`, { 'dark:before:bg-red-400 dark:before:border-red-700 before:border-red-500 before:bg-red-100': faulty && !lineActive, 'dark:before:bg-gray-800 dark:before:border-gray-700 before:border-blue-500 before:bg-primary/10': !faulty && !lineActive, 'dark:before:bg-green-900 dark:before:border-green-700 before:border-green-500 before:bg-green-400': !faulty && lineActive },{ 'before:rounded-full': !lineToggle, 'before:rounded-md': lineToggle})}>
+        <div onClick={handleClick} className={classNames(`${REPLICA_BUTTON_CLASSES} w-135p`, { 'dark:before:bg-red-400 dark:before:border-red-700 before:border-red-500 before:bg-red-100': faulty && !lineActive, 'dark:before:bg-gray-800 dark:before:border-gray-700 before:border-blue-500 before:bg-primary/10': !faulty && !lineActive, 'dark:before:bg-green-900 dark:before:border-green-700 before:border-green-500 before:bg-green-400': !faulty && lineActive }, { 'before:rounded-full': !lineToggle, 'before:rounded-md': lineToggle })}>
             <span className="relative text-base font-semibold text-primary dark:text-white">{title}</span >
         </div>
     )
 }
 
-export const MvTSelectButton = ({ title, onClick, graphNo}) => {
+export const MvTSelectButton = ({ title, onClick, graphNo }) => {
     const { mvtGraphNo } = useContext(GraphViewContext);
 
     const handleClick = () => {
@@ -86,7 +86,7 @@ export const SubmitButton = ({ title, loading }) => {
 const ICON_BTTN_CLSS_HOVER = {
     'play': 'dark:hover:before:border-green-700 before:hover:border-blue-500',
     'clear': 'dark:hover:before:border-red-700 before:hover:border-blue-500',
-} 
+}
 
 export const IconButtons = ({ title, onClick, children, disabled }) => {
     const handleClick = () => {
@@ -94,13 +94,14 @@ export const IconButtons = ({ title, onClick, children, disabled }) => {
     };
     const extraClass = disabled ? 'cursor-not-allowed dark:border-gray-700 dark:text-gray-700' : `${ICON_BTTN_CLSS_HOVER[title.toLowerCase()]} dark:text-white`;
     return (
-        // TODO: Change the below true and false in cn
         <button onClick={handleClick} className={`${ICON_BUTTON_CLASSES} ${extraClass}`} disabled={disabled}>
             {children}
             <span className="relative text-base font-semibold">{title}</span>
         </button>
     )
 };
+
+
 
 export const DropDownButtons = ({ selected, onClick, elements }) => {
     const [open, setOpen] = useState(false);
