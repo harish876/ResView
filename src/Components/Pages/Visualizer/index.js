@@ -10,8 +10,8 @@ import Mvt from './Graphs/MVT';
 import PBFT from './Graphs/PBFT';
 import Input from './Input';
 import ResizableContainer from './ResizableContainer';
-import TransInfo from './TransInfo';
 import { VISUALIZER_PAGE_SUBTITLE } from "../../../Constants";
+import TransInfo from './TransInfo'
 
 
 const Visualizer = () => {

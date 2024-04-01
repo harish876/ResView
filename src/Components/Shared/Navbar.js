@@ -1,6 +1,10 @@
 import { Tooltip } from "@mui/material";
 import cn from "classnames";
+import _ from "lodash";
 import React, { memo, useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { NavbarToggleContext } from "../../Context/navbarToggle";
+import { ThemeContext } from "../../Context/theme";
 import {
   homeIcon,
   linearGraphIcon,
@@ -8,17 +12,8 @@ import {
   sunIcon,
   teamIcon
 } from "../../Resources/Icons";
-import ResViewLogo from "../../Resources/Images/ResViewLogo.jpg";
-import { COLOR_LIGHT, ICON_DEFAULT_COLOR, SUN_COLOR } from "./Constants";
+import { ICON_DEFAULT_COLOR, SUN_COLOR } from "./Constants";
 import { Icon } from "./Icon";
-import { ThemeContext } from "../../Context/theme";
-import _ from "lodash";
-import { NavbarToggleContext } from "../../Context/navbarToggle";
-import { Link } from "react-router-dom";
-
-const navbarPageActiveColor = (currentPage, pageName) => {
-  return currentPage === pageName ? COLOR_LIGHT : ICON_DEFAULT_COLOR;
-};
 
 const LightOrDark = memo(() => {
   const { theme, toggleLightTheme, toggleDarkTheme } = useContext(ThemeContext);
@@ -50,35 +45,39 @@ const LightOrDark = memo(() => {
   );
 });
 
-const NavLink = ({
+const NavComp = ({
   title,
-  currentPage,
   page,
   icon,
   iconHeight,
   iconViewBox,
-}) => (
-  <Tooltip title={title} enterDelay={500}>
-    <a href={`/pages/${page}`} className={cn(
-      'cursor-pointer font-bold text-gray-900 dark:text-white',
-      {'dark:bg-green-80 bg-green-40 px-2 py-1 rounded-lg transition': currentPage===page},
-    )}>
-      {/* <Icon
+}) => {
+  return (
+      <NavLink 
+        to={`${page}`} 
+        className={({ isActive }) => cn(
+          "cursor-pointer font-bold text-gray-900 dark:text-white",
+          {
+            "dark:bg-green-80 bg-green-40 px-2 py-1 rounded-lg": isActive
+          }
+        )}>
+        {/* <Icon
         fill={navbarPageActiveColor(currentPage, page)}
         height={iconHeight}
         path={icon}
         viewBox={iconViewBox}
       /> */}
-      {_.capitalize(page)}
-    </a>
-  </Tooltip>
-);
+        <Tooltip title={title} enterDelay={500}>
+          {title}
+        </Tooltip>
+      </NavLink>
+  );
+};
 
 const Navbar = memo(() => {
   const { theme } = useContext(ThemeContext);
   const { borderToggle } = useContext(NavbarToggleContext);
 
-  const CURRENT_PAGE = window.location.href.split("/")[4];
   const logo = theme ? 'https://i.postimg.cc/jd6PkhDs/Res-View-Logo-Dark.png' : 'https://i.postimg.cc/Y0dMy9mf/Copy-of-Untitled-Design-removebg-preview.png';
   return (
     <>
@@ -98,18 +97,16 @@ const Navbar = memo(() => {
         </Link>
         <div></div>
         <div className='flex items-center justify-center gap-x-12 w-full'>
-          <NavLink
+          <NavComp
             title={"Home"}
-            currentPage={CURRENT_PAGE}
-            page={"home"}
+            page={"/pages/home"}
             icon={homeIcon}
             iconHeight={"1.4em"}
             iconViewBox={"0 0 640 512"}
           />
-          <NavLink
-            title={"Our Team"}
-            currentPage={CURRENT_PAGE}
-            page={"team"}
+          <NavComp
+            title={"Team"}
+            page={"/pages/team"}
             icon={teamIcon}
             iconHeight={"1.4em"}
             iconViewBox={"0 0 640 512"}
@@ -119,10 +116,9 @@ const Navbar = memo(() => {
           )}>
             Blog
           </a>
-          <NavLink
+          <NavComp
             title={"Visualizer"}
-            currentPage={CURRENT_PAGE}
-            page={"visualizer"}
+            page={"/pages/visualizer"}
             icon={linearGraphIcon}
             iconHeight={"1.5em"}
           />

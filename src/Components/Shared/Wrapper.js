@@ -46,6 +46,8 @@ export const ParticleWrapper = ({ children }) => {
       maxSize: 4
     }
   }
+
+  console.log('SETTINGS', settings)
   return (
   <div className='relative'>
         <div className='absolute -z-10 h-full w-full'>

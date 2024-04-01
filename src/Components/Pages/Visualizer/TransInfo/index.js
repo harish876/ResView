@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { cancelIcon, tickIcon } from '../../../../Resources/Icons';
 import HRline from '../../../Shared/HRline';
 import { Icon } from '../../../Shared/Icon';
@@ -8,16 +8,18 @@ import { dummyData } from '../Graphs/data';
 
 
 // TODO: Change the below computation
-let FAULTY_REPLICAS = [false, false, false, false]
+let FAULTY_REPLICAS_DEFAULT = [true, true, true, true]
 
-const index = ({ primary, numberOfReplicas, messageHistory, transactionNumber = 17, status }) => {
-    // TODO: Change the below from dummyData to messageHistory
+const TransInfo = ({ primary, numberOfReplicas, messageHistory, transactionNumber = 17, status }) => {
 
-
+    let currentStatus = status;
     let currentData = messageHistory[transactionNumber];
+
     if (!currentData) {
         currentData = dummyData[17];
+        currentStatus = FAULTY_REPLICAS_DEFAULT;
     }
+    
     const { primaryIndex, transactions } =
         computeDataDetails(currentData);
 
@@ -48,7 +50,7 @@ const index = ({ primary, numberOfReplicas, messageHistory, transactionNumber = 
             <div className="flex flex-col w-full my-3 gap-y-4">
                 <FontVarTitle title={'Faultiness:'} fontClass={'text-18p'} />
                 <div className="flex items-center justify-around">
-                    {status.length > 0 && status.map((value, index) => (
+                    {currentStatus.length > 0 && currentStatus.map((value, index) => (
                         <div className='text-18p flex items-center justify-center gap-x-3' key={index}>
                             <div>
                                 {`Replica ${index + 1}`} :
@@ -64,4 +66,4 @@ const index = ({ primary, numberOfReplicas, messageHistory, transactionNumber = 
     )
 }
 
-export default index
+export default TransInfo
