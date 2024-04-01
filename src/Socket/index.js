@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import useWebSocket from "react-use-websocket";
 
-export const WebSocketDemo = ({onMessage}) => {
+export const WebSocket = ({onMessage}) => {
   //Public API that will echo messages sent to it back to the client
   /*const socketUrls = [
     'ws://localhost:21001',
@@ -81,7 +80,7 @@ export const WebSocketDemo = ({onMessage}) => {
     const fetchData = async (replicaPort) => {
       try {
         // Make API call
-        const response = await fetch('http://localhost:'+String(18501+replicaPort)+'/consensus_data');
+        const response = await fetch(process.env.DEFAULT_LOCAL + String(process.env.DEFAULT_LOCAL_PORT + replicaPort) + process.env.SOCKET_URL_EP);
         const newData = await response.json();
         // Update state with new data
         Object.keys(newData).map(key => {

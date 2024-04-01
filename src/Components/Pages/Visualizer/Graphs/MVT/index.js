@@ -34,15 +34,7 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
         value = value + 1;
         setResetGraph(value);
     }
-
-    const sendMessage = (replicaNumber) => {
-        const ws_list = ['22001', '22002', '22003', '22004'];
-        const sendWs = new WebSocket('ws://localhost:' + ws_list[replicaNumber]);
-        sendWs.onopen = () => {
-            sendWs.send("Message");
-        }
-    }
-
+    
     const toggleFaulty = (label) => {
         setLabelToggleFaulty((prevLabels) => {
             const updatedLabels = { ...prevLabels };
@@ -77,10 +69,8 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
     };
 
     useEffect(() => {
-        console.log('MESSAGE HISTORY', messageHistory);
         if (!(currentTransaction in messageHistory) || messageHistory[currentTransaction].current_time < 0) {
             setMessageChartData([[], []])
-            // console.log(currentTransaction, " Not in messageHistory")
         }
         else {
             const transactionData = messageHistory[currentTransaction];

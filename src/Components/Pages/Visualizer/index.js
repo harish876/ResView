@@ -1,18 +1,14 @@
-// !! IMPORTANT - DELETE THIS FOLDER AFTER VISUALIZER IS COMPLETE
-
-
-import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { anglesRightIcon, eyeIcon } from "../../../Resources/Icons";
-import { WebSocketDemo } from '../../../Socket';
+import { WebSocket } from '../../../Socket';
 import { LinkButton } from '../../Shared/Buttons';
 import HRline from '../../Shared/HRline';
 import { Icon } from '../../Shared/Icon';
 import Title, { FontVarTitle, Subtitle } from '../../Shared/Title';
 import Wrapper from "../../Shared/Wrapper";
-import Input from './Input';
 import Mvt from './Graphs/MVT';
 import PBFT from './Graphs/PBFT';
+import Input from './Input';
 import ResizableContainer from './ResizableContainer';
 import TransInfo from './TransInfo';
 
@@ -72,37 +68,6 @@ const Dashboard = () => {
       }, []);
 
 
-    const sendGet = async (key) => {
-        let url = 'http://127.0.0.1:18000/v1/transactions/' + key;
-        try {
-            const response = await axios.get(url);
-            // console.log("Get response: ", response.data);
-        }
-        catch (error) {
-            // console.error("Error: ", error);
-        }
-    };
-
-
-    const sendPost = async (key, value) => {
-        let data = { "id": key, "value": value };
-        let url = 'http://127.0.0.1:18000/v1/transactions/commit';
-        try {
-            const response = await axios.post(
-                url,
-                JSON.stringify(data),
-                {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                }
-            );
-            // console.log("Get response: ", response.data);
-        }
-        catch (error) {
-            // console.error("Error: ", error);
-        }
-    };
     return (
         <Wrapper>
             <div className="mt-6 mb-6">
@@ -111,10 +76,10 @@ const Dashboard = () => {
             <div>
                 <Subtitle subtitle={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat vitae, dolor illo harum consequatur ea, temporibus, corrupti iure veniam esse quisquam ut quidem dignissimos quasi. Quas totam temporibus'} />
             </div>
-            {<WebSocketDemo onMessage={onMessage} />}
+            {<WebSocket onMessage={onMessage} />}
             {/* TODO: Change the below TransactionSelect Component */}
             <div className="my-8">
-                <Input chooseTransaction={setCurrentTransaction} sendGet={sendGet} sendPost={sendPost}/>
+                <Input chooseTransaction={setCurrentTransaction} />
             </div>
             <div className="w-full">
                 <TransInfo messageHistory={messageHistory} transactionNumber={currentTransaction} status={replicaStatus} />
