@@ -8,9 +8,8 @@ import { ThemeContext } from "../../../../../Context/theme";
 import { cancelIcon, playIcon } from "../../../../../Resources/Icons";
 import { IconButtons } from "../../../../Shared/Buttons";
 import { Icon } from "../../../../Shared/Icon";
-import { dummyData } from "../data";
 import { connectionRender, labelPrimaryNode } from "./Computation/D3";
-import { generateConnections, generateLabels, generateLines, generatePoints, generateTransactionIds } from "./Computation/Skeleton";
+import { generateConnections, generateLabels, generateLines, generatePoints } from "./Computation/Skeleton";
 
 
 const PBFT = ({
@@ -29,6 +28,7 @@ const PBFT = ({
 
     const ref = useRef(null);
     const lineRef = useRef(null);
+    const primaryLabelRef = useRef(null);
 
     const debouncedRender = useCallback(() => {
         const data = generatePoints(
@@ -136,13 +136,21 @@ const PBFT = ({
                 .style("text-anchor", "middle")
                 .text(`${label.title}`)
                 .attr("fill", "#c4c4c4")
-
-            if (index === primaryIndex) labelPrimaryNode(svg, label);
             return labelText;
         });
 
         if(!clear) {
-            const svg2 = d3
+
+            const primaryLabelSVG = d3
+                .select(primaryLabelRef.current)
+                .attr("width", width)
+                .attr("height", height)
+            
+            labelsY.forEach((label, index) => {
+                if (index === primaryIndex) return labelPrimaryNode(primaryLabelSVG, label);
+            })
+
+            const lineSVG = d3
                 .select(lineRef.current)
                 .attr("width", width)
                 .attr("height", height)
@@ -153,14 +161,14 @@ const PBFT = ({
             // REQUEST LINES
             points.request.end.forEach((end, i) => {
                 if (end.flag) {
-                    connectionRender([points.request.start[0].points, end.points], points.request.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * 1000, lineGen, svg2, 'request');
+                    connectionRender([points.request.start[0].points, end.points], points.request.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * 1000, lineGen, lineSVG, 'request');
                 }
             });
 
             // PRE-PREPARE LINES
             points.prePrepare.end.forEach((end, i) => {
                 if (end.flag) {
-                    connectionRender([points.prePrepare.start[0].points, end.points], points.prePrepare.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * TRANSDURATION_PBFT_GRAPH + 1500, lineGen, svg2, 'prePrepare');
+                    connectionRender([points.prePrepare.start[0].points, end.points], points.prePrepare.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * TRANSDURATION_PBFT_GRAPH + 1500, lineGen, lineSVG, 'prePrepare');
                 }
             });
 
@@ -168,7 +176,7 @@ const PBFT = ({
             points.prepare.start.map((start, index) =>
                 points.prepare.end[index].map((end, i) => {
                     return (
-                        end.flag && connectionRender([start, end.points], points.prepare.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * TRANSDURATION_PBFT_GRAPH + 6000, lineGen, svg2, 'prepare')
+                        end.flag && connectionRender([start, end.points], points.prepare.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * TRANSDURATION_PBFT_GRAPH + 6000, lineGen, lineSVG, 'prepare')
                     );
                 })
             );
@@ -177,7 +185,7 @@ const PBFT = ({
             points.commit.start.map((start, index) =>
                 points.commit.end[index].map((end, i) => {
                     return (
-                        end.flag && connectionRender([start, end.points], points.commit.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * TRANSDURATION_PBFT_GRAPH + 10500, lineGen, svg2, 'commit')
+                        end.flag && connectionRender([start, end.points], points.commit.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * TRANSDURATION_PBFT_GRAPH + 10500, lineGen, lineSVG, 'commit')
                     );
                 })
             );
@@ -185,7 +193,7 @@ const PBFT = ({
             // REPLY LINES
             points.reply.start.forEach((start, i) => {
                 return (
-                    start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * TRANSDURATION_PBFT_GRAPH + 14500, lineGen, svg2, 'reply')
+                    start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * TRANSDURATION_PBFT_GRAPH + 14500, lineGen, lineSVG, 'reply')
                 );
             });
         }
@@ -195,11 +203,6 @@ const PBFT = ({
     useEffect(() => {
             debouncedRender();
     }, [debouncedRender]);
-
-    // TODO: Check what the below does
-    // useEffect(() => {
-    //     console.log("MESSAGE HISTIRY", messageHistory);
-    // }, [messageHistory]);
 
     const onClear = () => {
         setClear(true);
@@ -229,7 +232,10 @@ const PBFT = ({
                     <>
                         <svg id={'svg-one'} ref={ref} className='absolute'></svg>
                         {!clear && (
-                            <svg ref={lineRef} className='absolute'></svg>
+                            <>
+                                    <svg ref={lineRef} className='absolute'></svg>
+                                    <svg ref={primaryLabelRef} className='absolute'></svg>
+                            </>
                         )}
                     </>
                 )}
