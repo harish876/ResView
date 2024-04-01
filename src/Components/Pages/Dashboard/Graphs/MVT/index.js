@@ -49,7 +49,21 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
             updatedLabels[label] = !updatedLabels[label];
             return updatedLabels;
         });
-        sendMessage(parseInt(label.slice(-1) - 1));
+
+        const setFaulty = async (label) => {
+            console.log(label);
+            try {
+                let response = await fetch('http://localhost:1850' + String(label.charAt(label.length - 1)) + '/make_faulty');
+                
+
+                console.log(response.body());
+            } catch (error) {
+                //console.error('Error toggling faulty:', error);
+            }
+        }
+
+        setFaulty(label);
+
         updateGraph();
     };
 
@@ -114,10 +128,20 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
             for (const element of allPrepareTimes) {
                 let lineData = [{ x: 0, y: 0 }];
                 for (let j = 0; j < element.length; j++) {
-                    const relativeTime = element[j] - startTime;
-                    lineData.push({ x: relativeTime, y: j });
-                    lineData.push({ x: relativeTime, y: j + 1 });
-                    maxPrepareTS = Math.max(maxPrepareTS, relativeTime);
+                    if(element[j] - startTime>0){
+                        const relativeTime = element[j] - startTime;
+                        lineData.push({ x: relativeTime, y: j });
+                        lineData.push({ x: relativeTime, y: j + 1 });
+                        maxPrepareTS = Math.max(maxPrepareTS, relativeTime);
+                    }
+                    else{
+                        if(j+1<element.length){
+                            const relativeTime = element[j+1] - startTime;
+                            lineData.push({ x: relativeTime, y: j });
+                            lineData.push({ x: relativeTime, y: j + 1 });
+                            maxPrepareTS = Math.max(maxPrepareTS, relativeTime);
+                        }
+                    }
                 }
                 prepareChartData.push(lineData);
             }
@@ -125,10 +149,20 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
             for (const element of allCommitTimes) {
                 let lineData = [{ x: 0, y: 0 }];
                 for (let j = 0; j < element.length; j++) {
-                    const relativeTime = element[j] - firstPrepareTime;
-                    lineData.push({ x: relativeTime, y: j });
-                    lineData.push({ x: relativeTime, y: j + 1 });
-                    maxCommitTS = Math.max(maxCommitTS, relativeTime);
+                    if(element[j] - firstPrepareTime>0){
+                        const relativeTime = element[j] - firstPrepareTime;
+                        lineData.push({ x: relativeTime, y: j });
+                        lineData.push({ x: relativeTime, y: j + 1 });
+                        maxCommitTS = Math.max(maxCommitTS, relativeTime);
+                    }
+                    else{
+                        if(j+1<element.length){
+                            const relativeTime = element[j+1] - firstPrepareTime;
+                            lineData.push({ x: relativeTime, y: j });
+                            lineData.push({ x: relativeTime, y: j + 1 });
+                            maxCommitTS = Math.max(maxCommitTS, relativeTime);
+                        }
+                    }
                 }
                 commitChartData.push(lineData);
             }
@@ -177,7 +211,6 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
 
             let pointData = { 1: preparePoints, 2: commitPoints };
             let maxPointData = {1: maxPrepareTS, 2: maxCommitTS};
-
             setChartMaxData(maxPointData);
             setMessageChartData(pointData);
         }

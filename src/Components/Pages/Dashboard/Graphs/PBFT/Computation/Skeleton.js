@@ -1,4 +1,5 @@
 import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NODES_PBFT_GRAPH, TITLES_PBFT_GRAPH } from "../../../../../../Constants";
+import { dummyData } from "../../data";
 
 const primaryIndexToPoint = {
     1: 2,
@@ -35,7 +36,13 @@ export const generateConnections = (
 ) => {
     let points = {};
 
-    const currentData = messageHistory[transactionNumber];
+    console.log("Number 2: ", transactionNumber)
+    console.log("DATA: ",messageHistory[transactionNumber])
+    let currentData = messageHistory[transactionNumber];
+    //If no data, using dummy data to avoid crash
+    if(!currentData){
+        currentData=dummyData[17];
+    }
 
     const { primaryIndex, transactions } =
         computeDataDetails(currentData);
