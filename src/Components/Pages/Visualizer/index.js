@@ -16,7 +16,7 @@ import TransInfo from './TransInfo'
 
 const Visualizer = () => {
     const [messageHistory, setMessageHistory] = useState({});
-    const [currentTransaction, setCurrentTransaction] = useState(0);
+    const [currentTransaction, setCurrentTransaction] = useState(17);
     const [replicaStatus, setReplicaStatus] = useState([false, false, false, false])
 
 
