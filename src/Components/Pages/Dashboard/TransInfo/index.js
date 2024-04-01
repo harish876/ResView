@@ -32,9 +32,9 @@ const index = ({ primary, numberOfReplicas, messageHistory, transactionNumber=17
                       Primary : {primary ?? `Replica ${primaryIndex}`}
                   </div>
                   <div className='text-18p'>
-                      # Replicas : {transactions.size ?? '0'}
+                      # Replicas : {'4'}
                   </div>
-                  {/* TODO: CHange the below */}
+                  {/* TODO: Change the below */}
                   <div className='text-18p'>
                       Some Info : {'0'}
                   </div>
