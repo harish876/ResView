@@ -135,8 +135,7 @@ const Home = () => {
 
                 <div class="text-gray-900 dark:text-white font-bold text-5xl md:text-6xl xl:text-7xl">Visualizer for new age blockchain fabrics.</div>
 
-                <p class="mt-8 px-[6em] text-gray-700 dark:text-gray-300 text-20p">Metrics? KPIs? You name it and we have it. Visualize your blockchain like never before. Novel dashboards for novel blockchains.
-              {/* A novel dashboard metric of a blockchain database system, offering new users and learners a clear visualization of a complex technology */}
+            <p class="mt-8 px-[6em] text-gray-700 dark:text-gray-300 text-20p">A novel dashboard metric of a blockchain database system, offering new users and learners a clear visualization of a complex technology.
               </p>
                 <div class="mt-16 flex items-center justify-center gap-y-4 gap-x-[4em]">
                   <LinkButton title={'Visualizer'} link={'/pages/visualizer'} external={true} />
@@ -157,10 +156,10 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <div className="mt-24">
+            <div className="mt-28">
             <WhatIsPbft />
             </div>
-            <div className="mt-24">
+            <div className="mt-12">
               <Graphs />
             </div>
         </div>
