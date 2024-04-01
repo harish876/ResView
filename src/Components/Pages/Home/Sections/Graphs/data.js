@@ -1,10 +1,10 @@
-import { DEFAULT_IMAGE } from "../../../../../Constants";
+import { DEFAULT_IMAGE, PBFT_GRAPH_HOME } from "../../../../../Constants";
 
 // ------ HOME PAGE CARD IMAGES -------
 export const homePageCardDetails = [
     {
         // TODO: Change the below image to a normal one
-        image: DEFAULT_IMAGE, 
+        image: PBFT_GRAPH_HOME, 
         alt: 'PBFT Graph Image',
         title: 'PBFT Graph',
         // TODO: Change the below details FOR ALL

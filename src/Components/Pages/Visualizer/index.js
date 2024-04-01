@@ -5,15 +5,16 @@ import { LinkButton } from '../../Shared/Buttons';
 import HRline from '../../Shared/HRline';
 import { Icon } from '../../Shared/Icon';
 import Title, { FontVarTitle, Subtitle } from '../../Shared/Title';
-import Wrapper from "../../Shared/Wrapper";
+import Wrapper, { ParticleWrapper } from "../../Shared/Wrapper";
 import Mvt from './Graphs/MVT';
 import PBFT from './Graphs/PBFT';
 import Input from './Input';
 import ResizableContainer from './ResizableContainer';
 import TransInfo from './TransInfo';
+import { VISUALIZER_PAGE_SUBTITLE } from "../../../Constants";
 
 
-const Dashboard = () => {
+const Visualizer = () => {
     const [messageHistory, setMessageHistory] = useState({});
     const [currentTransaction, setCurrentTransaction] = useState(0);
     const [replicaStatus, setReplicaStatus] = useState([false, false, false, false])
@@ -74,7 +75,7 @@ const Dashboard = () => {
                 <Title title={'Visualizer'} icon={eyeIcon} iconViewBox={'0 0 576 512'} titleFontSize={''} />
             </div>
             <div>
-                <Subtitle subtitle={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat vitae, dolor illo harum consequatur ea, temporibus, corrupti iure veniam esse quisquam ut quidem dignissimos quasi. Quas totam temporibus'} />
+                <Subtitle subtitle={VISUALIZER_PAGE_SUBTITLE} />
             </div>
             {<WebSocket onMessage={onMessage} />}
             {/* TODO: Change the below TransactionSelect Component */}
@@ -123,9 +124,9 @@ const index = () => {
     return (
         <>
             {/* <ParticleWrapper>
-                <Dashboard />
+                <Visualizer />
             </ParticleWrapper> */}
-            <Dashboard />
+            <Visualizer />
         </>
     );
 }

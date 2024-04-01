@@ -36,6 +36,10 @@ export const generateConnections = (
 ) => {
     let points = {};
 
+    console.log('DATAAAA', numberOfSteps,
+        xCoords,
+        yCoords,)
+
     let currentData = messageHistory[transactionNumber];
     //If no data, using dummy data to avoid crash
     if(!currentData){
