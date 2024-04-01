@@ -33,50 +33,10 @@ const Dashboard = () => {
     const [currentTransaction, setCurrentTransaction] = useState(0);
     const [messageChartData, setMessageChartData] = useState([]);
     const [labelToggle, setLabelToggle] = useState({ "Replica 1": true, "Replica 2": true, "Replica 3": true, "Replica 4": true });
-    const [labelToggleFaulty, setLabelToggleFaulty] = useState({ "Replica 1": false, "Replica 2": false, "Replica 3": false, "Replica 4": false });
     const [resetGraph, setResetGraph] = useState(0);
     const [replicaStatus, setReplicaStatus] = useState([false, false, false, false])
 
 
-    const updateGraph = () => {
-        let value = resetGraph;
-        value = value + 1;
-        setResetGraph(value);
-    }
-
-
-    const toggleLine = (label) => {
-        setLabelToggle((prevLabels) => {
-            const updatedLabels = { ...prevLabels };
-            updatedLabels[label] = !updatedLabels[label];
-            return updatedLabels;
-        });
-        updateGraph();
-    };
-
-    const toggleFaulty = (label) => {
-        setLabelToggleFaulty((prevLabels) => {
-            const updatedLabels = { ...prevLabels };
-            updatedLabels[label] = !updatedLabels[label];
-            return updatedLabels;
-        });
-
-        const setFaulty = async (label) => {
-            let response = await fetch('http://localhost:1850' + String(label) + '/make_faulty', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ key: String(label) })
-            });
-
-            console.log(response.json().stringify());
-        }
-
-        setFaulty(label);
-
-        updateGraph();
-    };
    const onMessage = (newData, txn_number)=>{
         setMessageHistory(JSON.parse(JSON.stringify(newData)));
         setCurrentTransaction(txn_number);
@@ -224,7 +184,6 @@ const Dashboard = () => {
                 commitPoints.push(data);
             }
             let pointData = { 1: preparePoints, 2: commitPoints };
-            console.log("Graph: ", pointData);
             setMessageChartData(pointData);
         }
     }, [messageHistory, currentTransaction, labelToggle, resetGraph]);
