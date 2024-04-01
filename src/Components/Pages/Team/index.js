@@ -11,7 +11,7 @@ const Team = () => {
       <div className="mt-8 mb-16">
         <Title title={'Team'} icon={teamIcon} iconViewBox={'0 0 640 512'} titleFontSize={''} />
       </div>
-      <div className='mt-4 mb-4 mx-8 grid grid-cols-2 gap-16 w-full h-full'>
+      <div className='mt-4 mb-4 mx-8 grid grid-cols-2 gap-24 w-full h-full'>
         {currentTeam.length > 0 &&
           currentTeam.map((element, index) => (
             <div key={index} data-aos='fade-in' data-aos-delay={100*index}>
@@ -19,7 +19,7 @@ const Team = () => {
             </div>
           ))}
       </div>
-      <div className='my-16 mx-8 grid grid-cols-3 gap-16 w-full h-full'>
+      <div className='my-24 mx-8 grid grid-cols-3 gap-16 w-full h-full'>
         {pastMembers.length > 0 &&
           pastMembers.map((element, index) => (
             <div key={index} data-aos='fade-in' data-aos-delay={100 * index}>
@@ -37,9 +37,9 @@ const Team = () => {
 
 const index = () => {
   return (
-    // <ParticleWrapper>
+    <ParticleWrapper>
       <Team />
-    // </ParticleWrapper>
+    </ParticleWrapper>
   );
 }
 

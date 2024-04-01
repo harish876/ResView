@@ -5,7 +5,7 @@ import { LinkButton } from '../../Shared/Buttons';
 import HRline from '../../Shared/HRline';
 import { Icon } from '../../Shared/Icon';
 import Title, { FontVarTitle, Subtitle } from '../../Shared/Title';
-import Wrapper from "../../Shared/Wrapper";
+import Wrapper, { ParticleWrapper } from "../../Shared/Wrapper";
 import Mvt from './Graphs/MVT';
 import PBFT from './Graphs/PBFT';
 import Input from './Input';
@@ -122,10 +122,10 @@ const Dashboard = () => {
 const index = () => {
     return (
         <>
-            {/* <ParticleWrapper>
+            <ParticleWrapper>
                 <Dashboard />
-            </ParticleWrapper> */}
-            <Dashboard />
+            </ParticleWrapper>
+            {/* <Dashboard /> */}
         </>
     );
 }
