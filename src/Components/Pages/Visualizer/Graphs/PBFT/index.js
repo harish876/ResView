@@ -12,6 +12,19 @@ import { connectionRender, labelPrimaryNode } from "./Computation/D3";
 import { generateConnections, generateLabels, generateLines, generatePoints } from "./Computation/Skeleton";
 
 
+const PBFT_ANIMATION_SPEEDS = {
+    '1x': {
+
+    },
+    '1/2x': {
+
+    },
+    '2x': {
+
+    }
+}
+
+
 const PBFT = ({
     messageHistory,
     // TODO: Uncomment the below after connecting to the BE
@@ -212,12 +225,26 @@ const PBFT = ({
         setClear(false);
     }
 
+    const slowDown = () => {
+
+    }
+
+    const speedUp = () => {
+
+    }
+
     return (
         <>
             <div className="flex items-center justify-between gap-x-16 mb-[-1em] mt-2">
                 <IconButtons title={!clear ? 'Playing' : 'Play'} onClick={() => onPlay()} disabled={!clear}>
                     <Icon path={!clear ? pauseIcon : playIcon} viewBox={'0 0 384 512'} height={'13px'} fill={!clear ? '#374151' : '#fff'} />
                 </IconButtons>
+                {!clear && (
+                    <>
+                        <IconButtons title={'2x'} onClick={() => onPlay()} />
+                        <IconButtons title={'0.5x'} onClick={() => onPlay()} />
+                    </>
+                )}
                 <IconButtons title={'Clear'} onClick={() => onClear()} disabled={clear}>
                     <Icon path={cancelIcon} viewBox={'0 0 384 512'} height={'14px'} fill={clear ? '#374151' : '#fff'} />
                 </IconButtons>
