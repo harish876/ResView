@@ -58,25 +58,22 @@ const Timeline = () => {
                 </div>
                 <img src={PBFT_IMAGE} alt="PBFT Consensus Protocol" className='py-3 px-2 shadow-md flex flex-col justify-center items-center rounded-md bg-white my-8 dark:border-3p dark:border-solid dark:border-gray-50 dark:bg-blue-500' onLoad={imageLoaded} style={{ display: imageLoading ? "none" : "block" }} />
             </div>
-            <div className="items-center flex gap-x-8 mt-4">
+            <div className="flex items-start justify-center gap-x-8 mt-4">
                 {data.length > 0 && (
-                    data.map((details, index) => (
-                        <>
-                            {index < 3 && (
-                                <Component details={details} index={index} key={index} length={data.length - 1} />
-                            )}
-                        </>
+                    data.slice(0, 3).map((details, index) => (
+                        <div key={index} className='flex-1'>
+                            <Component details={details} index={index} length={data.length - 1} />
+
+                        </div>
                     ))
                 )}
             </div>
-            <div className="items-center flex gap-x-16 mt-16">
+            <div className="flex items-start justify-center gap-x-16 mt-16">
                 {data.length > 0 && (
-                    data.map((details, index) => (
-                        <>
-                            {index > 2 && (
-                                <Component details={details} index={index} key={index} length={data.length - 1} />
-                            )}
-                        </>
+                    data.slice(3).map((details, index) => (
+                        <div key={index} className='flex-1'>
+                            <Component details={details} index={index + 3} length={data.length - 1} />
+                        </div>
                     ))
                 )}
             </div>

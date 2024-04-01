@@ -8,7 +8,7 @@ const ResizableContainer = ({ children }) => {
     return (
         <>
             <Resizable
-                className='py-3 px-2 shadow-md flex flex-col justify-center items-center rounded-md bg-white dark:border-3p dark:border-solid dark:border-gray-50 dark:bg-blue-500 relative'
+                className='py-3 px-2 shadow-md flex flex-col justify-center items-center rounded-md bg-white dark:border-3p dark:border-solid dark:border-gray-50 dark:bg-blue-450 relative'
                 // data-aos='fade-in'
                 // data-aos-delay={300}
                 size={{ width: boxValues.width, height: boxValues.height }}

@@ -2,7 +2,12 @@ export const DEFAULT_IMAGE = 'https://i.postimg.cc/8PTkJPpQ/default-ui-image-pla
 
 export const PBFT_IMAGE = 'https://i.postimg.cc/66PwqccZ/PBFTGraph.png';
 
-export const PBFT_GRAPH_HOME = 'https://i.postimg.cc/pX2pYwCp/PBFT-Graph.png'
+export const PBFT_GRAPH_HOME = 'https://i.postimg.cc/ZYHh1y9x/Screenshot-2024-04-02-055528.png'
+export const COMMIT_GRAPH_HOME = 'https://i.postimg.cc/zfNV8Tfx/Screenshot-2024-04-02-055147.png'
+export const PREPARE_GRAPH_HOME = 'https://i.postimg.cc/bwks7mqG/Screenshot-2024-04-02-055208.png'
+export const TOGGLE_CHANGE_HOME = 'https://i.postimg.cc/vHpMzwgJ/Screenshot-2024-04-02-055739.png'
+
+export const BLOG_LINK = 'https://medium.com/@aunsh/resview-a-pbft-visualizer-based-on-the-resilientdb-blockchain-fabric-3ffaeb2aaee5'
 
 export const CARD_BG_GRAD = 'border-3p border-gray-170 dark:bg-gradient-to-r dark:from-blue-600 dark:via-blue dark:to-blue-550 dark:border-none';
 
