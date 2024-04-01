@@ -5,7 +5,7 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from "rea
 import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NUMBER_OF_STEPS_PBFT_GRAPH, TRANSDURATION_PBFT_GRAPH } from "../../../../../Constants";
 import { GraphResizerContext } from "../../../../../Context/graph";
 import { ThemeContext } from "../../../../../Context/theme";
-import { cancelIcon, playIcon } from "../../../../../Resources/Icons";
+import { cancelIcon, pauseIcon, playIcon } from "../../../../../Resources/Icons";
 import { IconButtons } from "../../../../Shared/Buttons";
 import { Icon } from "../../../../Shared/Icon";
 import { connectionRender, labelPrimaryNode } from "./Computation/D3";
@@ -215,8 +215,8 @@ const PBFT = ({
     return (
         <>
             <div className="flex items-center justify-between gap-x-16 mb-[-1em] mt-2">
-                <IconButtons title={'Play'} onClick={() => onPlay()} disabled={!clear}>
-                    <Icon path={playIcon} viewBox={'0 0 384 512'} height={'13px'} fill={!clear ? '#374151' : '#fff'} />
+                <IconButtons title={!clear ? 'Playing' : 'Play'} onClick={() => onPlay()} disabled={!clear}>
+                    <Icon path={!clear ? pauseIcon : playIcon} viewBox={'0 0 384 512'} height={'13px'} fill={!clear ? '#374151' : '#fff'} />
                 </IconButtons>
                 <IconButtons title={'Clear'} onClick={() => onClear()} disabled={clear}>
                     <Icon path={cancelIcon} viewBox={'0 0 384 512'} height={'14px'} fill={clear ? '#374151' : '#fff'} />
