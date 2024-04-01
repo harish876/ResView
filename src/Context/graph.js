@@ -28,7 +28,6 @@ export const GraphResizerProvider = ({ children }) => {
 export const GraphViewContext = createContext({
   graph: "MvT",
   mvtGraphNo: 1,
-  // TODO: Look into the toggleGraphChange and change it as a value will be passed to reference the next changed state of the graph
   toggleGraphChange: () => {},
   toggleMvtGraphNoChange: () => {},
 });
@@ -55,6 +54,24 @@ export const GraphViewProvider = ({ children }) => {
         toggleMvtGraphNoChange,
       }}
     >
+      {children}
+    </Provider>
+  );
+};
+
+// CONTEXT FOR PBFT GRAPH ANIMATION SPEEDS 
+export const PbftAnimationSpeedContext = createContext({
+  speed: '1x',
+});
+
+export const PbftAnimationSpeedProvider = ({ children }) => {
+  const { Provider } = PbftAnimationSpeedContext;
+  const [speed, setSpeed] = useState('1x')
+
+  const changeSpeed = (value) => setSpeed(value);
+
+  return (
+    <Provider value={{ speed, changeSpeed }}>
       {children}
     </Provider>
   );

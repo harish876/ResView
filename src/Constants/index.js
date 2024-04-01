@@ -33,4 +33,31 @@ export const NODES_PBFT_GRAPH = ["CLIENT", "REPLICA 1", "REPLICA 2", "REPLICA 3"
 
 export const TRANSDURATION_PBFT_GRAPH = 1500;
 
+export const PBFT_ANIMATION_SPEEDS = {
+    '1x': {
+        TRANSDURATION: 1500,
+        REQUEST_BUFFER: 1000,
+        PREPREPARE_BUFFER: 1500,
+        PREPARE_BUFFER: 3000,
+        COMMIT_BUFFER: 4500,
+        REPLY_BUFFER: 6000
+    },
+    '2x': {
+        TRANSDURATION: 750,
+        REQUEST_BUFFER: 500,
+        PREPREPARE_BUFFER: 750,
+        PREPARE_BUFFER: 1500,
+        COMMIT_BUFFER: 2250,
+        REPLY_BUFFER: 3000
+    },
+    '0.5x': {
+        TRANSDURATION: 3000,
+        REQUEST_BUFFER: 2000,
+        PREPREPARE_BUFFER: 3000,
+        PREPARE_BUFFER: 6000,
+        COMMIT_BUFFER: 9000,
+        REPLY_BUFFER: 12000
+    },
+}
+
 export const NUMBER_OF_STEPS_PBFT_GRAPH = 5;

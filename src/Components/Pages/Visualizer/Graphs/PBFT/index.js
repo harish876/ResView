@@ -2,27 +2,15 @@
 import * as d3 from "d3";
 import { line } from "d3-shape";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NUMBER_OF_STEPS_PBFT_GRAPH, TRANSDURATION_PBFT_GRAPH } from "../../../../../Constants";
-import { GraphResizerContext } from "../../../../../Context/graph";
+import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NUMBER_OF_STEPS_PBFT_GRAPH, PBFT_ANIMATION_SPEEDS, TRANSDURATION_PBFT_GRAPH } from "../../../../../Constants";
+import { GraphResizerContext, PbftAnimationSpeedContext } from "../../../../../Context/graph";
 import { ThemeContext } from "../../../../../Context/theme";
 import { cancelIcon, pauseIcon, playIcon } from "../../../../../Resources/Icons";
-import { IconButtons } from "../../../../Shared/Buttons";
+import { DropDownButtons, IconButtons } from "../../../../Shared/Buttons";
 import { Icon } from "../../../../Shared/Icon";
 import { connectionRender, labelPrimaryNode } from "./Computation/D3";
 import { generateConnections, generateLabels, generateLines, generatePoints } from "./Computation/Skeleton";
 
-
-const PBFT_ANIMATION_SPEEDS = {
-    '1x': {
-
-    },
-    '1/2x': {
-
-    },
-    '2x': {
-
-    }
-}
 
 
 const PBFT = ({
@@ -30,8 +18,20 @@ const PBFT = ({
     // TODO: Uncomment the below after connecting to the BE
     realTransactionNumber 
 }) => {
+    const { speed, changeSpeed } = useContext(PbftAnimationSpeedContext);
+    const {
+        TRANSDURATION,
+        REQUEST_BUFFER,
+        PREPREPARE_BUFFER,
+        PREPARE_BUFFER,
+        COMMIT_BUFFER,
+        REPLY_BUFFER
+    } = PBFT_ANIMATION_SPEEDS[speed];
+
     const { boxValues, resizing } = useContext(GraphResizerContext);
+
     const { width, height } = boxValues;
+
     const { theme } = useContext(ThemeContext);
 
     // TODO: Comment the below two lines after connecting to the BE
@@ -174,14 +174,14 @@ const PBFT = ({
             // REQUEST LINES
             points.request.end.forEach((end, i) => {
                 if (end.flag) {
-                    connectionRender([points.request.start[0].points, end.points], points.request.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * 1000, lineGen, lineSVG, 'request');
+                    connectionRender([points.request.start[0].points, end.points], points.request.color, '#edf0f5', TRANSDURATION, i * REQUEST_BUFFER, lineGen, lineSVG, 'request');
                 }
             });
 
             // PRE-PREPARE LINES
             points.prePrepare.end.forEach((end, i) => {
                 if (end.flag) {
-                    connectionRender([points.prePrepare.start[0].points, end.points], points.prePrepare.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * TRANSDURATION_PBFT_GRAPH + 1500, lineGen, lineSVG, 'prePrepare');
+                    connectionRender([points.prePrepare.start[0].points, end.points], points.prePrepare.color, '#edf0f5', TRANSDURATION, i * 1 + PREPREPARE_BUFFER, lineGen, lineSVG, 'prePrepare');
                 }
             });
 
@@ -189,7 +189,7 @@ const PBFT = ({
             points.prepare.start.map((start, index) =>
                 points.prepare.end[index].map((end, i) => {
                     return (
-                        end.flag && connectionRender([start, end.points], points.prepare.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * TRANSDURATION_PBFT_GRAPH + 6000, lineGen, lineSVG, 'prepare')
+                        end.flag && connectionRender([start, end.points], points.prepare.color, '#edf0f5', TRANSDURATION, i * 1 + PREPARE_BUFFER, lineGen, lineSVG, 'prepare')
                     );
                 })
             );
@@ -198,7 +198,7 @@ const PBFT = ({
             points.commit.start.map((start, index) =>
                 points.commit.end[index].map((end, i) => {
                     return (
-                        end.flag && connectionRender([start, end.points], points.commit.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * TRANSDURATION_PBFT_GRAPH + 10500, lineGen, lineSVG, 'commit')
+                        end.flag && connectionRender([start, end.points], points.commit.color, '#edf0f5', TRANSDURATION, i * 1 + COMMIT_BUFFER, lineGen, lineSVG, 'commit')
                     );
                 })
             );
@@ -206,7 +206,7 @@ const PBFT = ({
             // REPLY LINES
             points.reply.start.forEach((start, i) => {
                 return (
-                    start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * TRANSDURATION_PBFT_GRAPH + 14500, lineGen, lineSVG, 'reply')
+                    start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, '#edf0f5', TRANSDURATION, i * 1 + REPLY_BUFFER, lineGen, lineSVG, 'reply')
                 );
             });
         }
@@ -225,13 +225,7 @@ const PBFT = ({
         setClear(false);
     }
 
-    const slowDown = () => {
-
-    }
-
-    const speedUp = () => {
-
-    }
+    const animationSpeedChange = (value) => changeSpeed(value)
 
     return (
         <>
@@ -241,8 +235,10 @@ const PBFT = ({
                 </IconButtons>
                 {!clear && (
                     <>
-                        <IconButtons title={'2x'} onClick={() => onPlay()} />
-                        <IconButtons title={'0.5x'} onClick={() => onPlay()} />
+                        {/* <IconButtons title={'1x'} onClick={() => animationSpeedChange('1x')} />
+                        <IconButtons title={'2x'} onClick={() => animationSpeedChange('2x')} />
+                        <IconButtons title={'0.5x'} onClick={() => animationSpeedChange('0.5x')} /> */}
+                        <DropDownButtons selected={speed} elements={['1x', '0.5x', '2x']} onClick={animationSpeedChange} />
                     </>
                 )}
                 <IconButtons title={'Clear'} onClick={() => onClear()} disabled={clear}>
