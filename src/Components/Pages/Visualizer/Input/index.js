@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import TransactionSelect from './TransactionSelect';
+import { sendGet, sendPost } from '../../../../APIs';
 
-const Input = ({ chooseTransaction, sendGet, sendPost }) => {
+const Input = ({ chooseTransaction }) => {
 
     const [customTransaction, setCustomTransaction] = useState('');
     const [key, setKey] = useState('');
