@@ -1,7 +1,6 @@
 import Navbar from './Components/Shared/Navbar';
 import './Styles/App.css';
 import { AllProviders } from './Context';
-import Visualizer from './Components/Pages/Visualizer';
 import Team from './Components/Pages/Team';
 import Home from './Components/Pages/Home';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
@@ -11,7 +10,7 @@ import Footer from './Components/Shared/Footer';
 import NotFound from './Components/Shared/NotFound';
 import { ThemeContext } from './Context/theme';
 import { NavbarToggleContext } from './Context/navbarToggle';
-import Dashboard from './Components/Pages/Dashboard';
+import Visualizer from './Components/Pages/Visualizer';
 
 const BorderToggleRef = () => {
   const { bToggleElement } = useContext(NavbarToggleContext);
@@ -50,14 +49,9 @@ const PreSynthApp = () => {
             <Navbar borderToggle={borderToggle} />
             <BorderToggleRef />
             <Routes>
-              {/* // TODO: Uncomment the below after dashboard is removed */}
-              {/* <Route path='/pages/visualizer' element={<Visualizer  />} /> */}
               <Route path='/pages/team' element={<Team />} />
               <Route path='/pages/home' element={<Home />} />
-
-              {/* // TODO: REMOVE THE BELOW AND DELETE THE DASHBOARD FOLDER AFTER VISUALIZER IS COMPLETE */}
-              <Route path='/pages/visualizer' element={<Dashboard />} />
-
+              <Route path='/pages/visualizer' element={<Visualizer />} />
               <Route path='*' element={<NotFound  />} />
               <Route index element={<Navigate to="/pages/home" />} />
             </Routes>
