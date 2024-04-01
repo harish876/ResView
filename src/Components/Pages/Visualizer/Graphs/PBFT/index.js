@@ -26,7 +26,7 @@ const PBFT = ({
     const [transactionNumber, setTransactionNumber] = useState(realTransactionNumber);
     const [clear, setClear] = useState(false);
 
-    const ref = useRef(null);
+    const graphRef = useRef(null);
     const lineRef = useRef(null);
     const primaryLabelRef = useRef(null);
 
@@ -58,7 +58,7 @@ const PBFT = ({
         const { labelsX, labelsY } = generateLabels(xCoords, yCoords);
 
         const svg = d3
-            .select(ref.current)
+            .select(graphRef.current)
             .attr("width", width)
             .attr("height", height)
             .classed("flex", true)
@@ -230,7 +230,7 @@ const PBFT = ({
                     </div>
                 ) : (
                     <>
-                        <svg id={'svg-one'} ref={ref} className='absolute'></svg>
+                            <svg id={'svg-one'} ref={graphRef} className='absolute'></svg>
                         {!clear && (
                             <>
                                     <svg ref={lineRef} className='absolute'></svg>
