@@ -14,6 +14,7 @@ import { Icon } from "./Icon";
 import { ThemeContext } from "../../Context/theme";
 import _ from "lodash";
 import { NavbarToggleContext } from "../../Context/navbarToggle";
+import { Link } from "react-router-dom";
 
 const navbarPageActiveColor = (currentPage, pageName) => {
   return currentPage === pageName ? COLOR_LIGHT : ICON_DEFAULT_COLOR;
@@ -85,18 +86,16 @@ const Navbar = memo(() => {
         'w-full py-[1em] px-8 text-white lg:px-8 lg:py-4 flex items-center justify-between flex-initial fixed top-0 z-20',
         {'border-b-2 dark:bg-blue-400 bg-blue-20 border-gray-900 dark:border-white transition': borderToggle}
       )}>
-        <div className='flex items-center justify-center gap-x-2 w-full'>
-          <a href='/'>
+        <Link to='/pages/home' className='flex items-center justify-center gap-x-2 w-full cursor-pointer'>
             <img
               src={logo}
               alt='ResDb View Logo'
               className='h-35p w-35p'
             />
-          </a>
           <div className='text-blue-190 text-20p font-sans font-bold'>
             <span class="text-2xl font-bold text-gray-900 dark:text-white">ResView</span>
           </div>
-        </div>
+        </Link>
         <div></div>
         <div className='flex items-center justify-center gap-x-12 w-full'>
           <NavLink
@@ -120,15 +119,6 @@ const Navbar = memo(() => {
           )}>
             Blog
           </a>
-          {/* <NavLink
-            title={"Visualizer"}
-            currentPage={CURRENT_PAGE}
-            page={"visualizer"}
-            icon={linearGraphIcon}
-            iconHeight={"1.5em"}
-          /> */}
-
-          {/* // ! IMPORTANT: DELETE THE BELOW AFTER VISUALZER IS COMPLETE */}
           <NavLink
             title={"Visualizer"}
             currentPage={CURRENT_PAGE}
