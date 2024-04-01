@@ -31,8 +31,6 @@ export const TITLES_PBFT_GRAPH = ["REQUEST", "PRE-PREPARE", "PREPARE", "COMMIT",
 
 export const NODES_PBFT_GRAPH = ["CLIENT", "REPLICA 1", "REPLICA 2", "REPLICA 3", "REPLICA 4"];
 
-export const TRANSDURATION_PBFT_GRAPH = 1500;
-
 export const PBFT_ANIMATION_SPEEDS = {
     '1x': {
         TRANSDURATION: 1500,
