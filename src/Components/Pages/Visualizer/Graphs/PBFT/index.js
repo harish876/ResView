@@ -2,7 +2,7 @@
 import * as d3 from "d3";
 import { line } from "d3-shape";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NUMBER_OF_STEPS_PBFT_GRAPH, PBFT_ANIMATION_SPEEDS, TRANSDURATION_PBFT_GRAPH } from "../../../../../Constants";
+import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NUMBER_OF_STEPS_PBFT_GRAPH, PBFT_ANIMATION_SPEEDS } from "../../../../../Constants";
 import { GraphResizerContext, PbftAnimationSpeedContext } from "../../../../../Context/graph";
 import { ThemeContext } from "../../../../../Context/theme";
 import { cancelIcon, pauseIcon, playIcon } from "../../../../../Resources/Icons";
@@ -217,6 +217,13 @@ const PBFT = ({
             debouncedRender();
     }, [debouncedRender]);
 
+    useEffect(() => {
+        setClear(true)
+        setTimeout(() => {
+            setClear(false)
+        }, 500)
+    }, [speed])
+
     const onClear = () => {
         setClear(true);
     }
@@ -225,7 +232,7 @@ const PBFT = ({
         setClear(false);
     }
 
-    const animationSpeedChange = (value) => changeSpeed(value)
+    const animationSpeedChange = (value) => changeSpeed(value);
 
     return (
         <>
@@ -234,12 +241,7 @@ const PBFT = ({
                     <Icon path={!clear ? pauseIcon : playIcon} viewBox={'0 0 384 512'} height={'13px'} fill={!clear ? '#374151' : '#fff'} />
                 </IconButtons>
                 {!clear && (
-                    <>
-                        {/* <IconButtons title={'1x'} onClick={() => animationSpeedChange('1x')} />
-                        <IconButtons title={'2x'} onClick={() => animationSpeedChange('2x')} />
-                        <IconButtons title={'0.5x'} onClick={() => animationSpeedChange('0.5x')} /> */}
-                        <DropDownButtons selected={speed} elements={['1x', '0.5x', '2x']} onClick={animationSpeedChange} />
-                    </>
+                    <DropDownButtons selected={speed} elements={['1x', '0.5x', '2x']} onClick={animationSpeedChange} />
                 )}
                 <IconButtons title={'Clear'} onClick={() => onClear()} disabled={clear}>
                     <Icon path={cancelIcon} viewBox={'0 0 384 512'} height={'14px'} fill={clear ? '#374151' : '#fff'} />
