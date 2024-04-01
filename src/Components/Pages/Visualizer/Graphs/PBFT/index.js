@@ -8,7 +8,7 @@ import { ThemeContext } from "../../../../../Context/theme";
 import { cancelIcon, pauseIcon, playIcon } from "../../../../../Resources/Icons";
 import { DropDownButtons, IconButtons } from "../../../../Shared/Buttons";
 import { Icon } from "../../../../Shared/Icon";
-import { connectionRender, labelPrimaryNode } from "./Computation/D3";
+import { connectionRender, labelFaultyNode, labelPrimaryNode } from "./Computation/D3";
 import { generateConnections, generateLabels, generateLines, generatePoints } from "./Computation/Skeleton";
 
 
@@ -38,10 +38,12 @@ const PBFT = ({
     //const { transactionIds } = generateTransactionIds(dummyData);
     const [transactionNumber, setTransactionNumber] = useState(realTransactionNumber);
     const [clear, setClear] = useState(false);
+    const [playing, setPlaying] = useState(true);
 
     const graphRef = useRef(null);
     const lineRef = useRef(null);
     const primaryLabelRef = useRef(null);
+    const faultyReplicasLabelRef = useRef(null);
 
     const debouncedRender = useCallback(() => {
         const data = generatePoints(
@@ -158,9 +160,29 @@ const PBFT = ({
                 .select(primaryLabelRef.current)
                 .attr("width", width)
                 .attr("height", height)
-            
+
+            const faultyReplicasLabelSVG = d3
+                .select(faultyReplicasLabelRef.current)
+                .attr("width", width)
+                .attr("height", height)
+
+            let yCoordToIndexMap = new Map()
+            yCoords.forEach((value, index) => {
+                if(index > 0 && value !== points.prePrepare.start[0].points.y){
+                    yCoordToIndexMap.set(value, index);
+                }
+            });
+
+            points.prepare.start.forEach((value, _) => {
+                if(yCoordToIndexMap.get(value.y)) yCoordToIndexMap.delete(value.y);
+            });
+
+            let faultyReplicaIndices = new Set();
+            for (let [_, value] of yCoordToIndexMap) faultyReplicaIndices.add(value);
+
             labelsY.forEach((label, index) => {
                 if (index === primaryIndex) return labelPrimaryNode(primaryLabelSVG, label);
+                if (faultyReplicaIndices.has(index)) return labelFaultyNode(faultyReplicasLabelSVG, label);
             })
 
             const lineSVG = d3
@@ -177,6 +199,8 @@ const PBFT = ({
                     connectionRender([points.request.start[0].points, end.points], points.request.color, '#edf0f5', TRANSDURATION, i * REQUEST_BUFFER, lineGen, lineSVG, 'request');
                 }
             });
+
+            console.log(points, "POINTS");
 
             // PRE-PREPARE LINES
             points.prePrepare.end.forEach((end, i) => {
@@ -226,10 +250,12 @@ const PBFT = ({
 
     const onClear = () => {
         setClear(true);
+        setPlaying(false);
     }
 
     const onPlay = () => {
         setClear(false);
+        setPlaying(true);
     }
 
     const animationSpeedChange = (value) => changeSpeed(value);
@@ -240,7 +266,7 @@ const PBFT = ({
                 <IconButtons title={!clear ? 'Playing' : 'Play'} onClick={() => onPlay()} disabled={!clear}>
                     <Icon path={!clear ? pauseIcon : playIcon} viewBox={'0 0 384 512'} height={'13px'} fill={!clear ? '#374151' : '#fff'} />
                 </IconButtons>
-                {!clear && (
+                {playing && (
                     <DropDownButtons selected={speed} elements={['1x', '0.5x', '2x']} onClick={animationSpeedChange} />
                 )}
                 <IconButtons title={'Clear'} onClick={() => onClear()} disabled={clear}>
@@ -260,6 +286,7 @@ const PBFT = ({
                             <>
                                     <svg ref={lineRef} className='absolute'></svg>
                                     <svg ref={primaryLabelRef} className='absolute'></svg>
+                                    <svg ref={faultyReplicasLabelRef} className='absolute'></svg>
                             </>
                         )}
                     </>

@@ -9,6 +9,30 @@ export const labelPrimaryNode = (svg, label) => {
         .attr("width", 85)
         .attr("height", 40)
         .attr("fill", "none")
+        .attr("stroke", "#02c415")
+        .attr("stroke-width", 1)
+        .attr("rx", 10)
+        .attr("ry", 10);
+
+    svg
+        .append("text")
+        .attr("transform", "translate(" + label.x + " ," + (label.y + 15) + ")")
+        .attr("fill", "#02c415")
+        .style("text-anchor", "middle")
+        .style("font-size", "12px")
+        .text("Primary");
+
+    return svg;
+};
+
+export const labelFaultyNode = (svg, label) => {
+    svg
+        .append("rect")
+        .attr("x", label.x - 42.5)
+        .attr("y", label.y - 20)
+        .attr("width", 85)
+        .attr("height", 40)
+        .attr("fill", "none")
         .attr("stroke", "#fc453f")
         .attr("stroke-width", 1)
         .attr("rx", 10)
@@ -19,8 +43,8 @@ export const labelPrimaryNode = (svg, label) => {
         .attr("transform", "translate(" + label.x + " ," + (label.y + 15) + ")")
         .attr("fill", "#fc453f")
         .style("text-anchor", "middle")
-        .style("font-size", "12px")
-        .text("Primary");
+        .style("font-size", "11px")
+        .text("Faulty");
 
     return svg;
 };
