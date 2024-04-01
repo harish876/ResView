@@ -8,9 +8,14 @@ const LINK_BUTTON_CLASSES = "relative flex h-11 w-220p items-center justify-cent
 
 const REPLICA_BUTTON_CLASSES = "relative flex h-11 items-center justify-center px-6 before:absolute before:inset-0 before:border-3p before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max cursor-pointer"
 
-const ICON_BUTTON_CLASSES = "relative flex h-10 items-center justify-center px-4 before:absolute before:inset-0 before:border-2p before:bg-gradient-to-b before:transition before:duration-200 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max before:rounded-md w-auto flex items-center justify-center gap-x-2 h-9 text-primary before:cursor-pointer"
+const ICON_BUTTON_CLASSES = "relative flex h-10 items-center justify-center px-4 before:absolute before:inset-0 border-2p rounded-md before:transition before:duration-200 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max before:rounded-md w-auto flex items-center justify-center gap-x-2 h-9 text-primary before:cursor-pointer"
 
 const DROPDOWN_BUTTON_CLASSES = "relative flex h-10 items-center justify-center px-4 before:absolute before:inset-0 before:border-2p before:bg-gradient-to-b before:transition before:duration-200 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max before:rounded-md flex items-center justify-center gap-x-2 h-9 text-primary before:cursor-pointer"
+
+const ICON_BTTN_CLSS_HOVER = {
+    'play': 'dark:hover:before:border-green-700 before:hover:border-blue-500',
+    'clear': 'dark:hover:before:border-red-700 before:hover:border-blue-500',
+}
 
 export const LinkButton = ({ title, link, external, scrollId }) => {
     const handleClick = () => {
@@ -83,16 +88,12 @@ export const SubmitButton = ({ title, loading }) => {
     )
 }
 
-const ICON_BTTN_CLSS_HOVER = {
-    'play': 'dark:hover:before:border-green-700 before:hover:border-blue-500',
-    'clear': 'dark:hover:before:border-red-700 before:hover:border-blue-500',
-}
-
 export const IconButtons = ({ title, onClick, children, disabled }) => {
     const handleClick = () => {
         onClick()
     };
-    const extraClass = disabled ? 'cursor-not-allowed dark:border-gray-700 dark:text-gray-700' : `${ICON_BTTN_CLSS_HOVER[title.toLowerCase()]} dark:text-white`;
+    const extraClass = disabled ? 'cursor-not-allowed border-gray-10 text-gray-10 dark:border-gray-700 dark:text-gray-700' : `${ICON_BTTN_CLSS_HOVER[title.toLowerCase()]} dark:text-white border-gray-700 dark:border-gray-10`;
+    console.log('ICON BUTTONS', extraClass)
     return (
         <button onClick={handleClick} className={`${ICON_BUTTON_CLASSES} ${extraClass}`} disabled={disabled}>
             {children}
@@ -100,7 +101,6 @@ export const IconButtons = ({ title, onClick, children, disabled }) => {
         </button>
     )
 };
-
 
 
 export const DropDownButtons = ({ selected, onClick, elements }) => {
