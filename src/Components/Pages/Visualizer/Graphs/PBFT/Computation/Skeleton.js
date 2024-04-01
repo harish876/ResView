@@ -36,8 +36,6 @@ export const generateConnections = (
 ) => {
     let points = {};
 
-    console.log("Number 2: ", transactionNumber)
-    console.log("DATA: ",messageHistory[transactionNumber])
     let currentData = messageHistory[transactionNumber];
     //If no data, using dummy data to avoid crash
     if(!currentData){
