@@ -78,7 +78,6 @@ const Visualizer = () => {
                 <Subtitle subtitle={VISUALIZER_PAGE_SUBTITLE} />
             </div>
             {<WebSocket onMessage={onMessage} />}
-            {/* TODO: Change the below TransactionSelect Component */}
             <div className="my-8">
                 <Input chooseTransaction={setCurrentTransaction} />
             </div>

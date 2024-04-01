@@ -19,7 +19,7 @@ const indexToSocial = {
 const LinkIcon = ({ link, social }) => {
   return (
     <a href={link} target='_blank' rel='noreferrer nofollow' className='cursor-pointer'>
-      <Icon 
+      <Icon
         fill={ICON_DEFAULT_COLOR}
         path={linkToIcon[social]}
         height={'1.5em'}
@@ -31,7 +31,7 @@ const LinkIcon = ({ link, social }) => {
 export const CurrentTeamCard = ({ element }) => {
   const { name, title, socials, profilePic, quote } = element;
   return (
-    <div className='w-full h-250p bg-white text-black rounded-md shadow-md dark:border-2p grid grid-cols-2 gap-x-4 dark:border-solid dark:border-gray-50 dark:bg-blue-500 dark:text-white px-4 py-6 hover:scale-105 transition'>
+    <div className='w-full h-250p text-black rounded-md border-3p border-gray-700 grid grid-cols-2 gap-x-4 dark:border-solid dark:border-gray-50 dark:bg-blue-500 dark:text-white px-4 py-6 hover:scale-105 transition'>
       <div className='w-full h-full flex items-center justify-center'>
         <img
           src={profilePic || defaultProfileImage}
@@ -63,7 +63,7 @@ export const CurrentTeamCard = ({ element }) => {
 export const PastMembersCard = ({ element }) => {
   const { name, profilePic, title, socials } = element;
   return (
-    <div className='w-full h-auto bg-white text-black rounded-md shadow-md dark:border-2p flex flex-col gap-x-2 dark:border-solid dark:border-gray-50 dark:bg-blue-500 dark:text-white px-2 py-4 hover:scale-105 transition'>
+    <div className='w-full h-auto text-black rounded-md  border-3p border-gray-700 flex flex-col gap-x-2 dark:border-solid dark:border-gray-50 dark:bg-blue-500 dark:text-white px-2 py-4 hover:scale-105 transition'>
       <div className='w-full h-full flex items-center justify-center rounded-lg'>
         <img
           src={profilePic || defaultProfileImage}
