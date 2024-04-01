@@ -1,16 +1,16 @@
-import Navbar from './Components/Shared/Navbar';
-import './Styles/App.css';
-import { AllProviders } from './Context';
-import Team from './Components/Pages/Team';
+import { Suspense, useContext, useEffect, useState } from 'react';
+import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from './Components/Pages/Home';
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { Suspense, useContext, useState, useRef, useCallback, useEffect } from 'react';
-import Loader from './Components/Shared/Loader';
-import Footer from './Components/Shared/Footer';
-import NotFound from './Components/Shared/NotFound';
-import { ThemeContext } from './Context/theme';
-import { NavbarToggleContext } from './Context/navbarToggle';
+import Team from './Components/Pages/Team';
 import Visualizer from './Components/Pages/Visualizer';
+import Footer from './Components/Shared/Footer';
+import Loader from './Components/Shared/Loader';
+import Navbar from './Components/Shared/Navbar';
+import NotFound from './Components/Shared/NotFound';
+import { AllProviders } from './Context';
+import { NavbarToggleContext } from './Context/navbarToggle';
+import { ThemeContext } from './Context/theme';
+import './Styles/App.css';
 
 const BorderToggleRef = () => {
   const { bToggleElement } = useContext(NavbarToggleContext);

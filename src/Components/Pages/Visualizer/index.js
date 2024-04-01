@@ -38,7 +38,7 @@ const Dashboard = () => {
         let results = [false, false, false, false];
     
         for (let i = 0; i < 4; i++) {
-            let promise = fetchWithTimeout('http://localhost:1850' + String(i + 1) + '/get_status')
+            let promise = fetchWithTimeout(process.env.REPLICA_STATUS_DOMAIN + String(i + 1) + process.env.REPLICA_STATUS_EP)
                 .then(response => {
                     return response.text(); 
                 })

@@ -65,18 +65,13 @@ const Input = ({ chooseTransaction }) => {
             </>
         );
     };
-    const viewDictionary = [
-        <SelectTrans />,
-        <GetTrans />,
-        <SetTrans />
-    ];
-
+    
     return (
         <div className='flex items-center justify-start gap-x-16'>
             <div className="my-8">
                 <TransactionSelect selectTransaction={selectTransaction} />
             </div>
-            {(view == 0) && (
+            {(view === 0) && (
                 <div className="my-8">
                     <SelectTrans />
                     <button type="submit" style={{ marginLeft: '60px' }} className='py-2.5 px-5 me-2 text-sm font-medium w-120p flex items-center justify-center bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center text-white' onClick={performAction}>
@@ -84,7 +79,7 @@ const Input = ({ chooseTransaction }) => {
                     </button>
                 </div>
             )}
-            {(view == 1) && (
+            {(view === 1) && (
                 <div className="my-8">
                     <GetTrans />
                     <button type="submit" style={{ marginLeft: '60px' }} className='py-2.5 px-5 me-2 text-sm font-medium w-120p flex items-center justify-center bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center text-white' onClick={performAction}>
@@ -92,7 +87,7 @@ const Input = ({ chooseTransaction }) => {
                     </button>
                 </div>
             )}
-            {(view == 2) && (
+            {(view === 2) && (
                 <div className="my-8">
                     <SetTrans />
                     <button type="submit" style={{ marginLeft: '60px' }} className='py-2.5 px-5 me-2 text-sm font-medium w-120p flex items-center justify-center bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center text-white' onClick={performAction}>

@@ -9,37 +9,9 @@ export const WebSocket = ({onMessage}) => {
     'ws://localhost:21004',
   ];*/
   const transactionCount = useRef(0);
-  //Stores all messages from ResDB
   const allMessages = useRef({});
   const keyList = useRef([[], [], [], []]);
-    //For Websocket functionality, boot up start_service.sh on backend first, then
-  //load websocket. If console says "Websocket Open" for all 4, functionality works
   let updatedMessageList;
-
-  /*const useCreateWebSocket = (url, onMessage) => {
-    const {lastJsonMessage, readyState, sendMessage, disconnect} = useWebSocket(url, {
-      shouldReconnect: () => true,
-    });
-
-    const updateSocketData = () => {
-      addMessage(lastJsonMessage);
-      onMessage(allMessages.current);
-    };
-
-    useEffect(() => {
-      if(readyState===WebSocket.OPEN){
-        console.log("OPEN");
-      }
-      //updateSocketData();
-    }, [lastJsonMessage, readyState, disconnect]);
-
-  };
-
-  const connectionList = [useCreateWebSocket(socketUrls[0], onMessage),
-  useCreateWebSocket(socketUrls[1], onMessage),
-  useCreateWebSocket(socketUrls[2], onMessage),
-  useCreateWebSocket(socketUrls[3], onMessage)];*/
-
 
   const addMessage = (receivedMessage) => {
     if(receivedMessage===null){

@@ -1,13 +1,11 @@
-import React, {useState, useEffect} from 'react'
-import { dummyData } from '../Graphs/data';
-import { computeDataDetails } from '../Graphs/PBFT/Computation/Skeleton';
-import { FontVarTitle } from '../../../Shared/Title';
+import React from 'react';
+import { cancelIcon, tickIcon } from '../../../../Resources/Icons';
 import HRline from '../../../Shared/HRline';
 import { Icon } from '../../../Shared/Icon';
-import { cancelIcon, circleIcon, tickIcon } from '../../../../Resources/Icons';
+import { FontVarTitle } from '../../../Shared/Title';
+import { computeDataDetails } from '../Graphs/PBFT/Computation/Skeleton';
+import { dummyData } from '../Graphs/data';
 
-// TODO: Compute the replicas not faulty map here 
-//  TODO: Change the messageHistory and transactionNumbers and pass the real values
 
 // TODO: Change the below computation
 let FAULTY_REPLICAS = [false, false, false, false]
