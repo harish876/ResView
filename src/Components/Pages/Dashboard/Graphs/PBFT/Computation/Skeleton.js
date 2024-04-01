@@ -280,7 +280,5 @@ export const generateTransactionIds = (data) => {
         transactionIds.push(parseInt(property));
     }
 
-    console.log(transactionIds);
-
     return { transactionIds };
 };

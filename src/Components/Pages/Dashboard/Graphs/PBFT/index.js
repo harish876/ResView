@@ -153,7 +153,6 @@ const PBFT = ({
             // REQUEST LINES
             points.request.end.forEach((end, i) => {
                 if (end.flag) {
-                    console.log('REQUEST POINTS', points.request.color);
                     connectionRender([points.request.start[0].points, end.points], points.request.color, '#edf0f5', TRANSDURATION_PBFT_GRAPH, i * 1000, lineGen, svg2, 'request');
                 }
             });

@@ -40,7 +40,7 @@ export const ParticleWrapper = ({ children }) => {
   const settings = theme ? settingsBasic : {
     ...settingsBasic,
     particle: {
-      particleCount: 80,
+      particleCount: 100,
       color: "#0d98db",
       minSize: 1,
       maxSize: 4

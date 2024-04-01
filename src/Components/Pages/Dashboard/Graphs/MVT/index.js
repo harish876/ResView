@@ -17,11 +17,11 @@ const FAULT_TOGGLES = { "Replica 1": false, "Replica 2": false, "Replica 3": fal
 
 // TODO: Change the value of currentTransaction when connecting to BE also pass messageHistory to the Mvt component in the index of Graphs  
 const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
-    const { boxValues, resizing, setResizing } = useContext(GraphResizerContext);
-    const { toggleMvtGraphNoChange, mvtGraphNo } = useContext(GraphViewContext);
+    const { resizing } = useContext(GraphResizerContext);
+    const { toggleMvtGraphNoChange } = useContext(GraphViewContext);
 
-    const [points, setPoints] = useState();
     const [messageChartData, setMessageChartData] = useState([]);
+    const [chartMaxData, setChartMaxData] = useState({});
 
     const [labelToggle, setLabelToggle] = useState(LABEL_TOGGLES);
     const [labelToggleFaulty, setLabelToggleFaulty] = useState(FAULT_TOGGLES);
@@ -86,61 +86,81 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
             const transactionData = messageHistory[currentTransaction];
             let startTime = 0;
             let firstPrepareTime = 0;
-            let pre_prepare_times = [];
+            let prePrepareTimes = [];
             let prepare_times = [];
-            let all_prepare_times = [];
-            let all_commit_times = [];
-            let label_list = [];
+            let allPrepareTimes = [];
+            let allCommitTimes = [];
+            let labelList = [];
 
             Object.keys(transactionData).forEach((key) => {
-                label_list.push("Replica " + key);
-                if (transactionData[key].primary_id !== transactionData[key].replica_id) {
-                    pre_prepare_times.push(Math.floor(transactionData[key].propose_pre_prepare_time / 10000));
+
+                labelList.push("Replica " + key);
+                if (transactionData[key].primary_id !== transactionData[key].replica_id) 
+                {
+                    prePrepareTimes.push(Math.floor(transactionData[key].propose_pre_prepare_time / 10000));
                 }
+
                 prepare_times.push(Math.floor(transactionData[key].prepare_time / 10000));
-                let replica_prepare_timestamps = [];
-                let replica_commit_timestamps = [];
-                transactionData[key]["prepare_message_timestamps"].map((time) => {
-                    replica_prepare_timestamps.push(Math.floor(time / 10000));
-                });
-                transactionData[key]["commit_message_timestamps"].map((time) => {
-                    replica_commit_timestamps.push(Math.floor(time / 10000));
-                });
-                all_prepare_times.push(replica_prepare_timestamps);
-                all_commit_times.push(replica_commit_timestamps);
+
+                let replicaPrepareTS = [];
+                let replicaCommitTS = [];
+
+                transactionData[key]["prepare_message_timestamps"].map((time) => 
+                    replicaPrepareTS.push(Math.floor(time / 10000))
+                );
+
+                transactionData[key]["commit_message_timestamps"].map((time) => 
+                    replicaCommitTS.push(Math.floor(time / 10000))
+                );
+
+                allPrepareTimes.push(replicaPrepareTS);
+                allCommitTimes.push(replicaCommitTS);
             });
-            startTime = Math.min(...pre_prepare_times);
+
+            startTime = Math.min(...prePrepareTimes);
             firstPrepareTime = Math.min(...prepare_times);
 
             let prepareChartData = [];
             let commitChartData = [];
-            for (const element of all_prepare_times) {
+            let maxPrepareTS = 0;
+            let maxCommitTS = 0;
+
+            for (const element of allPrepareTimes) {
                 let lineData = [{ x: 0, y: 0 }];
                 for (let j = 0; j < element.length; j++) {
                     if(element[j] - startTime>0){
-                        lineData.push({ x: element[j] - startTime, y: j });
-                        lineData.push({ x: element[j] - startTime, y: j + 1 });
+                        const relativeTime = element[j] - startTime;
+                        lineData.push({ x: relativeTime, y: j });
+                        lineData.push({ x: relativeTime, y: j + 1 });
+                        maxPrepareTS = Math.max(maxPrepareTS, relativeTime);
                     }
                     else{
                         if(j+1<element.length){
-                            lineData.push({ x: element[j+1] - startTime, y: j });
-                            lineData.push({ x: element[j+1] - startTime, y: j + 1 });
+                            const relativeTime = element[j+1] - startTime;
+                            lineData.push({ x: relativeTime, y: j });
+                            lineData.push({ x: relativeTime, y: j + 1 });
+                            maxPrepareTS = Math.max(maxPrepareTS, relativeTime);
                         }
                     }
                 }
                 prepareChartData.push(lineData);
             }
-            for (const element of all_commit_times) {
+
+            for (const element of allCommitTimes) {
                 let lineData = [{ x: 0, y: 0 }];
                 for (let j = 0; j < element.length; j++) {
                     if(element[j] - firstPrepareTime>0){
-                        lineData.push({ x: element[j] - firstPrepareTime, y: j });
-                        lineData.push({ x: element[j] - firstPrepareTime, y: j + 1 });
+                        const relativeTime = element[j] - firstPrepareTime;
+                        lineData.push({ x: relativeTime, y: j });
+                        lineData.push({ x: relativeTime, y: j + 1 });
+                        maxCommitTS = Math.max(maxCommitTS, relativeTime);
                     }
                     else{
                         if(j+1<element.length){
-                            lineData.push({ x: element[j+1] - firstPrepareTime, y: j });
-                            lineData.push({ x: element[j+1] - firstPrepareTime, y: j + 1 });
+                            const relativeTime = element[j+1] - firstPrepareTime;
+                            lineData.push({ x: relativeTime, y: j });
+                            lineData.push({ x: relativeTime, y: j + 1 });
+                            maxCommitTS = Math.max(maxCommitTS, relativeTime);
                         }
                     }
                 }
@@ -149,43 +169,49 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
 
             let preparePoints = [];
             let data = {};
-            for (let i = 0; i < label_list.length; i++) {
-                if (!labelToggle[label_list[i]]) {
+
+            for (let i = 0; i < labelList.length; i++) {
+                if (!labelToggle[labelList[i]]) {
                     data = {
-                        id: label_list[i],
+                        id: labelList[i],
                         color: COLORS_MVT_GRAPH[i],
                         data: [],
                     };
                 }
                 else {
                     data = {
-                        id: label_list[i],
+                        id: labelList[i],
                         color: COLORS_MVT_GRAPH[i],
                         data: prepareChartData[i],
                     };
                 }
                 preparePoints.push(data);
             }
+
             let commitPoints = [];
-            for (let i = 0; i < label_list.length; i++) {
-                if (!labelToggle[label_list[i]]) {
+
+            for (let i = 0; i < labelList.length; i++) {
+                if (!labelToggle[labelList[i]]) {
                     data = {
-                        id: label_list[i],
+                        id: labelList[i],
                         color: COLORS_MVT_GRAPH[i],
                         data: [],
                     };
                 }
                 else {
                     data = {
-                        id: label_list[i],
+                        id: labelList[i],
                         color: COLORS_MVT_GRAPH[i],
                         data: commitChartData[i],
                     };
                 }
+
                 commitPoints.push(data);
             }
+
             let pointData = { 1: preparePoints, 2: commitPoints };
-            console.log("Point Data: ", pointData)
+            let maxPointData = {1: maxPrepareTS, 2: maxCommitTS};
+            setChartMaxData(maxPointData);
             setMessageChartData(pointData);
         }
     }, [messageHistory, currentTransaction, labelToggle, resetGraph]);
@@ -206,7 +232,7 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
                         </div>
                     ) : (
                         <>
-                            <MvtGraph points={messageChartData[mvtGraphNo]} />
+                                <MvtGraph chartData={messageChartData} chartMaxData={chartMaxData} />
                         </>
                     )}
                 </div>
