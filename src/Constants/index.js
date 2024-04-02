@@ -29,6 +29,15 @@ export const COLORS_PBFT_GRAPH = [
     "#795548"
 ];
 
+export const COLORS_PBFT_GRAPH_LIGHT = [
+    "#086ebf",
+    "#820896",
+    "#9c7503",
+    "#0594a6",
+    "#039609",
+    "#b33204"
+];
+
 export const COLORS_MVT_GRAPH = ["hsl(148, 70%, 50%)", "hsl(200, 70%, 50%)", "hsl(171, 70%, 50%)", "hsl(313, 70%, 50%)"];
 
 

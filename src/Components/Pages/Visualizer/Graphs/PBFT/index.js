@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import { line } from "d3-shape";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NUMBER_OF_STEPS_PBFT_GRAPH, PBFT_ANIMATION_SPEEDS } from "../../../../../Constants";
-import { GraphResizerContext, PbftAnimationSpeedContext } from "../../../../../Context/graph";
+import { GraphResizerContext, PbftAnimationSpeedContext, PbftGraphClearContext } from "../../../../../Context/graph";
 import { ThemeContext } from "../../../../../Context/theme";
 import { cancelIcon, pauseIcon, playIcon } from "../../../../../Resources/Icons";
 import { DropDownButtons, IconButtons } from "../../../../Shared/Buttons";
@@ -15,11 +15,10 @@ import { generateConnections, generateLabels, generateLines, generatePoints } fr
 
 const PBFT = ({
     messageHistory,
-    // TODO: Uncomment the below after connecting to the BE
     realTransactionNumber
 }) => {
     const { speed, changeSpeed } = useContext(PbftAnimationSpeedContext);
-    const {
+     const {
         TRANSDURATION,
         REQUEST_BUFFER,
         PREPREPARE_BUFFER,
@@ -34,10 +33,14 @@ const PBFT = ({
 
     const { theme } = useContext(ThemeContext);
 
+    const { clear, changeClear } = useContext(PbftGraphClearContext);
+
+    const colorMode = !theme ? 'black' : "#c4c4c4";
+    const pointColorMode = theme ? '#edf0f5' : '#464747';
+
     // TODO: Comment the below two lines after connecting to the BE
     //const { transactionIds } = generateTransactionIds(dummyData);
     const [transactionNumber, setTransactionNumber] = useState(realTransactionNumber);
-    const [clear, setClear] = useState(false);
     const [playing, setPlaying] = useState(true);
 
     const graphRef = useRef(null);
@@ -65,9 +68,9 @@ const PBFT = ({
             NUMBER_OF_STEPS_PBFT_GRAPH,
             xCoords,
             yCoords,
-            // TODO: Change dummyData to messageHistory after connecting to BE
             messageHistory,
-            realTransactionNumber
+            realTransactionNumber,
+            theme
         );
 
         const { labelsX, labelsY } = generateLabels(xCoords, yCoords);
@@ -116,7 +119,7 @@ const PBFT = ({
             svg
                 .append("path")
                 .attr("d", lineGen(line))
-                .attr("stroke", "gray")
+                .attr("stroke", colorMode)
                 .attr("fill", "none")
                 .attr("stroke-width", 0.2)
                 .attr("stroke-dasharray", "5,10")
@@ -127,7 +130,7 @@ const PBFT = ({
             svg
                 .append("path")
                 .attr("d", lineGen(line))
-                .attr("stroke", "gray")
+                .attr("stroke", colorMode)
                 .attr("fill", "none")
                 .attr("stroke-width", 0.2)
                 .attr("stroke-dasharray", "5,10")
@@ -138,7 +141,7 @@ const PBFT = ({
             svg
                 .append("text")
                 .attr("transform", "translate(" + label.x + " ," + label.y + ")")
-                .attr("fill", "#c4c4c4")
+                .attr("fill", colorMode)
                 .style("text-anchor", "middle")
                 .text(`${label.title}`)
         );
@@ -150,7 +153,7 @@ const PBFT = ({
                 .attr("transform", "translate(" + label.x + " ," + label.y + ")")
                 .style("text-anchor", "middle")
                 .text(`${label.title}`)
-                .attr("fill", "#c4c4c4")
+                .attr("fill", colorMode)
             return labelText;
         });
 
@@ -196,14 +199,14 @@ const PBFT = ({
             // REQUEST LINES
             points.request.end.forEach((end, i) => {
                 if (end.flag) {
-                    connectionRender([points.request.start[0].points, end.points], points.request.color, '#edf0f5', TRANSDURATION, i * REQUEST_BUFFER, lineGen, lineSVG, 'request');
+                    connectionRender([points.request.start[0].points, end.points], points.request.color, pointColorMode, TRANSDURATION, i * REQUEST_BUFFER, lineGen, lineSVG, 'request');
                 }
             });
 
             // PRE-PREPARE LINES
             points.prePrepare.end.forEach((end, i) => {
                 if (end.flag) {
-                    connectionRender([points.prePrepare.start[0].points, end.points], points.prePrepare.color, '#edf0f5', TRANSDURATION, i * 1 + PREPREPARE_BUFFER, lineGen, lineSVG, 'prePrepare');
+                    connectionRender([points.prePrepare.start[0].points, end.points], points.prePrepare.color, pointColorMode, TRANSDURATION, i * 1 + PREPREPARE_BUFFER, lineGen, lineSVG, 'prePrepare');
                 }
             });
 
@@ -211,7 +214,7 @@ const PBFT = ({
             points.prepare.start.map((start, index) =>
                 points.prepare.end[index].map((end, i) => {
                     return (
-                        end.flag && connectionRender([start, end.points], points.prepare.color, '#edf0f5', TRANSDURATION, i * 1 + PREPARE_BUFFER, lineGen, lineSVG, 'prepare')
+                        end.flag && connectionRender([start, end.points], points.prepare.color, pointColorMode, TRANSDURATION, i * 1 + PREPARE_BUFFER, lineGen, lineSVG, 'prepare')
                     );
                 })
             );
@@ -220,7 +223,7 @@ const PBFT = ({
             points.commit.start.map((start, index) =>
                 points.commit.end[index].map((end, i) => {
                     return (
-                        end.flag && connectionRender([start, end.points], points.commit.color, '#edf0f5', TRANSDURATION, i * 1 + COMMIT_BUFFER, lineGen, lineSVG, 'commit')
+                        end.flag && connectionRender([start, end.points], points.commit.color, pointColorMode, TRANSDURATION, i * 1 + COMMIT_BUFFER, lineGen, lineSVG, 'commit')
                     );
                 })
             );
@@ -228,7 +231,7 @@ const PBFT = ({
             // REPLY LINES
             points.reply.start.forEach((start, i) => {
                 return (
-                    start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, '#edf0f5', TRANSDURATION, i * 1 + REPLY_BUFFER, lineGen, lineSVG, 'reply')
+                    start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, pointColorMode, TRANSDURATION, i * 1 + REPLY_BUFFER, lineGen, lineSVG, 'reply')
                 );
             });
         }
@@ -240,35 +243,37 @@ const PBFT = ({
     }, [debouncedRender]);
 
     useEffect(() => {
-        setClear(true)
+        changeClear(true)
         setTimeout(() => {
-            setClear(false)
+            changeClear(false)
         }, 500)
     }, [speed])
 
     const onClear = () => {
-        setClear(true);
+        changeClear(true);
         setPlaying(false);
     }
 
     const onPlay = () => {
-        setClear(false);
+        changeClear(false);
         setPlaying(true);
     }
 
     const animationSpeedChange = (value) => changeSpeed(value);
 
+    const color = theme && clear ? 'gray' : theme && !clear ? 'white' : !theme && clear ? 'gray' : 'black';
+
     return (
         <>
             <div className="flex items-center justify-between gap-x-16 mb-[-1em] mt-2">
                 <IconButtons title={!clear ? 'Playing' : 'Play'} onClick={() => onPlay()} disabled={!clear}>
-                    <Icon path={!clear ? pauseIcon : playIcon} viewBox={'0 0 384 512'} height={'13px'} fill={!clear ? '#374151' : '#fff'} />
+                    <Icon path={!clear ? pauseIcon : playIcon} viewBox={'0 0 384 512'} height={'13px'} fill={color} />
                 </IconButtons>
                 {playing && (
                     <DropDownButtons selected={speed} elements={['1x', '0.5x', '2x']} onClick={animationSpeedChange} />
                 )}
                 <IconButtons title={'Clear'} onClick={() => onClear()} disabled={clear}>
-                    <Icon path={cancelIcon} viewBox={'0 0 384 512'} height={'14px'} fill={clear ? '#374151' : '#fff'} />
+                    <Icon path={cancelIcon} viewBox={'0 0 384 512'} height={'14px'} fill={color} />
                 </IconButtons>
             </div>
             <div className='relative w-full h-full pl-4 pr-2 pb-6'>

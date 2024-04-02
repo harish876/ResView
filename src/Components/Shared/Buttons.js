@@ -10,7 +10,7 @@ const REPLICA_BUTTON_CLASSES = "relative flex h-11 items-center justify-center p
 
 const ICON_BUTTON_CLASSES = "relative flex h-10 items-center justify-center px-4 before:absolute before:inset-0 border-2p rounded-md before:transition before:duration-200 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max before:rounded-md w-auto flex items-center justify-center gap-x-2 h-9 text-primary before:cursor-pointer"
 
-const DROPDOWN_BUTTON_CLASSES = "relative flex h-10 items-center justify-center px-4 before:absolute before:inset-0 before:border-2p before:bg-gradient-to-b before:transition before:duration-200 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max before:rounded-md flex items-center justify-center gap-x-2 h-9 text-primary before:cursor-pointer"
+const DROPDOWN_BUTTON_CLASSES = "relative flex h-10 items-center justify-center px-4 before:absolute before:inset-0 before:border-2p before:border-gray-700 dark:before:border-white before:transition before:duration-200 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max before:rounded-md flex items-center justify-center gap-x-2 h-9 text-primary before:cursor-pointer"
 
 const ICON_BTTN_CLSS_HOVER = {
     'play': 'dark:hover:before:border-green-700 before:hover:border-blue-500',
@@ -92,7 +92,7 @@ export const IconButtons = ({ title, onClick, children, disabled }) => {
     const handleClick = () => {
         onClick()
     };
-    const extraClass = disabled ? 'cursor-not-allowed border-gray-10 text-gray-10 dark:border-gray-700 dark:text-gray-700' : `${ICON_BTTN_CLSS_HOVER[title.toLowerCase()]} dark:text-white border-gray-700 dark:border-gray-10`;
+    const extraClass = disabled ? 'cursor-not-allowed border-gray-100 text-gray-100 dark:border-gray-700 dark:text-gray-700' : `${ICON_BTTN_CLSS_HOVER[title.toLowerCase()]} dark:text-white border-gray-700 dark:border-gray-10`;
     console.log('ICON BUTTONS', extraClass)
     return (
         <button onClick={handleClick} className={`${ICON_BUTTON_CLASSES} ${extraClass}`} disabled={disabled}>
@@ -119,7 +119,7 @@ export const DropDownButtons = ({ selected, onClick, elements }) => {
                 <span className="relative text-base font-semibold dark:text-white">{selected}</span>
             </button>
             {(elements.length > 0 && open) && (
-                <div className='flex flex-col items-center justify-center gap-y-4 dark:bg-blue-450 px-2 py-3 rounded-lg dark:border-1p absolute opacity-100 z-10 top-50p'>
+                <div className='flex flex-col items-center justify-center gap-y-4 bg-blue-20 dark:bg-blue-450 px-2 py-3 rounded-lg border-1p absolute opacity-100 z-10 top-50p'>
                     {elements.map((value, index) => {
                         if (value !== selected) {
                             return <button onClick={() => handleClick(value)} className={`${DROPDOWN_BUTTON_CLASSES} w-50p`} key={index}>
