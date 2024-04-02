@@ -15,11 +15,11 @@ Git clone the ResilientDB backend repository and follow the instructions to set 
 git clone https://github.com/apache/incubator-resilientdb
 ```
 
-To enable different ResView services, go to service/tools/config/server/server.config in the ResilientDB repository and set: 
+To enable different ResView api endpoints and view change service locally, go to service/tools/config/server/server.config in the ResilientDB repository and set: 
 ```bash
-enable_resview:true to enable ResView apis
-enable_faulty_switch:true to enable toggling replicas to Faulty state
-enable_viewchange:true to allow view changes to occur.
+enable_resview:true
+enable_faulty_switch:true
+enable_viewchange:true
 ```
 
 Setup KV Service to run the backend:
@@ -57,6 +57,8 @@ REACT_APP_DEFAULT_LOCAL_PORT = 18501
 REACT_APP_SOCKET_URL_EP = "/consensus_data"
 REACT_APP_REPLICA_STATUS_EP = "/get_status"
 ```
+
+Run the below command to install all required packages
 
 ```bash
 npm install
