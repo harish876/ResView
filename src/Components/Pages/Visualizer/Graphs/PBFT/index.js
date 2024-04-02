@@ -8,15 +8,15 @@ import { ThemeContext } from "../../../../../Context/theme";
 import { cancelIcon, pauseIcon, playIcon } from "../../../../../Resources/Icons";
 import { DropDownButtons, IconButtons } from "../../../../Shared/Buttons";
 import { Icon } from "../../../../Shared/Icon";
-import { connectionRender, labelFaultyNode, labelPrimaryNode } from "./Computation/D3";
-import { generateConnections, generateLabels, generateLines, generatePoints } from "./Computation/Skeleton";
+import { connectionRender, labelFaultyNode, labelPrimaryNode } from "../Computation/D3Pbft";
+import { generateConnections, generateLabels, generateLines, generatePoints } from "../Computation/SkeletonPbft";
 
 
 
 const PBFT = ({
     messageHistory,
     // TODO: Uncomment the below after connecting to the BE
-    realTransactionNumber 
+    realTransactionNumber
 }) => {
     const { speed, changeSpeed } = useContext(PbftAnimationSpeedContext);
     const {
@@ -112,7 +112,7 @@ const PBFT = ({
         );
 
         // VERTICAL DOTTED LINES
-        verticalLines.forEach((line, index) =>
+        verticalLines.forEach((line, _) =>
             svg
                 .append("path")
                 .attr("d", lineGen(line))
@@ -123,7 +123,7 @@ const PBFT = ({
         );
 
         // HORIZONTAL DOTTED LINES
-        horizontalLines.forEach((line, index) =>
+        horizontalLines.forEach((line, _) =>
             svg
                 .append("path")
                 .attr("d", lineGen(line))
@@ -144,7 +144,7 @@ const PBFT = ({
         );
 
         // LABELS FOR EACH NODE
-        labelsY.forEach((label, index) => {
+        labelsY.forEach((label, _) => {
             const labelText = svg
                 .append("text")
                 .attr("transform", "translate(" + label.x + " ," + label.y + ")")
@@ -154,7 +154,7 @@ const PBFT = ({
             return labelText;
         });
 
-        if(!clear) {
+        if (!clear) {
 
             const primaryLabelSVG = d3
                 .select(primaryLabelRef.current)
@@ -168,13 +168,13 @@ const PBFT = ({
 
             let yCoordToIndexMap = new Map()
             yCoords.forEach((value, index) => {
-                if(index > 0 && value !== points.prePrepare.start[0].points.y){
+                if (index > 0 && value !== points.prePrepare.start[0].points.y) {
                     yCoordToIndexMap.set(value, index);
                 }
             });
 
             points.prepare.start.forEach((value, _) => {
-                if(yCoordToIndexMap.get(value.y)) yCoordToIndexMap.delete(value.y);
+                if (yCoordToIndexMap.get(value.y)) yCoordToIndexMap.delete(value.y);
             });
 
             let faultyReplicaIndices = new Set();
@@ -199,8 +199,6 @@ const PBFT = ({
                     connectionRender([points.request.start[0].points, end.points], points.request.color, '#edf0f5', TRANSDURATION, i * REQUEST_BUFFER, lineGen, lineSVG, 'request');
                 }
             });
-
-            console.log(points, "POINTS");
 
             // PRE-PREPARE LINES
             points.prePrepare.end.forEach((end, i) => {
@@ -234,11 +232,11 @@ const PBFT = ({
                 );
             });
         }
-        
+
     }, [theme, width, height, clear]);
 
     useEffect(() => {
-            debouncedRender();
+        debouncedRender();
     }, [debouncedRender]);
 
     useEffect(() => {
@@ -281,12 +279,12 @@ const PBFT = ({
                     </div>
                 ) : (
                     <>
-                            <svg id={'svg-one'} ref={graphRef} className='absolute'></svg>
+                        <svg id={'svg-one'} ref={graphRef} className='absolute'></svg>
                         {!clear && (
                             <>
-                                    <svg ref={lineRef} className='absolute'></svg>
-                                    <svg ref={primaryLabelRef} className='absolute'></svg>
-                                    <svg ref={faultyReplicasLabelRef} className='absolute'></svg>
+                                <svg ref={lineRef} className='absolute'></svg>
+                                <svg ref={primaryLabelRef} className='absolute'></svg>
+                                <svg ref={faultyReplicasLabelRef} className='absolute'></svg>
                             </>
                         )}
                     </>
