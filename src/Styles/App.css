@@ -1001,6 +1001,10 @@ video {
   --tw-border-opacity: 1;
   border-color: rgb(2 88 136 / var(--tw-border-opacity));
 }
+.border-gray-100 {
+  --tw-border-opacity: 1;
+  border-color: rgb(119 119 119 / var(--tw-border-opacity));
+}
 .border-gray-170 {
   --tw-border-opacity: 1;
   border-color: rgb(46 46 46 / var(--tw-border-opacity));
@@ -1025,10 +1029,6 @@ video {
   --tw-border-opacity: 1;
   border-color: rgb(17 24 39 / var(--tw-border-opacity));
 }
-.bg-blue-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(63 40 116 / var(--tw-bg-opacity));
-}
 .bg-blue-20 {
   --tw-bg-opacity: 1;
   background-color: rgb(238 243 250 / var(--tw-bg-opacity));
@@ -1040,10 +1040,6 @@ video {
 .bg-gray-10 {
   --tw-bg-opacity: 1;
   background-color: rgb(235 235 242 / var(--tw-bg-opacity));
-}
-.bg-gray-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 .bg-gray-900 {
   --tw-bg-opacity: 1;
@@ -1533,6 +1529,12 @@ svg:hover {
   border-color: rgb(55 65 81 / var(--tw-border-opacity));
 }
 
+.before\:border-gray-800::before {
+  content: var(--tw-content);
+  --tw-border-opacity: 1;
+  border-color: rgb(31 41 55 / var(--tw-border-opacity));
+}
+
 .before\:border-green-500::before {
   content: var(--tw-content);
   --tw-border-opacity: 1;
@@ -1543,6 +1545,12 @@ svg:hover {
   content: var(--tw-content);
   --tw-border-opacity: 1;
   border-color: rgb(239 68 68 / var(--tw-border-opacity));
+}
+
+.before\:bg-gray-100::before {
+  content: var(--tw-content);
+  --tw-bg-opacity: 1;
+  background-color: rgb(119 119 119 / var(--tw-bg-opacity));
 }
 
 .before\:bg-green-400::before {
@@ -1684,6 +1692,11 @@ svg:hover {
 :is([data-theme="dark"] .dark\:border-blue-600) {
   --tw-border-opacity: 1;
   border-color: rgb(0 32 113 / var(--tw-border-opacity));
+}
+
+:is([data-theme="dark"] .dark\:border-gray-10) {
+  --tw-border-opacity: 1;
+  border-color: rgb(235 235 242 / var(--tw-border-opacity));
 }
 
 :is([data-theme="dark"] .dark\:border-gray-50) {
@@ -1841,6 +1854,12 @@ svg:hover {
   content: var(--tw-content);
   --tw-border-opacity: 1;
   border-color: rgb(185 28 28 / var(--tw-border-opacity));
+}
+
+:is([data-theme="dark"] .dark\:before\:border-white)::before {
+  content: var(--tw-content);
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
 
 :is([data-theme="dark"] .dark\:before\:bg-gray-500)::before {

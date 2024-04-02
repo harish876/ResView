@@ -1,11 +1,12 @@
 import React from 'react';
-import Wrapper, { ParticleWrapper } from '../../Shared/Wrapper';
+import Wrapper from '../../Shared/Wrapper';
 // TODO: Remove the below import and entire components after demo is done
 import blockchain from '../../../Resources/Images/blockchain.jpeg';
 import Graphs from './Sections/Graphs';
 import WhatIsPbft from './Sections/WhatIsPbft'
 import { LinkButton } from '../../Shared/Buttons';
 import { BLOG_LINK } from '../../../Constants';
+import { ParticleWrapper } from '../../Shared/ParticleWrapper';
 
 const ResViewOld = () => {
   return (
@@ -61,7 +62,7 @@ const Home = () => {
       <div class="relative pt-20 ml-auto">
             <div class="lg:w-2/3 text-center mx-auto">
 
-                <div class="text-gray-900 dark:text-white font-bold text-5xl md:text-6xl xl:text-7xl">Visualizer for new age blockchain fabrics.</div>
+                <div class="text-gray-900 dark:text-white font-bold text-5xl md:text-6xl xl:text-7xl">Visualizer for a new age blockchain fabric.</div>
 
             <p class="mt-8 px-[6em] text-gray-700 dark:text-gray-300 text-20p">A novel dashboard metric of a blockchain database system, offering new users and learners a clear visualization of a complex technology.
               </p>
@@ -99,9 +100,6 @@ const Home = () => {
 const index = () => {
   return (
     <>
-      {/* <ParticleWrapper>
-        <Home />
-      </ParticleWrapper> */}
       <Home />
     </>
   );
