@@ -39,7 +39,9 @@ const Visualizer = () => {
         let results = [false, false, false, false];
     
         for (let i = 0; i < 4; i++) {
-            let promise = fetchWithTimeout(process.env.REPLICA_STATUS_DOMAIN + String(i + 1) + process.env.REPLICA_STATUS_EP)
+            let port= parseInt(process.env.REACT_APP_DEFAULT_LOCAL_PORT)+i
+            let url = process.env.REACT_APP_DEFAULT_LOCAL + String(port) + process.env.REACT_APP_REPLICA_STATUS_EP
+            let promise = fetchWithTimeout(url)
                 .then(response => {
                     return response.text(); 
                 })

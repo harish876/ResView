@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const sendGet = async (key) => {
-    let url = process.env.SEND_GET_URL + key;
+    let url = process.env.REACT_APP_SEND_GET_URL + key;
     try {
         const response = await axios.get(url);
         // console.log("Get response: ", response.data);
@@ -14,7 +14,7 @@ export const sendGet = async (key) => {
 
 export const sendPost = async (key, value) => {
     let data = { "id": key, "value": value };
-    let url = process.env.SEND_POST_URL;
+    let url = process.env.REACT_APP_SEND_POST_URL;
     try {
         const response = await axios.post(
             url,
