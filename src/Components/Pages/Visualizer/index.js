@@ -10,13 +10,13 @@ import Mvt from './Graphs/MVT';
 import PBFT from './Graphs/PBFT';
 import Input from './Input';
 import ResizableContainer from './ResizableContainer';
-import TransInfo from './TransInfo';
 import { VISUALIZER_PAGE_SUBTITLE } from "../../../Constants";
+import TransInfo from './TransInfo'
 
 
 const Visualizer = () => {
     const [messageHistory, setMessageHistory] = useState({});
-    const [currentTransaction, setCurrentTransaction] = useState(0);
+    const [currentTransaction, setCurrentTransaction] = useState(17);
     const [replicaStatus, setReplicaStatus] = useState([false, false, false, false])
 
 

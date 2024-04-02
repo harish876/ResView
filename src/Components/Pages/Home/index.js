@@ -6,6 +6,7 @@ import pbft from '../../../Resources/Images/pbft.PNG';
 import Graphs from './Sections/Graphs';
 import WhatIsPbft from './Sections/WhatIsPbft'
 import { LinkButton } from '../../Shared/Buttons';
+import { BLOG_LINK } from '../../../Constants';
 
 const ResViewOld = () => {
 
@@ -101,7 +102,7 @@ const ResViewOld = () => {
       {/* Card 2 */} 
       <div className="max-w-md my-4 border border-2p border-blue-190 text-white p-6 rounded-lg shadow-md hover:scale-105 transition">
         <h2 className="text-2xl font-bold mb-4 text-blue-190">Prepare phase</h2>
-        <p className="text-white w-full text-justify">The pre-prepare message that each replica received from the primary node is then broadcast to every other replica, including the primary node, during the prepare phase. Good replicas can get ready for the commit after learning that a majority of them received the same transaction during the prepare phase..</p>
+        <p className="text-white w-full text-justify">The pre-prepare message that each replica received from the primary node is then broadcast to every other replica, including the primary node, during the prepare phase. Good replicas can get ready for the commit after learning that a majority of them received the same transaction during the prepare phase.</p>
       </div> 
       {/* Card 3 */} 
       <div className="max-w-md mr-2 my-4 border border-2p border-blue-190 text-white p-6 rounded-lg shadow-md hover:scale-105 transition">
@@ -134,12 +135,11 @@ const Home = () => {
 
                 <div class="text-gray-900 dark:text-white font-bold text-5xl md:text-6xl xl:text-7xl">Visualizer for new age blockchain fabrics.</div>
 
-                <p class="mt-8 px-[6em] text-gray-700 dark:text-gray-300 text-20p">Metrics? KPIs? You name it and we have it. Visualize your blockchain like never before. Novel dashboards for novel blockchains.
-              {/* A novel dashboard metric of a blockchain database system, offering new users and learners a clear visualization of a complex technology */}
+            <p class="mt-8 px-[6em] text-gray-700 dark:text-gray-300 text-20p">A novel dashboard metric of a blockchain database system, offering new users and learners a clear visualization of a complex technology.
               </p>
                 <div class="mt-16 flex items-center justify-center gap-y-4 gap-x-[4em]">
                   <LinkButton title={'Visualizer'} link={'/pages/visualizer'} external={true} />
-                  <LinkButton title={'Learn More'} link={'https://medium.com/@aunsh/resview-a-pbft-visualizer-based-on-the-resilientdb-blockchain-fabric-3ffaeb2aaee5'} external={true} />
+                  <LinkButton title={'Learn More'} link={BLOG_LINK} external={true} />
                 </div>
                 <div class="py-8 mt-16 px-2 border-y-3p border-gray-900 dark:border-white sm:flex flex items-center justify-between">
                     <div class="text-center">
@@ -156,10 +156,10 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <div className="mt-24">
+            <div className="mt-28">
             <WhatIsPbft />
             </div>
-            <div className="mt-24">
+            <div className="mt-12">
               <Graphs />
             </div>
         </div>
@@ -171,10 +171,10 @@ const Home = () => {
 const index = () => {
   return (
     <>
-      <ParticleWrapper>
+      {/* <ParticleWrapper>
         <Home />
-      </ParticleWrapper>
-      {/* <Home /> */}
+      </ParticleWrapper> */}
+      <Home />
     </>
   );
 }
