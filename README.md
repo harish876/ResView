@@ -45,7 +45,10 @@ With these 2 services running, the ResView front end can now send transactions t
 
 ## Installation
 
-Clone the repo and open in a new folder.
+Clone this repository and open in a new folder.
+```bash
+git clone https://github.com/aunshx/resview-pvt
+```
 
 Create a .env file in the root directory with the following contents.
 
