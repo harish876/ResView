@@ -63,7 +63,7 @@ export const MvTSelectButton = ({ title, onClick, graphNo }) => {
         onClick()
     };
     return (
-        <div onClick={handleClick} className={classNames(`${REPLICA_BUTTON_CLASSES} before:rounded-full w-200p`, { 'dark:before:bg-gray-500 dark:before:border-gray-50 before:border-red-500 before:bg-red-100': graphNo === mvtGraphNo, 'dark:before:bg-gray-800 dark:before:border-gray-700 before:border-blue-500 before:bg-primary/10': graphNo !== mvtGraphNo })}>
+        <div onClick={handleClick} className={classNames(`${REPLICA_BUTTON_CLASSES} before:rounded-full w-200p`, { 'dark:before:bg-gray-500 dark:before:border-gray-50 before:border-gray-800 before:bg-gray-100 text-white': graphNo === mvtGraphNo, 'dark:before:bg-gray-800 dark:before:border-gray-700 before:border-blue-500 before:bg-primary/10': graphNo !== mvtGraphNo })}>
             <span className="relative text-base font-semibold text-primary dark:text-white">{title}</span >
         </div>
     )
