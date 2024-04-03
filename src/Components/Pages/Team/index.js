@@ -1,9 +1,9 @@
-import React from 'react'
-import Wrapper, { ParticleWrapper } from '../../Shared/Wrapper';
-import { currentTeam, pastMembers } from './data';
-import { CurrentTeamCard, PastMembersCard } from './Card';
-import Title from '../../Shared/Title';
+import React from 'react';
 import { teamIcon } from '../../../Resources/Icons';
+import Title from '../../Shared/Title';
+import Wrapper from '../../Shared/Wrapper';
+import { CurrentTeamCard, PastMembersCard } from './Card';
+import { currentTeam, pastMembers } from './data';
 
 const Team = () => {
   return (
@@ -37,9 +37,7 @@ const Team = () => {
 
 const index = () => {
   return (
-    <ParticleWrapper>
-      <Team />
-    </ParticleWrapper>
+    <Team />
   );
 }
 

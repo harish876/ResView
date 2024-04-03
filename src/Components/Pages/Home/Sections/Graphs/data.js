@@ -7,7 +7,7 @@ export const homePageCardDetails = [
         alt: 'PBFT Graph Image',
         title: 'PBFT Graph',
         // TODO: Change the below details FOR ALL
-        description: 'A web-app to maximize your productivity and manage time smartly. Also included smart metrics to check your statistics.',
+        description: 'Novel PBFT visualizer with bespoke animations, speed ups and replays',
         link: '/pages/visualizer',
     },
     {
@@ -15,7 +15,7 @@ export const homePageCardDetails = [
         alt: 'Messages v Time',
         title: 'Messages v Time',
         // TODO: Change the below details FOR ALL
-        description: 'A web-app to maximize your productivity and manage time smartly. Also included smart metrics to check your statistics.',
+        description: 'Check out the commit messages over time for different replicas',
         link: '/pages/visualizer',
     },
     {
@@ -23,7 +23,7 @@ export const homePageCardDetails = [
         alt: 'Messages v Time',
         title: 'Messages v Time',
         // TODO: Change the below details FOR ALL
-        description: 'A web-app to maximize your productivity and manage time smartly. Also included smart metrics to check your statistics.',
+        description: 'Check out the prepare messages over time for different replicas',
         link: '/pages/visualizer',
     },
     {
@@ -31,7 +31,7 @@ export const homePageCardDetails = [
         alt: 'Simulate Fualtiness',
         title: 'Simulate Fualtiness',
         // TODO: Change the below details FOR ALL
-        description: 'A web-app to maximize your productivity and manage time smartly. Also included smart metrics to check your statistics.',
+        description: 'Toggle faultiness to simulate different consensus situations',
         link: '/pages/visualizer',
     },
 ]

@@ -624,9 +624,6 @@ video {
 .ml-auto {
   margin-left: auto;
 }
-.mr-2 {
-  margin-right: 0.5rem;
-}
 .ms-3 {
   margin-inline-start: 0.75rem;
 }
@@ -871,8 +868,8 @@ video {
 .flex-col {
   flex-direction: column;
 }
-.flex-wrap {
-  flex-wrap: wrap;
+.items-start {
+  align-items: flex-start;
 }
 .items-start {
   align-items: flex-start;
@@ -968,6 +965,9 @@ video {
 .border {
   border-width: 1px;
 }
+.border-1p {
+  border-width: 1px;
+}
 .border-2 {
   border-width: 2px;
 }
@@ -1004,6 +1004,10 @@ video {
   --tw-border-opacity: 1;
   border-color: rgb(2 88 136 / var(--tw-border-opacity));
 }
+.border-gray-100 {
+  --tw-border-opacity: 1;
+  border-color: rgb(119 119 119 / var(--tw-border-opacity));
+}
 .border-gray-170 {
   --tw-border-opacity: 1;
   border-color: rgb(46 46 46 / var(--tw-border-opacity));
@@ -1012,17 +1016,21 @@ video {
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
+.border-gray-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(156 163 175 / var(--tw-border-opacity));
+}
 .border-gray-600 {
   --tw-border-opacity: 1;
   border-color: rgb(75 85 99 / var(--tw-border-opacity));
 }
+.border-gray-700 {
+  --tw-border-opacity: 1;
+  border-color: rgb(55 65 81 / var(--tw-border-opacity));
+}
 .border-gray-900 {
   --tw-border-opacity: 1;
   border-color: rgb(17 24 39 / var(--tw-border-opacity));
-}
-.bg-blue-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(63 40 116 / var(--tw-bg-opacity));
 }
 .bg-blue-20 {
   --tw-bg-opacity: 1;
@@ -1032,13 +1040,13 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(29 78 216 / var(--tw-bg-opacity));
 }
-.bg-gray-200 {
+.bg-gray-10 {
   --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+  background-color: rgb(235 235 242 / var(--tw-bg-opacity));
 }
-.bg-gray-700 {
+.bg-gray-900 {
   --tw-bg-opacity: 1;
-  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
 .bg-gray-900 {
   --tw-bg-opacity: 1;
@@ -1089,6 +1097,9 @@ video {
 }
 .object-cover {
   object-fit: cover;
+}
+.object-fill {
+  object-fit: fill;
 }
 .p-2 {
   padding: 0.5rem;
@@ -1223,9 +1234,6 @@ video {
 }
 .text-22p {
   font-size: 22px;
-}
-.text-26p {
-  font-size: 26px;
 }
 .text-2xl {
   font-size: 1.5rem;
@@ -1372,9 +1380,6 @@ video {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
-}
-.ease-in-out {
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 :root {
@@ -1531,6 +1536,12 @@ svg:hover {
   border-color: rgb(55 65 81 / var(--tw-border-opacity));
 }
 
+.before\:border-gray-800::before {
+  content: var(--tw-content);
+  --tw-border-opacity: 1;
+  border-color: rgb(31 41 55 / var(--tw-border-opacity));
+}
+
 .before\:border-green-500::before {
   content: var(--tw-content);
   --tw-border-opacity: 1;
@@ -1541,6 +1552,12 @@ svg:hover {
   content: var(--tw-content);
   --tw-border-opacity: 1;
   border-color: rgb(239 68 68 / var(--tw-border-opacity));
+}
+
+.before\:bg-gray-100::before {
+  content: var(--tw-content);
+  --tw-bg-opacity: 1;
+  background-color: rgb(119 119 119 / var(--tw-bg-opacity));
 }
 
 .before\:bg-green-400::before {
@@ -1588,6 +1605,11 @@ svg:hover {
 .hover\:bg-blue-800:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(30 64 175 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-gray-10:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(235 235 242 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-gray-100:hover {
@@ -1677,6 +1699,11 @@ svg:hover {
 :is([data-theme="dark"] .dark\:border-blue-600) {
   --tw-border-opacity: 1;
   border-color: rgb(0 32 113 / var(--tw-border-opacity));
+}
+
+:is([data-theme="dark"] .dark\:border-gray-10) {
+  --tw-border-opacity: 1;
+  border-color: rgb(235 235 242 / var(--tw-border-opacity));
 }
 
 :is([data-theme="dark"] .dark\:border-gray-50) {
@@ -1834,6 +1861,12 @@ svg:hover {
   content: var(--tw-content);
   --tw-border-opacity: 1;
   border-color: rgb(185 28 28 / var(--tw-border-opacity));
+}
+
+:is([data-theme="dark"] .dark\:before\:border-white)::before {
+  content: var(--tw-content);
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
 
 :is([data-theme="dark"] .dark\:before\:bg-gray-500)::before {

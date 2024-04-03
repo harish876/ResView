@@ -10,7 +10,7 @@ const Manipulator = ({
     toggleLine,
 }) => {
     return (
-        <div className='mt-2 rounded-md shadow-md w-700p py-6 px-2 dark:border-1p dark:border-solid dark:border-gray-50 flex flex-col gap-y-6'>
+        <div className='mt-2 rounded-md w-700p py-6 px-2 border-3p border-solid border-gray-700 dark:border-gray-50 flex flex-col gap-y-6'>
             <div className="flex flex-col gap-y-4">
                 <FontVarTitle title={'Select Replica To be Faulty:'} fontClass={'text-18p'} />
                 <div className='flex gap-x-7 justify-center'>

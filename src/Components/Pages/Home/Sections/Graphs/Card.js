@@ -4,20 +4,21 @@ import { CARD_BG_GRAD } from "../../../../../Constants";
 
 const ImageElement = ({ link, title, image, alt }) => {
     return (
-        <div className={`w-full h-300p flex items-center justify-center rounded-lg  border-3p border-gray-170 dark:border-blue-600 `}>
+
           <a
             href={link}
             target={"_blank"}
             rel='noopener noreferrer nofollow'
             aria-label={title}
           >
+            <div className={`w-full h-300p flex items-center justify-center rounded-lg  border-3p border-gray-170 dark:border-blue-600`}>
               <img
                 src={image}
                 alt={alt}
-                className="rounded-lg w-full h-full block object-contain"
+                className="w-full h-full object-fill"
               />
+            </div>
           </a>
-        </div>
     );
 };
 
@@ -30,9 +31,9 @@ const DescriptionElement = ({ link, title, description }) => {
               rel='noopener noreferrer nofollow'
               aria-label={title}
             >
-              <CardSkeleton value={title} classes={'text-26p font-bold p-2'} />
+              <CardSkeleton value={title} classes={'text-22p font-bold p-2'} />
             </a>
-            <CardSkeleton value={description} classes={'text-18p p-4 font-normal text-left'} />
+            <CardSkeleton value={description} classes={'text-16p p-4 font-normal text-left'} />
         </div>
     );
 };
@@ -56,7 +57,7 @@ const Card = ({
   return (
     <div className='mt-2 mb-2 mx-0 w-750p'>
       <div className={
-        classNames('grid gap-x-4',
+        classNames('grid gap-x-4 items-center justify-center',
         {'grid-cols-1-1.5fr': inverted},
         {'grid-cols-1.5-1fr': !inverted})
       }>
@@ -70,7 +71,7 @@ const Card = ({
 const CardSkeleton = ({ value, classes }) => {
     return (
         <div className={`text-gray-600 dark:text-gray-300 flex items-center justify-center mb-4 rounded-lg px-3p py-3p ${CARD_BG_GRAD}`}>
-            <div className={`dark:bg-blue-500 bg-none w-full h-full rounded-lg flex items-center justify-center ${classes}`}>
+            <div className={`dark:bg-blue-500 bg-none w-full h-full rounded-lg flex items-center justify-center text-center ${classes}`}>
                 {value}
             </div>
         </div>

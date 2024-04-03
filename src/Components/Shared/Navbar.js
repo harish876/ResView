@@ -15,9 +15,21 @@ import {
 import { ICON_DEFAULT_COLOR, SUN_COLOR } from "./Constants";
 import { Icon } from "./Icon";
 import { BLOG_LINK } from "../../Constants";
+import { PbftGraphClearContext } from "../../Context/graph";
 
 const LightOrDark = memo(() => {
   const { theme, toggleLightTheme, toggleDarkTheme } = useContext(ThemeContext);
+  const { changeClear } = useContext(PbftGraphClearContext);
+
+  const handleClick = () => {
+    changeClear(true);
+    if(!theme){
+      toggleDarkTheme()
+    } else {
+      toggleLightTheme()
+    }
+    setTimeout(() => changeClear(false), 500)
+  }
 
   return (
     <Tooltip
@@ -34,7 +46,7 @@ const LightOrDark = memo(() => {
             "svg-hover-dark": theme,
           }
         )}
-        onClick={!theme ? toggleDarkTheme : toggleLightTheme}
+        onClick={handleClick}
       >
         {!theme ? (
           <Icon fill={SUN_COLOR} height={"1.4em"} path={sunIcon} />

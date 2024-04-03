@@ -11,6 +11,7 @@ import { AllProviders } from './Context';
 import { NavbarToggleContext } from './Context/navbarToggle';
 import { ThemeContext } from './Context/theme';
 import './Styles/App.css';
+import ParticleWrapper from './Components/Shared/ParticleWrapper';
 
 const BorderToggleRef = () => {
   const { bToggleElement } = useContext(NavbarToggleContext);
@@ -46,6 +47,7 @@ const PreSynthApp = () => {
         <Loader />
       ) : (
           <Router>
+            <ParticleWrapper />
             <Navbar borderToggle={borderToggle} />
             <BorderToggleRef />
             <Routes>

@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { VISUALIZER_PAGE_SUBTITLE } from "../../../Constants";
 import { anglesRightIcon, eyeIcon } from "../../../Resources/Icons";
 import { WebSocket } from '../../../Socket';
 import { LinkButton } from '../../Shared/Buttons';
 import HRline from '../../Shared/HRline';
 import { Icon } from '../../Shared/Icon';
 import Title, { FontVarTitle, Subtitle } from '../../Shared/Title';
-import Wrapper, { ParticleWrapper } from "../../Shared/Wrapper";
+import Wrapper from "../../Shared/Wrapper";
 import Mvt from './Graphs/MVT';
 import PBFT from './Graphs/PBFT';
 import Input from './Input';
 import ResizableContainer from './ResizableContainer';
-import { VISUALIZER_PAGE_SUBTITLE } from "../../../Constants";
-import TransInfo from './TransInfo'
+import TransInfo from './TransInfo';
 
 
 const Visualizer = () => {
@@ -80,7 +80,6 @@ const Visualizer = () => {
                 <Subtitle subtitle={VISUALIZER_PAGE_SUBTITLE} />
             </div>
             {<WebSocket onMessage={onMessage} />}
-            {/* TODO: Change the below TransactionSelect Component */}
             <div className="my-8">
                 <Input chooseTransaction={setCurrentTransaction} />
             </div>
@@ -125,9 +124,6 @@ const Visualizer = () => {
 const index = () => {
     return (
         <>
-            {/* <ParticleWrapper>
-                <Visualizer />
-            </ParticleWrapper> */}
             <Visualizer />
         </>
     );
