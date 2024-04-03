@@ -1,4 +1,4 @@
-import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NODES_PBFT_GRAPH, TITLES_PBFT_GRAPH } from "../../../../../Constants";
+import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, COLORS_PBFT_GRAPH_LIGHT, NODES_PBFT_GRAPH, TITLES_PBFT_GRAPH } from "../../../../../Constants";
 import { dummyData } from "../data";
 
 const primaryIndexToPoint = {
@@ -32,7 +32,8 @@ export const generateConnections = (
     xCoords,
     yCoords,
     messageHistory,
-    transactionNumber = 17
+    transactionNumber = 17,
+    theme
 ) => {
     let points = {};
 
@@ -42,6 +43,8 @@ export const generateConnections = (
         currentData = dummyData[17];
     }
 
+    const lineColors = theme ? COLORS_PBFT_GRAPH : COLORS_PBFT_GRAPH_LIGHT;
+
     const { primaryIndex, transactions } =
         computeDataDetails(currentData);
 
@@ -50,7 +53,7 @@ export const generateConnections = (
         (points = {
             ...points,
             [action]: {
-                color: `${COLORS_PBFT_GRAPH[index]}`,
+                color: `${lineColors[index]}`,
                 start: [],
                 end: [],
             },

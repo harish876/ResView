@@ -1,8 +1,9 @@
 import { ResponsiveLine } from "@nivo/line";
 import { useContext } from "react";
 import { GraphViewContext } from "../../../../../Context/graph";
+import { ThemeContext } from "../../../../../Context/theme";
 
-const theme = {
+const themeObj = {
     "text": {
         "fontSize": 12,
         "fill": "#333333",
@@ -113,6 +114,41 @@ const theme = {
 
 const MvtGraph = ({ chartData, chartMaxData }) => {
     const { mvtGraphNo } = useContext(GraphViewContext)
+    const { theme } = useContext(ThemeContext);
+
+    const graphTheme = theme ? themeObj : {
+        ...themeObj,
+        axis: {
+            ...themeObj.axis, 
+            legend: {
+                text: {
+                    ...themeObj.axis.legend.text,
+                    "fill": "#2c2e2d",
+                }
+            },
+            ticks: {
+                ...themeObj.axis.ticks,
+                text: {
+                    ...themeObj.axis.ticks.text,
+                    "fill": "#2c2e2d",
+                }
+            }
+        },
+        legends: {
+            ...themeObj.legends,
+            text: {
+                ...themeObj.legends.text,
+                "fill": "#2c2e2d",
+            },
+        },
+        grid: {
+            line: {
+                ...themeObj.grid.line,
+                "stroke": "#5d5e5e",
+            }
+        },
+    };
+
     return (
         <ResponsiveLine
             data={chartData[mvtGraphNo]}
@@ -186,7 +222,7 @@ const MvtGraph = ({ chartData, chartMaxData }) => {
                     },
                 ]
             }
-            theme={theme}
+            theme={graphTheme}
         />
     );
 }
