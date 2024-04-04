@@ -52,7 +52,7 @@ const themeObj = {
             }
         },
         number: {
-            value: 60
+            value: 50
         },
         shape: {
             type: "circle"

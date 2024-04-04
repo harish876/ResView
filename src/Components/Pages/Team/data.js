@@ -1,15 +1,6 @@
 // TODO: Change the data once you get the details of your team members 
 export const currentTeam = [
   {
-    name: "Saipranav Kotamreddy",
-    title: "BE Developer & Co-Architect",
-    socials: {
-      ig: "https://instagram.com/aunsh___",
-      linkedIn: "https://instagram.com/in/aunsh",
-    },
-    profilePic: "https://i.postimg.cc/3NVyH6R8/SPKR.jpg",
-  },
-  {
     name: "Aunsh Bandivadekar",
     title: "FE Developer & Co-Architect",
     socials: [
@@ -19,6 +10,15 @@ export const currentTeam = [
     ],
     profilePic: "https://i.postimg.cc/MZRbqn4Y/aunshPic.jpg",
     quote: "Veni Vidi Vici",
+  },
+  {
+    name: "Saipranav Kotamreddy",
+    title: "BE Developer & Co-Architect",
+    socials: {
+      ig: "https://instagram.com/aunsh___",
+      linkedIn: "https://instagram.com/in/aunsh",
+    },
+    profilePic: "https://i.postimg.cc/3NVyH6R8/SPKR.jpg",
   }
 ];
 

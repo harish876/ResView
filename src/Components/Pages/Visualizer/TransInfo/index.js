@@ -25,7 +25,7 @@ const TransInfo = ({ primary, numberOfReplicas, messageHistory, transactionNumbe
 
 
     return (
-        <div className='py-4 px-2 flex flex-col justify-center items-center rounded-md border-3p border-solid border-gray-700 dark:border-gray-50 w-full dark:text-gray-300'>
+        <div className='py-4 px-2 flex flex-col justify-center items-center rounded-md border-3p border-solid border-gray-700 dark:border-gray-50 w-full dark:text-gray-300 bg-blue-10 dark:bg-blue-450 opacity-1'>
             <div className="flex flex-col w-full my-3 gap-y-4">
                 <FontVarTitle title={'Basic Transaction Info:'} fontClass={'text-18p'} />
                 <div className="flex items-center justify-around">
