@@ -23,13 +23,9 @@ const ResViewOld = () => {
           </div>
         </div>
       </div>
-
+      {/* TODO: Rmeove this later on: PSQL MAC relative path export PATH=/Applications/Postgres.app/Contents/Versions/15/bin:$PATH
+ */}
     <div className="flex justify-around">
-      {/* Card 1 */}
-      <div className="max-w-md mb-4 m-2 border border-2 border-blue-190 text-white p-6 rounded-lg shadow-md hover:scale-105 transition">
-        <h2 className="text-2xl font-bold mb-4 text-blue-190">Overview</h2>
-        <p className="text-white">ResView visualizes the ResDB architecture, providing an in-depth understanding of consensus operations, replica comparisons and transaction statistics.</p>
-      </div>
 
       {/* Card 2 */}
       <div className="max-w-md mb-4 m-2 border border-2 border-blue-190 text-white p-6 rounded-lg shadow-md hover:scale-105 transition">
