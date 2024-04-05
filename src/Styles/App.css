@@ -871,6 +871,9 @@ video {
 .items-start {
   align-items: flex-start;
 }
+.items-start {
+  align-items: flex-start;
+}
 .items-center {
   align-items: center;
 }
@@ -1040,6 +1043,10 @@ video {
 .bg-gray-10 {
   --tw-bg-opacity: 1;
   background-color: rgb(235 235 242 / var(--tw-bg-opacity));
+}
+.bg-gray-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
 .bg-gray-900 {
   --tw-bg-opacity: 1;

@@ -2,12 +2,6 @@ import React, { useEffect, useRef } from "react";
 
 export const WebSocket = ({onMessage}) => {
   //Public API that will echo messages sent to it back to the client
-  /*const socketUrls = [
-    'ws://localhost:21001',
-    'ws://localhost:21002',
-    'ws://localhost:21003',
-    'ws://localhost:21004',
-  ];*/
   const transactionCount = useRef(0);
   const allMessages = useRef({});
   const keyList = useRef([[], [], [], []]);
@@ -52,7 +46,8 @@ export const WebSocket = ({onMessage}) => {
     const fetchData = async (replicaPort) => {
       try {
         // Make API call
-        const response = await fetch(process.env.DEFAULT_LOCAL + String(process.env.DEFAULT_LOCAL_PORT + replicaPort) + process.env.SOCKET_URL_EP);
+        let port = parseInt(process.env.REACT_APP_DEFAULT_LOCAL_PORT) + replicaPort
+        const response = await fetch(process.env.REACT_APP_DEFAULT_LOCAL + String(port) + process.env.REACT_APP_SOCKET_URL_EP);
         const newData = await response.json();
         // Update state with new data
         Object.keys(newData).map(key => {
