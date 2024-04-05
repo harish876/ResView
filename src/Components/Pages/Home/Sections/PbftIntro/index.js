@@ -13,7 +13,7 @@ const index = () => {
             <div>
                 <Subtitle subtitle={WHAT_IST_PBFT_SUBTITLE} />
             </div>
-            <div className='my-16'>
+            <div className='mt-16'>
                 <Timeline />
             </div>
         </div>

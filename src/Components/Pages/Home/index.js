@@ -1,12 +1,12 @@
 import React from 'react';
 import Wrapper from '../../Shared/Wrapper';
 // TODO: Remove the below import and entire components after demo is done
-import blockchain from '../../../Resources/Images/blockchain.jpeg';
-import Graphs from './Sections/Graphs';
-import WhatIsPbft from './Sections/WhatIsPbft'
-import { LinkButton } from '../../Shared/Buttons';
 import { BLOG_LINK } from '../../../Constants';
-import { ParticleWrapper } from '../../Shared/ParticleWrapper';
+import blockchain from '../../../Resources/Images/blockchain.jpeg';
+import { LinkButton } from '../../Shared/Buttons';
+import Graphs from './Sections/Graphs';
+import PbftIntro from './Sections/PbftIntro';
+import ResViewIntro from './Sections/ResViewIntro';
 
 const ResViewOld = () => {
   return (
@@ -85,10 +85,13 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+          <div className="mt-28">
+            <ResViewIntro />
+          </div>
             <div className="mt-28">
-            <WhatIsPbft />
+            <PbftIntro />
             </div>
-            <div className="mt-12">
+            <div className="mt-28">
               <Graphs />
             </div>
         </div>
