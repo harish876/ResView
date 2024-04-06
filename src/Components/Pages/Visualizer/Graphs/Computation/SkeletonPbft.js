@@ -15,9 +15,14 @@ export const computeDataDetails = (data) => {
     for (const property in data) {
         transactions.add(parseInt(property));
     }
-
+    let i = 0;
     for (const [key, value] of Object.entries(data)) {
-        if (value.primary_id === value.replica_id) primaryInd = key;
+        if (value.primary_id === value.replica_id) {
+            primaryInd = key;
+        } else {
+            console.log('Oh Shit', key, value, i)
+        }
+        i++;
     }
 
     let primaryIndex = parseInt(primaryInd);
@@ -48,6 +53,8 @@ export const generateConnections = (
     const { primaryIndex, transactions } =
         computeDataDetails(currentData);
 
+    console.log('PRIMARY INDEX', primaryIndex)
+
     ACTION_TYPE_PBFT_GRAPH.forEach(
         (action, index) =>
         (points = {
@@ -60,16 +67,26 @@ export const generateConnections = (
         })
     );
 
+    if(primaryIndex === -1){
+        console.log('H')
+    } else {
+
+    }
+
+    console.log('DATA', data)
+
     let currentPrimaryPointIndex = primaryIndexToPoint[primaryIndex]
     // REQUEST OBJECT
     points.request.start.push({
         flag: true,
         points: data[0],
     });
+    
     points.request.end.push({
         flag: true,
         points: data[numberOfSteps + currentPrimaryPointIndex],
     });
+
     // PRE-PREPARE OBJECT
     points.prePrepare.start.push({
         flag: true,

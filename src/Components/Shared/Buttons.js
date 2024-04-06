@@ -93,7 +93,6 @@ export const IconButtons = ({ title, onClick, children, disabled }) => {
         onClick()
     };
     const extraClass = disabled ? 'cursor-not-allowed border-gray-100 text-gray-100 dark:border-gray-700 dark:text-gray-700' : `${ICON_BTTN_CLSS_HOVER[title.toLowerCase()]} dark:text-white border-gray-700 dark:border-gray-10`;
-    console.log('ICON BUTTONS', extraClass)
     return (
         <button onClick={handleClick} className={`${ICON_BUTTON_CLASSES} ${extraClass}`} disabled={disabled}>
             {children}
