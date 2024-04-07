@@ -127,6 +127,7 @@ export const mvtGraphComputation = (transactionData, labelToggle, chartMaxDataUp
 
         commitPoints.push(data);
     }
+    //
 
     let pointData = { 1: preparePoints, 2: commitPoints };
     let maxPointData = { 1: maxPrepareTS, 2: maxCommitTS };
