@@ -9,7 +9,7 @@
 
 
 module.exports = {
-  darkMode: ['class','[data-theme="dark"]'],
+  darkMode: ['class', '[data-theme="dark"]'],
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
@@ -42,7 +42,9 @@ module.exports = {
       borderWidth: {
         "0.5p": "0.5px",
         "1p": "1px",
+        "2p": "2px",
         "3p": "3px",
+        "4p": "4px",
         "6p": "6px",
       },
       boxShadow: {
@@ -137,6 +139,12 @@ module.exports = {
           190: "#189788",
           200: "#26D8C4",
           300: "#0a0a0a",
+          400: "#172e54",
+          450: "#111a31",
+          500: "#0f172a",
+          550: "#025888",
+          600: "#002071",
+          20: "#eef3fa"
         },
         yellow: {
           10: "#fffbec",
@@ -340,6 +348,8 @@ module.exports = {
         "300p-1fr": "300px 1fr",
         "16p-1fr": "16px 1fr",
         "3-max-content": "repeat(3, minmax(0, max-content))",
+        "1.5-1fr": "1.5fr 1fr",
+        "1-1.5fr": "1fr 1.5fr"
       },
       gridTemplateRows: {
         10: "repeat(10, 1fr);",
@@ -475,6 +485,7 @@ module.exports = {
         "360p": "360px",
         "800p": "800px",
         "450p": "450px",
+        "550p": "550px",
         "720p": "720px"
       },
       width: {
@@ -499,17 +510,17 @@ module.exports = {
         "420p": "420px",
         "455p": "455px",
         "460p": "460px",
+        "700p": "700px",
+        "750p": "750px",
         "880p": "880px",
         "920p": "920px"
       },
       zIndex: {
         "neg-1": "-1",
         1: "1",
-        1: "1",
         1000: "1000",
       },
       inset: {
-        "370p": "370px",
       },
       animation: {
         pulseLong: "pulseLong 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
@@ -530,6 +541,5 @@ module.exports = {
     transitionProperty: ["responsive", "motion-safe", "motion-reduce"],
   },
   plugins: [
-    
   ],
 };

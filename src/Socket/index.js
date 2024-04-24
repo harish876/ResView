@@ -1,51 +1,17 @@
 import React, { useEffect, useRef } from "react";
-import useWebSocket from "react-use-websocket";
 
-export const WebSocketDemo = ({onMessage}) => {
+export const WebSocket = ({onMessage}) => {
   //Public API that will echo messages sent to it back to the client
-  const socketUrls = [
-    'ws://localhost:21001',
-    'ws://localhost:21002',
-    'ws://localhost:21003',
-    'ws://localhost:21004',
-  ];
   const transactionCount = useRef(0);
-  //Stores all messages from ResDB
   const allMessages = useRef({});
-    //For Websocket functionality, boot up start_service.sh on backend first, then
-  //load websocket. If console says "Websocket Open" for all 4, functionality works
+  const keyList = useRef([[], [], [], []]);
   let updatedMessageList;
-
-  const useCreateWebSocket = (url, onMessage) => {
-    const {lastJsonMessage, readyState, sendMessage, disconnect} = useWebSocket(url, {
-      shouldReconnect: () => true,
-    });
-
-    const updateSocketData = () => {
-      addMessage(lastJsonMessage);
-      onMessage(allMessages.current);
-    };
-
-    useEffect(() => {
-      if(readyState===WebSocket.OPEN){
-        console.log("OPEN");
-      }
-      updateSocketData();
-    }, [lastJsonMessage, readyState, disconnect]);
-
-  };
-
-  const connectionList = [useCreateWebSocket(socketUrls[0], onMessage),
-  useCreateWebSocket(socketUrls[1], onMessage),
-  useCreateWebSocket(socketUrls[2], onMessage),
-  useCreateWebSocket(socketUrls[3], onMessage)];
-
 
   const addMessage = (receivedMessage) => {
     if(receivedMessage===null){
       return;
     }
-    console.log(receivedMessage);
+    //console.log(receivedMessage);
     const reply= new Date().getTime();
     let newMessage = {
       ...receivedMessage,
@@ -61,7 +27,7 @@ export const WebSocketDemo = ({onMessage}) => {
         [replica_number]: newMessage,
       };
       updatedMessageList[txn_number]= txn_messages;
-      console.log("Received Message: ", updatedMessageList)
+      //console.log("Received Message: ", updatedMessageList)
       allMessages.current=updatedMessageList;
     }
     else{
@@ -69,12 +35,48 @@ export const WebSocketDemo = ({onMessage}) => {
         [replica_number]: newMessage,
       }
       updatedMessageList[txn_number]= txn_messages;
-      console.log("Received Message: ", updatedMessageList)
+      //console.log("Received Message: ", updatedMessageList)
       allMessages.current=updatedMessageList;
       transactionCount.current = transactionCount.current+1;
     }
-    console.log(allMessages.current);
+    //console.log(allMessages.current);
   }
+
+  useEffect(() => {
+    const fetchData = async (replicaPort) => {
+      try {
+        // Make API call
+        let port = parseInt(process.env.REACT_APP_DEFAULT_LOCAL_PORT) + replicaPort
+        const response = await fetch(process.env.REACT_APP_DEFAULT_LOCAL + String(port) + process.env.REACT_APP_SOCKET_URL_EP);
+        const newData = await response.json();
+        // Update state with new data
+        Object.keys(newData).map(key => {
+          if(!keyList.current[replicaPort].includes(key)){
+            keyList.current[replicaPort].push(key);
+            addMessage(newData[key]);
+            onMessage(allMessages.current, key);
+          }
+        })
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    const updateStatus = async () => {
+      //console.log(keyList);
+      //console.log(allMessages);
+      for(var i =0; i<4; i++){
+        fetchData(i);
+      }
+    }
+
+    updateStatus();
+    // Set interval to fetch data every 20 seconds
+    const interval = setInterval(updateStatus, 20000);
+
+    // Clear interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div>

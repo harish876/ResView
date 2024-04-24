@@ -4,7 +4,7 @@ const Loader = () => {
   return (
     <div class='w-screen h-screen relative'>
       <div class='loader'>
-        <div>ResDb Visualizer</div>
+        <div>ResView</div>
         <div class='inner' />
       </div>
     </div>
