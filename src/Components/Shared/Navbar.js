@@ -1,6 +1,10 @@
 import { Tooltip } from "@mui/material";
 import cn from "classnames";
+import _ from "lodash";
 import React, { memo, useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { NavbarToggleContext } from "../../Context/navbarToggle";
+import { ThemeContext } from "../../Context/theme";
 import {
   homeIcon,
   linearGraphIcon,
@@ -8,17 +12,24 @@ import {
   sunIcon,
   teamIcon
 } from "../../Resources/Icons";
-import ResViewLogo from "../../Resources/Images/ResViewLogo.jpg";
-import { COLOR_LIGHT, ICON_DEFAULT_COLOR, SUN_COLOR } from "./Constants";
+import { ICON_DEFAULT_COLOR, SUN_COLOR } from "./Constants";
 import { Icon } from "./Icon";
-import { ThemeContext } from "../../Context/theme";
-
-const navbarPageActiveColor = (currentPage, pageName) => {
-  return currentPage === pageName ? COLOR_LIGHT : ICON_DEFAULT_COLOR;
-};
+import { BLOG_LINK } from "../../Constants";
+import { PbftGraphClearContext } from "../../Context/graph";
 
 const LightOrDark = memo(() => {
   const { theme, toggleLightTheme, toggleDarkTheme } = useContext(ThemeContext);
+  const { changeClear } = useContext(PbftGraphClearContext);
+
+  const handleClick = () => {
+    changeClear(true);
+    if(!theme){
+      toggleDarkTheme()
+    } else {
+      toggleLightTheme()
+    }
+    setTimeout(() => changeClear(false), 500)
+  }
 
   return (
     <Tooltip
@@ -35,7 +46,7 @@ const LightOrDark = memo(() => {
             "svg-hover-dark": theme,
           }
         )}
-        onClick={!theme ? toggleDarkTheme : toggleLightTheme}
+        onClick={handleClick}
       >
         {!theme ? (
           <Icon fill={SUN_COLOR} height={"1.4em"} path={sunIcon} />
@@ -47,69 +58,83 @@ const LightOrDark = memo(() => {
   );
 });
 
-const NavLink = ({
+const NavComp = ({
   title,
-  currentPage,
   page,
   icon,
   iconHeight,
   iconViewBox,
-}) => (
-  <Tooltip title={title} enterDelay={500}>
-    <a href={`/pages/${page}`} className='cursor-pointer'>
-      <Icon
+}) => {
+  return (
+      <NavLink 
+        to={`${page}`} 
+        className={({ isActive }) => cn(
+          "cursor-pointer font-bold text-gray-900 dark:text-white",
+          {
+            "dark:bg-green-80 bg-green-40 px-2 py-1 rounded-lg": isActive
+          }
+        )}>
+        {/* <Icon
         fill={navbarPageActiveColor(currentPage, page)}
         height={iconHeight}
         path={icon}
         viewBox={iconViewBox}
-      />
-    </a>
-  </Tooltip>
-);
+      /> */}
+        <Tooltip title={title} enterDelay={500}>
+          {title}
+        </Tooltip>
+      </NavLink>
+  );
+};
 
 const Navbar = memo(() => {
-  const CURRENT_PAGE = window.location.href.split("/")[4];
+  const { theme } = useContext(ThemeContext);
+  const { borderToggle } = useContext(NavbarToggleContext);
+
+  const logo = theme ? 'https://i.postimg.cc/jd6PkhDs/Res-View-Logo-Dark.png' : 'https://i.postimg.cc/Y0dMy9mf/Copy-of-Untitled-Design-removebg-preview.png';
   return (
     <>
-      <div class='w-full max-w-screen-xl rounded-xl bg-white py-2 px-8 text-white shadow-md lg:px-8 lg:py-4 flex items-center justify-between flex-initial fixed z-20 dark:border-1p dark:border-solid dark:border-gray-50 dark:bg-blue-300'>
-        <div className='flex items-center justify-start gap-x-4 w-full'>
-          <a href='/'>
+      <div class={cn(
+        'w-full py-[1em] px-8 text-white lg:px-8 lg:py-4 flex items-center justify-between flex-initial fixed top-0 z-20',
+        {'border-b-2 dark:bg-blue-400 bg-blue-20 border-gray-900 dark:border-white transition': borderToggle}
+      )}>
+        <Link to='/pages/home' className='flex items-center justify-center gap-x-2 w-full cursor-pointer'>
             <img
-              src={ResViewLogo}
+              src={logo}
               alt='ResDb View Logo'
-              className='h-40p w-60p rounded-md'
+              className='h-35p w-35p'
             />
-          </a>
           <div className='text-blue-190 text-20p font-sans font-bold'>
-            Res <span className='italic text-blue-200'>View</span>
+            <span class="text-2xl font-bold text-gray-900 dark:text-white">ResView</span>
           </div>
-        </div>
-        <div className='flex items-center justify-center gap-x-24 w-full'>
-          <NavLink
+        </Link>
+        <div></div>
+        <div className='flex items-center justify-center gap-x-12 w-full'>
+          <NavComp
             title={"Home"}
-            currentPage={CURRENT_PAGE}
-            page={"home"}
+            page={"/pages/home"}
             icon={homeIcon}
             iconHeight={"1.4em"}
             iconViewBox={"0 0 640 512"}
           />
-          <NavLink
-            title={"Visualizer"}
-            currentPage={CURRENT_PAGE}
-            page={"visualizer"}
-            icon={linearGraphIcon}
-            iconHeight={"1.5em"}
-          />
-          <NavLink
-            title={"Our Team"}
-            currentPage={CURRENT_PAGE}
-            page={"team"}
+          <NavComp
+            title={"Team"}
+            page={"/pages/team"}
             icon={teamIcon}
             iconHeight={"1.4em"}
             iconViewBox={"0 0 640 512"}
           />
-        </div>
-        <div className='w-full flex items-center justify-end'>
+          <a href={BLOG_LINK} target="_blank" rel="noreferrer nofollow" className={cn(
+            'cursor-pointer font-bold text-gray-900 dark:text-white'
+          )}>
+            Blog
+          </a>
+          <NavComp
+            title={"Visualizer"}
+            page={"/pages/visualizer"}
+            icon={linearGraphIcon}
+            iconHeight={"1.5em"}
+          />
           <LightOrDark />
         </div>
       </div>

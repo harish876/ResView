@@ -6,11 +6,21 @@
 :root {
     --main-dark-color: #189788;
     --main-light-color: #26D8C4;
-    --background-color: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --background-color: linear-gradient(160deg, rgba(240, 242, 245, 1) 0%,
+      rgba(209, 223, 255, 1) 51%,
+      rgba(213, 225, 255, 1) 100%);
+    --card-color: rgb(255, 255, 255);
+    --light-dark-font-color: rgb(51, 51, 51);
+    --grey-color: grey;
+    --logo-color:rgb(0, 145, 255);
 }
 
 [data-theme="dark"] {
-  --background-color: radial-gradient(circle at 24.1% 65.8%, rgb(25, 25, 25) 0%, rgb(0, 0, 0) 95.4%);
+  --background-color: linear-gradient(160deg,rgba(23, 46, 84, 1) 0%,
+    rgba(17, 26, 49, 1) 31%,
+    rgba(15, 23, 42, 1) 100%);
+    --card-color: rgb(35, 35, 35);
+    --light-dark-font-color: rgb(204, 204, 204);
 }
 
 body {
@@ -20,7 +30,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: var(--background-color);
+  background: var(--background-color);
   transition: background-image 1s;
 }
 
@@ -99,54 +109,3 @@ svg:hover {
     transform: rotate(405deg);
   }
 }
-
-
-/* Add this to your CSS file or style block */
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-/* Add an additional class for styling the cursor */
-@keyframes typewriter {
-  from {
-    width: 0;
-  }
-  to {
-    width: 13ch;
-  }
-}
-
-/* Apply the typewriter animation to the title */
-.typewriter {
-  display: inline-block;
-  overflow: hidden;
-  border-right: 0.15em solid white; /* Adjust border color and size as needed */
-  white-space: nowrap;
-  margin: 0;
-  animation: typewriter 3s steps(20) forwards infinite alternate;
-}
-
-@keyframes titlewriter {
-  from {
-    width: 0;
-  }
-  to {
-    width: 16ch;
-  }
-}
-
-/* Apply the typewriter animation to the title */
-.titlewriter {
-  display: inline-block;
-  overflow: hidden;
-  border-right: 0.15em solid white; /* Adjust border color and size as needed */
-  white-space: nowrap;
-  margin: 0;
-  animation: titlewriter 3s steps(20) forwards infinite alternate;
-}
-
