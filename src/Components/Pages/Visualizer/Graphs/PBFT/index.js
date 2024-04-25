@@ -161,6 +161,8 @@ const PBFT = ({
 
             let primaryLabelSVG;
 
+            console.log('POINTSjguir eir', points)
+
             const faultyReplicasLabelSVG = d3
                 .select(faultyReplicasLabelRef.current)
                 .attr("width", width)
@@ -174,13 +176,13 @@ const PBFT = ({
             }
 
             let yCoordToIndexMap = new Map()
-            yCoords.forEach((value, index) => {
+            points.prePrepare.start.length > 0 && yCoords.forEach((value, index) => {
                 if (index > 0 && value !== points.prePrepare.start[0].points.y) {
                     yCoordToIndexMap.set(value, index);
                 }
             });
 
-            points.prepare.start.forEach((value, _) => {
+            points.prepare.start.length > 0 && points.prepare.start.forEach((value, _) => {
                 if (yCoordToIndexMap.get(value.y)) yCoordToIndexMap.delete(value.y);
             });
 
@@ -201,22 +203,21 @@ const PBFT = ({
                 .classed("items-center", true);
 
             // REQUEST LINES
-            points.request.end.forEach((end, i) => {
+            points.request.end.length > 0 && points.request.end.forEach((end, i) => {
                 if (end.flag) {
-                    console.log('HELLO')
                     connectionRender([points.request.start[0].points, end.points], points.request.color, pointColorMode, TRANSDURATION, i * REQUEST_BUFFER, lineGen, lineSVG, 'request');
                 }
             });
 
             // PRE-PREPARE LINES
-            points.prePrepare.end.forEach((end, i) => {
+            points.prePrepare.end.length > 0 && points.prePrepare.end.forEach((end, i) => {
                 if (end.flag) {
                     connectionRender([points.prePrepare.start[0].points, end.points], points.prePrepare.color, pointColorMode, TRANSDURATION, i * 1 + PREPREPARE_BUFFER, lineGen, lineSVG, 'prePrepare');
                 }
             });
 
             // PREPARE LINES
-            points.prepare.start.map((start, index) =>
+            points.prepare.start.length > 0 && points.prepare.start.map((start, index) =>
                 points.prepare.end[index].map((end, i) => {
                     return (
                         end.flag && connectionRender([start, end.points], points.prepare.color, pointColorMode, TRANSDURATION, i * 1 + PREPARE_BUFFER, lineGen, lineSVG, 'prepare')
@@ -225,7 +226,7 @@ const PBFT = ({
             );
 
             // COMMIT LINES
-            points.commit.start.map((start, index) =>
+            points.commit.start.length > 0 && points.commit.start.map((start, index) =>
                 points.commit.end[index].map((end, i) => {
                     return (
                         end.flag && connectionRender([start, end.points], points.commit.color, pointColorMode, TRANSDURATION, i * 1 + COMMIT_BUFFER, lineGen, lineSVG, 'commit')
@@ -234,7 +235,7 @@ const PBFT = ({
             );
 
             // REPLY LINES
-            points.reply.start.forEach((start, i) => {
+            points.reply.start.length > 0 && points.reply.start.forEach((start, i) => {
                 return (
                     start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, pointColorMode, TRANSDURATION, i * 1 + REPLY_BUFFER, lineGen, lineSVG, 'reply')
                 );

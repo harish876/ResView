@@ -336,7 +336,7 @@ export const dummyData = {
             prepare_time: 1701956096776841500,
             primary_id: 1,
             propose_pre_prepare_time: 1701956096767388700,
-            replica_id: 1,
+            replica_id: 5,
             txn_commands: ["GET"],
             txn_keys: ["test"],
             txn_number: 17,
