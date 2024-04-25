@@ -9,7 +9,7 @@ import { cancelIcon, pauseIcon, playIcon } from "../../../../../Resources/Icons"
 import { DropDownButtons, IconButtons } from "../../../../Shared/Buttons";
 import { Icon } from "../../../../Shared/Icon";
 import { connectionRender, labelFaultyNode, labelPrimaryNode } from "../Computation/D3Pbft";
-import { generateConnections, generateLabels, generateLines, generatePoints } from "../Computation/SkeletonPbft";
+import { generateConnections, generateLabels, generateLines, generatePoints } from "../Computation/CompPbft";
 
 
 
@@ -18,7 +18,7 @@ const PBFT = ({
     realTransactionNumber
 }) => {
     const { speed, changeSpeed } = useContext(PbftAnimationSpeedContext);
-     const {
+    const {
         TRANSDURATION,
         REQUEST_BUFFER,
         PREPREPARE_BUFFER,
@@ -159,15 +159,19 @@ const PBFT = ({
 
         if (!clear) {
 
-            const primaryLabelSVG = d3
-                .select(primaryLabelRef.current)
-                .attr("width", width)
-                .attr("height", height)
+            let primaryLabelSVG;
 
             const faultyReplicasLabelSVG = d3
                 .select(faultyReplicasLabelRef.current)
                 .attr("width", width)
                 .attr("height", height)
+
+            if(primaryIndex !== -1) {
+                primaryLabelSVG = d3
+                    .select(primaryLabelRef.current)
+                    .attr("width", width)
+                    .attr("height", height)
+            }
 
             let yCoordToIndexMap = new Map()
             yCoords.forEach((value, index) => {
@@ -199,6 +203,7 @@ const PBFT = ({
             // REQUEST LINES
             points.request.end.forEach((end, i) => {
                 if (end.flag) {
+                    console.log('HELLO')
                     connectionRender([points.request.start[0].points, end.points], points.request.color, pointColorMode, TRANSDURATION, i * REQUEST_BUFFER, lineGen, lineSVG, 'request');
                 }
             });

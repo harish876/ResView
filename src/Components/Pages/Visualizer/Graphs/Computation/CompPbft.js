@@ -15,14 +15,11 @@ export const computeDataDetails = (data) => {
     for (const property in data) {
         transactions.add(parseInt(property));
     }
-    let i = 0;
+
     for (const [key, value] of Object.entries(data)) {
         if (value.primary_id === value.replica_id) {
             primaryInd = key;
-        } else {
-            console.log('Oh Shit', key, value, i)
         }
-        i++;
     }
 
     let primaryIndex = parseInt(primaryInd);
@@ -53,8 +50,6 @@ export const generateConnections = (
     const { primaryIndex, transactions } =
         computeDataDetails(currentData);
 
-    console.log('PRIMARY INDEX', primaryIndex)
-
     ACTION_TYPE_PBFT_GRAPH.forEach(
         (action, index) =>
         (points = {
@@ -67,115 +62,128 @@ export const generateConnections = (
         })
     );
 
-    if(primaryIndex === -1){
-        console.log('H')
-    } else {
-
-    }
-
-    console.log('DATA', data)
-
-    let currentPrimaryPointIndex = primaryIndexToPoint[primaryIndex]
     // REQUEST OBJECT
     points.request.start.push({
         flag: true,
         points: data[0],
     });
+
+    console.log('DATA', data)
     
-    points.request.end.push({
-        flag: true,
-        points: data[numberOfSteps + currentPrimaryPointIndex],
-    });
+    if (primaryIndex === -1) {
 
-    // PRE-PREPARE OBJECT
-    points.prePrepare.start.push({
-        flag: true,
-        points: points.request.end[0].points,
-    });
+        let reqEndPoints = [];
 
-    for (let i = 1; i < yCoords.length; i++) {
-        if (primaryIndex === i) continue;
-        points.prePrepare.end.push({
+        for (const [_, value] of Object.entries(primaryIndexToPoint)) {
+            reqEndPoints.push(data[numberOfSteps + value])
+        }
+
+        console.log('POINTIRENG', primaryIndexToPoint, reqEndPoints)
+        points.request.end.push({
             flag: true,
-            points: {
-                x: xCoords[2],
-                y: yCoords[i],
-            },
+            points: reqEndPoints,
         });
-    }
 
-    let yCoordToReplicas = {};
+    } else {
+        let currentPrimaryPointIndex = primaryIndexToPoint[primaryIndex]
 
-    for (let i = 1; i < yCoords.length; i++) {
-        yCoordToReplicas = {
-            ...yCoordToReplicas,
-            [yCoords[i]]: i,
-        };
-    }
-    // PREPARE OBJECT
-    points.prePrepare.end.forEach((element, index) => {
-        if (transactions.has(yCoordToReplicas[element.points.y])) {
-            points.prepare.start.push(element.points);
-        }
-    });
+        points.request.end.push({
+            flag: true,
+            points: data[numberOfSteps + currentPrimaryPointIndex],
+        });
 
-    for (const element of points.prepare.start) points.prepare.end.push([]);
+        // PRE-PREPARE OBJECT
+        points.prePrepare.start.push({
+            flag: true,
+            points: points.request.end[0].points,
+        });
 
-    for (let i = 0; i < points.prepare.start.length; i++) {
-        for (let j = 1; j < yCoords.length; j++) {
-            if (points.prepare.start[i].y !== yCoords[j]) {
-                points.prepare.end[i].push({
-                    flag: true,
-                    points: {
-                        x: xCoords[3],
-                        y: yCoords[j],
-                    },
-                });
-            }
-        }
-    }
-    // COMMIT OBJECT
-    for (let i = 1; i < yCoords.length; i++) {
-        if (transactions.has(i)) {
-            points.commit.start.push({
-                x: xCoords[3],
-                y: yCoords[i],
-            });
-        }
-    }
-
-    for (const element of points.commit.start) points.commit.end.push([]);
-
-    for (let i = 0; i < points.commit.start.length; i++) {
-        for (let j = 1; j < yCoords.length; j++) {
-            if (points.commit.start[i].y !== yCoords[j]) {
-                points.commit.end[i].push({
-                    flag: true,
-                    points: {
-                        x: xCoords[4],
-                        y: yCoords[j],
-                    },
-                });
-            }
-        }
-    }
-    // REPLY OBJECT
-    points.reply.end.push({
-        flag: true,
-        points: data[numberOfSteps],
-    });
-
-    for (let i = 1; i < yCoords.length; i++) {
-        if (transactions.has(i)) {
-            points.reply.start.push({
+        for (let i = 1; i < yCoords.length; i++) {
+            if (primaryIndex === i) continue;
+            points.prePrepare.end.push({
                 flag: true,
                 points: {
-                    x: xCoords[4],
+                    x: xCoords[2],
                     y: yCoords[i],
                 },
             });
         }
+
+        let yCoordToReplicas = {};
+
+        for (let i = 1; i < yCoords.length; i++) {
+            yCoordToReplicas = {
+                ...yCoordToReplicas,
+                [yCoords[i]]: i,
+            };
+        }
+
+        // PREPARE OBJECT
+        points.prePrepare.end.forEach((element, index) => {
+            if (transactions.has(yCoordToReplicas[element.points.y])) {
+                points.prepare.start.push(element.points);
+            }
+        });
+
+        for (const element of points.prepare.start) points.prepare.end.push([]);
+
+        for (let i = 0; i < points.prepare.start.length; i++) {
+            for (let j = 1; j < yCoords.length; j++) {
+                if (points.prepare.start[i].y !== yCoords[j]) {
+                    points.prepare.end[i].push({
+                        flag: true,
+                        points: {
+                            x: xCoords[3],
+                            y: yCoords[j],
+                        },
+                    });
+                }
+            }
+        }
+        // COMMIT OBJECT
+        for (let i = 1; i < yCoords.length; i++) {
+            if (transactions.has(i)) {
+                points.commit.start.push({
+                    x: xCoords[3],
+                    y: yCoords[i],
+                });
+            }
+        }
+
+        for (const element of points.commit.start) points.commit.end.push([]);
+
+        for (let i = 0; i < points.commit.start.length; i++) {
+            for (let j = 1; j < yCoords.length; j++) {
+                if (points.commit.start[i].y !== yCoords[j]) {
+                    points.commit.end[i].push({
+                        flag: true,
+                        points: {
+                            x: xCoords[4],
+                            y: yCoords[j],
+                        },
+                    });
+                }
+            }
+        }
+        // REPLY OBJECT
+        points.reply.end.push({
+            flag: true,
+            points: data[numberOfSteps],
+        });
+
+        for (let i = 1; i < yCoords.length; i++) {
+            if (transactions.has(i)) {
+                points.reply.start.push({
+                    flag: true,
+                    points: {
+                        x: xCoords[4],
+                        y: yCoords[i],
+                    },
+                });
+            }
+        }
     }
+    
     return { points, primaryIndex };
 };
 

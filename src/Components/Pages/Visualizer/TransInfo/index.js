@@ -3,7 +3,7 @@ import { cancelIcon, tickIcon } from '../../../../Resources/Icons';
 import HRline from '../../../Shared/HRline';
 import { Icon } from '../../../Shared/Icon';
 import { FontVarTitle } from '../../../Shared/Title';
-import { computeDataDetails } from '../Graphs/Computation/SkeletonPbft';
+import { computeDataDetails } from '../Graphs/Computation/CompPbft';
 import { dummyData } from '../Graphs/data';
 
 
@@ -19,7 +19,7 @@ const TransInfo = ({ primary, numberOfReplicas, messageHistory, transactionNumbe
         currentData = dummyData[17];
         currentStatus = FAULTY_REPLICAS_DEFAULT;
     }
-    
+
     const { primaryIndex, transactions } =
         computeDataDetails(currentData);
 
