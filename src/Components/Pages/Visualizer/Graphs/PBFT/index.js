@@ -230,6 +230,31 @@ const PBFT = ({
                     })
                 );
 
+                // PREPARE LINES
+                points.prepare.start.length > 0 && points.prepare.start.map((start, index) =>
+                    points.prepare.end[index].map((end, i) => {
+                        return (
+                            end.flag && connectionRender([start, end.points], points.prepare.color, pointColorMode, TRANSDURATION_NP, i * 1 + PREPARE_BUFFER_NP, lineGen, lineSVG, 'prepare')
+                        );
+                    })
+                );
+
+                // COMMIT LINES
+                points.commit.start.length > 0 && points.commit.start.map((start, index) =>
+                    points.commit.end[index].map((end, i) => {
+                        return (
+                            end.flag && connectionRender([start, end.points], points.commit.color, pointColorMode, TRANSDURATION_NP, i * 1 + COMMIT_BUFFER_NP, lineGen, lineSVG, 'commit')
+                        );
+                    })
+                );
+
+                // REPLY LINES
+                points.reply.start.length > 0 && points.reply.start.forEach((start, i) => {
+                    return (
+                        start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, pointColorMode, TRANSDURATION_NP, i * 1 + REPLY_BUFFER_NP, lineGen, lineSVG, 'reply')
+                    );
+                });
+
             } else {
                 points.request.end.length > 0 && points.request.end.forEach((end, i) => {
                     if (end.flag) {
@@ -243,32 +268,32 @@ const PBFT = ({
                         connectionRender([points.prePrepare.start[0].points, end.points], points.prePrepare.color, pointColorMode, TRANSDURATION, i * 1 + PREPREPARE_BUFFER, lineGen, lineSVG, 'prePrepare');
                     }
                 });
-            }
 
-            // PREPARE LINES
-            points.prepare.start.length > 0 && points.prepare.start.map((start, index) =>
-                points.prepare.end[index].map((end, i) => {
-                    return (
-                        end.flag && connectionRender([start, end.points], points.prepare.color, pointColorMode, TRANSDURATION, i * 1 + PREPARE_BUFFER, lineGen, lineSVG, 'prepare')
-                    );
-                })
-            );
-
-            // COMMIT LINES
-            points.commit.start.length > 0 && points.commit.start.map((start, index) =>
-                points.commit.end[index].map((end, i) => {
-                    return (
-                        end.flag && connectionRender([start, end.points], points.commit.color, pointColorMode, TRANSDURATION, i * 1 + COMMIT_BUFFER, lineGen, lineSVG, 'commit')
-                    );
-                })
-            );
-
-            // REPLY LINES
-            points.reply.start.length > 0 && points.reply.start.forEach((start, i) => {
-                return (
-                    start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, pointColorMode, TRANSDURATION, i * 1 + REPLY_BUFFER, lineGen, lineSVG, 'reply')
+                // PREPARE LINES
+                points.prepare.start.length > 0 && points.prepare.start.map((start, index) =>
+                    points.prepare.end[index].map((end, i) => {
+                        return (
+                            end.flag && connectionRender([start, end.points], points.prepare.color, pointColorMode, TRANSDURATION, i * 1 + PREPARE_BUFFER, lineGen, lineSVG, 'prepare')
+                        );
+                    })
                 );
-            });
+
+                // COMMIT LINES
+                points.commit.start.length > 0 && points.commit.start.map((start, index) =>
+                    points.commit.end[index].map((end, i) => {
+                        return (
+                            end.flag && connectionRender([start, end.points], points.commit.color, pointColorMode, TRANSDURATION, i * 1 + COMMIT_BUFFER, lineGen, lineSVG, 'commit')
+                        );
+                    })
+                );
+
+                // REPLY LINES
+                points.reply.start.length > 0 && points.reply.start.forEach((start, i) => {
+                    return (
+                        start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, pointColorMode, TRANSDURATION, i * 1 + REPLY_BUFFER, lineGen, lineSVG, 'reply')
+                    );
+                });
+            }
         }
 
     }, [theme, width, height, clear]);
@@ -303,7 +328,7 @@ const PBFT = ({
             <div className="flex items-center justify-around w-full flex-row mb-[-1em] mt-2">
                 <div className="basis-1/4">
                     {doesPrimaryExist.current === -1 && (
-                        <div className="text-red-400 font-18p border-1p rounded-md p-1 border-red-400 w-180p flex items-center justify-center ml-8">
+                        <div className="text-amber-600 font-18p border-1p rounded-md p-1 border-amber-600 w-180p flex items-center justify-center ml-8">
                             !No Primary Chosen!
                         </div>
                     )}
