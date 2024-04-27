@@ -53,8 +53,6 @@ export const connectionRender = (lineData, lineColor, dotColor, duration, delay,
 
     const divID = 'tooltip_' + hash([lineData[0].x , lineData[0].y , lineData[1].x , lineData[1].y]);
 
-    console.log('LINEAR', lineData)
-
     var line = svg.append("path")
         .attr("d", lineGen(lineData))
         .attr("id", `${divID}`)

@@ -9,7 +9,7 @@ import { cancelIcon, pauseIcon, playIcon } from "../../../../../Resources/Icons"
 import { DropDownButtons, IconButtons } from "../../../../Shared/Buttons";
 import { Icon } from "../../../../Shared/Icon";
 import { connectionRender, labelFaultyNode, labelPrimaryNode } from "../Computation/D3Pbft";
-import { generateConnections, generateLabels, generateLines, generatePoints } from "../Computation/CompPbft";
+import { generateConnections, generateLabels, generateLines, generatePoints, generateTransactionIds } from "../Computation/CompPbft";
 
 
 
@@ -57,6 +57,8 @@ const PBFT = ({
     const primaryLabelRef = useRef(null);
     const faultyReplicasLabelRef = useRef(null);
     const doesPrimaryExist = useRef(1);
+    const yCoordToReplicasMap = useRef({});
+    const transactionsSet = useRef({});
 
     const debouncedRender = useCallback(() => {
         const data = generatePoints(
@@ -73,7 +75,7 @@ const PBFT = ({
             NUMBER_OF_STEPS_PBFT_GRAPH
         );
 
-        const { points, primaryIndex } = generateConnections(
+        const { points, primaryIndex, yCoordToReplicas, transactions } = generateConnections(
             data,
             NUMBER_OF_STEPS_PBFT_GRAPH,
             xCoords,
@@ -84,6 +86,8 @@ const PBFT = ({
         );
 
         doesPrimaryExist.current = primaryIndex;
+        yCoordToReplicasMap.current = yCoordToReplicas;
+        transactionsSet.current = transactions;
 
         const { labelsX, labelsY } = generateLabels(xCoords, yCoords);
 
@@ -185,26 +189,6 @@ const PBFT = ({
                     .attr("height", height)
             }
 
-            // let yCoordToIndexMap = new Map()
-
-            // points.prePrepare.start.length > 0 && yCoords.forEach((value, index) => {
-            //     if (index > 0 && value !== points.prePrepare.start[0].points.y) {
-            //         yCoordToIndexMap.set(value, index);
-            //     }
-            // });
-
-            // points.prepare.start.length > 0 && points.prepare.start.forEach((value, _) => {
-            //     if (yCoordToIndexMap.get(value.y)) yCoordToIndexMap.delete(value.y);
-            // });
-
-            // let faultyReplicaIndices = new Set();
-            // for (let [_, value] of yCoordToIndexMap) faultyReplicaIndices.add(value);
-
-            // labelsY.forEach((label, index) => {
-            //     if (index === primaryIndex) return labelPrimaryNode(primaryLabelSVG, label);
-            //     if (faultyReplicaIndices.has(index)) return labelFaultyNode(faultyReplicasLabelSVG, label);
-            // })
-
             const lineSVG = d3
                 .select(lineRef.current)
                 .attr("width", width)
@@ -213,8 +197,21 @@ const PBFT = ({
                 .classed("justify-center", true)
                 .classed("items-center", true);
 
-            // REQUEST LINES
+
+            // CREATE LABELS FOR FAULTY NODES
+            let faultyReplicaIndices = new Set();
+            for (let [_, value] of Object.entries(yCoordToReplicasMap.current)) {
+                if (!transactionsSet.current.has(value)) faultyReplicaIndices.add(value)
+            }
+
+            labelsY.forEach((label, index) => {
+                if (faultyReplicaIndices.has(index)) return labelFaultyNode(faultyReplicasLabelSVG, label);
+            })
+
+            // IF PRIMARY DOES NOT EXIST AND VICEVERSA
             if(primaryIndex === -1) {
+
+                // REQUEST LINES
                 points.request.end[0].points.length > 0 && points.request.end[0].points.forEach((end, i) => {
                     connectionRender([points.request.start[0].points, end], points.request.color, pointColorMode, TRANSDURATION_NP, i * REQUEST_BUFFER_NP, lineGen, lineSVG, 'request');
                 });
@@ -254,6 +251,12 @@ const PBFT = ({
                 });
 
             } else {
+                
+                labelsY.forEach((label, index) => {
+                    if (index === primaryIndex) return labelPrimaryNode(primaryLabelSVG, label);
+                    if (faultyReplicaIndices.has(index)) return labelFaultyNode(faultyReplicasLabelSVG, label);
+                })
+
                 points.request.end.length > 0 && points.request.end.forEach((end, i) => {
                     if (end.flag) {
                         connectionRender([points.request.start[0].points, end.points], points.request.color, pointColorMode, TRANSDURATION, i * REQUEST_BUFFER, lineGen, lineSVG, 'request');

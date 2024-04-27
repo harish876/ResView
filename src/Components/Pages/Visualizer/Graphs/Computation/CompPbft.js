@@ -68,6 +68,8 @@ export const generateConnections = (
         points: data[0],
     });
 
+    let yCoordToReplicas = {};
+
     // CONDITION WHERE PRIMARY EXISTS AND DOES EXIST
     if (primaryIndex === -1) {
 
@@ -102,8 +104,6 @@ export const generateConnections = (
                 }
             }
         }
-
-        let yCoordToReplicas = {};
 
         for (let i = 1; i < yCoords.length; i++) {
             yCoordToReplicas = {
@@ -167,8 +167,6 @@ export const generateConnections = (
                 },
             });
         }
-
-        let yCoordToReplicas = {};
 
         for (let i = 1; i < yCoords.length; i++) {
             yCoordToReplicas = {
@@ -245,7 +243,7 @@ export const generateConnections = (
         }
     }
 
-    return { points, primaryIndex };
+    return { points, primaryIndex, yCoordToReplicas, transactions };
 };
 
 export const generateLabels = (xCoords, yCoords) => {
