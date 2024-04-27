@@ -173,8 +173,6 @@ const PBFT = ({
 
             let primaryLabelSVG;
 
-            console.log('CURRENT POINTS', points)
-
             const faultyReplicasLabelSVG = d3
                 .select(faultyReplicasLabelRef.current)
                 .attr("width", width)
@@ -329,11 +327,11 @@ const PBFT = ({
                 <div className="basis-1/4">
                     {doesPrimaryExist.current === -1 && (
                         <div className="text-amber-600 font-18p border-1p rounded-md p-1 border-amber-600 w-180p flex items-center justify-center ml-8">
-                            !No Primary Chosen!
+                            !No Primary Exists&#161;
                         </div>
                     )}
                 </div>
-                <div className="flex items-center justify-around gap-x-10 basis-1/2">
+                <div className="flex items-center justify-center gap-x-16 basis-1/2">
                     <IconButtons title={!clear ? 'Playing' : 'Play'} onClick={() => onPlay()} disabled={!clear}>
                         <Icon path={!clear ? pauseIcon : playIcon} viewBox={'0 0 384 512'} height={'13px'} fill={color} />
                     </IconButtons>
