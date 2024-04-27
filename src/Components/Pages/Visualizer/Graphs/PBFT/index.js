@@ -2,7 +2,7 @@
 import * as d3 from "d3";
 import { line } from "d3-shape";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NUMBER_OF_STEPS_PBFT_GRAPH, PBFT_ANIMATION_SPEEDS } from "../../../../../Constants";
+import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NUMBER_OF_STEPS_PBFT_GRAPH, PBFT_ANIMATION_SPEEDS, PBFT_ANIMATION_SPEEDS_NO_PRIMARY } from "../../../../../Constants";
 import { GraphResizerContext, PbftAnimationSpeedContext, PbftGraphClearContext } from "../../../../../Context/graph";
 import { ThemeContext } from "../../../../../Context/theme";
 import { cancelIcon, pauseIcon, playIcon } from "../../../../../Resources/Icons";
@@ -27,6 +27,15 @@ const PBFT = ({
         REPLY_BUFFER
     } = PBFT_ANIMATION_SPEEDS[speed];
 
+    const {
+        TRANSDURATION_NP,
+        REQUEST_BUFFER_NP,
+        PREPREPARE_BUFFER_NP,
+        PREPARE_BUFFER_NP,
+        COMMIT_BUFFER_NP,
+        REPLY_BUFFER_NP
+    } = PBFT_ANIMATION_SPEEDS_NO_PRIMARY[speed];
+
     const { boxValues, resizing } = useContext(GraphResizerContext);
 
     const { width, height } = boxValues;
@@ -47,6 +56,7 @@ const PBFT = ({
     const lineRef = useRef(null);
     const primaryLabelRef = useRef(null);
     const faultyReplicasLabelRef = useRef(null);
+    const doesPrimaryExist = useRef(1);
 
     const debouncedRender = useCallback(() => {
         const data = generatePoints(
@@ -72,6 +82,8 @@ const PBFT = ({
             realTransactionNumber,
             theme
         );
+
+        doesPrimaryExist.current = primaryIndex;
 
         const { labelsX, labelsY } = generateLabels(xCoords, yCoords);
 
@@ -161,7 +173,7 @@ const PBFT = ({
 
             let primaryLabelSVG;
 
-            console.log('POINTSjguir eir', points)
+            console.log('CURRENT POINTS', points)
 
             const faultyReplicasLabelSVG = d3
                 .select(faultyReplicasLabelRef.current)
@@ -175,24 +187,25 @@ const PBFT = ({
                     .attr("height", height)
             }
 
-            let yCoordToIndexMap = new Map()
-            points.prePrepare.start.length > 0 && yCoords.forEach((value, index) => {
-                if (index > 0 && value !== points.prePrepare.start[0].points.y) {
-                    yCoordToIndexMap.set(value, index);
-                }
-            });
+            // let yCoordToIndexMap = new Map()
 
-            points.prepare.start.length > 0 && points.prepare.start.forEach((value, _) => {
-                if (yCoordToIndexMap.get(value.y)) yCoordToIndexMap.delete(value.y);
-            });
+            // points.prePrepare.start.length > 0 && yCoords.forEach((value, index) => {
+            //     if (index > 0 && value !== points.prePrepare.start[0].points.y) {
+            //         yCoordToIndexMap.set(value, index);
+            //     }
+            // });
 
-            let faultyReplicaIndices = new Set();
-            for (let [_, value] of yCoordToIndexMap) faultyReplicaIndices.add(value);
+            // points.prepare.start.length > 0 && points.prepare.start.forEach((value, _) => {
+            //     if (yCoordToIndexMap.get(value.y)) yCoordToIndexMap.delete(value.y);
+            // });
 
-            labelsY.forEach((label, index) => {
-                if (index === primaryIndex) return labelPrimaryNode(primaryLabelSVG, label);
-                if (faultyReplicaIndices.has(index)) return labelFaultyNode(faultyReplicasLabelSVG, label);
-            })
+            // let faultyReplicaIndices = new Set();
+            // for (let [_, value] of yCoordToIndexMap) faultyReplicaIndices.add(value);
+
+            // labelsY.forEach((label, index) => {
+            //     if (index === primaryIndex) return labelPrimaryNode(primaryLabelSVG, label);
+            //     if (faultyReplicaIndices.has(index)) return labelFaultyNode(faultyReplicasLabelSVG, label);
+            // })
 
             const lineSVG = d3
                 .select(lineRef.current)
@@ -203,18 +216,34 @@ const PBFT = ({
                 .classed("items-center", true);
 
             // REQUEST LINES
-            points.request.end.length > 0 && points.request.end.forEach((end, i) => {
-                if (end.flag) {
-                    connectionRender([points.request.start[0].points, end.points], points.request.color, pointColorMode, TRANSDURATION, i * REQUEST_BUFFER, lineGen, lineSVG, 'request');
-                }
-            });
+            if(primaryIndex === -1) {
+                points.request.end[0].points.length > 0 && points.request.end[0].points.forEach((end, i) => {
+                    connectionRender([points.request.start[0].points, end], points.request.color, pointColorMode, TRANSDURATION_NP, i * REQUEST_BUFFER_NP, lineGen, lineSVG, 'request');
+                });
 
-            // PRE-PREPARE LINES
-            points.prePrepare.end.length > 0 && points.prePrepare.end.forEach((end, i) => {
-                if (end.flag) {
-                    connectionRender([points.prePrepare.start[0].points, end.points], points.prePrepare.color, pointColorMode, TRANSDURATION, i * 1 + PREPREPARE_BUFFER, lineGen, lineSVG, 'prePrepare');
-                }
-            });
+                // PRE-PREPARE LINES
+                points.prePrepare.start.length > 0 && points.prePrepare.start.map((start, index) =>
+                    points.prePrepare.end[index].map((end, i) => {
+                        return (
+                            end.flag && connectionRender([start, end.points], points.prePrepare.color, pointColorMode, TRANSDURATION_NP, i * 1 + PREPREPARE_BUFFER_NP, lineGen, lineSVG, 'prepare')
+                        );
+                    })
+                );
+
+            } else {
+                points.request.end.length > 0 && points.request.end.forEach((end, i) => {
+                    if (end.flag) {
+                        connectionRender([points.request.start[0].points, end.points], points.request.color, pointColorMode, TRANSDURATION, i * REQUEST_BUFFER, lineGen, lineSVG, 'request');
+                    }
+                });
+
+                // PRE-PREPARE LINES
+                points.prePrepare.end.length > 0 && points.prePrepare.end.forEach((end, i) => {
+                    if (end.flag) {
+                        connectionRender([points.prePrepare.start[0].points, end.points], points.prePrepare.color, pointColorMode, TRANSDURATION, i * 1 + PREPREPARE_BUFFER, lineGen, lineSVG, 'prePrepare');
+                    }
+                });
+            }
 
             // PREPARE LINES
             points.prepare.start.length > 0 && points.prepare.start.map((start, index) =>
@@ -271,16 +300,26 @@ const PBFT = ({
 
     return (
         <>
-            <div className="flex items-center justify-between gap-x-16 mb-[-1em] mt-2">
-                <IconButtons title={!clear ? 'Playing' : 'Play'} onClick={() => onPlay()} disabled={!clear}>
-                    <Icon path={!clear ? pauseIcon : playIcon} viewBox={'0 0 384 512'} height={'13px'} fill={color} />
-                </IconButtons>
-                {playing && (
-                    <DropDownButtons selected={speed} elements={['1x', '0.5x', '2x']} onClick={animationSpeedChange} />
-                )}
-                <IconButtons title={'Clear'} onClick={() => onClear()} disabled={clear}>
-                    <Icon path={cancelIcon} viewBox={'0 0 384 512'} height={'14px'} fill={color} />
-                </IconButtons>
+            <div className="flex items-center justify-around w-full flex-row mb-[-1em] mt-2">
+                <div className="basis-1/4">
+                    {doesPrimaryExist.current === -1 && (
+                        <div className="text-red-400 font-18p border-1p rounded-md p-1 border-red-400 w-180p flex items-center justify-center ml-8">
+                            !No Primary Chosen!
+                        </div>
+                    )}
+                </div>
+                <div className="flex items-center justify-around gap-x-10 basis-1/2">
+                    <IconButtons title={!clear ? 'Playing' : 'Play'} onClick={() => onPlay()} disabled={!clear}>
+                        <Icon path={!clear ? pauseIcon : playIcon} viewBox={'0 0 384 512'} height={'13px'} fill={color} />
+                    </IconButtons>
+                    {playing && (
+                        <DropDownButtons selected={speed} elements={['1x', '0.5x', '2x']} onClick={animationSpeedChange} />
+                    )}
+                    <IconButtons title={'Clear'} onClick={() => onClear()} disabled={clear}>
+                        <Icon path={cancelIcon} viewBox={'0 0 384 512'} height={'14px'} fill={color} />
+                    </IconButtons>
+                </div>
+                <div className="basis-1/4" />
             </div>
             <div className='relative w-full h-full pl-4 pr-2 pb-6'>
                 {resizing ? (

@@ -74,6 +74,33 @@ export const PBFT_ANIMATION_SPEEDS = {
     },
 }
 
+export const PBFT_ANIMATION_SPEEDS_NO_PRIMARY = {
+    '1x': {
+        TRANSDURATION_NP: 1500,
+        REQUEST_BUFFER_NP: 1000,
+        PREPREPARE_BUFFER_NP: 4500,
+        PREPARE_BUFFER_NP: 6000,
+        COMMIT_BUFFER_NP: 4500,
+        REPLY_BUFFER_NP: 6000
+    },
+    '2x': {
+        TRANSDURATION_NP: 750,
+        REQUEST_BUFFER_NP: 500,
+        PREPREPARE_BUFFER_NP: 750,
+        PREPARE_BUFFER_NP: 1500,
+        COMMIT_BUFFER_NP: 2250,
+        REPLY_BUFFER_NP: 3000
+    },
+    '0.5x': {
+        TRANSDURATION_NP: 3000,
+        REQUEST_BUFFER_NP: 2000,
+        PREPREPARE_BUFFER_NP: 3000,
+        PREPARE_BUFFER_NP: 6000,
+        COMMIT_BUFFER_NP: 9000,
+        REPLY_BUFFER_NP: 12000
+    },
+}
+
 export const NUMBER_OF_STEPS_PBFT_GRAPH = 5;
 
 export const VISUALIZER_PAGE_SUBTITLE = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat vitae, dolor illo harum consequatur ea, temporibus, corrupti iure veniam esse quisquam ut quidem dignissimos quasi. Quas totam temporibus';

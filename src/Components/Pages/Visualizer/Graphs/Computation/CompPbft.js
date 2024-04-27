@@ -68,8 +68,7 @@ export const generateConnections = (
         points: data[0],
     });
 
-    console.log('DATA', data)
-    
+    // CONDITION WHERE PRIMARY EXISTS AND DOES EXIST
     if (primaryIndex === -1) {
 
         let reqEndPoints = [];
@@ -78,11 +77,71 @@ export const generateConnections = (
             reqEndPoints.push(data[numberOfSteps + value])
         }
 
-        console.log('POINTIRENG', primaryIndexToPoint, reqEndPoints)
         points.request.end.push({
             flag: true,
             points: reqEndPoints,
         });
+
+        // PRE-PREPARE OBJECT
+        for (let i = 0; i < points.request.end[0].points.length; i++){
+            points.prePrepare.start.push(points.request.end[0].points[i])
+        }
+
+        for (const element of points.prePrepare.start) points.prePrepare.end.push([]);
+
+        for (let i = 0; i < points.prePrepare.start.length; i++) {
+            for (let j = 1; j < yCoords.length; j++) {
+                if (points.prePrepare.start[i].y !== yCoords[j]) {
+                    points.prePrepare.end[i].push({
+                        flag: true,
+                        points: {
+                            x: xCoords[2],
+                            y: yCoords[j],
+                        },
+                    });
+                }
+            }
+        }
+
+        let yCoordToReplicas = {};
+
+        for (let i = 1; i < yCoords.length; i++) {
+            yCoordToReplicas = {
+                ...yCoordToReplicas,
+                [yCoords[i]]: i,
+            };
+        }
+
+        // PREPARE OBJECT 
+        let xVal = points.prePrepare.end[0][0].points.x;
+        let currentPreparePoints = new Set();
+        
+        points.prePrepare.end.forEach((element, index) => {
+            element.length > 0 && element.map((singlePoint, index) => {
+                let replicaDoesExist = yCoordToReplicas[singlePoint.points.y]
+                if (transactions.has(replicaDoesExist) && !currentPreparePoints.has(replicaDoesExist)) {
+                    currentPreparePoints.add(replicaDoesExist)
+                    points.prepare.start.push({ x: xVal, y: singlePoint.points.y});
+                }
+            })
+        });
+
+        for (const element of points.prepare.start) points.prepare.end.push([]);
+
+
+        for (let i = 0; i < points.prepare.start.length; i++) {
+            for (let j = 1; j < yCoords.length; j++) {
+                if (points.prepare.start[i].y !== yCoords[j]) {
+                    points.prepare.end[i].push({
+                        flag: true,
+                        points: {
+                            x: xCoords[3],
+                            y: yCoords[j],
+                        },
+                    });
+                }
+            }
+        }
 
     } else {
         let currentPrimaryPointIndex = primaryIndexToPoint[primaryIndex]
@@ -140,50 +199,52 @@ export const generateConnections = (
                 }
             }
         }
-        // COMMIT OBJECT
-        for (let i = 1; i < yCoords.length; i++) {
-            if (transactions.has(i)) {
-                points.commit.start.push({
-                    x: xCoords[3],
-                    y: yCoords[i],
-                });
-            }
+    }
+
+    // COMMIT OBJECT
+    for (let i = 1; i < yCoords.length; i++) {
+        if (transactions.has(i)) {
+            points.commit.start.push({
+                x: xCoords[3],
+                y: yCoords[i],
+            });
         }
+    }
 
-        for (const element of points.commit.start) points.commit.end.push([]);
+    for (const element of points.commit.start) points.commit.end.push([]);
 
-        for (let i = 0; i < points.commit.start.length; i++) {
-            for (let j = 1; j < yCoords.length; j++) {
-                if (points.commit.start[i].y !== yCoords[j]) {
-                    points.commit.end[i].push({
-                        flag: true,
-                        points: {
-                            x: xCoords[4],
-                            y: yCoords[j],
-                        },
-                    });
-                }
-            }
-        }
-        // REPLY OBJECT
-        points.reply.end.push({
-            flag: true,
-            points: data[numberOfSteps],
-        });
-
-        for (let i = 1; i < yCoords.length; i++) {
-            if (transactions.has(i)) {
-                points.reply.start.push({
+    for (let i = 0; i < points.commit.start.length; i++) {
+        for (let j = 1; j < yCoords.length; j++) {
+            if (points.commit.start[i].y !== yCoords[j]) {
+                points.commit.end[i].push({
                     flag: true,
                     points: {
                         x: xCoords[4],
-                        y: yCoords[i],
+                        y: yCoords[j],
                     },
                 });
             }
         }
     }
-    
+
+    // REPLY OBJECT
+    points.reply.end.push({
+        flag: true,
+        points: data[numberOfSteps],
+    });
+
+    for (let i = 1; i < yCoords.length; i++) {
+        if (transactions.has(i)) {
+            points.reply.start.push({
+                flag: true,
+                points: {
+                    x: xCoords[4],
+                    y: yCoords[i],
+                },
+            });
+        }
+    }
+
     return { points, primaryIndex };
 };
 
