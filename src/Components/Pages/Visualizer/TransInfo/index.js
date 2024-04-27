@@ -6,9 +6,14 @@ import { FontVarTitle } from '../../../Shared/Title';
 import { computeDataDetails } from '../Graphs/Computation/CompPbft';
 import { dummyData } from '../Graphs/data';
 
+let FAULTY_REPLICAS_DEFAULT = [false, false, false, false]
 
-// TODO: Change the below computation
-let FAULTY_REPLICAS_DEFAULT = [true, true, true, true]
+const generateReplicaStatus = (data, defaultResult) => {
+    for(let [key, _] of Object.entries(data)){
+        defaultResult[key-1] = true;
+    }
+    return defaultResult;
+};
 
 const TransInfo = ({ primary, numberOfReplicas, messageHistory, transactionNumber = 17, status }) => {
 
@@ -17,7 +22,7 @@ const TransInfo = ({ primary, numberOfReplicas, messageHistory, transactionNumbe
 
     if (!currentData) {
         currentData = dummyData[17];
-        currentStatus = FAULTY_REPLICAS_DEFAULT;
+        currentStatus = generateReplicaStatus(currentData, FAULTY_REPLICAS_DEFAULT);
     }
 
     const { primaryIndex, transactions } =
@@ -26,7 +31,7 @@ const TransInfo = ({ primary, numberOfReplicas, messageHistory, transactionNumbe
 
     return (
         <div className='py-4 px-2 flex flex-col justify-center items-center rounded-md border-3p border-solid border-gray-700 dark:border-gray-50 w-full dark:text-gray-300 bg-blue-10 dark:bg-blue-450 opacity-1'>
-            <div className="flex flex-col w-full my-3 gap-y-4">
+            <div className="flex flex-col w-full my-3 gap-y-6">
                 <FontVarTitle title={'Basic Transaction Info:'} fontClass={'text-18p'} />
                 <div className="flex items-center justify-around">
                     <div className='text-18p'>
@@ -37,10 +42,6 @@ const TransInfo = ({ primary, numberOfReplicas, messageHistory, transactionNumbe
                     </div>
                     <div className='text-18p'>
                         # Replicas : {'4'}
-                    </div>
-                    {/* TODO: Change the below */}
-                    <div className='text-18p'>
-                        Some Info : {'0'}
                     </div>
                 </div>
             </div>
