@@ -2,14 +2,14 @@
 import * as d3 from "d3";
 import { line } from "d3-shape";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NUMBER_OF_STEPS_PBFT_GRAPH, PBFT_ANIMATION_SPEEDS } from "../../../../../Constants";
+import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NUMBER_OF_STEPS_PBFT_GRAPH, PBFT_ANIMATION_SPEEDS, PBFT_ANIMATION_SPEEDS_NO_PRIMARY } from "../../../../../Constants";
 import { GraphResizerContext, PbftAnimationSpeedContext, PbftGraphClearContext } from "../../../../../Context/graph";
 import { ThemeContext } from "../../../../../Context/theme";
 import { cancelIcon, pauseIcon, playIcon } from "../../../../../Resources/Icons";
 import { DropDownButtons, IconButtons } from "../../../../Shared/Buttons";
 import { Icon } from "../../../../Shared/Icon";
 import { connectionRender, labelFaultyNode, labelPrimaryNode } from "../Computation/D3Pbft";
-import { generateConnections, generateLabels, generateLines, generatePoints } from "../Computation/SkeletonPbft";
+import { generateConnections, generateLabels, generateLines, generatePoints, generateTransactionIds } from "../Computation/CompPbft";
 
 
 
@@ -18,7 +18,7 @@ const PBFT = ({
     realTransactionNumber
 }) => {
     const { speed, changeSpeed } = useContext(PbftAnimationSpeedContext);
-     const {
+    const {
         TRANSDURATION,
         REQUEST_BUFFER,
         PREPREPARE_BUFFER,
@@ -26,6 +26,15 @@ const PBFT = ({
         COMMIT_BUFFER,
         REPLY_BUFFER
     } = PBFT_ANIMATION_SPEEDS[speed];
+
+    const {
+        TRANSDURATION_NP,
+        REQUEST_BUFFER_NP,
+        PREPREPARE_BUFFER_NP,
+        PREPARE_BUFFER_NP,
+        COMMIT_BUFFER_NP,
+        REPLY_BUFFER_NP
+    } = PBFT_ANIMATION_SPEEDS_NO_PRIMARY[speed];
 
     const { boxValues, resizing } = useContext(GraphResizerContext);
 
@@ -47,6 +56,9 @@ const PBFT = ({
     const lineRef = useRef(null);
     const primaryLabelRef = useRef(null);
     const faultyReplicasLabelRef = useRef(null);
+    const doesPrimaryExist = useRef(1);
+    const yCoordToReplicasMap = useRef({});
+    const transactionsSet = useRef({});
 
     const debouncedRender = useCallback(() => {
         const data = generatePoints(
@@ -63,7 +75,7 @@ const PBFT = ({
             NUMBER_OF_STEPS_PBFT_GRAPH
         );
 
-        const { points, primaryIndex } = generateConnections(
+        const { points, primaryIndex, yCoordToReplicas, transactions } = generateConnections(
             data,
             NUMBER_OF_STEPS_PBFT_GRAPH,
             xCoords,
@@ -72,6 +84,10 @@ const PBFT = ({
             realTransactionNumber,
             theme
         );
+
+        doesPrimaryExist.current = primaryIndex;
+        yCoordToReplicasMap.current = yCoordToReplicas;
+        transactionsSet.current = transactions;
 
         const { labelsX, labelsY } = generateLabels(xCoords, yCoords);
 
@@ -159,34 +175,19 @@ const PBFT = ({
 
         if (!clear) {
 
-            const primaryLabelSVG = d3
-                .select(primaryLabelRef.current)
-                .attr("width", width)
-                .attr("height", height)
+            let primaryLabelSVG;
 
             const faultyReplicasLabelSVG = d3
                 .select(faultyReplicasLabelRef.current)
                 .attr("width", width)
                 .attr("height", height)
 
-            let yCoordToIndexMap = new Map()
-            yCoords.forEach((value, index) => {
-                if (index > 0 && value !== points.prePrepare.start[0].points.y) {
-                    yCoordToIndexMap.set(value, index);
-                }
-            });
-
-            points.prepare.start.forEach((value, _) => {
-                if (yCoordToIndexMap.get(value.y)) yCoordToIndexMap.delete(value.y);
-            });
-
-            let faultyReplicaIndices = new Set();
-            for (let [_, value] of yCoordToIndexMap) faultyReplicaIndices.add(value);
-
-            labelsY.forEach((label, index) => {
-                if (index === primaryIndex) return labelPrimaryNode(primaryLabelSVG, label);
-                if (faultyReplicaIndices.has(index)) return labelFaultyNode(faultyReplicasLabelSVG, label);
-            })
+            if(primaryIndex !== -1) {
+                primaryLabelSVG = d3
+                    .select(primaryLabelRef.current)
+                    .attr("width", width)
+                    .attr("height", height)
+            }
 
             const lineSVG = d3
                 .select(lineRef.current)
@@ -196,44 +197,104 @@ const PBFT = ({
                 .classed("justify-center", true)
                 .classed("items-center", true);
 
-            // REQUEST LINES
-            points.request.end.forEach((end, i) => {
-                if (end.flag) {
-                    connectionRender([points.request.start[0].points, end.points], points.request.color, pointColorMode, TRANSDURATION, i * REQUEST_BUFFER, lineGen, lineSVG, 'request');
-                }
-            });
 
-            // PRE-PREPARE LINES
-            points.prePrepare.end.forEach((end, i) => {
-                if (end.flag) {
-                    connectionRender([points.prePrepare.start[0].points, end.points], points.prePrepare.color, pointColorMode, TRANSDURATION, i * 1 + PREPREPARE_BUFFER, lineGen, lineSVG, 'prePrepare');
-                }
-            });
+            // CREATE LABELS FOR FAULTY NODES
+            let faultyReplicaIndices = new Set();
+            for (let [_, value] of Object.entries(yCoordToReplicasMap.current)) {
+                if (!transactionsSet.current.has(value)) faultyReplicaIndices.add(value)
+            }
 
-            // PREPARE LINES
-            points.prepare.start.map((start, index) =>
-                points.prepare.end[index].map((end, i) => {
-                    return (
-                        end.flag && connectionRender([start, end.points], points.prepare.color, pointColorMode, TRANSDURATION, i * 1 + PREPARE_BUFFER, lineGen, lineSVG, 'prepare')
-                    );
-                })
-            );
+            labelsY.forEach((label, index) => {
+                if (faultyReplicaIndices.has(index)) return labelFaultyNode(faultyReplicasLabelSVG, label);
+            })
 
-            // COMMIT LINES
-            points.commit.start.map((start, index) =>
-                points.commit.end[index].map((end, i) => {
-                    return (
-                        end.flag && connectionRender([start, end.points], points.commit.color, pointColorMode, TRANSDURATION, i * 1 + COMMIT_BUFFER, lineGen, lineSVG, 'commit')
-                    );
-                })
-            );
+            // IF PRIMARY DOES NOT EXIST AND VICEVERSA
+            if(primaryIndex === -1) {
 
-            // REPLY LINES
-            points.reply.start.forEach((start, i) => {
-                return (
-                    start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, pointColorMode, TRANSDURATION, i * 1 + REPLY_BUFFER, lineGen, lineSVG, 'reply')
+                // REQUEST LINES
+                points.request.end[0].points.length > 0 && points.request.end[0].points.forEach((end, i) => {
+                    connectionRender([points.request.start[0].points, end], points.request.color, pointColorMode, TRANSDURATION_NP, i * REQUEST_BUFFER_NP, lineGen, lineSVG, 'request');
+                });
+
+                // PRE-PREPARE LINES
+                points.prePrepare.start.length > 0 && points.prePrepare.start.map((start, index) =>
+                    points.prePrepare.end[index].map((end, i) => {
+                        return (
+                            end.flag && connectionRender([start, end.points], points.prePrepare.color, pointColorMode, TRANSDURATION_NP, i * 1 + PREPREPARE_BUFFER_NP, lineGen, lineSVG, 'prepare')
+                        );
+                    })
                 );
-            });
+
+                // PREPARE LINES
+                points.prepare.start.length > 0 && points.prepare.start.map((start, index) =>
+                    points.prepare.end[index].map((end, i) => {
+                        return (
+                            end.flag && connectionRender([start, end.points], points.prepare.color, pointColorMode, TRANSDURATION_NP, i * 1 + PREPARE_BUFFER_NP, lineGen, lineSVG, 'prepare')
+                        );
+                    })
+                );
+
+                // COMMIT LINES
+                points.commit.start.length > 0 && points.commit.start.map((start, index) =>
+                    points.commit.end[index].map((end, i) => {
+                        return (
+                            end.flag && connectionRender([start, end.points], points.commit.color, pointColorMode, TRANSDURATION_NP, i * 1 + COMMIT_BUFFER_NP, lineGen, lineSVG, 'commit')
+                        );
+                    })
+                );
+
+                // REPLY LINES
+                points.reply.start.length > 0 && points.reply.start.forEach((start, i) => {
+                    return (
+                        start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, pointColorMode, TRANSDURATION_NP, i * 1 + REPLY_BUFFER_NP, lineGen, lineSVG, 'reply')
+                    );
+                });
+
+            } else {
+                
+                labelsY.forEach((label, index) => {
+                    if (index === primaryIndex) return labelPrimaryNode(primaryLabelSVG, label);
+                    if (faultyReplicaIndices.has(index)) return labelFaultyNode(faultyReplicasLabelSVG, label);
+                })
+
+                points.request.end.length > 0 && points.request.end.forEach((end, i) => {
+                    if (end.flag) {
+                        connectionRender([points.request.start[0].points, end.points], points.request.color, pointColorMode, TRANSDURATION, i * REQUEST_BUFFER, lineGen, lineSVG, 'request');
+                    }
+                });
+
+                // PRE-PREPARE LINES
+                points.prePrepare.end.length > 0 && points.prePrepare.end.forEach((end, i) => {
+                    if (end.flag) {
+                        connectionRender([points.prePrepare.start[0].points, end.points], points.prePrepare.color, pointColorMode, TRANSDURATION, i * 1 + PREPREPARE_BUFFER, lineGen, lineSVG, 'prePrepare');
+                    }
+                });
+
+                // PREPARE LINES
+                points.prepare.start.length > 0 && points.prepare.start.map((start, index) =>
+                    points.prepare.end[index].map((end, i) => {
+                        return (
+                            end.flag && connectionRender([start, end.points], points.prepare.color, pointColorMode, TRANSDURATION, i * 1 + PREPARE_BUFFER, lineGen, lineSVG, 'prepare')
+                        );
+                    })
+                );
+
+                // COMMIT LINES
+                points.commit.start.length > 0 && points.commit.start.map((start, index) =>
+                    points.commit.end[index].map((end, i) => {
+                        return (
+                            end.flag && connectionRender([start, end.points], points.commit.color, pointColorMode, TRANSDURATION, i * 1 + COMMIT_BUFFER, lineGen, lineSVG, 'commit')
+                        );
+                    })
+                );
+
+                // REPLY LINES
+                points.reply.start.length > 0 && points.reply.start.forEach((start, i) => {
+                    return (
+                        start.flag && connectionRender([start.points, points.reply.end[0].points], points.reply.color, pointColorMode, TRANSDURATION, i * 1 + REPLY_BUFFER, lineGen, lineSVG, 'reply')
+                    );
+                });
+            }
         }
 
     }, [theme, width, height, clear]);
@@ -265,16 +326,26 @@ const PBFT = ({
 
     return (
         <>
-            <div className="flex items-center justify-between gap-x-16 mb-[-1em] mt-2">
-                <IconButtons title={!clear ? 'Playing' : 'Play'} onClick={() => onPlay()} disabled={!clear}>
-                    <Icon path={!clear ? pauseIcon : playIcon} viewBox={'0 0 384 512'} height={'13px'} fill={color} />
-                </IconButtons>
-                {playing && (
-                    <DropDownButtons selected={speed} elements={['1x', '0.5x', '2x']} onClick={animationSpeedChange} />
-                )}
-                <IconButtons title={'Clear'} onClick={() => onClear()} disabled={clear}>
-                    <Icon path={cancelIcon} viewBox={'0 0 384 512'} height={'14px'} fill={color} />
-                </IconButtons>
+            <div className="flex items-center justify-around w-full flex-row mb-[-1em] mt-2">
+                <div className="basis-1/4">
+                    {doesPrimaryExist.current === -1 && (
+                        <div className="text-amber-600 font-18p border-1p rounded-md p-1 border-amber-600 w-180p flex items-center justify-center ml-8">
+                            !No Primary Exists&#161;
+                        </div>
+                    )}
+                </div>
+                <div className="flex items-center justify-center gap-x-16 basis-1/2">
+                    <IconButtons title={!clear ? 'Playing' : 'Play'} onClick={() => onPlay()} disabled={!clear}>
+                        <Icon path={!clear ? pauseIcon : playIcon} viewBox={'0 0 384 512'} height={'13px'} fill={color} />
+                    </IconButtons>
+                    {playing && (
+                        <DropDownButtons selected={speed} elements={['1x', '0.5x', '2x']} onClick={animationSpeedChange} />
+                    )}
+                    <IconButtons title={'Clear'} onClick={() => onClear()} disabled={clear}>
+                        <Icon path={cancelIcon} viewBox={'0 0 384 512'} height={'14px'} fill={color} />
+                    </IconButtons>
+                </div>
+                <div className="basis-1/4" />
             </div>
             <div className='relative w-full h-full pl-4 pr-2 pb-6'>
                 {resizing ? (

@@ -15,14 +15,11 @@ export const computeDataDetails = (data) => {
     for (const property in data) {
         transactions.add(parseInt(property));
     }
-    let i = 0;
+
     for (const [key, value] of Object.entries(data)) {
         if (value.primary_id === value.replica_id) {
             primaryInd = key;
-        } else {
-            console.log('Oh Shit', key, value, i)
         }
-        i++;
     }
 
     let primaryIndex = parseInt(primaryInd);
@@ -53,8 +50,6 @@ export const generateConnections = (
     const { primaryIndex, transactions } =
         computeDataDetails(currentData);
 
-    console.log('PRIMARY INDEX', primaryIndex)
-
     ACTION_TYPE_PBFT_GRAPH.forEach(
         (action, index) =>
         (points = {
@@ -67,73 +62,143 @@ export const generateConnections = (
         })
     );
 
-    if(primaryIndex === -1){
-        console.log('H')
-    } else {
-
-    }
-
-    console.log('DATA', data)
-
-    let currentPrimaryPointIndex = primaryIndexToPoint[primaryIndex]
     // REQUEST OBJECT
     points.request.start.push({
         flag: true,
         points: data[0],
     });
-    
-    points.request.end.push({
-        flag: true,
-        points: data[numberOfSteps + currentPrimaryPointIndex],
-    });
-
-    // PRE-PREPARE OBJECT
-    points.prePrepare.start.push({
-        flag: true,
-        points: points.request.end[0].points,
-    });
-
-    for (let i = 1; i < yCoords.length; i++) {
-        if (primaryIndex === i) continue;
-        points.prePrepare.end.push({
-            flag: true,
-            points: {
-                x: xCoords[2],
-                y: yCoords[i],
-            },
-        });
-    }
 
     let yCoordToReplicas = {};
 
-    for (let i = 1; i < yCoords.length; i++) {
-        yCoordToReplicas = {
-            ...yCoordToReplicas,
-            [yCoords[i]]: i,
-        };
-    }
-    // PREPARE OBJECT
-    points.prePrepare.end.forEach((element, index) => {
-        if (transactions.has(yCoordToReplicas[element.points.y])) {
-            points.prepare.start.push(element.points);
+    // CONDITION WHERE PRIMARY EXISTS AND DOES EXIST
+    if (primaryIndex === -1) {
+
+        let reqEndPoints = [];
+
+        for (const [_, value] of Object.entries(primaryIndexToPoint)) {
+            reqEndPoints.push(data[numberOfSteps + value])
         }
-    });
 
-    for (const element of points.prepare.start) points.prepare.end.push([]);
+        points.request.end.push({
+            flag: true,
+            points: reqEndPoints,
+        });
 
-    for (let i = 0; i < points.prepare.start.length; i++) {
-        for (let j = 1; j < yCoords.length; j++) {
-            if (points.prepare.start[i].y !== yCoords[j]) {
-                points.prepare.end[i].push({
-                    flag: true,
-                    points: {
-                        x: xCoords[3],
-                        y: yCoords[j],
-                    },
-                });
+        // PRE-PREPARE OBJECT
+        for (let i = 0; i < points.request.end[0].points.length; i++){
+            points.prePrepare.start.push(points.request.end[0].points[i])
+        }
+
+        for (const element of points.prePrepare.start) points.prePrepare.end.push([]);
+
+        for (let i = 0; i < points.prePrepare.start.length; i++) {
+            for (let j = 1; j < yCoords.length; j++) {
+                if (points.prePrepare.start[i].y !== yCoords[j]) {
+                    points.prePrepare.end[i].push({
+                        flag: true,
+                        points: {
+                            x: xCoords[2],
+                            y: yCoords[j],
+                        },
+                    });
+                }
+            }
+        }
+
+        for (let i = 1; i < yCoords.length; i++) {
+            yCoordToReplicas = {
+                ...yCoordToReplicas,
+                [yCoords[i]]: i,
+            };
+        }
+
+        // PREPARE OBJECT 
+        let xVal = points.prePrepare.end[0][0].points.x;
+        let currentPreparePoints = new Set();
+        
+        points.prePrepare.end.forEach((element, index) => {
+            element.length > 0 && element.map((singlePoint, index) => {
+                let replicaDoesExist = yCoordToReplicas[singlePoint.points.y]
+                if (transactions.has(replicaDoesExist) && !currentPreparePoints.has(replicaDoesExist)) {
+                    currentPreparePoints.add(replicaDoesExist)
+                    points.prepare.start.push({ x: xVal, y: singlePoint.points.y});
+                }
+            })
+        });
+
+        for (const element of points.prepare.start) points.prepare.end.push([]);
+
+
+        for (let i = 0; i < points.prepare.start.length; i++) {
+            for (let j = 1; j < yCoords.length; j++) {
+                if (points.prepare.start[i].y !== yCoords[j]) {
+                    points.prepare.end[i].push({
+                        flag: true,
+                        points: {
+                            x: xCoords[3],
+                            y: yCoords[j],
+                        },
+                    });
+                }
+            }
+        }
+
+    } else {
+        let currentPrimaryPointIndex = primaryIndexToPoint[primaryIndex]
+
+        points.request.end.push({
+            flag: true,
+            points: data[numberOfSteps + currentPrimaryPointIndex],
+        });
+
+        // PRE-PREPARE OBJECT
+        points.prePrepare.start.push({
+            flag: true,
+            points: points.request.end[0].points,
+        });
+
+        for (let i = 1; i < yCoords.length; i++) {
+            if (primaryIndex === i) continue;
+            points.prePrepare.end.push({
+                flag: true,
+                points: {
+                    x: xCoords[2],
+                    y: yCoords[i],
+                },
+            });
+        }
+
+        for (let i = 1; i < yCoords.length; i++) {
+            yCoordToReplicas = {
+                ...yCoordToReplicas,
+                [yCoords[i]]: i,
+            };
+        }
+
+        // PREPARE OBJECT
+        points.prePrepare.end.forEach((element, index) => {
+            if (transactions.has(yCoordToReplicas[element.points.y])) {
+                points.prepare.start.push(element.points);
+            }
+        });
+
+        for (const element of points.prepare.start) points.prepare.end.push([]);
+
+        for (let i = 0; i < points.prepare.start.length; i++) {
+            for (let j = 1; j < yCoords.length; j++) {
+                if (points.prepare.start[i].y !== yCoords[j]) {
+                    points.prepare.end[i].push({
+                        flag: true,
+                        points: {
+                            x: xCoords[3],
+                            y: yCoords[j],
+                        },
+                    });
+                }
             }
         }
     }
+
     // COMMIT OBJECT
     for (let i = 1; i < yCoords.length; i++) {
         if (transactions.has(i)) {
@@ -159,6 +224,7 @@ export const generateConnections = (
             }
         }
     }
+
     // REPLY OBJECT
     points.reply.end.push({
         flag: true,
@@ -176,7 +242,8 @@ export const generateConnections = (
             });
         }
     }
-    return { points, primaryIndex };
+
+    return { points, primaryIndex, yCoordToReplicas, transactions };
 };
 
 export const generateLabels = (xCoords, yCoords) => {
