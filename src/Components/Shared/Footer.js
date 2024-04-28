@@ -13,7 +13,7 @@ const Footer = () => {
         <div className='text-12p text-gray-100 my-1p'>
           by {" "}
           <span className='hover:text-blue-190 mx-1'>
-            <a href='https://aunsh.com'>
+            <a href='https://deploy-preview-5--helpful-hamster-a151d8.netlify.app/'>
               aunshx
             </a>
           </span>

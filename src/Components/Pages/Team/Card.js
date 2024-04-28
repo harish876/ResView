@@ -34,7 +34,7 @@ export const CurrentTeamCard = ({ element }) => {
     <div className='w-full h-250p text-black rounded-md border-3p border-gray-700 grid grid-cols-2 gap-x-4 dark:border-solid dark:border-gray-50 bg-blue-10 dark:bg-blue-500 dark:text-white px-4 py-6 hover:scale-105 transition'>
       <div className='w-full h-full flex items-center justify-center'>
         <img
-          src={profilePic || defaultProfileImage}
+          src={profilePic ?? defaultProfileImage}
           alt={`Profile pic of ${name}`}
           className='object-fit rounded-md w-full'
         />
