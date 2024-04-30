@@ -15,6 +15,16 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '22.0.0'
+          cache: 'npm'
+
+      - name: Upgrade npm
+        run: npm install -g npm@latest
+
+      - name: Clear npm cache
+        run: npm cache clean --force
+
+      - name: Remove node_modules
+        run: rm -rf node_modules
 
       - name: Install Dependencies
         run: npm install
@@ -30,7 +40,7 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           port: 22
           source: "build/*"
-          target: "~/resview"
+          target: "~/resview-pvt"
           
       - name: Deploy to server
         uses: appleboy/ssh-action@master
@@ -41,7 +51,7 @@ jobs:
           port: 22
           script: |
             pm2 delete resview || true
-            cd ~/resview
+            cd ~/resview-pvt
             npm install -g http-server
-            pm2 start http-server --name "resview" -- -p 7500 -c-1 ./build
+            pm2 start http-server --name "resview-pvt" -- -p 7500 -c-1 ./build
             pm2 save
