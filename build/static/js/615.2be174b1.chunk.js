@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkclient=self.webpackChunkclient||[]).push([[615],{6682:(e,a,n)=>{n.d(a,{u:()=>t});const t=["emoji"]},615:(e,a,n)=>{n.d(a,{loadEmojiShape:()=>i});var t=n(6682);async function i(e){let a=!(arguments.length>1&&void 0!==arguments[1])||arguments[1];const{EmojiDrawer:i}=await n.e(1638).then(n.bind(n,1638));await e.addShape(t.u,new i,a)}}}]);
+//# sourceMappingURL=615.2be174b1.chunk.js.map
