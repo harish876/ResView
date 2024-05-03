@@ -81,7 +81,7 @@ const themeObj = {
     },
 }
 
-const ParticleWrapper = () => {
+const ParticleWrapper = ({ setIsLoading }) => {
     const [init, setInit] = useState(false);
     const { theme } = useContext(ThemeContext);
 
@@ -90,6 +90,7 @@ const ParticleWrapper = () => {
             await loadSlim(engine);
         }).then(() => {
             setInit(true);
+            setIsLoading(false);
         });
     }, []);
 

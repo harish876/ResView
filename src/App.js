@@ -24,16 +24,16 @@ const BorderToggleRef = () => {
 }
 
 const PreSynthApp = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { borderToggle } = useContext(NavbarToggleContext);
   const { toggleLightTheme, toggleDarkTheme } = useContext(ThemeContext);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 2000);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   if (localStorage.getItem("theme") === "light") {
     toggleLightTheme();
@@ -45,6 +45,7 @@ const PreSynthApp = () => {
 
   return (
     <>
+      <ParticleWrapper setIsLoading={setIsLoading} />
       {isLoading ? (
         <Loader />
       ) : (
@@ -53,7 +54,6 @@ const PreSynthApp = () => {
               <OnlyDesktop />
             ) : (
               <Router>
-                <ParticleWrapper />
                 <Navbar borderToggle={borderToggle} />
                 <BorderToggleRef />
                 <Routes>
