@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export const sendGet = async (key) => {
-    let url = process.env.REACT_APP_SEND_GET_URL + key;
+    //let url = process.env.REACT_APP_SEND_GET_URL + key;
+    let url = "http://127.0.0.1:18000/v1/transactions/" + key;
     try {
         const response = await axios.get(url);
         // console.log("Get response: ", response.data);
@@ -14,7 +15,8 @@ export const sendGet = async (key) => {
 
 export const sendPost = async (key, value) => {
     let data = { "id": key, "value": value };
-    let url = process.env.REACT_APP_SEND_POST_URL;
+    //let url = process.env.REACT_APP_SEND_POST_URL;
+    let url = "http://127.0.0.1:18000/v1/transactions/commit";
     try {
         const response = await axios.post(
             url,

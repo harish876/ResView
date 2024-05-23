@@ -46,8 +46,10 @@ export const WebSocket = ({onMessage}) => {
     const fetchData = async (replicaPort) => {
       try {
         // Make API call
-        let port = parseInt(process.env.REACT_APP_DEFAULT_LOCAL_PORT) + replicaPort
-        const response = await fetch(process.env.REACT_APP_DEFAULT_LOCAL + String(port) + process.env.REACT_APP_SOCKET_URL_EP);
+        //let port = parseInt(process.env.REACT_APP_DEFAULT_LOCAL_PORT) + replicaPort
+        //const response = await fetch(process.env.REACT_APP_DEFAULT_LOCAL + String(port) + process.env.REACT_APP_SOCKET_URL_EP);
+        let port = parseInt(18501) + replicaPort
+        const response = await fetch("http://localhost:" + String(port) + "/consensus_data");
         const newData = await response.json();
         // Update state with new data
         Object.keys(newData).map(key => {
