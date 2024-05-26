@@ -76,11 +76,11 @@ const Visualizer = () => {
     return (
         <div className="py-6">
             <TransInfo messageHistory={messageHistory} transactionNumber={currentTransaction} status={replicaStatus} />
-            <div className="ml-[220px] p-2 py-6">
-                <div className="grid grid-cols-2 gap-x-12 w-full">
+            <div className="ml-[220px] px-8 py-6">
+                <div className="grid grid-cols-2 gap-x-6 w-full">
                     <div className="" id='pbft-graph'>
                         <div className="mb-8">
-                            <FontVarTitle title={'Practical Byzantine Fault Tolerance Graph'} />
+                            <FontVarTitle title={'Practical Byzantine Fault Tolerance'} />
                         </div>
                         <ResizableContainer>
                             {/* <PBFT
@@ -94,7 +94,7 @@ const Visualizer = () => {
                     </div>
                     <div className="" id='pbft-graph'>
                         <div className="mb-8">
-                            <FontVarTitle title={'View Change Graph'} />
+                            <FontVarTitle title={'View Change'} />
                         </div>
                         <ResizableContainer>
                             {/* <PBFT
@@ -107,8 +107,8 @@ const Visualizer = () => {
                         </ResizableContainer>
                     </div>
                 </div>
-                <div className="mt-24 mb-16 w-full">
-                    {/* <HRline /> */}
+                <div className="mt-24 mb-16 px-24 w-full">
+                    <HRline />
                 </div>
                 <div className="" id="mvt-graph">
                     <Mvt

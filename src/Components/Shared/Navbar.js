@@ -93,7 +93,6 @@ const Navbar = memo(() => {
 
   const logo = theme ? LOGO_DARK : LOGO_LIGHT;
 
-  if (window.location.pathname === URL_VISUALIZER_PAGE) return <></>
   return (
       <div className={cn(
         'w-full py-[1em] px-8 text-white lg:px-8 lg:py-4 flex items-center justify-between flex-initial fixed top-0 z-20',
