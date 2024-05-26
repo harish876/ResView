@@ -1,4 +1,5 @@
-import { Suspense, useContext, useEffect, useState } from 'react';
+import { Suspense, useContext, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from './Components/Pages/Home';
 import Team from './Components/Pages/Team';
@@ -9,12 +10,11 @@ import Navbar from './Components/Shared/Navbar';
 import NotFound from './Components/Shared/NotFound';
 import OnlyDesktop from './Components/Shared/OnlyDesktop';
 import ParticleWrapper from './Components/Shared/ParticleWrapper';
+import { URL_HOME_PAGE, URL_REROUTE_PAGE, URL_TEAM_PAGE, URL_VISUALIZER_PAGE } from './Constants';
 import { AllProviders } from './Context';
 import { NavbarToggleContext } from './Context/navbarToggle';
 import { ThemeContext } from './Context/theme';
 import './Styles/App.css';
-import { isMobile } from 'react-device-detect';
-import { URL_HOME_PAGE, URL_REROUTE_PAGE, URL_TEAM_PAGE, URL_VISUALIZER_PAGE } from './Constants';
 
 const BorderToggleRef = () => {
   const { bToggleElement } = useContext(NavbarToggleContext);
@@ -28,13 +28,6 @@ const PreSynthApp = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { borderToggle } = useContext(NavbarToggleContext);
   const { toggleLightTheme, toggleDarkTheme } = useContext(ThemeContext);
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 2000);
-  //   return () => clearTimeout(timer);
-  // }, []);
 
   if (localStorage.getItem("theme") === "light") {
     toggleLightTheme();
