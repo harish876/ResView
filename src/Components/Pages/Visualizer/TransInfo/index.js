@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { cancelIcon, tickIcon } from '../../../../Resources/Icons';
 import HRline from '../../../Shared/HRline';
 import { Icon } from '../../../Shared/Icon';
-import { FontVarTitle } from '../../../Shared/Title';
 import { computeDataDetails } from '../Graphs/Computation/CompPbft';
 import { dummyData } from '../Graphs/data';
 
@@ -13,6 +12,32 @@ const generateReplicaStatus = (data, defaultResult) => {
         defaultResult[key-1] = true;
     }
     return defaultResult;
+};
+
+const BasicInfoTile = ({ title, info }) => {
+    return (
+        <div className='flex flex-col justify-center items-center'>
+            <div className='text-20p md:text-16p sm:text-12p font-bold py-1'>
+                {info}
+            </div>
+            <div className='text-16p md:text-14p sm:text-10p pt-1'>
+                {title}
+            </div>
+        </div>
+    );
+};
+
+const ReplicaStatTile = ({ replica, status }) => {
+    return (
+        <div className='flex flex-col justify-center items-center'>
+            <div className="">
+                <Icon path={status ? tickIcon : cancelIcon} viewBox={status ? '0 0 448 512' : '0 0 384 512'} height={'20px'} fill={status ? '#0ac24d' : '#ed1123'} />
+            </div>
+            <div className='text-16p md:text-14p sm:text-10p pt-2'>
+                {replica}
+            </div>
+        </div>
+    );
 };
 
 const TransInfo = ({ primary, numberOfReplicas, messageHistory, transactionNumber = 17, status }) => {
@@ -30,38 +55,33 @@ const TransInfo = ({ primary, numberOfReplicas, messageHistory, transactionNumbe
 
 
     return (
-        <div className='py-4 px-2 flex flex-col justify-center items-center rounded-md border-3p border-solid border-gray-700 dark:border-gray-50 w-full dark:text-gray-300 bg-blue-10 dark:bg-blue-450 opacity-1'>
-            <div className="flex flex-col w-full my-3 gap-y-6">
-                <FontVarTitle title={'Basic Transaction Info:'} fontClass={'text-18p'} />
-                <div className="flex items-center justify-around">
-                    <div className='text-18p'>
-                        Transaction # : {transactionNumber ?? `17`}
-                    </div>
-                    <div className='text-18p'>
-                        Primary : {primary ?? `Replica ${primaryIndex}`}
-                    </div>
-                    <div className='text-18p'>
-                        # Replicas : {'4'}
-                    </div>
-                </div>
+        <div className="h-full w-220p fixed z-1 top-0 left-0 overflow-x-hidden p-2 py-6 flex flex-col items-center justify-around opacity-1 border-r-2p border-solid border-gray-700 dark:border-gray-50 dark:text-gray-300">
+            <div className='text-20p md:text-16p sm:text-12p font-bold py-1'>
+                Current Transaction
             </div>
-            <div className="px-28 w-full my-3">
+            <div>
+                <BasicInfoTile title={'Transaction #'} info={transactionNumber ?? `17`} />
+            </div>
+            <div>
+                <BasicInfoTile title={'Primary'} info={primary ?? `Replica ${primaryIndex}`} />
+            </div>
+            <div>
+                <BasicInfoTile title={'# Replicas'} info={'4'} />
+            </div>
+            <div className='w-full px-4'>
                 <HRline />
             </div>
-            <div className="flex flex-col w-full my-3 gap-y-4">
-                <FontVarTitle title={'Faultiness:'} fontClass={'text-18p'} />
-                <div className="flex items-center justify-around">
-                    {currentStatus.length > 0 && currentStatus.map((value, index) => (
-                        <div className='text-18p flex items-center justify-center gap-x-3' key={index}>
-                            <div>
-                                {`Replica ${index + 1}`} :
-                            </div>
-                            <div className="mt-[2px]">
-                                <Icon path={value ? tickIcon : cancelIcon} viewBox={value ? '0 0 448 512' : '0 0 384 512'} height={'20px'} fill={value ? '#0ac24d' : '#ed1123'} />
-                            </div>
-                        </div>
-                    ))}
-                </div>
+            <div className='text-20p md:text-16p sm:text-12p font-bold py-1'>
+                Replica Status
+            </div>
+            <div className='flex flex-col items-center justify-center gap-y-10'>
+                {currentStatus.length > 0 && currentStatus.map((value, index) => (
+                    <ReplicaStatTile
+                        key={index}
+                        replica={`Replica ${index + 1}`}
+                        status={value}
+                    />
+                ))}
             </div>
         </div>
     )

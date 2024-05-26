@@ -3,7 +3,8 @@ import { isMobile } from 'react-device-detect';
 import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from './Components/Pages/Home';
 import Team from './Components/Pages/Team';
-import Visualizer from './Components/Pages/Visualizer';
+// TODO: Change the below from index2 to index for Visualizer
+import Visualizer from './Components/Pages/Visualizer/index2';
 import Footer from './Components/Shared/Footer';
 import Loader from './Components/Shared/Loader';
 import Navbar from './Components/Shared/Navbar';

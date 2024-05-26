@@ -10,4 +10,14 @@ const Wrapper = ({ children }) => {
   )
 }
 
+export const VisualizerWrapper = ({ children }) => {
+  return (
+    <div className='w-full h-full flex justify-center items-center z-10'>
+      <div className='flex items-center justify-center flex-col w-full'>
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export default Wrapper
