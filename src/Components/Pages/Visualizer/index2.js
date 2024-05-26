@@ -108,7 +108,7 @@ const Visualizer = () => {
                     </div>
                 </div>
                 <div className="mt-24 mb-16 w-full">
-                    <HRline />
+                    {/* <HRline /> */}
                 </div>
                 <div className="" id="mvt-graph">
                     <Mvt

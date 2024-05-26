@@ -17,7 +17,7 @@ import { NavbarToggleContext } from './Context/navbarToggle';
 import { ThemeContext } from './Context/theme';
 import './Styles/App.css';
 
-const BorderToggleRef = () => {
+export const BorderToggleRef = () => {
   const { bToggleElement } = useContext(NavbarToggleContext);
 
   return (
@@ -27,7 +27,6 @@ const BorderToggleRef = () => {
 
 const PreSynthApp = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const { borderToggle } = useContext(NavbarToggleContext);
   const { toggleLightTheme, toggleDarkTheme } = useContext(ThemeContext);
 
   if (localStorage.getItem("theme") === "light") {
@@ -37,6 +36,7 @@ const PreSynthApp = () => {
     toggleDarkTheme();
     document.documentElement.setAttribute("data-theme", "dark");
   }
+
 
   return (
     <>
@@ -49,8 +49,6 @@ const PreSynthApp = () => {
               <OnlyDesktop />
             ) : (
               <Router>
-                <Navbar borderToggle={borderToggle} />
-                <BorderToggleRef />
                 <Routes>
                     <Route path={`${URL_TEAM_PAGE}`} element={<Team />} />
                     <Route path={`${URL_HOME_PAGE}`} element={<Home />} />

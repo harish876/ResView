@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { teamIcon } from '../../../Resources/Icons';
 import Title from '../../Shared/Title';
 import Wrapper from '../../Shared/Wrapper';
 import { CurrentTeamCard, PastMembersCard } from './Card';
 import { currentTeam, pastMembers } from './data';
+import { NavbarToggleContext } from '../../../Context/navbarToggle';
+import Navbar from '../../Shared/Navbar';
+import { BorderToggleRef } from '../../../App';
 
 const Team = () => {
   return (
@@ -35,10 +38,15 @@ const Team = () => {
   );
 }
 
-const index = () => {
+const Index = () => {
+  const { borderToggle } = useContext(NavbarToggleContext);
   return (
-    <Team />
+    <>
+      <Navbar borderToggle={borderToggle} />
+      <BorderToggleRef />
+      <Team />
+    </>
   );
 }
 
-export default index;
+export default Index
