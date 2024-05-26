@@ -14,6 +14,7 @@ import { NavbarToggleContext } from './Context/navbarToggle';
 import { ThemeContext } from './Context/theme';
 import './Styles/App.css';
 import { isMobile } from 'react-device-detect';
+import { URL_HOME_PAGE, URL_REROUTE_PAGE, URL_TEAM_PAGE, URL_VISUALIZER_PAGE } from './Constants';
 
 const BorderToggleRef = () => {
   const { bToggleElement } = useContext(NavbarToggleContext);
@@ -57,11 +58,11 @@ const PreSynthApp = () => {
                 <Navbar borderToggle={borderToggle} />
                 <BorderToggleRef />
                 <Routes>
-                  <Route path='/pages/team' element={<Team />} />
-                  <Route path='/pages/home' element={<Home />} />
-                  <Route path='/pages/visualizer' element={<Visualizer />} />
+                    <Route path={`${URL_TEAM_PAGE}`} element={<Team />} />
+                    <Route path={`${URL_HOME_PAGE}`} element={<Home />} />
+                    <Route path={`${URL_VISUALIZER_PAGE}`} element={<Visualizer />} />
                   <Route path='*' element={<NotFound />} />
-                  <Route index element={<Navigate to="/pages/home" />} />
+                    <Route index element={<Navigate to={`${URL_REROUTE_PAGE}`} />} />
                 </Routes>
                 <Footer />
               </Router >
