@@ -1,4 +1,5 @@
-import { Suspense, useContext, useEffect, useState } from 'react';
+import { Suspense, useContext, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from './Components/Pages/Home';
 import Team from './Components/Pages/Team';
@@ -9,11 +10,11 @@ import Navbar from './Components/Shared/Navbar';
 import NotFound from './Components/Shared/NotFound';
 import OnlyDesktop from './Components/Shared/OnlyDesktop';
 import ParticleWrapper from './Components/Shared/ParticleWrapper';
+import { URL_HOME_PAGE, URL_REROUTE_PAGE, URL_TEAM_PAGE, URL_VISUALIZER_PAGE } from './Constants';
 import { AllProviders } from './Context';
 import { NavbarToggleContext } from './Context/navbarToggle';
 import { ThemeContext } from './Context/theme';
 import './Styles/App.css';
-import { isMobile } from 'react-device-detect';
 
 const BorderToggleRef = () => {
   const { bToggleElement } = useContext(NavbarToggleContext);
@@ -27,13 +28,6 @@ const PreSynthApp = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { borderToggle } = useContext(NavbarToggleContext);
   const { toggleLightTheme, toggleDarkTheme } = useContext(ThemeContext);
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 2000);
-  //   return () => clearTimeout(timer);
-  // }, []);
 
   if (localStorage.getItem("theme") === "light") {
     toggleLightTheme();
@@ -57,11 +51,11 @@ const PreSynthApp = () => {
                 <Navbar borderToggle={borderToggle} />
                 <BorderToggleRef />
                 <Routes>
-                  <Route path='/pages/team' element={<Team />} />
-                  <Route path='/pages/home' element={<Home />} />
-                  <Route path='/pages/visualizer' element={<Visualizer />} />
+                    <Route path={`${URL_TEAM_PAGE}`} element={<Team />} />
+                    <Route path={`${URL_HOME_PAGE}`} element={<Home />} />
+                    <Route path={`${URL_VISUALIZER_PAGE}`} element={<Visualizer />} />
                   <Route path='*' element={<NotFound />} />
-                  <Route index element={<Navigate to="/pages/home" />} />
+                    <Route index element={<Navigate to={`${URL_REROUTE_PAGE}`} />} />
                 </Routes>
                 <Footer />
               </Router >

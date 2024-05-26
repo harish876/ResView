@@ -14,7 +14,7 @@ import {
 } from "../../Resources/Icons";
 import { ICON_DEFAULT_COLOR, SUN_COLOR } from "./Constants";
 import { Icon } from "./Icon";
-import { BLOG_LINK } from "../../Constants";
+import { BLOG_LINK, URL_HOME_PAGE, URL_TEAM_PAGE, URL_VISUALIZER_PAGE } from "../../Constants";
 import { PbftGraphClearContext } from "../../Context/graph";
 
 const LightOrDark = memo(() => {
@@ -93,8 +93,7 @@ const Navbar = memo(() => {
 
   const logo = theme ? 'https://i.postimg.cc/jd6PkhDs/Res-View-Logo-Dark.png' : 'https://i.postimg.cc/Y0dMy9mf/Copy-of-Untitled-Design-removebg-preview.png';
   return (
-    <>
-      <div class={cn(
+      <div className={cn(
         'w-full py-[1em] px-8 text-white lg:px-8 lg:py-4 flex items-center justify-between flex-initial fixed top-0 z-20',
         {'border-b-2 dark:bg-blue-400 bg-blue-20 border-gray-900 dark:border-white transition': borderToggle}
       )}>
@@ -105,21 +104,21 @@ const Navbar = memo(() => {
               className='h-35p w-35p'
             />
           <div className='text-blue-190 text-20p font-sans font-bold'>
-            <span class="text-2xl font-bold text-gray-900 dark:text-white">ResView</span>
+            <span className="text-2xl font-bold text-gray-900 dark:text-white">ResView</span>
           </div>
         </Link>
         <div></div>
         <div className='flex items-center justify-center gap-x-12 w-full'>
           <NavComp
             title={"Home"}
-            page={"/pages/home"}
+          page={URL_HOME_PAGE}
             icon={homeIcon}
             iconHeight={"1.4em"}
             iconViewBox={"0 0 640 512"}
           />
           <NavComp
             title={"Team"}
-            page={"/pages/team"}
+          page={URL_TEAM_PAGE}
             icon={teamIcon}
             iconHeight={"1.4em"}
             iconViewBox={"0 0 640 512"}
@@ -131,14 +130,13 @@ const Navbar = memo(() => {
           </a>
           <NavComp
             title={"Visualizer"}
-            page={"/pages/visualizer"}
+          page={URL_VISUALIZER_PAGE}
             icon={linearGraphIcon}
             iconHeight={"1.5em"}
           />
           <LightOrDark />
         </div>
       </div>
-    </>
   );
 });
 

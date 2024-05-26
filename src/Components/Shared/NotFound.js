@@ -1,5 +1,6 @@
 import React from 'react'
 import Wrapper from './Wrapper';
+import { URL_HOME_PAGE } from '../../Constants';
 
 const NotFound = () => {
   return (
@@ -11,7 +12,7 @@ const NotFound = () => {
         </div>
         <div className='my-8 text-gray dark:text-white text-36p bold'>Error 404</div>
         <div className='my-4 text-gray dark:text-white text-30p bold'>Page Not Found</div>
-        <a href='/pages/home' className='my-[4em] cursor-pointer border-[2px] border-solid border-blue-190 w-100p h-50p rounded-md text-blue-200 text-18p bold flex items-center justify-center'>
+        <a href={`${URL_HOME_PAGE}`} className='my-[4em] cursor-pointer border-[2px] border-solid border-blue-190 w-100p h-50p rounded-md text-blue-200 text-18p bold flex items-center justify-center'>
           Go Back
         </a>
       </Wrapper>
