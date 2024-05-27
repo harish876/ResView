@@ -1,4 +1,9 @@
 import React, { useContext, useState } from 'react';
+import {
+    useWindowSize,
+    useWindowWidth,
+    useWindowHeight,
+} from '@react-hook/window-size';
 import { GraphResizerContext } from '../../../../../Context/graph';
 import { FontVarTitle } from '../../../../Shared/Title';
 import classNames from 'classnames';
@@ -9,6 +14,9 @@ import Modal from './Modal';
 const GraphContainer = ({ children, title, heightBig, disableExpand }) => {
     // TODO: Remove the below GraphResizerContext Once its done
     const { boxValues, setBoxValues, setResizing } = useContext(GraphResizerContext);
+    const [_, height] = useWindowSize()
+
+    let concurrentHeight = Math.floor(height / 2)
 
     const [modalActive, setModalActive] = useState(false);
 
@@ -22,7 +30,8 @@ const GraphContainer = ({ children, title, heightBig, disableExpand }) => {
 
     return (
         <div
-            className={classNames('py-2 px-1 flex flex-col justify-center items-center rounded-md border-3p bg-blue-10 dark:border-solid dark:bg-blue-450 relative w-full', { 'h-550p': !heightBig }, {'h-650p': heightBig})}
+            className={classNames('py-2 px-1 flex flex-col justify-center items-center rounded-md border-3p bg-blue-10 dark:border-solid dark:bg-blue-450 relative w-full')}
+            style={heightBig ? { height: concurrentHeight + 200 } : { height: concurrentHeight }}
         >
             <FontVarTitle title={title} />
             {children}

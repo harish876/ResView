@@ -76,18 +76,23 @@ const Visualizer = () => {
 
 
     return (
-        <div className="py-6">
-            <TransInfo messageHistory={messageHistory} transactionNumber={currentTransaction} status={replicaStatus} />
-            <div className="ml-[220px] px-8 py-6">
-                <div className="grid grid-cols-3f-1f gap-x-6 w-full">
+        <div className="py-6 h-full">
+            <TransInfo 
+                messageHistory={messageHistory} 
+                transactionNumber={currentTransaction} 
+                status={replicaStatus} 
+            />
+            <div className="ml-[220px] px-8 pt-6 h-full">
+                <div className="grid grid-cols-3f-1f gap-x-6 w-full h-full">
                     <GraphContainer title={'Practical Byzantine Fault Tolerance'} heightBig>
                         {/* <PBFT
                         messageHistory={messageHistory}
                         realTransactionNumber={currentTransaction}
                     /> */}
                     </GraphContainer>
-                    <GraphContainer title={'Transaction Select'} heightBig disableExpand>
-                        <Input chooseTransaction={setCurrentTransaction} />
+                    <GraphContainer title={'Transactions Overview'} heightBig disableExpand>
+                        {/* <Input chooseTransaction={setCurrentTransaction} /> */}
+                        
                     </GraphContainer>
                 </div>
                 <div className="my-8 px-24 w-full">

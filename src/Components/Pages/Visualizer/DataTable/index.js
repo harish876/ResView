@@ -2,35 +2,43 @@ import React, { useEffect, useState } from 'react';
 import { computeTableData, computeTransInfo } from '../Computation/TransInfo';
 import { dummyData } from '../Graphs/data';
 
-const CompoundCellValues = () => {
-
-}
-
-const TableValues = ({ transNumber = 17, primary = 2, faultyReplicaCount = 1, commitTime = 10, execTime = 10, prepareTime = 10, replicaNumber = 1 }) => {
+const TableValues = ({ srNo, transaction, replicaDetailsKeys }) => {
     return (
-        <tr className="border-t hover:bg-gray-50 dark:hover:bg-blue-700 cursor-pointer">
-            <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap dark:text-gray-300 text-gray-700">
-                {transNumber}
-            </th>
-            <td className="px-6 py-4">
-                {primary}
-            </td>
-            <td className="px-6 py-4">
-                {faultyReplicaCount}
-            </td>
-            <td className="px-6 py-4">
-                {replicaNumber}
-            </td>
-            <td className="px-6 py-4">
-                {commitTime}
-            </td>
-            <td className="px-6 py-4">
-                {execTime}
-            </td>
-            <td className="px-6 py-4">
-                {prepareTime}
-            </td>
-        </tr>
+        <>
+            <tr className='border-b-1p'>
+                <td rowSpan={replicaDetailsKeys.length + 1} className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50">
+                    {srNo}
+                </td>
+                <td rowSpan={replicaDetailsKeys.length + 1} className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50">
+                    {transaction.transactionNumber}
+                </td>
+                <td rowSpan={replicaDetailsKeys.length + 1} className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50">
+                    {transaction.primary}
+                </td>
+                <td rowSpan={replicaDetailsKeys.length + 1} className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50">
+                    {transaction.faultReplicas}
+                </td>
+            </tr>   
+            {replicaDetailsKeys.map(replicaKey => {
+                const replica = transaction.replicaDetails[replicaKey];
+                return (
+                    <tr key={replicaKey} className='border-b-1p'>
+                        <td className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50">
+                            {replicaKey}
+                        </td>
+                        <td className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50">
+                            {replica.commitTime}
+                        </td>
+                        <td className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50">
+                            {replica.execTime}
+                        </td>
+                        <td className="px-6 py-3 border-gray-700 dark:border-gray-50">
+                            {replica.prepTime}
+                        </td>
+                    </tr>
+                );
+            })}         
+        </>
     );
 }
 
@@ -39,21 +47,26 @@ const DataTable = ({ messageHistory, transactionNumber, status, delay=5000 }) =>
     let defaultData = Object.keys(messageHistory).length > 0 ? messageHistory : dummyData;
 
     const [currentHistory, setCurrentHistory] = useState(defaultData);
-
+    const [tableLoading, setTableLoading] = useState(false);
+    
     const [tableData, setTableData] = useState();
 
     useEffect(() => {
+        setTableLoading(true)
         const timeoutId = setTimeout(() => {
             if (Object.keys(messageHistory).length > 0) {
                 setCurrentHistory(messageHistory);
-                const currentData = computeTableData(messageHistory);
-                setTableData(currentData)
+                const { data } = computeTableData(messageHistory);
+                setTableData(data)
             } else {
                 setCurrentHistory(dummyData);
-                const currentData = computeTableData(dummyData);
-                setTableData(currentData)
+                const { data } = computeTableData(dummyData);
+                setTableData(data)
+                console.log('HELLO', tableData)
             }
+            setTableLoading(false)
         }, delay);
+
         return () => clearTimeout(timeoutId);
     }, [messageHistory, delay]);
 
@@ -61,10 +74,13 @@ const DataTable = ({ messageHistory, transactionNumber, status, delay=5000 }) =>
 
 
   return (
-      <div className="relative overflow-x-auto rounded-md border-3p bg-blue-10 dark:border-solid  border-gray-700 dark:border-gray-50">
-          <table className="w-full text-sm text-center rtl:text-right dark:text-gray-300 text-gray-700" style={{ border: '1px solid green' }}>
-              <thead className="text-xs uppercase dark:text-gray-300 text-gray-700 w-full">
+      <div className="relative overflow-x-auto rounded-md border-3p bg-blue-10 dark:border-solid border-gray-700 dark:border-gray-50">
+          <table className="w-full text-sm text-center rtl:text-right dark:text-gray-300 text-gray-700">
+              <thead className="text-xs uppercase dark:text-gray-300 text-gray-700 w-full border-b-1p border-gray-700 dark:border-gray-50">
                   <tr>
+                      <th scope="col" className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50" rowSpan="2">
+                          Sr #
+                      </th>
                       <th scope="col" className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50" rowSpan="2">
                           Transaction #
                       </th>
@@ -74,7 +90,7 @@ const DataTable = ({ messageHistory, transactionNumber, status, delay=5000 }) =>
                       <th scope="col" className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50" rowSpan="2">
                           Faulty Replicas
                       </th>
-                      <th scope="col" className="px-6 py-3 border-r-1p border-b-1p border-gray-700 dark:border-gray-50" colSpan="4">
+                      <th scope="col" className="px-6 py-3 border-b-1p border-gray-700 dark:border-gray-50" colSpan="4">
                           Replica Details
                       </th>
                   </tr>
@@ -88,17 +104,32 @@ const DataTable = ({ messageHistory, transactionNumber, status, delay=5000 }) =>
                       <th scope="col" className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50">
                           Execution Time
                       </th>
-                      <th scope="col" className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50">
+                      <th scope="col" className="px-6 py-3 border-gray-700 dark:border-gray-50">
                           Prepare Time
                       </th>
                   </tr>
               </thead>
               <tbody>
-                  {/* {Object.keys(tableData).length > 0 && (
-                      Object.entries(tableData).forEach(([key, value]) => {
-
-                      })
-                  )} */}
+                  {tableLoading ? (
+                    <>
+                        loading
+                    </>
+                  ) : (
+                    <>
+                    {typeof tableData !== 'undefined' && Object.keys(tableData).map((transactionKey, index) => {
+                      const transaction = tableData[transactionKey];
+                      const replicaDetailsKeys = Object.keys(transaction.replicaDetails);
+                      console.log(tableData)
+                      return (
+                          <TableValues
+                              key={transactionKey}
+                              srNo={index + 1}
+                              transaction={transaction} replicaDetailsKeys={replicaDetailsKeys}
+                          />     
+                      );
+                  })}
+                    </>
+                  )}
               </tbody>
               
           </table>
