@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { computeTableData, computeTransInfo } from '../Computation/TransInfo';
 import { dummyData } from '../Graphs/data';
+import classNames from 'classnames';
+import { DATA_TABLE_NO_PRIMARY_EXISTS } from '../../../../Constants';
 
-const TableValues = ({ srNo, transaction, replicaDetailsKeys }) => {
+const TableValues = ({ srNo, transaction, replicaDetailsKeys, loading }) => {
     return (
-        <>
+        <Fragment>
             <tr className='border-b-1p'>
-                <td rowSpan={replicaDetailsKeys.length + 1} className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50">
+                <td rowSpan={replicaDetailsKeys.length + 1} className={classNames("px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50", { 'text-red-50': transaction.primary === DATA_TABLE_NO_PRIMARY_EXISTS })}>
                     {srNo}
                 </td>
-                <td rowSpan={replicaDetailsKeys.length + 1} className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50">
+                <td rowSpan={replicaDetailsKeys.length + 1} className={classNames("px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50", { 'text-red-50': transaction.primary === DATA_TABLE_NO_PRIMARY_EXISTS })}>
                     {transaction.transactionNumber}
                 </td>
-                <td rowSpan={replicaDetailsKeys.length + 1} className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50">
+                <td rowSpan={replicaDetailsKeys.length + 1} className={classNames("px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50", { 'text-red-50': transaction.primary === DATA_TABLE_NO_PRIMARY_EXISTS})}>
                     {transaction.primary}
                 </td>
-                <td rowSpan={replicaDetailsKeys.length + 1} className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50">
+                <td rowSpan={replicaDetailsKeys.length + 1} className={classNames("px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50", { 'text-red-50': transaction.primary === DATA_TABLE_NO_PRIMARY_EXISTS })}>
                     {transaction.faultReplicas}
                 </td>
             </tr>   
@@ -38,11 +40,11 @@ const TableValues = ({ srNo, transaction, replicaDetailsKeys }) => {
                     </tr>
                 );
             })}         
-        </>
+        </Fragment>
     );
 }
 
-const DataTable = ({ messageHistory, transactionNumber, status, delay=5000 }) => {
+const DataTable = ({ messageHistory, transactionNumber, status, delay=1000 }) => {
 
     let defaultData = Object.keys(messageHistory).length > 0 ? messageHistory : dummyData;
 
@@ -74,7 +76,7 @@ const DataTable = ({ messageHistory, transactionNumber, status, delay=5000 }) =>
 
 
   return (
-      <div className="relative overflow-x-auto rounded-md border-3p bg-blue-10 dark:border-solid border-gray-700 dark:border-gray-50">
+      <div className="relative overflow-x-auto rounded-md border-3p bg-blue-10 dark:border-solid border-gray-700 dark:border-gray-50 h-550p">
           <table className="w-full text-sm text-center rtl:text-right dark:text-gray-300 text-gray-700">
               <thead className="text-xs uppercase dark:text-gray-300 text-gray-700 w-full border-b-1p border-gray-700 dark:border-gray-50">
                   <tr>
@@ -122,6 +124,7 @@ const DataTable = ({ messageHistory, transactionNumber, status, delay=5000 }) =>
                       console.log(tableData)
                       return (
                           <TableValues
+                              className='cursor-pointer'
                               key={transactionKey}
                               srNo={index + 1}
                               transaction={transaction} replicaDetailsKeys={replicaDetailsKeys}

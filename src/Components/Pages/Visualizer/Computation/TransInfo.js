@@ -1,3 +1,4 @@
+import { DATA_TABLE_NO_PRIMARY_EXISTS } from "../../../../Constants";
 import { dummyData } from "../Graphs/data";
 import { computeDataDetails } from "./CompPbft";
 
@@ -37,9 +38,11 @@ export const computeTableData = (messageHistory) => {
     Object.entries(messageHistory).forEach(([key, value]) => {
         const { primaryIndex, faultReplicas } = computeTransInfo(messageHistory, key, REPLICA_STATUS)
 
+        let primary = primaryIndex === -1 ? DATA_TABLE_NO_PRIMARY_EXISTS : `Replica ${primaryIndex}`
+
         data[key] = {
             transactionNumber: key, 
-            primary: `Replica ${primaryIndex}`,
+            primary,
             faultReplicas: `${faultReplicas}`,
             replicaDetails: {}
         }
