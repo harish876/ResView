@@ -53,7 +53,7 @@ const TransInfo = ({ primary, numberOfReplicas, messageHistory, transactionNumbe
 
     const logo = theme ? LOGO_DARK : LOGO_LIGHT;
 
-    const { primaryIndex, transactions, currentStatus } = computeTransInfo(messageHistory, transactionNumber, status)
+    const { primaryIndex, currentStatus } = computeTransInfo(messageHistory, transactionNumber, status)
 
 
     return (

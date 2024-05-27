@@ -79,27 +79,18 @@ const Visualizer = () => {
         <div className="py-6">
             <TransInfo messageHistory={messageHistory} transactionNumber={currentTransaction} status={replicaStatus} />
             <div className="ml-[220px] px-8 py-6">
-                <div className="grid grid-cols-2 gap-x-6 w-full">
-                    <GraphContainer title={'Practical Byzantine Fault Tolerance'}>
+                <div className="grid grid-cols-3f-1f gap-x-6 w-full">
+                    <GraphContainer title={'Practical Byzantine Fault Tolerance'} heightBig>
                         {/* <PBFT
                         messageHistory={messageHistory}
                         realTransactionNumber={currentTransaction}
                     /> */}
-                        {/* <div className='absolute bottom-0 right-0 rotate-45'>
-                            <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
-                        </div> */}
                     </GraphContainer>
-                    <GraphContainer title={'View Change'}>
-                        {/* <PBFT
-                        messageHistory={messageHistory}
-                        realTransactionNumber={currentTransaction}
-                    /> */}
-                        {/* <div className='absolute bottom-0 right-0 rotate-45'>
-                            <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
-                        </div> */}
+                    <GraphContainer title={'Transaction Select'} heightBig disableExpand>
+                        <Input chooseTransaction={setCurrentTransaction} />
                     </GraphContainer>
                 </div>
-                <div className="my-10 px-24 w-full">
+                <div className="my-8 px-24 w-full">
                     <HRline />
                 </div>
                 <div className="">
@@ -112,7 +103,9 @@ const Visualizer = () => {
                     <HRline />
                 </div>
                 <div className="px-24">
-                    <DataTable />
+                    <DataTable 
+                        messageHistory={messageHistory} transactionNumber={currentTransaction} status={replicaStatus} 
+                    />
                 </div>
                 <div className="mt-10 mb-24 px-24 w-full">
                     <HRline />

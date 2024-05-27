@@ -350,7 +350,8 @@ module.exports = {
         "16p-1fr": "16px 1fr",
         "3-max-content": "repeat(3, minmax(0, max-content))",
         "1.5-1fr": "1.5fr 1fr",
-        "1-1.5fr": "1fr 1.5fr"
+        "1-1.5fr": "1fr 1.5fr",
+        "3f-1f": "3fr 1fr"
       },
       gridTemplateRows: {
         10: "repeat(10, 1fr);",
@@ -484,14 +485,19 @@ module.exports = {
         "150p": "150px",
         "200p": "200px",
         "360p": "360px",
-        "800p": "800px",
         "450p": "450px",
         "550p": "550px",
-        "720p": "720px"
+        "650p": "650px",
+        "720p": "720px",
+        "800p": "800px",
+        "60per": "60%",
+        "70per": "70%",
+        "80per": "80%",
       },
       width: {
         "95per": "95%",
         "60per": "60%",
+        "80per": "80%",
         "72p": "72px",
         "95p": "95px",
         "96p": "96px",
@@ -516,7 +522,8 @@ module.exports = {
         "700p": "700px",
         "750p": "750px",
         "880p": "880px",
-        "920p": "920px"
+        "920p": "920px",
+        "1028p": "1028px"
       },
       zIndex: {
         "neg-1": "-1",
