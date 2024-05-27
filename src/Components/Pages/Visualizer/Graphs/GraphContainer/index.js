@@ -13,12 +13,10 @@ const GraphContainer = ({ children, title, heightBig, disableExpand }) => {
     const [modalActive, setModalActive] = useState(false);
 
     const openModal = () => {
-        console.log('OPEN MODAL')
         setModalActive(true);
     }
 
     const closeModal = () => {
-        console.log('CLOSE MODAL')
         setModalActive(false);
     }
 
