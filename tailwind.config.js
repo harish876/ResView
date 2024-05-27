@@ -534,6 +534,8 @@ module.exports = {
       },
       animation: {
         pulseLong: "pulseLong 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        'fade-in': 'fadeIn 0.3s ease-in-out',
+        'fade-in-drop': 'fadeInDrop 0.5s ease-in-out',
       },
       keyframes: {
         pulseLong: {
@@ -542,6 +544,20 @@ module.exports = {
           },
           "50%": {
             opacity: 1,
+          },
+        },
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+        fadeInDrop: {
+          '0%': {
+            opacity: 0,
+            transform: 'translateY(-20px)',
+          },
+          '100%': {
+            opacity: 1,
+            transform: 'translateY(0)',
           },
         },
       },

@@ -5,7 +5,7 @@ const Modal = ({ children, onClose, title }) => {
         <>
             <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40" />
             <div id="modal-overlay" tabIndex="-1" className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 flex justify-center items-center w-full h-full z-40" onClick={onClose}>
-                <div className="w-80per h-80per z-50 rounded-md border-3p bg-blue-10 dark:border-solid dark:bg-blue-450 flex flex-col">
+                <div className="w-80per h-80per z-50 rounded-md border-3p bg-blue-10 dark:border-solid dark:bg-blue-450 flex flex-col animate-fade-in-drop">
                         <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                                 {title}
