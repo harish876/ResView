@@ -7,6 +7,7 @@ import { currentTeam, pastMembers } from './data';
 import { NavbarToggleContext } from '../../../Context/navbarToggle';
 import Navbar from '../../Shared/Navbar';
 import { BorderToggleRef } from '../../../App';
+import Footer from '../../Shared/Footer';
 
 const Team = () => {
   return (
@@ -45,6 +46,7 @@ const Index = () => {
       <Navbar borderToggle={borderToggle} />
       <BorderToggleRef />
       <Team />
+      <Footer />
     </>
   );
 }

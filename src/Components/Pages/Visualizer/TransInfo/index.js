@@ -1,22 +1,11 @@
 import React, { useContext } from 'react';
-import { cancelIcon, teamIcon, tickIcon } from '../../../../Resources/Icons';
+import { Link } from 'react-router-dom';
+import { LOGO_DARK, LOGO_LIGHT, URL_HOME_PAGE } from '../../../../Constants';
+import { ThemeContext } from '../../../../Context/theme';
+import { cancelIcon, tickIcon } from '../../../../Resources/Icons';
 import HRline from '../../../Shared/HRline';
 import { Icon } from '../../../Shared/Icon';
-import { computeDataDetails } from '../Graphs/Computation/CompPbft';
-import { dummyData } from '../Graphs/data';
-import Title from '../../../Shared/Title';
-import { LOGO_DARK, LOGO_LIGHT, URL_HOME_PAGE } from '../../../../Constants';
-import { Link } from 'react-router-dom';
-import { ThemeContext } from '../../../../Context/theme';
-
-let FAULTY_REPLICAS_DEFAULT = [false, false, false, false]
-
-const generateReplicaStatus = (data, defaultResult) => {
-    for(let [key, _] of Object.entries(data)){
-        defaultResult[key-1] = true;
-    }
-    return defaultResult;
-};
+import { computeTransInfo } from '../Computation/TransInfo';
 
 const LINK_BUTTON_CLASSES = "relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border-3p before:border-blue-500 before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark: before:border-gray-700 dark:before:bg-gray-800 sm:w-max cursor-pointer"
 
@@ -64,20 +53,11 @@ const TransInfo = ({ primary, numberOfReplicas, messageHistory, transactionNumbe
 
     const logo = theme ? LOGO_DARK : LOGO_LIGHT;
 
-    let currentStatus = status;
-    let currentData = messageHistory[transactionNumber];
-
-    if (!currentData) {
-        currentData = dummyData[17];
-        currentStatus = generateReplicaStatus(currentData, FAULTY_REPLICAS_DEFAULT);
-    }
-
-    const { primaryIndex, transactions } =
-        computeDataDetails(currentData);
+    const { primaryIndex, transactions, currentStatus } = computeTransInfo(messageHistory, transactionNumber, status)
 
 
     return (
-        <div className="h-full w-220p fixed z-1 top-0 left-0 overflow-x-hidden p-2 py-6 flex flex-col items-center justify-around opacity-1 border-r-2p border-solid border-gray-700 dark:border-gray-50 dark:text-gray-300">
+        <div className="h-full w-220p fixed z-1 top-0 left-0 overflow-x-hidden p-2 py-6 flex flex-col items-center justify-around opacity-1 border-r-3p border-solid border-gray-700 dark:border-gray-50 dark:text-gray-300">
             <Link to={URL_HOME_PAGE} className='flex items-center justify-center gap-x-2 w-full cursor-pointer'>
                 <img
                     src={logo}

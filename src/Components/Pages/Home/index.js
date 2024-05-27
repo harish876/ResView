@@ -8,6 +8,7 @@ import PbftIntro from './Sections/PbftIntro';
 import Navbar from '../../Shared/Navbar';
 import { NavbarToggleContext } from '../../../Context/navbarToggle';
 import { BorderToggleRef } from '../../../App';
+import Footer from '../../Shared/Footer';
 
 const Home = () => {
   
@@ -63,6 +64,7 @@ const Index = () => {
       <Navbar borderToggle={borderToggle} />
       <BorderToggleRef />
       <Home />
+      <Footer />
     </>
   );
 }

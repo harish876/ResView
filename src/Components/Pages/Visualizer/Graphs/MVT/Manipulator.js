@@ -11,7 +11,7 @@ const Manipulator = ({
 }) => {
     return (
         <div className='mt-2 rounded-md w-550p py-6 px-2 border-3p border-solid border-gray-700 dark:border-gray-50 flex flex-col gap-y-6 bg-blue-10 dark:bg-blue-450'>
-            <div className="flex flex-col gap-y-4">
+            <div className="flex flex-col gap-y-6">
                 <FontVarTitle title={'Select Replica To be Faulty:'} fontClass={'text-15p'} />
                 <div className='flex gap-x-7 justify-center'>
                     {MVT_GRAPH_LABELS.length > 0 && MVT_GRAPH_LABELS.map((title, index) => (
@@ -24,7 +24,7 @@ const Manipulator = ({
                     ))}
                 </div>
             </div>
-            <div className="flex flex-col gap-y-4">
+            <div className="flex flex-col gap-y-6">
                 <FontVarTitle title={'Toggle Line Graph:'} fontClass={'text-15p'} />
                 <div className='flex gap-x-7 justify-center'>
                     {MVT_GRAPH_LABELS.length > 0 && MVT_GRAPH_LABELS.map((title, index) => (

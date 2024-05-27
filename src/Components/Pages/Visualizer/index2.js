@@ -6,12 +6,14 @@ import { LinkButton } from '../../Shared/Buttons';
 import HRline from '../../Shared/HRline';
 import { Icon } from '../../Shared/Icon';
 import Title, { FontVarTitle, Subtitle } from '../../Shared/Title';
-import {VisualizerWrapper} from "../../Shared/Wrapper";
+import { VisualizerWrapper } from "../../Shared/Wrapper";
 import Mvt from './Graphs/MVT';
 import PBFT from './Graphs/PBFT';
 import Input from './Input';
-import ResizableContainer from './ResizableContainer';
+import GraphContainer from './Graphs/GraphContainer';
 import TransInfo from './TransInfo';
+import Footer from "../../Shared/Footer";
+import DataTable from './DataTable'
 
 
 const Visualizer = () => {
@@ -78,45 +80,47 @@ const Visualizer = () => {
             <TransInfo messageHistory={messageHistory} transactionNumber={currentTransaction} status={replicaStatus} />
             <div className="ml-[220px] px-8 py-6">
                 <div className="grid grid-cols-2 gap-x-6 w-full">
-                    <div className="" id='pbft-graph'>
-                        <div className="mb-8">
-                            <FontVarTitle title={'Practical Byzantine Fault Tolerance'} />
-                        </div>
-                        <ResizableContainer>
-                            {/* <PBFT
+                    <GraphContainer title={'Practical Byzantine Fault Tolerance'}>
+                        {/* <PBFT
                         messageHistory={messageHistory}
                         realTransactionNumber={currentTransaction}
                     /> */}
-                            {/* <div className='absolute bottom-0 right-0 rotate-45'>
+                        {/* <div className='absolute bottom-0 right-0 rotate-45'>
                             <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
                         </div> */}
-                        </ResizableContainer>
-                    </div>
-                    <div className="" id='pbft-graph'>
-                        <div className="mb-8">
-                            <FontVarTitle title={'View Change'} />
-                        </div>
-                        <ResizableContainer>
-                            {/* <PBFT
+                    </GraphContainer>
+                    <GraphContainer title={'View Change'}>
+                        {/* <PBFT
                         messageHistory={messageHistory}
                         realTransactionNumber={currentTransaction}
                     /> */}
-                            {/* <div className='absolute bottom-0 right-0 rotate-45'>
+                        {/* <div className='absolute bottom-0 right-0 rotate-45'>
                             <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
                         </div> */}
-                        </ResizableContainer>
-                    </div>
+                    </GraphContainer>
                 </div>
-                <div className="mt-24 mb-16 px-24 w-full">
+                <div className="my-10 px-24 w-full">
                     <HRline />
                 </div>
-                <div className="" id="mvt-graph">
+                <div className="">
                     <Mvt
                         messageHistory={messageHistory}
                         currentTransaction={currentTransaction}
                     />
                 </div>
-            </div>   
+                <div className="my-10 px-24 w-full">
+                    <HRline />
+                </div>
+                <div className="px-24">
+                    <DataTable />
+                </div>
+                <div className="mt-10 mb-24 px-24 w-full">
+                    <HRline />
+                </div>
+                <div className="mb-[-2em]">
+                    <Footer />
+                </div>
+            </div>
         </div>
     )
 }

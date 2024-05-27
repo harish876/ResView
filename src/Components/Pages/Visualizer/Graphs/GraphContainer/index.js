@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { Resizable } from "re-resizable";
-import { GraphResizerContext } from '../../../../Context/graph';
-import { FontVarTitle } from '../../../Shared/Title';
+import { GraphResizerContext } from '../../../../../Context/graph';
+import { FontVarTitle } from '../../../../Shared/Title';
 
-const ResizableContainer = ({ children, title }) => {
+const GraphContainer = ({ children, title }) => {
+    // TODO: Remove the below GraphResizerContext Once its done
     const { boxValues, setBoxValues, setResizing } = useContext(GraphResizerContext);
 
     return (
@@ -16,4 +16,4 @@ const ResizableContainer = ({ children, title }) => {
     )
 }
 
-export default ResizableContainer
+export default GraphContainer

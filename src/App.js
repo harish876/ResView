@@ -56,8 +56,7 @@ const PreSynthApp = () => {
                   <Route path='*' element={<NotFound />} />
                     <Route index element={<Navigate to={`${URL_REROUTE_PAGE}`} />} />
                 </Routes>
-                <Footer />
-              </Router >
+              </Router>
             )}
           </>
       )}
