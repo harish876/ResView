@@ -1,17 +1,16 @@
-
 import * as d3 from "d3";
 import { line } from "d3-shape";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import throttle from 'lodash/throttle';
 import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NUMBER_OF_STEPS_PBFT_GRAPH, PBFT_ANIMATION_SPEEDS, PBFT_ANIMATION_SPEEDS_NO_PRIMARY } from "../../../../../Constants";
-import { GraphResizerContext, PbftAnimationSpeedContext, PbftGraphClearContext } from "../../../../../Context/graph";
+import { PbftAnimationSpeedContext, PbftGraphClearContext } from "../../../../../Context/graph";
 import { ThemeContext } from "../../../../../Context/theme";
 import { cancelIcon, pauseIcon, playIcon } from "../../../../../Resources/Icons";
 import { DropDownButtons, IconButtons } from "../../../../Shared/Buttons";
 import { Icon } from "../../../../Shared/Icon";
 import { connectionRender, labelFaultyNode, labelPrimaryNode } from "../../Computation/D3Pbft";
-import { generateConnections, generateLabels, generateLines, generatePoints, generateTransactionIds } from "../../Computation/CompPbft";
-
-
+import { generateConnections, generateLabels, generateLines, generatePoints } from "../../Computation/CompPbft";
+import GraphContainer from "../GraphContainer";
 
 const PBFT = ({
     messageHistory,
@@ -36,10 +35,6 @@ const PBFT = ({
         REPLY_BUFFER_NP
     } = PBFT_ANIMATION_SPEEDS_NO_PRIMARY[speed];
 
-    const { boxValues, resizing } = useContext(GraphResizerContext);
-
-    const { width, height } = boxValues;
-
     const { theme } = useContext(ThemeContext);
 
     const { clear, changeClear } = useContext(PbftGraphClearContext);
@@ -47,8 +42,6 @@ const PBFT = ({
     const colorMode = !theme ? 'black' : "#c4c4c4";
     const pointColorMode = theme ? '#edf0f5' : '#464747';
 
-    // TODO: Comment the below two lines after connecting to the BE
-    //const { transactionIds } = generateTransactionIds(dummyData);
     const [transactionNumber, setTransactionNumber] = useState(realTransactionNumber);
     const [playing, setPlaying] = useState(true);
 
@@ -56,11 +49,41 @@ const PBFT = ({
     const lineRef = useRef(null);
     const primaryLabelRef = useRef(null);
     const faultyReplicasLabelRef = useRef(null);
+    const containerRef = useRef(null);
     const doesPrimaryExist = useRef(1);
     const yCoordToReplicasMap = useRef({});
     const transactionsSet = useRef({});
+    const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+    useEffect(() => {
+        const updateDimensions = throttle(() => {
+            if (containerRef.current) {
+                const { clientWidth, clientHeight } = containerRef.current;
+                setDimensions({ width: clientWidth, height: clientHeight });
+            }
+        }, 200);
+
+        updateDimensions();
+
+        window.addEventListener("resize", updateDimensions);
+        return () => {
+            window.removeEventListener("resize", updateDimensions);
+            updateDimensions.cancel();
+        };
+    }, []);
+
+    const clearSVGs = () => {
+        d3.select(graphRef.current).selectAll("*").remove();
+        d3.select(lineRef.current).selectAll("*").remove();
+        d3.select(primaryLabelRef.current).selectAll("*").remove();
+        d3.select(faultyReplicasLabelRef.current).selectAll("*").remove();
+    };
 
     const debouncedRender = useCallback(() => {
+        clearSVGs();
+
+        const { width, height } = dimensions;
+
         const data = generatePoints(
             width,
             height,
@@ -182,7 +205,7 @@ const PBFT = ({
                 .attr("width", width)
                 .attr("height", height)
 
-            if(primaryIndex !== -1) {
+            if (primaryIndex !== -1) {
                 primaryLabelSVG = d3
                     .select(primaryLabelRef.current)
                     .attr("width", width)
@@ -209,7 +232,7 @@ const PBFT = ({
             })
 
             // IF PRIMARY DOES NOT EXIST AND VICEVERSA
-            if(primaryIndex === -1) {
+            if (primaryIndex === -1) {
 
                 // REQUEST LINES
                 points.request.end[0].points.length > 0 && points.request.end[0].points.forEach((end, i) => {
@@ -251,7 +274,7 @@ const PBFT = ({
                 });
 
             } else {
-                
+
                 labelsY.forEach((label, index) => {
                     if (index === primaryIndex) return labelPrimaryNode(primaryLabelSVG, label);
                     if (faultyReplicaIndices.has(index)) return labelFaultyNode(faultyReplicasLabelSVG, label);
@@ -297,7 +320,7 @@ const PBFT = ({
             }
         }
 
-    }, [theme, width, height, clear]);
+    }, [theme, dimensions, messageHistory, realTransactionNumber, clear]);
 
     useEffect(() => {
         debouncedRender();
@@ -325,8 +348,8 @@ const PBFT = ({
     const color = theme && clear ? 'gray' : theme && !clear ? 'white' : !theme && clear ? 'gray' : 'black';
 
     return (
-        <>
-            <div className="flex items-center justify-around w-full flex-row mb-[-1em] mt-2">
+        <GraphContainer title={'Practical Byzantine Fault Tolerance'} heightBig>
+            <div className="flex items-center justify-around w-full flex-row mt-12">
                 <div className="basis-1/4">
                     {doesPrimaryExist.current === -1 && (
                         <div className="text-amber-600 font-18p border-1p rounded-md p-1 border-amber-600 w-180p flex items-center justify-center ml-8">
@@ -347,14 +370,14 @@ const PBFT = ({
                 </div>
                 <div className="basis-1/4" />
             </div>
-            <div className='relative w-full h-full pl-4 pr-2 pb-6'>
-                {resizing ? (
-                    <div class='loader'>
+            <div ref={containerRef} className='relative w-full h-full pl-8 pr-0 pb-1'>
+                {/* {resizing ? (
+                    <div className='loader'>
                         <div>PBFT</div>
-                        <div class='inner' />
+                        <div className='inner' />
                     </div>
                 ) : (
-                    <>
+                    <> */}
                         <svg id={'svg-one'} ref={graphRef} className='absolute'></svg>
                         {!clear && (
                             <>
@@ -363,10 +386,10 @@ const PBFT = ({
                                 <svg ref={faultyReplicasLabelRef} className='absolute'></svg>
                             </>
                         )}
-                    </>
-                )}
+                    {/* </>
+                )} */}
             </div>
-        </>
+        </GraphContainer>
     );
 };
 

@@ -84,12 +84,10 @@ const Visualizer = () => {
             />
             <div className="ml-[220px] px-8 pt-6 h-full">
                 <div className="grid grid-cols-3f-1f gap-x-6 w-full h-full">
-                    <GraphContainer title={'Practical Byzantine Fault Tolerance'} heightBig>
-                        {/* <PBFT
+                    <PBFT
                         messageHistory={messageHistory}
                         realTransactionNumber={currentTransaction}
-                    /> */}
-                    </GraphContainer>
+                    />
                     <GraphContainer title={'Transactions Overview'} heightBig disableExpand>
                         {/* <Input chooseTransaction={setCurrentTransaction} /> */}
                         
