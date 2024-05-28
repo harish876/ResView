@@ -359,13 +359,13 @@ const PBFT = ({
                 </div>
                 <div className="flex items-center justify-center gap-x-16 basis-1/2">
                     <IconButtons title={!clear ? 'Playing' : 'Play'} onClick={() => onPlay()} disabled={!clear}>
-                        <Icon path={!clear ? pauseIcon : playIcon} viewBox={'0 0 384 512'} height={'13px'} fill={color} />
+                        <Icon path={!clear ? pauseIcon : playIcon} viewBox={'0 0 384 512'} height={'11px'} fill={color} />
                     </IconButtons>
                     {playing && (
                         <DropDownButtons selected={speed} elements={['1x', '0.5x', '2x']} onClick={animationSpeedChange} />
                     )}
                     <IconButtons title={'Clear'} onClick={() => onClear()} disabled={clear}>
-                        <Icon path={cancelIcon} viewBox={'0 0 384 512'} height={'14px'} fill={color} />
+                        <Icon path={cancelIcon} viewBox={'0 0 384 512'} height={'12px'} fill={color} />
                     </IconButtons>
                 </div>
                 <div className="basis-1/4" />
