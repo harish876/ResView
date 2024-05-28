@@ -69,6 +69,17 @@ export const MvTSelectButton = ({ title, onClick, graphNo }) => {
     )
 }
 
+export const NormalButton = ({ title, onClick }) => {
+    const handleClick = () => {
+        onClick()
+    };
+    return (
+        <div onClick={handleClick} className={classNames(`relative flex h-7 items-center justify-center px-4 before:absolute before:inset-0 before:border-3p before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max cursor-pointer before:rounded-lg w-80p dark:before:bg-gray-800 dark:before:border-gray-700 before:border-blue-500 before:bg-primary/10`)}>
+            <span className="relative text-14p font-semibold text-primary dark:text-white">{title}</span >
+        </div>
+    )
+}
+
 export const SubmitButton = ({ title, loading }) => {
     return (
         <button type="button" className={classNames(
