@@ -1,5 +1,5 @@
 import { DATA_TABLE_NO_PRIMARY_EXISTS } from "../../../../Constants";
-import { dummyData } from "../Graphs/data";
+import { dummyData } from "../data/data";
 import { computeDataDetails } from "./CompPbft";
 
 let FAULTY_REPLICAS_DEFAULT = [false, false, false, false]
@@ -16,7 +16,7 @@ const generateReplicaStatus = (data, defaultResult) => {
 
 let REPLICA_STATUS = [false, false, false, false];
 
-export const computeTransInfo = (messageHistory, transactionNumber=17, status) => {
+export const computeTransInfo = (messageHistory, transactionNumber = 17, status) => {
     let currentStatus = status;
     let currentData = messageHistory[transactionNumber];
 
@@ -41,19 +41,19 @@ export const computeTableData = (messageHistory) => {
         let primary = primaryIndex === -1 ? DATA_TABLE_NO_PRIMARY_EXISTS : `Replica ${primaryIndex}`
 
         data[key] = {
-            transactionNumber: key, 
+            transactionNumber: key,
             primary,
             faultReplicas: `${faultReplicas}`,
             replicaDetails: {}
         }
 
-        for (let replicaId in messageHistory[key]){
+        for (let replicaId in messageHistory[key]) {
             const entry = messageHistory[key][replicaId];
-                data[key].replicaDetails[replicaId] = {
-                    commitTime: entry.commit_time,
-                    execTime: entry.execution_time,
-                    prepTime: entry.prepare_time,
-                };
+            data[key].replicaDetails[replicaId] = {
+                commitTime: entry.commit_time,
+                execTime: entry.execution_time,
+                prepTime: entry.prepare_time,
+            };
         }
     });
 

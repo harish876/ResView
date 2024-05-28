@@ -1,5 +1,5 @@
 import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, COLORS_PBFT_GRAPH_LIGHT, NODES_PBFT_GRAPH, TITLES_PBFT_GRAPH } from "../../../../Constants";
-import { dummyData } from "../Graphs/data";
+import { dummyData } from "../data/data";
 
 const primaryIndexToPoint = {
     1: 2,
@@ -85,7 +85,7 @@ export const generateConnections = (
         });
 
         // PRE-PREPARE OBJECT
-        for (let i = 0; i < points.request.end[0].points.length; i++){
+        for (let i = 0; i < points.request.end[0].points.length; i++) {
             points.prePrepare.start.push(points.request.end[0].points[i])
         }
 
@@ -115,13 +115,13 @@ export const generateConnections = (
         // PREPARE OBJECT 
         let xVal = points.prePrepare.end[0][0].points.x;
         let currentPreparePoints = new Set();
-        
+
         points.prePrepare.end.forEach((element, index) => {
             element.length > 0 && element.map((singlePoint, index) => {
                 let replicaDoesExist = yCoordToReplicas[singlePoint.points.y]
                 if (transactions.has(replicaDoesExist) && !currentPreparePoints.has(replicaDoesExist)) {
                     currentPreparePoints.add(replicaDoesExist)
-                    points.prepare.start.push({ x: xVal, y: singlePoint.points.y});
+                    points.prepare.start.push({ x: xVal, y: singlePoint.points.y });
                 }
             })
         });

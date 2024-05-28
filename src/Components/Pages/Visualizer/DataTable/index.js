@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { Fragment, useEffect, useState } from 'react';
 import { DATA_TABLE_NO_PRIMARY_EXISTS } from '../../../../Constants';
 import { computeTableData } from '../Computation/TransInfo';
-import { tableDataDummy } from '../Graphs/data';
+import { tableDataDummy } from '../data/data';
 
 const TABLE_HEADERS = {
     1: [
