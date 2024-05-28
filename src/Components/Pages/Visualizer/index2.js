@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { VISUALIZER_PAGE_SUBTITLE } from "../../../Constants";
+import { DATA_TABLE_DELAY, VISUALIZER_PAGE_SUBTITLE } from "../../../Constants";
 import { anglesRightIcon, eyeIcon } from "../../../Resources/Icons";
 import { WebSocket } from '../../../Socket';
 import { LinkButton } from '../../Shared/Buttons';
@@ -109,7 +109,8 @@ const Visualizer = () => {
                 </div>
                 <div className="px-24">
                     <DataTable 
-                        messageHistory={messageHistory} transactionNumber={currentTransaction} status={replicaStatus} 
+                        messageHistory={messageHistory} 
+                        delay={DATA_TABLE_DELAY}
                     />
                 </div>
                 <div className="mt-10 mb-24 px-24 w-full">

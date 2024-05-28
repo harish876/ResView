@@ -118,3 +118,4 @@ export const WHAT_IST_PBFT_SUBTITLE = 'Practical Byzantine Fault Tolerance (PBFT
 export const WHAT_IS_RESVIEW = 'ResView provides a detailed understanding of consensus operations, replica comparisons during transactions, and transaction statistics by visualizing the architecture of ResDB.'
 
 export const DATA_TABLE_NO_PRIMARY_EXISTS = 'No Primary Selected'
+export const DATA_TABLE_DELAY = 3000

@@ -1,8 +1,24 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { computeTableData, computeTransInfo } from '../Computation/TransInfo';
-import { dummyData, tableDataDummy } from '../Graphs/data';
 import classNames from 'classnames';
+import React, { Fragment, useEffect, useState } from 'react';
 import { DATA_TABLE_NO_PRIMARY_EXISTS } from '../../../../Constants';
+import { computeTableData } from '../Computation/TransInfo';
+import { tableDataDummy } from '../Graphs/data';
+
+const TABLE_HEADERS = {
+    1: [
+        'Sr #',
+        'Transaction #',
+        'Primary',
+        'Faulty Replicas',
+        'Replica Details'
+    ],
+    2: [
+        'Replica Number',
+        'Commit Time',
+        'Execution Time',
+        'Prepare Time'
+    ]
+}
 
 const CellValues = ({ value, loading, replicaDetailsKeys, replicaDetailsBool, primaryDoesNotExist }) => {
     return (
@@ -72,11 +88,8 @@ const TableValues = ({ srNo, transaction, replicaDetailsKeys, loading }) => {
     );
 }
 
-const DataTable = ({ messageHistory, transactionNumber, status, delay=3000 }) => {
+const DataTable = ({ messageHistory, delay=3000 }) => {
 
-    let defaultData = Object.keys(messageHistory).length > 0 ? messageHistory : dummyData;
-
-    const [currentHistory, setCurrentHistory] = useState(defaultData);
     const [tableLoading, setTableLoading] = useState(false);
     
     const [tableData, setTableData] = useState();
@@ -85,11 +98,9 @@ const DataTable = ({ messageHistory, transactionNumber, status, delay=3000 }) =>
         setTableLoading(true)
         const timeoutId = setTimeout(() => {
             if (Object.keys(messageHistory).length > 0) {
-                setCurrentHistory(messageHistory);
                 const { data } = computeTableData(messageHistory);
                 setTableData(data)
             } else {
-                setCurrentHistory(dummyData);
                 setTableData(tableDataDummy)
             }
             setTableLoading(false)
@@ -98,43 +109,28 @@ const DataTable = ({ messageHistory, transactionNumber, status, delay=3000 }) =>
         return () => clearTimeout(timeoutId);
     }, [messageHistory, delay]);
 
-    const { primaryIndex, transactions, currentStatus, faultReplicas } = computeTransInfo(currentHistory, transactionNumber, status)
-
-
   return (
       <div className="relative overflow-x-auto rounded-md border-3p bg-blue-10 dark:border-solid border-gray-700 dark:border-gray-50 h-550p">
           <table className="w-full text-sm text-center rtl:text-right dark:text-gray-300 text-gray-700">
               <thead className="text-xs uppercase dark:text-gray-300 text-gray-700 w-full border-b-1p border-gray-700 dark:border-gray-50">
                   <tr>
-                      <th scope="col" className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50" rowSpan="2">
-                          Sr #
-                      </th>
-                      <th scope="col" className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50" rowSpan="2">
-                          Transaction #
-                      </th>
-                      <th scope="col" className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50" rowSpan="2">
-                          Primary
-                      </th>
-                      <th scope="col" className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50" rowSpan="2">
-                          Faulty Replicas
-                      </th>
-                      <th scope="col" className="px-6 py-3 border-b-1p border-gray-700 dark:border-gray-50" colSpan="4">
-                          Replica Details
-                      </th>
+                      {TABLE_HEADERS[1].map((value, index) => {
+                          let isReplicaDetailCol = value === 'Replica Details' ? true : false;
+                          return (
+                              <th scope="col" className={classNames("px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50", { 'border-b-1p border-r-0': isReplicaDetailCol })} rowSpan={!isReplicaDetailCol && '2'} colSpan={isReplicaDetailCol && '4'} key={index}>
+                                  {value}
+                              </th>
+                          )
+                      })}
                   </tr>
                   <tr>
-                      <th scope="col" className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50">
-                          Replica Number
-                      </th>
-                      <th scope="col" className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50">
-                          Commit Time
-                      </th>
-                      <th scope="col" className="px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50">
-                          Execution Time
-                      </th>
-                      <th scope="col" className="px-6 py-3 border-gray-700 dark:border-gray-50">
-                          Prepare Time
-                      </th>
+                      {TABLE_HEADERS[2].map((value, index) => {
+                          return (
+                              <th scope="col" className={classNames("px-6 py-3 border-gray-700 dark:border-gray-50", { 'border-r-1p': index !== TABLE_HEADERS[2].length - 1})} key={index}>
+                                  {value}
+                              </th>
+                          )
+                      })}
                   </tr>
               </thead>
               <tbody>
