@@ -856,3 +856,153 @@ export const dummyData = {
         },
     },
 };
+
+export const tableDataDummy = {
+    "17": {
+        "transactionNumber": "17",
+        "primary": "Replica 2",
+        "faultReplicas": "1",
+        "replicaDetails": {
+            "1": {
+                "commitTime": 1701956096786501400,
+                "execTime": 1701956096786658600,
+                "prepTime": 1701956096776394000
+            },
+            "2": {
+                "commitTime": 1701956096788358400,
+                "execTime": 1701956096789154300,
+                "prepTime": 1701956096776841500
+            },
+            "4": {
+                "commitTime": 1701956096786530000,
+                "execTime": 1701956096786978000,
+                "prepTime": 1701956096776375000
+            }
+        }
+    },
+    "18": {
+        "transactionNumber": "18",
+        "primary": "Replica 1",
+        "faultReplicas": "0",
+        "replicaDetails": {
+            "1": {
+                "commitTime": 1701956096786501400,
+                "execTime": 1701956096786658600,
+                "prepTime": 1701956096776394000
+            },
+            "2": {
+                "commitTime": 1701956096788358400,
+                "execTime": 1701956096789154300,
+                "prepTime": 1701956096776841500
+            },
+            "3": {
+                "commitTime": 1701956096787769900,
+                "execTime": 1701956096788227600,
+                "prepTime": 1701956096777074400
+            },
+            "4": {
+                "commitTime": 1701956096786530000,
+                "execTime": 1701956096786978000,
+                "prepTime": 1701956096776375000
+            }
+        }
+    },
+    "19": {
+        "transactionNumber": "19",
+        "primary": "Replica 4",
+        "faultReplicas": "0",
+        "replicaDetails": {
+            "1": {
+                "commitTime": 1701956096786501400,
+                "execTime": 1701956096786658600,
+                "prepTime": 1701956096776394000
+            },
+            "2": {
+                "commitTime": 1701956096788358400,
+                "execTime": 1701956096789154300,
+                "prepTime": 1701956096776841500
+            },
+            "3": {
+                "commitTime": 1701956096787769900,
+                "execTime": 1701956096788227600,
+                "prepTime": 1701956096777074400
+            },
+            "4": {
+                "commitTime": 1701956096786530000,
+                "execTime": 1701956096786978000,
+                "prepTime": 1701956096776375000
+            }
+        }
+    },
+    "20": {
+        "transactionNumber": "20",
+        "primary": "Replica 2",
+        "faultReplicas": "1",
+        "replicaDetails": {
+            "1": {
+                "commitTime": 1701956096786501400,
+                "execTime": 1701956096786658600,
+                "prepTime": 1701956096776394000
+            },
+            "2": {
+                "commitTime": 1701956096788358400,
+                "execTime": 1701956096789154300,
+                "prepTime": 1701956096776841500
+            },
+            "3": {
+                "commitTime": 1701956096787769900,
+                "execTime": 1701956096788227600,
+                "prepTime": 1701956096777074400
+            }
+        }
+    },
+    "21": {
+        "transactionNumber": "21",
+        "primary": "No Primary Selected",
+        "faultReplicas": "0",
+        "replicaDetails": {
+            "1": {
+                "commitTime": 1701956096786501400,
+                "execTime": 1701956096786658600,
+                "prepTime": 1701956096776394000
+            },
+            "2": {
+                "commitTime": 1701956096788358400,
+                "execTime": 1701956096789154300,
+                "prepTime": 1701956096776841500
+            },
+            "3": {
+                "commitTime": 1701956096787769900,
+                "execTime": 1701956096788227600,
+                "prepTime": 1701956096777074400
+            },
+            "4": {
+                "commitTime": 1701956096786530000,
+                "execTime": 1701956096786978000,
+                "prepTime": 1701956096776375000
+            }
+        }
+    },
+    "22": {
+        "transactionNumber": "22",
+        "primary": "Replica 1",
+        "faultReplicas": "1",
+        "replicaDetails": {
+            "1": {
+                "commitTime": 1701956096786501400,
+                "execTime": 1701956096786658600,
+                "prepTime": 1701956096776394000
+            },
+            "2": {
+                "commitTime": 1701956096788358400,
+                "execTime": 1701956096789154300,
+                "prepTime": 1701956096776841500
+            },
+            "4": {
+                "commitTime": 1701956096786530000,
+                "execTime": 1701956096786978000,
+                "prepTime": 1701956096776375000
+            }
+        }
+    }
+}

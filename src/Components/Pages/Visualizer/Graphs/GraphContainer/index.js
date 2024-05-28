@@ -1,14 +1,12 @@
-import React, { useContext, useState } from 'react';
 import {
-    useWindowSize,
-    useWindowWidth,
-    useWindowHeight,
+    useWindowSize
 } from '@react-hook/window-size';
-import { GraphResizerContext } from '../../../../../Context/graph';
-import { FontVarTitle } from '../../../../Shared/Title';
 import classNames from 'classnames';
-import { Icon } from '../../../../Shared/Icon';
+import React, { useContext, useState } from 'react';
+import { GraphResizerContext } from '../../../../../Context/graph';
 import { maximizeIcon } from '../../../../../Resources/Icons';
+import { Icon } from '../../../../Shared/Icon';
+import { FontVarTitle } from '../../../../Shared/Title';
 import Modal from './Modal';
 
 const GraphContainer = ({ children, title, heightBig, disableExpand }) => {
