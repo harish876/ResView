@@ -1,3 +1,8 @@
+export const URL_HOME_PAGE = '/home'
+export const URL_TEAM_PAGE = '/team'
+export const URL_VISUALIZER_PAGE = '/visualizer'
+export const URL_REROUTE_PAGE = '/home'
+
 export const DEFAULT_IMAGE = 'https://i.postimg.cc/8PTkJPpQ/default-ui-image-placeholder-wireframes-600nw-1037719192-ezgif-com-webp-to-jpg-converter.jpg';
 
 export const PBFT_IMAGE = 'https://i.postimg.cc/66PwqccZ/PBFTGraph.png';
