@@ -105,3 +105,51 @@ code {
     transform: rotate(405deg);
   }
 }
+
+@layer utilities {
+  .scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #b3b3b3 transparent;
+  }
+
+  .scrollbar::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    border: 5px solid #b3b3b3;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #bbbbbb;
+  }
+
+  .scrollbar-lg {
+    scrollbar-width: thin;
+    scrollbar-color: #b3b3b3 transparent;
+  }
+
+  .scrollbar-lg::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-lg::-webkit-scrollbar-thumb {
+    border-radius: 9px;
+    border: 9px solid transparent;
+  }
+
+  .scrollbar-lg::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  
+  .scrollbar-lg::-webkit-scrollbar-thumb:hover {
+    background-color: #bbbbbb;
+  }
+}
+

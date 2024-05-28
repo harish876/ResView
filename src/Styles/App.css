@@ -768,9 +768,6 @@ video {
 .h-6 {
   height: 1.5rem;
 }
-.h-650p {
-  height: 650px;
-}
 .h-8 {
   height: 2rem;
 }
@@ -904,18 +901,29 @@ video {
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-@keyframes fadeIn {
+@keyframes fadeInDrop {
 
   0% {
     opacity: 0;
+    transform: translateY(-20px);
   }
 
   100% {
     opacity: 1;
+    transform: translateY(0);
   }
 }
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-in-out;
+.animate-fade-in-drop {
+  animation: fadeInDrop 0.5s ease-in-out;
+}
+@keyframes pulse {
+
+  50% {
+    opacity: .5;
+  }
+}
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 @keyframes spin {
 
@@ -1052,8 +1060,8 @@ video {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.whitespace-nowrap {
-  white-space: nowrap;
+.rounded {
+  border-radius: 0.25rem;
 }
 .rounded-full {
   border-radius: 9999px;
@@ -1112,14 +1120,14 @@ video {
 .border-l-2p {
   border-left-width: 2px;
 }
+.border-r-0 {
+  border-right-width: 0px;
+}
 .border-r-1p {
   border-right-width: 1px;
 }
 .border-r-3p {
   border-right-width: 3px;
-}
-.border-t {
-  border-top-width: 1px;
 }
 .border-solid {
   border-style: solid;
@@ -1190,6 +1198,10 @@ video {
 .bg-gray-10 {
   --tw-bg-opacity: 1;
   background-color: rgb(235 235 242 / var(--tw-bg-opacity));
+}
+.bg-gray-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 .bg-gray-900 {
   --tw-bg-opacity: 1;
@@ -1364,6 +1376,9 @@ video {
 }
 .pt-20 {
   padding-top: 5rem;
+}
+.pt-6 {
+  padding-top: 1.5rem;
 }
 .text-left {
   text-align: left;
@@ -1570,6 +1585,24 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
+.scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #b3b3b3 transparent;
+  }
+.scrollbar::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
+.scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    border: 5px solid #b3b3b3;
+  }
+.scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #bbbbbb;
+  }
 
 :root {
     --main-dark-color: #189788;
@@ -1815,11 +1848,6 @@ code {
 .hover\:bg-gray-200:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-gray-50:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 
 .hover\:px-2:hover {
@@ -2248,3 +2276,4 @@ code {
 .rtl\:text-right:where([dir="rtl"], [dir="rtl"] *) {
   text-align: right;
 }
+
