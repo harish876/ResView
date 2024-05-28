@@ -320,12 +320,12 @@ export const generatePoints = (
     numberOfReplicas = 4,
     numberOfSteps = 5
 ) => {
-    const xStart = Math.floor(margin / 2) + Math.floor(padding / 2);
-    const yStart = Math.floor(margin / 2) + Math.floor(padding / 2);
+    const xStart = Math.floor(margin / 2) + Math.floor(padding / 1.8);
+    const yStart = Math.floor(margin / 2) + Math.floor(padding / 2.3);
 
     const numberOfTotalSteps = numberOfSteps + 1;
 
-    const cummulativeH = height - (padding + margin);
+    const cummulativeH = height - (Math.floor((padding+margin)/1.5));
     const cummulativeW = width - (padding + margin);
 
     const distX = Math.floor(cummulativeW / numberOfSteps);

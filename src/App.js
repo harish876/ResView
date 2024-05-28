@@ -26,7 +26,7 @@ export const BorderToggleRef = () => {
 }
 
 const PreSynthApp = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { toggleLightTheme, toggleDarkTheme } = useContext(ThemeContext);
 
   if (localStorage.getItem("theme") === "light") {
@@ -40,7 +40,7 @@ const PreSynthApp = () => {
 
   return (
     <>
-      <ParticleWrapper setIsLoading={setIsLoading} />
+      {/* <ParticleWrapper setIsLoading={setIsLoading} /> */}
       {isLoading ? (
         <Loader />
       ) : (

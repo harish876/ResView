@@ -670,29 +670,29 @@ export const dummyData = {
         // },
     },
     21: {
-        1: {
-            commit_message_timestamps: [
-                1701956096777352000, 1701956096782048300, 1701956096786494200,
-                1701956096786495200,
-            ],
-            commit_time: 1701956096786501400,
-            execution_time: 1701956096786658600,
-            ip: "127.0.0.1",
-            port: 10001,
-            prepare_message_timestamps: [
-                1701956096771379200, 1701956096776308700, 1701956096776386300,
-                1701956096777278200,
-            ],
-            prepare_time: 1701956096776394000,
-            primary_id: 5,
-            propose_pre_prepare_time: 1701956096769596400,
-            replica_id: 1,
-            txn_commands: ["GET"],
-            txn_keys: ["test"],
-            txn_number: 17,
-            txn_values: [""],
-            reply_time: 1702001829632,
-        },
+        // 1: {
+        //     commit_message_timestamps: [
+        //         1701956096777352000, 1701956096782048300, 1701956096786494200,
+        //         1701956096786495200,
+        //     ],
+        //     commit_time: 1701956096786501400,
+        //     execution_time: 1701956096786658600,
+        //     ip: "127.0.0.1",
+        //     port: 10001,
+        //     prepare_message_timestamps: [
+        //         1701956096771379200, 1701956096776308700, 1701956096776386300,
+        //         1701956096777278200,
+        //     ],
+        //     prepare_time: 1701956096776394000,
+        //     primary_id: 5,
+        //     propose_pre_prepare_time: 1701956096769596400,
+        //     replica_id: 1,
+        //     txn_commands: ["GET"],
+        //     txn_keys: ["test"],
+        //     txn_number: 17,
+        //     txn_values: [""],
+        //     reply_time: 1702001829632,
+        // },
         2: {
             commit_message_timestamps: [
                 1701956096777775600, 1701956096781659100, 1701956096788349400,

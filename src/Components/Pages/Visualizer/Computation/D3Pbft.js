@@ -2,18 +2,7 @@ import * as d3 from "d3";
 import hash from "object-hash";
 
 export const labelPrimaryNode = (svg, label) => {
-    svg
-        .append("rect")
-        .attr("x", label.x - 42.5)
-        .attr("y", label.y - 20)
-        .attr("width", 85)
-        .attr("height", 40)
-        .attr("fill", "none")
-        .attr("stroke", "#02c415")
-        .attr("stroke-width", 1)
-        .attr("rx", 10)
-        .attr("ry", 10);
-
+ 
     svg
         .append("text")
         .attr("transform", "translate(" + label.x + " ," + (label.y + 15) + ")")
@@ -25,25 +14,13 @@ export const labelPrimaryNode = (svg, label) => {
     return svg;
 };
 
-export const labelFaultyNode = (svg, label) => {
-    svg
-        .append("rect")
-        .attr("x", label.x - 42.5)
-        .attr("y", label.y - 20)
-        .attr("width", 85)
-        .attr("height", 40)
-        .attr("fill", "none")
-        .attr("stroke", "#fc453f")
-        .attr("stroke-width", 1)
-        .attr("rx", 10)
-        .attr("ry", 10);
-
+export const labelFaultyNode = (svg, label, relativeSpecialLabelFont) => {
     svg
         .append("text")
         .attr("transform", "translate(" + label.x + " ," + (label.y + 15) + ")")
         .attr("fill", "#fc453f")
+        .style("font-size", '12px')
         .style("text-anchor", "middle")
-        .style("font-size", "11px")
         .text("Faulty");
 
     return svg;

@@ -129,7 +129,7 @@ const PBFT = ({
             .append("circle")
             .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
-            .attr("r", 2)
+            .attr("r", '1.5')
             .attr("fill", `${!theme ? "black" : "white"}`);
 
         const lineGen = line()
@@ -145,8 +145,8 @@ const PBFT = ({
                 .attr("viewBox", "0 0 10 10")
                 .attr("refX", 10)
                 .attr("refY", 5)
-                .attr("markerWidth", 6)
-                .attr("markerHeight", 6)
+                .attr("markerWidth", 5)
+                .attr("markerHeight", 5)
                 .attr("orient", "auto-start-reverse")
                 .append("path")
                 .attr("fill", `${COLORS_PBFT_GRAPH[index]}`)
@@ -175,12 +175,17 @@ const PBFT = ({
                 .attr("stroke-dasharray", "5,10")
         );
 
+        const relativeLabelFont = Math.floor((height+width)/120)
+        const relativeLabelYPos = Math.floor(relativeLabelFont/2)
+        const relativeLabelXPos = relativeLabelYPos - 4
+
         // LABELS FOR EACH ACTION
         labelsX.forEach((label) =>
             svg
                 .append("text")
-                .attr("transform", "translate(" + label.x + " ," + label.y + ")")
+                .attr("transform", "translate(" + label.x + " ," + (label.y + relativeLabelYPos - 2) + ")")
                 .attr("fill", colorMode)
+                .attr("font-size", relativeLabelFont)
                 .style("text-anchor", "middle")
                 .text(`${label.title}`)
         );
@@ -189,7 +194,8 @@ const PBFT = ({
         labelsY.forEach((label, _) => {
             const labelText = svg
                 .append("text")
-                .attr("transform", "translate(" + label.x + " ," + label.y + ")")
+                .attr("transform", "translate(" + (label.x + relativeLabelXPos) + " ," + label.y + ")")
+                .attr("font-size", relativeLabelFont)
                 .style("text-anchor", "middle")
                 .text(`${label.title}`)
                 .attr("fill", colorMode)
@@ -227,8 +233,10 @@ const PBFT = ({
                 if (!transactionsSet.current.has(value)) faultyReplicaIndices.add(value)
             }
 
+            const relativeSpecialLabelFont = Math.floor((height + width) / 120)
+
             labelsY.forEach((label, index) => {
-                if (faultyReplicaIndices.has(index)) return labelFaultyNode(faultyReplicasLabelSVG, label);
+                if (faultyReplicaIndices.has(index))  return labelFaultyNode(faultyReplicasLabelSVG, label, relativeSpecialLabelFont);
             })
 
             // IF PRIMARY DOES NOT EXIST AND VICEVERSA
@@ -277,7 +285,6 @@ const PBFT = ({
 
                 labelsY.forEach((label, index) => {
                     if (index === primaryIndex) return labelPrimaryNode(primaryLabelSVG, label);
-                    if (faultyReplicaIndices.has(index)) return labelFaultyNode(faultyReplicasLabelSVG, label);
                 })
 
                 points.request.end.length > 0 && points.request.end.forEach((end, i) => {
@@ -320,6 +327,7 @@ const PBFT = ({
             }
         }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [theme, dimensions, messageHistory, realTransactionNumber, clear]);
 
     useEffect(() => {
