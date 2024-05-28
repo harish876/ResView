@@ -1,5 +1,5 @@
 import { DATA_TABLE_NO_PRIMARY_EXISTS } from "../../../../Constants";
-import { dummyData } from "../data/data";
+import { dummyData } from "../Data/data";
 import { computeDataDetails } from "./CompPbft";
 
 let FAULTY_REPLICAS_DEFAULT = [false, false, false, false]

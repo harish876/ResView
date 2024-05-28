@@ -12,9 +12,8 @@ import {
   sunIcon,
   teamIcon
 } from "../../Resources/Icons";
-import { ICON_DEFAULT_COLOR, SUN_COLOR } from "./Constants";
 import { Icon } from "./Icon";
-import { BLOG_LINK, LOGO_DARK, LOGO_LIGHT, URL_HOME_PAGE, URL_TEAM_PAGE, URL_VISUALIZER_PAGE } from "../../Constants";
+import { BLOG_LINK, ICON_DEFAULT_COLOR, LOGO_DARK, LOGO_LIGHT, SUN_COLOR, URL_HOME_PAGE, URL_TEAM_PAGE, URL_VISUALIZER_PAGE } from "../../Constants";
 import { PbftGraphClearContext } from "../../Context/graph";
 
 const LightOrDark = memo(() => {

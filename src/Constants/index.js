@@ -119,3 +119,7 @@ export const WHAT_IS_RESVIEW = 'ResView provides a detailed understanding of con
 
 export const DATA_TABLE_NO_PRIMARY_EXISTS = 'No Primary Selected'
 export const DATA_TABLE_DELAY = 3000
+
+export const ICON_DEFAULT_COLOR = '#8f9299';
+export const COLOR_LIGHT = '#26D8C4';
+export const SUN_COLOR = '#fdb813';

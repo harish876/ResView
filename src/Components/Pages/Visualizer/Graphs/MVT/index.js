@@ -9,7 +9,7 @@ import ResizableContainer from "../GraphContainer";
 import Manipulator from "./Manipulator";
 import MvtGraph from "./Graph";
 import { mvtGraphComputation } from "../../Computation/MVT";
-import { dummyData } from "../../data/data";
+import { dummyData } from "../../Data/data";
 
 const LABEL_TOGGLES = { "Replica 1": true, "Replica 2": true, "Replica 3": true, "Replica 4": true }
 

@@ -1,5 +1,5 @@
 import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, COLORS_PBFT_GRAPH_LIGHT, NODES_PBFT_GRAPH, TITLES_PBFT_GRAPH } from "../../../../Constants";
-import { dummyData } from "../data/data";
+import { dummyData } from "../Data/data";
 
 const primaryIndexToPoint = {
     1: 2,
@@ -325,7 +325,7 @@ export const generatePoints = (
 
     const numberOfTotalSteps = numberOfSteps + 1;
 
-    const cummulativeH = height - (Math.floor((padding+margin)/1.5));
+    const cummulativeH = height - (Math.floor((padding + margin) / 1.5));
     const cummulativeW = width - (padding + margin);
 
     const distX = Math.floor(cummulativeW / numberOfSteps);

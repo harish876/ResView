@@ -1,8 +1,8 @@
 import React from 'react'
-import defaultProfileImage from '../../../Resources/Images/defaultProfileImage.png';
-import { Icon } from '../../Shared/Icon';
-import { githubIcon, linkedinIcon, instagramIcon } from "../../../Resources/Icons";
-import { ICON_DEFAULT_COLOR } from '../../Shared/Constants';
+import defaultProfileImage from '../../../../Resources/Images/defaultProfileImage.png';
+import { Icon } from '../../../Shared/Icon';
+import { githubIcon, linkedinIcon, instagramIcon } from "../../../../Resources/Icons";
+import { ICON_DEFAULT_COLOR } from '../../../../Constants';
 
 const linkToIcon = {
   github: githubIcon,

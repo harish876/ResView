@@ -2,7 +2,7 @@ import React from 'react'
 
 const Modal = ({ children, onClose, title }) => {
     return (
-        <>
+        <div className=''>
             <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40" />
             <div id="modal-overlay" tabIndex="-1" className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 flex justify-center items-center w-full h-full z-40" onClick={onClose}>
                 <div className="w-80per h-80per z-50 rounded-md border-3p bg-blue-10 dark:border-solid dark:bg-blue-450 flex flex-col animate-fade-in-drop">
@@ -17,12 +17,12 @@ const Modal = ({ children, onClose, title }) => {
                                 <span className="sr-only">Close modal</span>
                             </button>
                         </div>
-                        <div className="p-4 pb-8 w-full h-full">
+                    <div className="p-4 pb-8 w-full h-full">
                             {children}
                         </div>
                     </div>
             </div>
-        </>
+        </div>
     )
 }
 

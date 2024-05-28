@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { teamIcon } from '../../../Resources/Icons';
 import Title from '../../Shared/Title';
 import Wrapper from '../../Shared/Wrapper';
-import { CurrentTeamCard, PastMembersCard } from './Card';
-import { currentTeam, pastMembers } from './data';
+import { CurrentTeamCard, PastMembersCard } from './Components/Card';
+import { currentTeam, pastMembers } from './Data/data';
 import { NavbarToggleContext } from '../../../Context/navbarToggle';
 import Navbar from '../../Shared/Navbar';
 import { BorderToggleRef } from '../../../App';
@@ -18,7 +18,7 @@ const Team = () => {
       <div className='mt-4 mb-4 mx-8 grid grid-cols-2 gap-24 w-full h-full'>
         {currentTeam.length > 0 &&
           currentTeam.map((element, index) => (
-            <div key={index} data-aos='fade-in' data-aos-delay={100*index}>
+            <div key={index} data-aos='fade-in' data-aos-delay={100 * index}>
               <CurrentTeamCard element={element} />
             </div>
           ))}
