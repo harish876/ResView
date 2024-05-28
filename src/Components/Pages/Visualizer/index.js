@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { VISUALIZER_PAGE_SUBTITLE } from "../../../Constants";
+import { DATA_TABLE_DELAY, VISUALIZER_PAGE_SUBTITLE } from "../../../Constants";
 import { anglesRightIcon, eyeIcon } from "../../../Resources/Icons";
 import { WebSocket } from '../../../Socket';
 import { LinkButton } from '../../Shared/Buttons';
 import HRline from '../../Shared/HRline';
 import { Icon } from '../../Shared/Icon';
 import Title, { FontVarTitle, Subtitle } from '../../Shared/Title';
-import Wrapper from "../../Shared/Wrapper";
+import { VisualizerWrapper } from "../../Shared/Wrapper";
 import Mvt from './Graphs/MVT';
 import PBFT from './Graphs/PBFT';
 import Input from './Input';
-import ResizableContainer from './ResizableContainer';
-import TransInfo from './TransInfo';
+import GraphContainer from './Graphs/GraphContainer';
+import TransInfo from './TransComps/Info';
+import Footer from "../../Shared/Footer";
+import DataTable from './DataTable'
 
 
 const Visualizer = () => {
@@ -20,32 +22,32 @@ const Visualizer = () => {
     const [replicaStatus, setReplicaStatus] = useState([false, false, false, false])
 
 
-   const onMessage = (newData, txn_number)=>{
+    const onMessage = (newData, txn_number) => {
         setMessageHistory(JSON.parse(JSON.stringify(newData)));
         setCurrentTransaction(txn_number);
-      };
+    };
 
     function fetchWithTimeout(url, options, timeout = 5000) {
-    return Promise.race([
-        fetch(url, options),
-        new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Timeout')), timeout)
-        )
-    ]);
+        return Promise.race([
+            fetch(url, options),
+            new Promise((_, reject) =>
+                setTimeout(() => reject(new Error('Timeout')), timeout)
+            )
+        ]);
     }
-      
+
     function fetchReplicaStatuses() {
         let promises = [];
         let results = [false, false, false, false];
-    
+
         for (let i = 0; i < 4; i++) {
             //let port= parseInt(process.env.REACT_APP_DEFAULT_LOCAL_PORT)+i
             //let url = process.env.REACT_APP_DEFAULT_LOCAL + String(port) + process.env.REACT_APP_REPLICA_STATUS_EP
-            let port= parseInt(18501)+i
+            let port = parseInt(18501) + i
             let url = "http://localhost:" + String(port) + "/get_status"
             let promise = fetchWithTimeout(url)
                 .then(response => {
-                    return response.text(); 
+                    return response.text();
                 })
                 .then(body => {
                     if (body === 'Not Faulty') {
@@ -55,10 +57,10 @@ const Visualizer = () => {
                 .catch(error => {
                     console.error('Error:', error);
                 });
-    
+
             promises.push(promise);
         }
-    
+
         Promise.all(promises)
             .then(() => {
                 setReplicaStatus(results);
@@ -66,59 +68,59 @@ const Visualizer = () => {
     }
     useEffect(() => {
         const interval = setInterval(() => {
-          fetchReplicaStatuses();
+            fetchReplicaStatuses();
         }, 3000); // 3000 milliseconds = 3 seconds
-    
+
         return () => clearInterval(interval);
-      }, []);
+    }, []);
 
 
     return (
-        <Wrapper>
-            <div className="mt-6 mb-6">
-                <Title title={'Visualizer'} icon={eyeIcon} iconViewBox={'0 0 576 512'} titleFontSize={''} />
-            </div>
-            <div>
-                <Subtitle subtitle={VISUALIZER_PAGE_SUBTITLE} />
-            </div>
-            {<WebSocket onMessage={onMessage} />}
-            <div className="my-8">
-                <Input chooseTransaction={setCurrentTransaction} />
-            </div>
-            <div className="w-full">
-                <TransInfo messageHistory={messageHistory} transactionNumber={currentTransaction} status={replicaStatus} />
-            </div>
-            <div className="my-10 flex items-center jusitfy-center gap-x-16">
-                <LinkButton title={'PBFT Graph'} link={'/pages/visualizer'} scrollId={'pbft-graph'} />
-                <LinkButton title={'Messages v Time Graph'} link={'/pages/visualizer'} scrollId={'mvt-graph'} />
-            </div>
-            <div className="my-12 w-full">
-                <HRline />
-            </div>
-            <div className="" id='pbft-graph'>
-                <div className="mb-8">
-                    <FontVarTitle title={'Practical Byzantine Fault Tolerance Graph'} />
-                </div>
-                <ResizableContainer>
-                    <PBFT
+        <div className="py-6 h-full">
+            <TransInfo 
+                messageHistory={messageHistory} 
+                transactionNumber={currentTransaction} 
+                status={replicaStatus} 
+            />
+            <div className="ml-[220px] px-8 pt-6 h-full">
+                <div className="grid grid-cols-3f-1f gap-x-6 w-full h-full">
+                    <GraphContainer title={'Practical Byzantine Fault Tolerance'} heightBig>
+                        {/* <PBFT
                         messageHistory={messageHistory}
                         realTransactionNumber={currentTransaction}
+                    /> */}
+                    </GraphContainer>
+                    <GraphContainer title={'Transactions Overview'} heightBig disableExpand>
+                        {/* <Input chooseTransaction={setCurrentTransaction} /> */}
+                        
+                    </GraphContainer>
+                </div>
+                <div className="my-8 px-24 w-full">
+                    <HRline />
+                </div>
+                <div className="">
+                    <Mvt
+                        messageHistory={messageHistory}
+                        currentTransaction={currentTransaction}
                     />
-                    <div className='absolute bottom-0 right-0 rotate-45'>
-                        <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
-                    </div>
-                </ResizableContainer>
+                </div>
+                <div className="my-10 px-24 w-full">
+                    <HRline />
+                </div>
+                <div className="px-24">
+                    <DataTable 
+                        messageHistory={messageHistory} 
+                        delay={DATA_TABLE_DELAY}
+                    />
+                </div>
+                <div className="mt-10 mb-24 px-24 w-full">
+                    <HRline />
+                </div>
+                <div className="mb-[-2em]">
+                    <Footer />
+                </div>
             </div>
-            <div className="mt-24 mb-16 w-full">
-                <HRline />
-            </div>
-            <div className="" id="mvt-graph">
-                <Mvt
-                    messageHistory={messageHistory}
-                    currentTransaction={currentTransaction}
-                />
-            </div>
-        </Wrapper>
+        </div>
     )
 }
 
@@ -133,6 +135,3 @@ const index = () => {
 
 
 export default index
-
-
-
