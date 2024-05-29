@@ -44,6 +44,10 @@ const Visualizer = () => {
             //let port= parseInt(18501)+i
             let port= parseInt(22501)+i
             let url = "http://localhost:" + String(port) + "/get_status"
+            if(i==2){ 
+                url = "http://54.208.98.67:" + String(port) + "/get_status"
+            }
+            
             let promise = fetchWithTimeout(url)
                 .then(response => {
                     return response.text(); 
