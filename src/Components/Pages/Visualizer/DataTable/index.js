@@ -94,8 +94,9 @@ const TableValues = ({ srNo, transaction, replicaDetailsKeys, loading }) => {
 const DataTable = ({ messageHistory, delay = 3000 }) => {
 
     const [tableLoading, setTableLoading] = useState(false);
-
-    const [tableData, setTableData] = useState();
+    const [tableData, setTableData] = useState({});
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
 
     useEffect(() => {
         setTableLoading(true)
@@ -111,6 +112,24 @@ const DataTable = ({ messageHistory, delay = 3000 }) => {
 
         return () => clearTimeout(timeoutId);
     }, [messageHistory, delay]);
+
+    const totalPages = tableData ? Math.ceil(Object.keys(tableData).length / itemsPerPage) : 1;
+
+    const startRecord = (currentPage - 1) * itemsPerPage + 1;
+    const endRecord = Math.min(currentPage * itemsPerPage, tableData ? Object.keys(tableData).length : 0);
+
+    const handleChangePage = (direction) => {
+        setCurrentPage((prevPage) => {
+            if (direction === 'next' && prevPage < totalPages) {
+                return prevPage + 1;
+            } else if (direction === 'prev' && prevPage > 1) {
+                return prevPage - 1;
+            }
+            return prevPage;
+        });
+    };
+
+    const currentTableData = tableData ? Object.keys(tableData).slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage) : [];
 
     return (
         <>
@@ -160,14 +179,14 @@ const DataTable = ({ messageHistory, delay = 3000 }) => {
                                 </>
                             ) : (
                                 <>
-                                    {typeof tableData !== 'undefined' && Object.keys(tableData).map((transactionKey, index) => {
+                                    {currentTableData.map((transactionKey, index) => {
                                         const transaction = tableData[transactionKey];
                                         const replicaDetailsKeys = Object.keys(transaction.replicaDetails);
                                         return (
                                             <TableValues
                                                 className='cursor-pointer'
                                                 key={transactionKey}
-                                                srNo={index + 1}
+                                                srNo={index + 1 + (currentPage - 1) * itemsPerPage}
                                                 transaction={transaction} replicaDetailsKeys={replicaDetailsKeys}
                                             />
                                         );
@@ -177,7 +196,14 @@ const DataTable = ({ messageHistory, delay = 3000 }) => {
                         </tbody>
                     </table>
                 </div>
-                <Carousel />
+                <Carousel 
+                    onPrev={() => handleChangePage('prev')} onNext={() => handleChangePage('next')} nextDisabled={currentPage === totalPages} prevDisabled={currentPage === 1} 
+                    startRecord={startRecord}
+                    endRecord={endRecord}
+                    data={tableData}
+                    currentData={currentTableData}
+                    loading={tableLoading}
+                />
             </div>
         </>
     )
