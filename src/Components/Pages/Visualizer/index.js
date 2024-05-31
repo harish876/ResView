@@ -42,10 +42,13 @@ const Visualizer = () => {
             //let port= parseInt(process.env.REACT_APP_DEFAULT_LOCAL_PORT)+i
             //let url = process.env.REACT_APP_DEFAULT_LOCAL + String(port) + process.env.REACT_APP_REPLICA_STATUS_EP
             //let port= parseInt(18501)+i
-            let port= parseInt(22501)+i
+            let port= parseInt(25501)+i
             let url = "http://localhost:" + String(port) + "/get_status"
             if(i==2){ 
                 url = "http://54.208.98.67:" + String(port) + "/get_status"
+            }
+            if(i==3){
+                url = "replica4.resilientdb.com" + "/get_status"
             }
             
             let promise = fetchWithTimeout(url)
