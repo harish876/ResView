@@ -39,7 +39,7 @@ const CellValues = ({ value, loading, replicaDetailsKeys, replicaDetailsBool, pr
 const TableValues = ({ srNo, transaction, replicaDetailsKeys, loading }) => {
     return (
         <Fragment>
-            <tr className=''>
+            <tr className='cursor-pointer hover:bg-black'>
                 <CellValues
                     value={srNo}
                     loading={loading}
@@ -63,7 +63,7 @@ const TableValues = ({ srNo, transaction, replicaDetailsKeys, loading }) => {
             {replicaDetailsKeys.map((replicaKey, index) => {
                 const replica = transaction.replicaDetails[replicaKey];
                 return (
-                    <tr key={replicaKey} className='border-b-1p'>
+                    <tr key={replicaKey} className='border-b-2p'>
                         <CellValues
                             value={replicaKey}
                             loading={loading}

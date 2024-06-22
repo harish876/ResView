@@ -43,8 +43,8 @@ export const CurrentTeamCard = ({ element }) => {
         <div className='truncate text-20p bold text-black max-w-200p dark:text-white font-bold'>
           {name}
         </div>
-        <div className='text-14p'>{title}</div>
-        <div className='text-14p italic'>"{quote}"</div>
+        <div className='text-16p'>{title}</div>
+        <div className='text-14p'>{quote}</div>
         <div className='flex items-center justify-between gap-x-6'>
           {socials.length > 0 &&
             socials.map((element, index) => (
