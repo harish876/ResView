@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { teamIcon } from '../../../Resources/Icons';
-import Title from '../../Shared/Title';
+import Title, { Subtitle } from '../../Shared/Title';
 import Wrapper from '../../Shared/Wrapper';
 import { CurrentTeamCard, PastMembersCard } from './Components/Card';
 import { currentTeam, pastMembers } from './Data/data';
@@ -12,8 +12,11 @@ import Footer from '../../Shared/Footer';
 const Team = () => {
   return (
     <Wrapper>
-      <div className="mt-8 mb-16">
+      <div className="mt-8">
         <Title title={'Team'} icon={teamIcon} iconViewBox={'0 0 640 512'} titleFontSize={''} />
+      </div>
+      <div className='mt-6 mb-16'>
+        <Subtitle subtitle={'Designed and developed at the Exploratory Systems Lab @ UC Davis'} />
       </div>
       <div className='mt-4 mb-4 mx-8 grid grid-cols-2 gap-24 w-full h-full'>
         {currentTeam.length > 0 &&

@@ -130,7 +130,7 @@ const Navbar = memo(() => {
           </a>
           <NavComp
             title={"Visualizer"}
-          page={URL_VISUALIZER_PAGE}
+            page={URL_VISUALIZER_PAGE}
             icon={linearGraphIcon}
             iconHeight={"1.5em"}
           />

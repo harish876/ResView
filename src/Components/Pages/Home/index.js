@@ -13,7 +13,7 @@ import Footer from '../../Shared/Footer';
 const Home = () => {
   
   return (
-    <Wrapper>
+    <>
       <div aria-hidden="true" className="absolute inset-0 grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20">
         <div className="blur-[200px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:from-blue-700"></div>
         <div className="blur-[200px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600"></div>
@@ -22,38 +22,42 @@ const Home = () => {
         <div className="relative pt-20 ml-auto">
           <div className="lg:w-2/3 text-center mx-auto">
 
-            <div className="text-gray-900 dark:text-white font-bold text-5xl md:text-6xl xl:text-7xl">Visualizer for a new age blockchain fabric.</div>
+            <div className="w-full mt-20 flex items-center justify-center flex-col" >
+              <div className="text-gray-900 dark:text-white font-bold text-8xl md:text-6xl xl:text-7xl px-[2em]">Visualizer for New Age Blockchain Fabrics</div>
 
-            <p className="mt-8 px-[6em] text-gray-700 dark:text-gray-300 text-20p">A novel dashboard metric of a blockchain database system, offering new users and learners a clear visualization of a complex technology.
-              </p>
-            <div className="mt-16 flex items-center justify-center gap-y-4 gap-x-[4em]">
+              <div className="mt-10 px-[24em] text-gray-700 dark:text-gray-300 text-20p">A novel graphical visualizer for the ResDB blockchain fabric, offering new users and learners a clear visualization of a complex technology.
+              </div>
+            </div>
+            <div className="mt-14 flex items-center justify-center gap-y-4 gap-x-[4em]">
               <LinkButton title={'Visualizer'} link={URL_VISUALIZER_PAGE} external={true} />
                   <LinkButton title={'Learn More'} link={BLOG_LINK} external={true} />
                 </div>
-            <div className="py-8 mt-16 px-2 border-y-3p border-gray-900 dark:border-white sm:flex flex items-center justify-between">
-                    <div className="text-center">
-                        <h6 className="text-lg font-semibold text-gray-700 dark:text-white">Super Fast & Cheap</h6>
-                        <p className="mt-2 text-gray-500">Intensively optimiazed computation</p>
-                    </div>
-                    <div className="text-center">
-                        <h6 className="text-lg font-semibold text-gray-700 dark:text-white">Wide range integration</h6>
-                        <p className="mt-2 text-gray-500">All the blocks no fuss!</p>
-                    </div>
-                    <div className="text-center">
-                        <h6 className="text-lg font-semibold text-gray-700 dark:text-white">Seeing is believing</h6>
-                        <p className="mt-2 text-gray-500">Check out all BC actions</p>
-                    </div>
+            <Wrapper>
+              <div className="py-8 mt-2 px-2 border-y-3p border-gray-900 dark:border-white sm:flex flex items-center justify-between w-full">
+                <div className="text-center">
+                  <h6 className="text-lg font-semibold text-gray-700 dark:text-white">Super Fast & Cheap</h6>
+                  <p className="mt-2 text-gray-500">Intensively optimized computation</p>
                 </div>
+                <div className="text-center">
+                  <h6 className="text-lg font-semibold text-gray-700 dark:text-white">Wide range integration</h6>
+                  <p className="mt-2 text-gray-500">All the blocks no fuss!</p>
+                </div>
+                <div className="text-center">
+                  <h6 className="text-lg font-semibold text-gray-700 dark:text-white">Seeing is believing</h6>
+                  <p className="mt-2 text-gray-500">Check out all BC actions</p>
+                </div>
+              </div>
+            </Wrapper>
             </div>
-            <div className="mt-28">
+            <div className="mt-20">
             <PbftIntro />
             </div>
-            <div className="mt-28">
+            <div className="mt-6 mb-16">
               <Graphs />
             </div>
         </div>
     </div>
-    </Wrapper>
+    </>
   );
 };
 

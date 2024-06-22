@@ -28,7 +28,7 @@ const Title = ({ title, icon, iconHeight, iconViewBox }) => {
 
 export const Subtitle = ({ subtitle }) => {
     return (
-        <div className='text-16p text-center dark:text-white text-gray-170 w-750p'>
+        <div className='text-18p text-center dark:text-white text-gray-170 w-750p'>
             {subtitle}
         </div>
     );

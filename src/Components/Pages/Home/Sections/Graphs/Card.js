@@ -55,7 +55,7 @@ const Card = ({
   };
 
   return (
-    <div className='mt-2 mb-2 mx-0 w-750p'>
+    <div className='mt-2 mb-2 mx-0 w-920p'>
       <div className={
         classNames('grid gap-x-4 items-center justify-center',
         {'grid-cols-1-1.5fr': inverted},

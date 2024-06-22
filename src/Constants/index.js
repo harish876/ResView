@@ -1,7 +1,7 @@
-export const URL_HOME_PAGE = '/home'
-export const URL_TEAM_PAGE = '/team'
-export const URL_VISUALIZER_PAGE = '/visualizer'
-export const URL_REROUTE_PAGE = '/home'
+export const URL_HOME_PAGE = '/pages/home'
+export const URL_TEAM_PAGE = '/pages/team'
+export const URL_VISUALIZER_PAGE = '/pages/visualizer'
+export const URL_REROUTE_PAGE = '/pages/home'
 
 export const LOGO_DARK = 'https://i.postimg.cc/jd6PkhDs/Res-View-Logo-Dark.png'
 export const LOGO_LIGHT = 'https://i.postimg.cc/Y0dMy9mf/Copy-of-Untitled-Design-removebg-preview.png'
@@ -110,8 +110,6 @@ export const PBFT_ANIMATION_SPEEDS_NO_PRIMARY = {
 }
 
 export const NUMBER_OF_STEPS_PBFT_GRAPH = 5;
-
-export const VISUALIZER_PAGE_SUBTITLE = 'Scroll below to check out the bespoke Visualizer for PBFT which has the PBFT simulation graph including sim manipulation toggles and the messages vs time graph along with the transaction information.';
 
 export const WHAT_IST_PBFT_SUBTITLE = 'Practical Byzantine Fault Tolerance (PBFT) is a consensus algorithm in distributed systems to reach an agreement among nodes on a single, consistent order of transactions, even in the presence of faulty or malicious nodes.'
 
