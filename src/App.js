@@ -1,4 +1,4 @@
-import { Suspense, useContext, useState } from 'react';
+import { Suspense, useContext, useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from './Components/Pages/Home';
@@ -16,6 +16,8 @@ import { AllProviders } from './Context';
 import { NavbarToggleContext } from './Context/navbarToggle';
 import { ThemeContext } from './Context/theme';
 import './Styles/App.css';
+import { initParticlesEngine } from '@tsparticles/react';
+import { loadSlim } from '@tsparticles/slim';
 
 export const BorderToggleRef = () => {
   const { bToggleElement } = useContext(NavbarToggleContext);
@@ -27,6 +29,7 @@ export const BorderToggleRef = () => {
 
 const PreSynthApp = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [init, setInit] = useState(false);
   const { toggleLightTheme, toggleDarkTheme } = useContext(ThemeContext);
 
   if (localStorage.getItem("theme") === "light") {
@@ -37,10 +40,18 @@ const PreSynthApp = () => {
     document.documentElement.setAttribute("data-theme", "dark");
   }
 
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine);
+    }).then(() => {
+      setInit(true);
+      setIsLoading(false);
+    });
+  }, []);
 
   return (
     <>
-      {/* <ParticleWrapper setIsLoading={setIsLoading} /> */}
+      <ParticleWrapper init={init} />
       {isLoading ? (
         <Loader />
       ) : (

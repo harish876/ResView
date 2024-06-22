@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useState, useContext } from "react";
-import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { loadSlim } from "@tsparticles/slim";
+import Particles from "@tsparticles/react";
+import { useContext, useMemo } from "react";
 import { ThemeContext } from "../../Context/theme";
 
 const themeObj = {
@@ -81,23 +80,8 @@ const themeObj = {
     },
 }
 
-const ParticleWrapper = ({ setIsLoading }) => {
-    const [init, setInit] = useState(false);
+const ParticleWrapper = ({ setIsLoading, init }) => {
     const { theme } = useContext(ThemeContext);
-
-    useEffect(() => {
-        initParticlesEngine(async (engine) => {
-            await loadSlim(engine);
-        }).then(() => {
-            setInit(true);
-            setIsLoading(false);
-        });
-    }, []);
-
-    const particlesLoaded = (container) => {
-        // console.log(container);
-    };
-
     const options = useMemo(() => {
         const currentThemeObj = theme ? {
             ...themeObj,
@@ -123,7 +107,7 @@ const ParticleWrapper = ({ setIsLoading }) => {
         return (
             <Particles
                 id="tsparticles"
-                particlesLoaded={particlesLoaded}
+                particlesLoaded={() => {}}
                 options={options}
             />
         );
