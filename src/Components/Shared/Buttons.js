@@ -2,7 +2,6 @@ import classNames from 'classnames'
 import React, { useContext, useState } from 'react'
 import { loadingPartialBueIcon } from '../../Resources/Icons'
 import { Link } from 'react-router-dom'
-import { GraphViewContext } from '../../Context/graph'
 
 const LINK_BUTTON_CLASSES = "relative flex h-11 w-220p items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border-3p before:border-blue-500 before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark: before:border-gray-700 dark:before:bg-gray-800 sm:w-max cursor-pointer"
 
@@ -52,19 +51,6 @@ export const ReplicaButton = ({ title, onClick, faulty, lineToggle, lineActive }
     return (
         <div onClick={handleClick} className={classNames(`${REPLICA_BUTTON_CLASSES} w-100p`, { 'dark:before:bg-red-400 dark:before:border-red-700 before:border-red-500 before:bg-red-100': faulty && !lineActive, 'dark:before:bg-gray-800 dark:before:border-gray-700 before:border-blue-500 before:bg-primary/10': !faulty && !lineActive, 'dark:before:bg-green-900 dark:before:border-green-700 before:border-green-500 before:bg-green-400': !faulty && lineActive }, { 'before:rounded-full': !lineToggle, 'before:rounded-md': lineToggle })}>
             <span className="relative text-14p text-primary dark:text-white">{title}</span >
-        </div>
-    )
-}
-
-export const MvTSelectButton = ({ title, onClick, graphNo }) => {
-    const { mvtGraphNo } = useContext(GraphViewContext);
-
-    const handleClick = () => {
-        onClick()
-    };
-    return (
-        <div onClick={handleClick} className={classNames(`${REPLICA_BUTTON_CLASSES} before:rounded-full w-200p`, { 'dark:before:bg-gray-500 dark:before:border-gray-50 before:border-gray-800 before:bg-gray-100 text-white': graphNo === mvtGraphNo, 'dark:before:bg-gray-800 dark:before:border-gray-700 before:border-blue-500 before:bg-primary/10': graphNo !== mvtGraphNo })}>
-            <span className="relative text-base font-semibold text-primary dark:text-white">{title}</span >
         </div>
     )
 }

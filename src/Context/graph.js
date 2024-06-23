@@ -24,14 +24,6 @@ export const GraphResizerProvider = ({ children }) => {
   );
 };
 
-// CONTEXT FOR THE GRAPH VIEW
-export const GraphViewContext = createContext({
-  graph: "MvT",
-  mvtGraphNo: 1,
-  toggleGraphChange: () => {},
-  toggleMvtGraphNoChange: () => {},
-});
-
 
 // CONTEXT FOR PBFT GRAPH ANIMATION SPEEDS 
 export const PbftAnimationSpeedContext = createContext({

@@ -1,9 +1,9 @@
 
 import { useContext, useEffect, useState } from "react";
-import { GraphResizerContext, GraphViewContext } from "../../../../../Context/graph";
+import { GraphResizerContext } from "../../../../../Context/graph";
 import { VizDataHistoryContext } from "../../../../../Context/visualizer";
-import { dummyData } from "../../Ancilliary/Data/data";
 import { mvtGraphComputation } from "../../Ancilliary/Computation/MVT";
+import { dummyData } from "../../Ancilliary/Data/data";
 import ResizableContainer from "../Components/GraphContainer";
 import MvtGraph from "./Components/Graph";
 import Manipulator from "./Components/Manipulator";
@@ -16,8 +16,6 @@ const FAULT_TOGGLES = { "Replica 1": false, "Replica 2": false, "Replica 3": fal
 const Mvt = () => {
     const { resizing } = useContext(GraphResizerContext);
     const { messageHistory, currentTransaction } = useContext(VizDataHistoryContext)
-
-    const { toggleMvtGraphNoChange } = useContext(GraphViewContext);
 
     const [messageChartData, setMessageChartData] = useState([]);
     const [chartMaxData, setChartMaxData] = useState({});
