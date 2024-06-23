@@ -11,12 +11,14 @@ import { Icon } from "../../../../Shared/Icon";
 import { connectionRender, labelFaultyNode, labelPrimaryNode } from "../../Computation/D3Pbft";
 import { generateConnections, generateLabels, generateLines, generatePoints } from "../../Computation/CompPbft";
 import GraphContainer from "../GraphContainer";
+import { VizDataHistoryContext } from "../../../../../Context/visualizer";
 
 const PBFT = ({
-    messageHistory,
-    realTransactionNumber
 }) => {
     const { speed, changeSpeed } = useContext(PbftAnimationSpeedContext);
+
+    const { messageHistory, currentTransaction } = useContext(VizDataHistoryContext)
+
     const {
         TRANSDURATION,
         REQUEST_BUFFER,
@@ -42,7 +44,7 @@ const PBFT = ({
     const colorMode = !theme ? 'black' : "#c4c4c4";
     const pointColorMode = theme ? '#edf0f5' : '#464747';
 
-    const [transactionNumber, setTransactionNumber] = useState(realTransactionNumber);
+    const [transactionNumber, setTransactionNumber] = useState(currentTransaction);
     const [playing, setPlaying] = useState(true);
 
     const graphRef = useRef(null);
@@ -104,7 +106,7 @@ const PBFT = ({
             xCoords,
             yCoords,
             messageHistory,
-            realTransactionNumber,
+            currentTransaction,
             theme
         );
 
@@ -328,7 +330,7 @@ const PBFT = ({
         }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [theme, dimensions, messageHistory, realTransactionNumber, clear]);
+    }, [theme, dimensions, messageHistory, currentTransaction, clear]);
 
     useEffect(() => {
         debouncedRender();

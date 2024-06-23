@@ -1,0 +1,84 @@
+import React, { createContext, useEffect, useState } from "react";
+
+export const VizDataHistoryContext = createContext({
+    messageHistory: {},
+    changeMessageHistory: () => {},
+    currentTransaction: 17,
+    changeCurrentTransaction: () => {},
+    replicaStatus: [false, false, false, false]
+});
+
+export const VizDataHistoryProvider = ({ children }) => {
+    const { Provider } = VizDataHistoryContext;
+    const [messageHistory, setMessageHistory] = useState({});
+    const [currentTransaction, setCurrentTransaction] = useState(17);
+    const [replicaStatus, setReplicaStatus] = useState([false, false, false, false])
+
+
+    const changeMessageHistory = (value) => {
+        setMessageHistory(value)
+    }
+
+    const changeCurrentTransaction = (value) => {
+        setCurrentTransaction(value)
+    }
+
+    const onMessage = (newData, txn_number) => {
+        changeMessageHistory(JSON.parse(JSON.stringify(newData)));
+        changeCurrentTransaction(txn_number);
+    };
+
+    const fetchWithTimeout = (url, options, timeout = 5000) => {
+        return Promise.race([
+            fetch(url, options),
+            new Promise((_, reject) =>
+                setTimeout(() => reject(new Error('Timeout')), timeout)
+            )
+        ]);
+    }
+
+    const fetchReplicaStatuses = () => {
+        let promises = [];
+        let results = [false, false, false, false];
+
+        for (let i = 0; i < 4; i++) {
+            //let port= parseInt(process.env.REACT_APP_DEFAULT_LOCAL_PORT)+i
+            //let url = process.env.REACT_APP_DEFAULT_LOCAL + String(port) + process.env.REACT_APP_REPLICA_STATUS_EP
+            let port = parseInt(18501) + i
+            let url = "http://localhost:" + String(port) + "/get_status"
+            let promise = fetchWithTimeout(url)
+                .then(response => {
+                    return response.text();
+                })
+                .then(body => {
+                    if (body === 'Not Faulty') {
+                        results[i] = true;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+            promises.push(promise);
+        }
+
+        Promise.all(promises)
+            .then(() => {
+                setReplicaStatus(results);
+            });
+    }
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            fetchReplicaStatuses();
+        }, 3000); // 3000 milliseconds = 3 seconds
+
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
+        <Provider value={{ messageHistory, changeMessageHistory, changeCurrentTransaction, replicaStatus }}>
+            {children}
+        </Provider>
+    )
+}

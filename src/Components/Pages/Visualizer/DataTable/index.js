@@ -1,10 +1,11 @@
 import classNames from 'classnames';
-import React, { Fragment, useEffect, useState } from 'react';
-import { DATA_TABLE_NO_PRIMARY_EXISTS } from '../../../../Constants';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
+import { DATA_TABLE_DELAY, DATA_TABLE_NO_PRIMARY_EXISTS } from '../../../../Constants';
 import { computeTableData } from '../Computation/TransInfo';
 import { tableDataDummy } from '../Data/data';
 import { FontVarTitle } from '../../../Shared/Title';
 import Carousel from './Carousel';
+import { VizDataHistoryContext } from '../../../../Context/visualizer';
 
 const TABLE_HEADERS = {
     1: [
@@ -91,7 +92,9 @@ const TableValues = ({ srNo, transaction, replicaDetailsKeys, loading }) => {
     );
 }
 
-const DataTable = ({ messageHistory, delay = 3000 }) => {
+const DataTable = ({ delay = DATA_TABLE_DELAY }) => {
+
+    const { messageHistory } = useContext(VizDataHistoryContext)
 
     const [tableLoading, setTableLoading] = useState(false);
     const [tableData, setTableData] = useState({});

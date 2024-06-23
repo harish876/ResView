@@ -2,6 +2,7 @@ import React from "react";
 import { GraphResizerProvider, PbftAnimationSpeedProvider, PbftGraphClearProvider } from "./graph";
 import { NavbarToggleProvider } from "./navbarToggle";
 import { ThemeProvider } from "./theme";
+import { VizDataHistoryProvider } from "./visualizer";
 
 
 // COMBINED PROVIDER FOR ALL CONTEXT
@@ -23,4 +24,5 @@ export const AllProviders = CombineProviders([
   [NavbarToggleProvider],
   [PbftAnimationSpeedProvider],
   [PbftGraphClearProvider],
+  [VizDataHistoryProvider],
 ]);

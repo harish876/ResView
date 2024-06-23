@@ -10,14 +10,17 @@ import Manipulator from "./Manipulator";
 import MvtGraph from "./Graph";
 import { mvtGraphComputation } from "../../Computation/MVT";
 import { dummyData } from "../../Data/data";
+import { VizDataHistoryContext } from "../../../../../Context/visualizer";
 
 const LABEL_TOGGLES = { "Replica 1": true, "Replica 2": true, "Replica 3": true, "Replica 4": true }
 
 const FAULT_TOGGLES = { "Replica 1": false, "Replica 2": false, "Replica 3": false, "Replica 4": false }
 
 
-const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
+const Mvt = () => {
     const { resizing } = useContext(GraphResizerContext);
+    const { messageHistory, currentTransaction } = useContext(VizDataHistoryContext)
+
     const { toggleMvtGraphNoChange } = useContext(GraphViewContext);
 
     const [messageChartData, setMessageChartData] = useState([]);

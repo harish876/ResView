@@ -6,6 +6,7 @@ import { cancelIcon, tickIcon } from '../../../../Resources/Icons';
 import HRline from '../../../Shared/HRline';
 import { Icon } from '../../../Shared/Icon';
 import { computeTransInfo } from '../Computation/TransInfo';
+import { VizDataHistoryContext } from '../../../../Context/visualizer';
 
 const LINK_BUTTON_CLASSES = "relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border-3p before:border-blue-500 before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark: before:border-gray-700 dark:before:bg-gray-800 sm:w-max cursor-pointer"
 
@@ -47,13 +48,15 @@ const LinkButton = ({ title, link }) => {
     )
 }
 
-const TransInfo = ({ primary, numberOfReplicas, messageHistory, transactionNumber = 17, status }) => {
+const TransInfo = ({ primary, numberOfReplicas }) => {
+
+    const { messageHistory, currentTransaction, replicaStatus } = useContext(VizDataHistoryContext)
 
     const { theme } = useContext(ThemeContext);
 
     const logo = theme ? LOGO_DARK : LOGO_LIGHT;
 
-    const { primaryIndex, currentStatus } = computeTransInfo(messageHistory, transactionNumber, status)
+    const { primaryIndex, currentStatus } = computeTransInfo(messageHistory, currentTransaction, replicaStatus)
 
 
     return (
@@ -81,7 +84,7 @@ const TransInfo = ({ primary, numberOfReplicas, messageHistory, transactionNumbe
                 Current Transaction
             </div>
             <div>
-                <BasicInfoTile title={'Transaction #'} info={transactionNumber ?? `17`} />
+                <BasicInfoTile title={'Transaction #'} info={currentTransaction ?? `17`} />
             </div>
             <div>
                 <BasicInfoTile title={'Primary'} info={primary ?? `Replica ${primaryIndex}`} />
