@@ -6,11 +6,11 @@ import Footer from "../../Shared/Footer";
 import HRline from '../../Shared/HRline';
 import { Icon } from "../../Shared/Icon";
 import { FontVarTitle } from "../../Shared/Title";
-import DataTable from './DataTable';
+import DataTable from './Table';
 import Mvt from './Graphs/Mvt';
 import Pbft from './Graphs/Pbft';
-import TransInfo from './TransComps/Info';
-import TransAnalyticsItem from "./TransComps/TransAnalyticsItem";
+import TransInfo from './TransComps';
+import TransAnalyticsItem from "./TransComps/Components/AnalyticsItem";
 import { WebSocket } from "../../../Socket";
 
 

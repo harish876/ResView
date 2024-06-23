@@ -10,7 +10,7 @@ import { DropDownButtons, IconButtons } from "../../../../Shared/Buttons";
 import { Icon } from "../../../../Shared/Icon";
 import { connectionRender, labelFaultyNode, labelPrimaryNode } from "../../Computation/D3Pbft";
 import { generateConnections, generateLabels, generateLines, generatePoints } from "../../Computation/CompPbft";
-import GraphContainer from "../GraphContainer";
+import GraphContainer from "../Components/GraphContainer";
 import { VizDataHistoryContext } from "../../../../../Context/visualizer";
 
 const PBFT = () => {
@@ -175,8 +175,8 @@ const PBFT = () => {
                 .attr("stroke-dasharray", "5,10")
         );
 
-        const relativeLabelFont = Math.floor((height+width)/120)
-        const relativeLabelYPos = Math.floor(relativeLabelFont/2)
+        const relativeLabelFont = Math.floor((height + width) / 120)
+        const relativeLabelYPos = Math.floor(relativeLabelFont / 2)
         const relativeLabelXPos = relativeLabelYPos - 4
 
         // LABELS FOR EACH ACTION
@@ -236,7 +236,7 @@ const PBFT = () => {
             const relativeSpecialLabelFont = Math.floor((height + width) / 120)
 
             labelsY.forEach((label, index) => {
-                if (faultyReplicaIndices.has(index))  return labelFaultyNode(faultyReplicasLabelSVG, label, relativeSpecialLabelFont);
+                if (faultyReplicaIndices.has(index)) return labelFaultyNode(faultyReplicasLabelSVG, label, relativeSpecialLabelFont);
             })
 
             // IF PRIMARY DOES NOT EXIST AND VICEVERSA
@@ -327,7 +327,7 @@ const PBFT = () => {
             }
         }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [theme, dimensions, messageHistory, currentTransaction, clear]);
 
     useEffect(() => {
@@ -386,15 +386,15 @@ const PBFT = () => {
                     </div>
                 ) : (
                     <> */}
-                        <svg id={'svg-one'} ref={graphRef} className='absolute'></svg>
-                        {!clear && (
-                            <>
-                                <svg ref={lineRef} className='absolute'></svg>
-                                <svg ref={primaryLabelRef} className='absolute'></svg>
-                                <svg ref={faultyReplicasLabelRef} className='absolute'></svg>
-                            </>
-                        )}
-                    {/* </>
+                <svg id={'svg-one'} ref={graphRef} className='absolute'></svg>
+                {!clear && (
+                    <>
+                        <svg ref={lineRef} className='absolute'></svg>
+                        <svg ref={primaryLabelRef} className='absolute'></svg>
+                        <svg ref={faultyReplicasLabelRef} className='absolute'></svg>
+                    </>
+                )}
+                {/* </>
                 )} */}
             </div>
         </GraphContainer>

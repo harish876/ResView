@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TransAnalyticsItem = ({ value }) => {
+const AnalyticsItem = ({ value }) => {
   return (
     <div className='flex flex-col items-center justify-center px-2 py-2 pt-3'>
           <div className={`dark:text-gray-300 text-gray-700 font-semibold text-center text-16p`}>
@@ -13,4 +13,4 @@ const TransAnalyticsItem = ({ value }) => {
   )
 }
 
-export default TransAnalyticsItem
+export default AnalyticsItem

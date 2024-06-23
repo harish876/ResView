@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import cn from "classnames";
 import { Tooltip } from "@mui/material";
-import { GraphViewContext } from "../../../../Context/graph";
+import { GraphViewContext } from "../../../../../Context/graph";
 
 // TODO: Change the arrow below once the name of the third graph is known
 const buttonRow = ["Form", "PBFT", "MvT"];

@@ -1,11 +1,11 @@
 import React, { createContext, useEffect, useState } from "react";
-import { dummyData } from "../Components/Pages/Visualizer/Data/data";
+import { dummyData } from "../Components/Pages/Visualizer/Ancilliary/Data/data";
 
 export const VizDataHistoryContext = createContext({
     messageHistory: {},
-    changeMessageHistory: () => {},
+    changeMessageHistory: () => { },
     currentTransaction: 17,
-    changeCurrentTransaction: () => {},
+    changeCurrentTransaction: () => { },
     replicaStatus: [false, false, false, false]
 });
 

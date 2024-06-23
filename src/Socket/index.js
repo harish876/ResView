@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { VizDataHistoryContext } from "../Context/visualizer";
-import { dummyData } from "../Components/Pages/Visualizer/Data/data";
+import { dummyData } from "../Components/Pages/Visualizer/Ancilliary/Data/data";
 
 export const WebSocket = () => {
 
@@ -24,11 +24,11 @@ export const WebSocket = () => {
   };
 
   const addMessage = (receivedMessage) => {
-    if(receivedMessage===null){
+    if (receivedMessage === null) {
       return;
     }
     //console.log(receivedMessage);
-    const reply= new Date().getTime();
+    const reply = new Date().getTime();
     let newMessage = {
       ...receivedMessage,
       reply_time: reply,
@@ -36,24 +36,24 @@ export const WebSocket = () => {
     const txn_number = String(newMessage.txn_number);
     const replica_number = String(newMessage.replica_id);
     updatedMessageList = allMessages.current;
-    if(txn_number in updatedMessageList){
+    if (txn_number in updatedMessageList) {
       let txn_messages = updatedMessageList[txn_number];
       txn_messages = {
         ...txn_messages,
         [replica_number]: newMessage,
       };
-      updatedMessageList[txn_number]= txn_messages;
+      updatedMessageList[txn_number] = txn_messages;
       //console.log("Received Message: ", updatedMessageList)
-      allMessages.current=updatedMessageList;
+      allMessages.current = updatedMessageList;
     }
-    else{
+    else {
       let txn_messages = {
         [replica_number]: newMessage,
       }
-      updatedMessageList[txn_number]= txn_messages;
+      updatedMessageList[txn_number] = txn_messages;
       //console.log("Received Message: ", updatedMessageList)
-      allMessages.current=updatedMessageList;
-      transactionCount.current = transactionCount.current+1;
+      allMessages.current = updatedMessageList;
+      transactionCount.current = transactionCount.current + 1;
     }
     //console.log(allMessages.current);
   }
@@ -69,7 +69,7 @@ export const WebSocket = () => {
         const newData = await response.json();
         // Update state with new data
         Object.keys(newData).map(key => {
-          if(!keyList.current[replicaPort].includes(key)){
+          if (!keyList.current[replicaPort].includes(key)) {
             keyList.current[replicaPort].push(key);
             addMessage(newData[key]);
             onMessage(allMessages.current, key);
@@ -83,7 +83,7 @@ export const WebSocket = () => {
     const updateStatus = async () => {
       //console.log(keyList);
       //console.log(allMessages);
-      for(var i =0; i<4; i++){
+      for (var i = 0; i < 4; i++) {
         fetchData(i);
       }
     }
