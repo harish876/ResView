@@ -5,8 +5,8 @@ import { VizDataHistoryContext } from "../../../../../Context/visualizer";
 import { dummyData } from "../../Ancilliary/Data/data";
 import { mvtGraphComputation } from "../../Ancilliary/Computation/MVT";
 import ResizableContainer from "../Components/GraphContainer";
-import MvtGraph from "./Graph";
-import Manipulator from "./Manipulator";
+import MvtGraph from "./Components/Graph";
+import Manipulator from "./Components/Manipulator";
 
 const LABEL_TOGGLES = { "Replica 1": true, "Replica 2": true, "Replica 3": true, "Replica 4": true }
 

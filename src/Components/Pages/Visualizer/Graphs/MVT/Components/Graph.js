@@ -1,7 +1,6 @@
 import { ResponsiveLine } from "@nivo/line";
 import { useContext } from "react";
-import { GraphViewContext } from "../../../../../Context/graph";
-import { ThemeContext } from "../../../../../Context/theme";
+import { ThemeContext } from "../../../../../../Context/theme";
 
 const themeObj = {
     "text": {

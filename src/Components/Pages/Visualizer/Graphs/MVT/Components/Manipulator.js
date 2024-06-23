@@ -1,7 +1,6 @@
-import { ReplicaButton } from "../../../../Shared/Buttons";
-import { FontVarTitle } from "../../../../Shared/Title";
-
-const MVT_GRAPH_LABELS = ['Replica 1', 'Replica 2', 'Replica 3', 'Replica 4']
+import { MVT_GRAPH_LABELS } from "../../../../../../Constants";
+import { ReplicaButton } from "../../../../../Shared/Buttons";
+import { FontVarTitle } from "../../../../../Shared/Title";
 
 const Manipulator = ({
     labelToggleFaulty,

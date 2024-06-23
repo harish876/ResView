@@ -114,3 +114,5 @@ export const TOTAL_NUMBER_OF_REPLICAS = 4;
 export const ICON_DEFAULT_COLOR = '#8f9299';
 export const COLOR_LIGHT = '#26D8C4';
 export const SUN_COLOR = '#fdb813';
+
+export const MVT_GRAPH_LABELS = ['Replica 1', 'Replica 2', 'Replica 3', 'Replica 4']
