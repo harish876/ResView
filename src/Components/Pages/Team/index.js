@@ -3,7 +3,7 @@ import { teamIcon } from '../../../Resources/Icons';
 import Title, { Subtitle } from '../../Shared/Title';
 import Wrapper from '../../Shared/Wrapper';
 import { CurrentTeamCard, PastMembersCard } from './Components/Card';
-import { currentTeam, pastMembers } from './Data/data';
+import { currentTeam, pastMembers } from './Ancilliary/Data/data';
 import { NavbarToggleContext } from '../../../Context/navbarToggle';
 import Navbar from '../../Shared/Navbar';
 import { BorderToggleRef } from '../../../App';
