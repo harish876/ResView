@@ -14,7 +14,7 @@ const FAULT_TOGGLES = { "Replica 1": false, "Replica 2": false, "Replica 3": fal
 
 const Mvt = () => {
     const { resizing } = useContext(GraphResizerContext);
-    const { messageHistory, currentTransaction, currentStatus } = useContext(VizDataHistoryContext)
+    const { messageHistory, currentTransaction, replicaStatus } = useContext(VizDataHistoryContext)
 
     const [messageChartData, setMessageChartData] = useState([]);
     const [chartMaxData, setChartMaxData] = useState({});
@@ -69,10 +69,18 @@ const Mvt = () => {
 
     useEffect(() => {
         const transactionData = messageHistory[currentTransaction];
+        setLabelToggleFaulty(FAULT_TOGGLES)
+
+        replicaStatus.length > 0 && replicaStatus.forEach((value, index) => {
+            if (!value) {
+                toggleFaulty(`Replica ${index + 1}`)
+                toggleLine(`Replica ${index + 1}`)
+            }
+        });
 
         mvtGraphComputation(transactionData, labelToggle, chartMaxDataUpdate, messageChartDataUpdate)
 
-    }, [messageHistory, currentTransaction, labelToggle, resetGraph, currentStatus]);
+    }, [messageHistory, currentTransaction, replicaStatus]);
 
     return (
         <div className="flex flex-col">

@@ -361,7 +361,7 @@ const PBFT = () => {
                 <div className="basis-1/4">
                     {doesPrimaryExist.current === -1 && (
                         <div className="text-amber-600 font-18p border-1p rounded-md p-1 border-amber-600 w-180p flex items-center justify-center ml-8">
-                            !No Primary Exists&#161;
+                            No Primary Exists
                         </div>
                     )}
                 </div>
