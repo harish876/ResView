@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import React, { Fragment, useContext, useEffect, useState } from 'react';
-import { DATA_TABLE_DELAY, DATA_TABLE_NO_PRIMARY_EXISTS } from '../../../../Constants';
+import { DATA_TABLE_NO_PRIMARY_EXISTS } from '../../../../Constants';
+import { VizDataHistoryContext } from '../../../../Context/visualizer';
+import { FontVarTitle } from '../../../Shared/Title';
 import { computeTableData } from '../Ancilliary/Computation/TransInfo';
 import { tableDataDummy } from '../Ancilliary/Data/data';
-import { FontVarTitle } from '../../../Shared/Title';
 import Carousel from './Components/Carousel';
-import { VizDataHistoryContext } from '../../../../Context/visualizer';
 
 const TABLE_HEADERS = {
     1: [
@@ -37,13 +37,18 @@ const CellValues = ({ value, loading, replicaDetailsKeys, replicaDetailsBool, pr
     );
 };
 
-const TableValues = ({ srNo, transaction, replicaDetailsKeys, loading }) => {
+const TableValues = ({ srNo, transaction, replicaDetailsKeys, loading, goToPbftGraph }) => {
 
     const { changeCurrentTransaction } = useContext(VizDataHistoryContext)
 
+    const changeTransaction = (value) => {
+        changeCurrentTransaction(value)
+        goToPbftGraph();
+    }
+
     return (
         <Fragment>
-            <tr className='cursor-pointer hover:bg-black' onClick={() => changeCurrentTransaction(transaction.transactionNumber)}>
+            <tr className={classNames({ 'cursor-pointer hover:bg-black': !loading})} onClick={() => !loading && changeTransaction(transaction.transactionNumber)}>
                 <CellValues
                     value={srNo}
                     loading={loading}
@@ -95,7 +100,7 @@ const TableValues = ({ srNo, transaction, replicaDetailsKeys, loading }) => {
     );
 }
 
-const DataTable = ({ delay = DATA_TABLE_DELAY }) => {
+const DataTable = ({ goToPbftGraph, delay }) => {
 
     const { messageHistory } = useContext(VizDataHistoryContext)
 
@@ -179,6 +184,7 @@ const DataTable = ({ delay = DATA_TABLE_DELAY }) => {
                                                 srNo={index + 1}
                                                 transaction={transaction} replicaDetailsKeys={replicaDetailsKeys}
                                                 loading={tableLoading}
+                                                goToPbftGraph={goToPbftGraph}
                                             />
                                         );
                                     })}
@@ -194,6 +200,7 @@ const DataTable = ({ delay = DATA_TABLE_DELAY }) => {
                                                 key={transactionKey}
                                                 srNo={index + 1 + (currentPage - 1) * itemsPerPage}
                                                 transaction={transaction} replicaDetailsKeys={replicaDetailsKeys}
+                                                goToPbftGraph={goToPbftGraph}
                                             />
                                         );
                                     })}

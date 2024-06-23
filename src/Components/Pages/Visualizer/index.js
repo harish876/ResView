@@ -8,10 +8,11 @@ import { Icon } from "../../Shared/Icon";
 import { FontVarTitle } from "../../Shared/Title";
 import DataTable from './Table';
 import Mvt from './Graphs/Mvt';
-import Pbft from './Graphs/Pbft';
 import TransInfo from './TransComps';
 import TransAnalyticsItem from "./TransComps/Components/AnalyticsItem";
 import { WebSocket } from "../../../Socket";
+import Pbft from "./Graphs/Pbft";
+import { DATA_TABLE_DELAY } from "../../../Constants";
 
 
 const Visualizer = () => {
@@ -73,7 +74,7 @@ const Visualizer = () => {
                     <HRline />
                 </div>
                 <div className="px-24" id="transaction-table">
-                    <DataTable goToPbftGraph={() => goToElement('pbft-graph')} />
+                    <DataTable goToPbftGraph={() => goToElement('pbft-graph')} delay={DATA_TABLE_DELAY} />
                 </div>
                 <div className="mt-10 mb-24 px-24 w-full">
                     <HRline />
