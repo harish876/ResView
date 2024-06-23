@@ -19,14 +19,6 @@ export const BLOG_LINK = 'https://medium.com/@aunsh/resview-a-pbft-visualizer-ba
 
 export const CARD_BG_GRAD = 'border-3p border-gray-170 dark:bg-gradient-to-r dark:from-blue-600 dark:via-blue dark:to-blue-550 dark:border-none';
 
-export const DROPDOWN_OPTS = [
-    'Select Transaction',
-    'Get Transaction',
-    'Set Transaction',
-    'Clear All'
-]
-
-export const DEFAULT_TRANS_SELECT_STR = 'Select Transaction Action';
 
 export const COLORS_PBFT_GRAPH = [
     "#2196F3",
@@ -117,6 +109,7 @@ export const WHAT_IS_RESVIEW = 'ResView provides a detailed understanding of con
 
 export const DATA_TABLE_NO_PRIMARY_EXISTS = 'No Primary Selected'
 export const DATA_TABLE_DELAY = 3000
+export const TOTAL_NUMBER_OF_REPLICAS = 4;
 
 export const ICON_DEFAULT_COLOR = '#8f9299';
 export const COLOR_LIGHT = '#26D8C4';
