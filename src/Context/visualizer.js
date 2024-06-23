@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { dummyData } from "../Components/Pages/Visualizer/Ancilliary/Data/data";
+import { computeTransInfo } from "../Components/Pages/Visualizer/Ancilliary/Computation/TransInfo";
 
 export const VizDataHistoryContext = createContext({
     messageHistory: {},
@@ -14,6 +15,7 @@ export const VizDataHistoryProvider = ({ children }) => {
     const [messageHistory, setMessageHistory] = useState(dummyData);
     const [currentTransaction, setCurrentTransaction] = useState(17);
     const [replicaStatus, setReplicaStatus] = useState([false, false, false, false])
+    const [primaryIndexVal, setPrimaryIndexVal] = useState(-1)
 
 
     const changeMessageHistory = (value) => {
@@ -64,16 +66,33 @@ export const VizDataHistoryProvider = ({ children }) => {
             });
     }
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            fetchReplicaStatuses();
-        }, 3000); // 3000 milliseconds = 3 seconds
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         fetchReplicaStatuses();
+    //     }, 3000); // 3000 milliseconds = 3 seconds
 
-        return () => clearInterval(interval);
-    }, []);
+    //     return () => clearInterval(interval);
+    // }, []);
+
+    useEffect(() => {
+        let results = [false, false, false, false];
+        const { primaryIndex, currentStatus } = computeTransInfo(messageHistory, currentTransaction, results)
+
+        setReplicaStatus(currentStatus)
+        setPrimaryIndexVal(primaryIndex)
+        // ! CHECK THE BELOW DEPENDENCIES WHEN THIS CONNECTED TO THE BE
+    }, [currentTransaction, messageHistory])
 
     return (
-        <Provider value={{ messageHistory, changeMessageHistory, changeCurrentTransaction, replicaStatus, currentTransaction }}>
+        <Provider value={
+            {   messageHistory, 
+                changeMessageHistory, 
+                changeCurrentTransaction, 
+                replicaStatus, 
+                currentTransaction, 
+                primaryIndexVal, 
+            }
+        }>
             {children}
         </Provider>
     )

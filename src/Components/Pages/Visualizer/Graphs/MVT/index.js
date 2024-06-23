@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import { GraphResizerContext } from "../../../../../Context/graph";
 import { VizDataHistoryContext } from "../../../../../Context/visualizer";
 import { mvtGraphComputation } from "../../Ancilliary/Computation/MVT";
-import { dummyData } from "../../Ancilliary/Data/data";
 import ResizableContainer from "../Components/GraphContainer";
 import MvtGraph from "./Components/Graph";
 import Manipulator from "./Components/Manipulator";
@@ -15,7 +14,7 @@ const FAULT_TOGGLES = { "Replica 1": false, "Replica 2": false, "Replica 3": fal
 
 const Mvt = () => {
     const { resizing } = useContext(GraphResizerContext);
-    const { messageHistory, currentTransaction } = useContext(VizDataHistoryContext)
+    const { messageHistory, currentTransaction, currentStatus } = useContext(VizDataHistoryContext)
 
     const [messageChartData, setMessageChartData] = useState([]);
     const [chartMaxData, setChartMaxData] = useState({});
@@ -69,11 +68,11 @@ const Mvt = () => {
     const messageChartDataUpdate = (value) => setMessageChartData(value);
 
     useEffect(() => {
-        const transactionData = Object.keys(messageHistory).length !== 0 ? messageHistory[currentTransaction] : dummyData[17];
+        const transactionData = messageHistory[currentTransaction];
 
         mvtGraphComputation(transactionData, labelToggle, chartMaxDataUpdate, messageChartDataUpdate)
 
-    }, [messageHistory, currentTransaction, labelToggle, resetGraph]);
+    }, [messageHistory, currentTransaction, labelToggle, resetGraph, currentStatus]);
 
     return (
         <div className="flex flex-col">

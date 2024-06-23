@@ -1,7 +1,4 @@
-// MVT GRAPH COMPUTATION 
-
 import { COLORS_MVT_GRAPH } from "../../../../../Constants";
-
 
 export const mvtGraphComputation = (transactionData, labelToggle, chartMaxDataUpdate, messageChartDataUpdate) => {
 
@@ -10,7 +7,7 @@ export const mvtGraphComputation = (transactionData, labelToggle, chartMaxDataUp
     let prePrepareTimes = [];
     let prepareTimes = [];
     let allPrepareTimes = [];
-    let allCommitTimes = [];
+    let allCommitTimes = [];            
     let labelList = [];
 
     Object.keys(transactionData).forEach((key) => {

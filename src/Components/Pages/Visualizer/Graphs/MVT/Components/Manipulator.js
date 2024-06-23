@@ -23,7 +23,7 @@ const Manipulator = ({
                     ))}
                 </div>
             </div>
-            <div className="flex flex-col gap-y-6">
+            {/* <div className="flex flex-col gap-y-6">
                 <FontVarTitle title={'Toggle Line Graph:'} fontClass={'text-15p'} />
                 <div className='flex gap-x-7 justify-center'>
                     {MVT_GRAPH_LABELS.length > 0 && MVT_GRAPH_LABELS.map((title, index) => (
@@ -36,7 +36,7 @@ const Manipulator = ({
                         />
                     ))}
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };

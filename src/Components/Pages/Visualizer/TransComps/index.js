@@ -50,15 +50,13 @@ const LinkButton = ({ title, link }) => {
 
 const TransInfo = () => {
 
-    const { messageHistory, currentTransaction, replicaStatus } = useContext(VizDataHistoryContext)
+    const { primaryIndexVal, currentTransaction, replicaStatus } = useContext(VizDataHistoryContext)
 
     const { theme } = useContext(ThemeContext);
 
     const logo = theme ? LOGO_DARK : LOGO_LIGHT;
 
-    const { primaryIndex, currentStatus } = computeTransInfo(messageHistory, currentTransaction, replicaStatus)
-
-    const primary = primaryIndex === -1 ? 'No Primary' : `Replica ${primaryIndex}`;
+    const primary = primaryIndexVal === -1 ? 'No Primary' : `Replica ${primaryIndexVal}`;
 
 
     return (
@@ -101,7 +99,7 @@ const TransInfo = () => {
                 Replica Status
             </div>
             <div className='flex flex-col items-center justify-center gap-y-10'>
-                {currentStatus.length > 0 && currentStatus.map((value, index) => (
+                {replicaStatus.length > 0 && replicaStatus.map((value, index) => (
                     <ReplicaStatTile
                         key={index}
                         replica={`Replica ${index + 1}`}

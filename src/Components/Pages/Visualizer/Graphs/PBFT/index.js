@@ -132,8 +132,6 @@ const PBFT = () => {
             .attr("r", '1.5')
             .attr("fill", `${!theme ? "black" : "white"}`);
 
-        console.log('THIS IS THE SVG', svg)
-
         const lineGen = line()
             .x((d) => d.x)
             .y((d) => d.y);
