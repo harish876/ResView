@@ -8,8 +8,8 @@ import { ThemeContext } from "../../../../../Context/theme";
 import { cancelIcon, pauseIcon, playIcon } from "../../../../../Resources/Icons";
 import { DropDownButtons, IconButtons } from "../../../../Shared/Buttons";
 import { Icon } from "../../../../Shared/Icon";
-import { connectionRender, labelFaultyNode, labelPrimaryNode } from "../../Computation/D3Pbft";
-import { generateConnections, generateLabels, generateLines, generatePoints } from "../../Computation/CompPbft";
+import { connectionRender, labelFaultyNode, labelPrimaryNode } from "../../Ancilliary/Computation/D3Pbft";
+import { generateConnections, generateLabels, generateLines, generatePoints } from "../../Ancilliary/Computation/CompPbft";
 import GraphContainer from "../Components/GraphContainer";
 import { VizDataHistoryContext } from "../../../../../Context/visualizer";
 
@@ -131,6 +131,8 @@ const PBFT = () => {
             .attr("cy", (d) => d.y)
             .attr("r", '1.5')
             .attr("fill", `${!theme ? "black" : "white"}`);
+
+        console.log('THIS IS THE SVG', svg)
 
         const lineGen = line()
             .x((d) => d.x)

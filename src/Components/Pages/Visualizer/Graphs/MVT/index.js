@@ -1,16 +1,12 @@
 
 import { useContext, useEffect, useState } from "react";
 import { GraphResizerContext, GraphViewContext } from "../../../../../Context/graph";
-import { anglesRightIcon } from "../../../../../Resources/Icons";
-import { MvTSelectButton } from "../../../../Shared/Buttons";
-import { Icon } from "../../../../Shared/Icon";
-import { FontVarTitle } from "../../../../Shared/Title";
-import ResizableContainer from "../Components/GraphContainer";
-import Manipulator from "./Manipulator";
-import MvtGraph from "./Graph";
-import { mvtGraphComputation } from "../../Computation/MVT";
-import { dummyData } from "../../Ancilliary/Data/data";
 import { VizDataHistoryContext } from "../../../../../Context/visualizer";
+import { dummyData } from "../../Ancilliary/Data/data";
+import { mvtGraphComputation } from "../../Ancilliary/Computation/MVT";
+import ResizableContainer from "../Components/GraphContainer";
+import MvtGraph from "./Graph";
+import Manipulator from "./Manipulator";
 
 const LABEL_TOGGLES = { "Replica 1": true, "Replica 2": true, "Replica 3": true, "Replica 4": true }
 

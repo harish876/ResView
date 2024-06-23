@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { DATA_TABLE_DELAY, DATA_TABLE_NO_PRIMARY_EXISTS } from '../../../../Constants';
-import { computeTableData } from '../Computation/TransInfo';
+import { computeTableData } from '../Ancilliary/Computation/TransInfo';
 import { tableDataDummy } from '../Ancilliary/Data/data';
 import { FontVarTitle } from '../../../Shared/Title';
 import Carousel from './Components/Carousel';

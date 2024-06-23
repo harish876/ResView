@@ -1,4 +1,4 @@
-import { DATA_TABLE_NO_PRIMARY_EXISTS, TOTAL_NUMBER_OF_REPLICAS } from "../../../../Constants";
+import { DATA_TABLE_NO_PRIMARY_EXISTS, TOTAL_NUMBER_OF_REPLICAS } from "../../../../../Constants";
 import { computeDataDetails } from "./CompPbft";
 
 let DEFAULT_REPLICA_STATUS = [false, false, false, false];

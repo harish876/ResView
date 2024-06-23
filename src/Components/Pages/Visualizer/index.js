@@ -17,8 +17,8 @@ import { WebSocket } from "../../../Socket";
 const Visualizer = () => {
     const { theme } = useContext(ThemeContext);
 
-    const goToTransTable = () => {
-        const element = document.getElementById("transaction-table");
+    const goToElement = (id) => {
+        const element = document.getElementById(id);
         if (element) {
             element.scrollIntoView({
                 behavior: 'smooth',
@@ -33,12 +33,12 @@ const Visualizer = () => {
             <TransInfo />
             <WebSocket />
             <div className="ml-[220px] px-8 pt-6 h-full">
-                <div className="grid grid-cols-3f-1f gap-x-6 w-full h-full">
+                <div className="grid grid-cols-3f-1f gap-x-6 w-full h-full" id="pbft-graph">
                     <Pbft />
                     <div className="grid grid-rows-2 gap-y-4">
                         <div className={classNames('flex flex-col justify-center items-center rounded-md border-3p bg-blue-10 dark:border-solid dark:bg-blue-450 relative w-full')}>
                             <FontVarTitle title={'Transactions Overview'} />
-                            <div className='w-full h-50p absolute bottom-0 flex items-center justify-center gap-x-4 border-t-3p dark:border-solid cursor-pointer' onClick={goToTransTable}>
+                            <div className='w-full h-50p absolute bottom-0 flex items-center justify-center gap-x-4 border-t-3p dark:border-solid cursor-pointer' onClick={() => goToElement("transaction-table")}>
                                 <Icon path={tableIcon} fill={theme ? "rgb(209,213,219)" : "black"} height={"1.2em"} />
                                 <div className="dark:text-gray-300 text-gray-700 font-bold text-center text-16p">
                                     Go To Transactions
@@ -73,7 +73,7 @@ const Visualizer = () => {
                     <HRline />
                 </div>
                 <div className="px-24" id="transaction-table">
-                    <DataTable />
+                    <DataTable goToPbftGraph={() => goToElement('pbft-graph')} />
                 </div>
                 <div className="mt-10 mb-24 px-24 w-full">
                     <HRline />
