@@ -34,16 +34,12 @@ export const generateConnections = (
     xCoords,
     yCoords,
     messageHistory,
-    transactionNumber = 17,
+    transactionNumber,
     theme
 ) => {
     let points = {};
 
     let currentData = messageHistory[transactionNumber];
-    //If no data, using dummy data to avoid crash
-    if (!currentData) {
-        currentData = dummyData[17];
-    }
 
     const lineColors = theme ? COLORS_PBFT_GRAPH : COLORS_PBFT_GRAPH_LIGHT;
 

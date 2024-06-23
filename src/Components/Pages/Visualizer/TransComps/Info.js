@@ -48,7 +48,7 @@ const LinkButton = ({ title, link }) => {
     )
 }
 
-const TransInfo = ({ primary, numberOfReplicas }) => {
+const TransInfo = () => {
 
     const { messageHistory, currentTransaction, replicaStatus } = useContext(VizDataHistoryContext)
 
@@ -57,6 +57,8 @@ const TransInfo = ({ primary, numberOfReplicas }) => {
     const logo = theme ? LOGO_DARK : LOGO_LIGHT;
 
     const { primaryIndex, currentStatus } = computeTransInfo(messageHistory, currentTransaction, replicaStatus)
+
+    const primary = primaryIndex === -1 ? 'No Primary' : `Replica ${primaryIndex}`;
 
 
     return (
@@ -87,7 +89,7 @@ const TransInfo = ({ primary, numberOfReplicas }) => {
                 <BasicInfoTile title={'Transaction #'} info={currentTransaction ?? `17`} />
             </div>
             <div>
-                <BasicInfoTile title={'Primary'} info={primary ?? `Replica ${primaryIndex}`} />
+                <BasicInfoTile title={'Primary'} info={primary} />
             </div>
             <div>
                 <BasicInfoTile title={'# Replicas'} info={'4'} />

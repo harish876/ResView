@@ -11,6 +11,7 @@ import Mvt from './Graphs/Mvt';
 import Pbft from './Graphs/Pbft';
 import TransInfo from './TransComps/Info';
 import TransAnalyticsItem from "./TransComps/TransAnalyticsItem";
+import { WebSocket } from "../../../Socket";
 
 
 const Visualizer = () => {
@@ -30,6 +31,7 @@ const Visualizer = () => {
     return (
         <div className="py-6 h-full">
             <TransInfo />
+            <WebSocket />
             <div className="ml-[220px] px-8 pt-6 h-full">
                 <div className="grid grid-cols-3f-1f gap-x-6 w-full h-full">
                     <Pbft />

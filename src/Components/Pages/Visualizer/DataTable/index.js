@@ -38,9 +38,12 @@ const CellValues = ({ value, loading, replicaDetailsKeys, replicaDetailsBool, pr
 };
 
 const TableValues = ({ srNo, transaction, replicaDetailsKeys, loading }) => {
+
+    const { changeCurrentTransaction } = useContext(VizDataHistoryContext)
+
     return (
         <Fragment>
-            <tr className='cursor-pointer hover:bg-black'>
+            <tr className='cursor-pointer hover:bg-black' onClick={() => changeCurrentTransaction(transaction.transactionNumber)}>
                 <CellValues
                     value={srNo}
                     loading={loading}
@@ -145,7 +148,7 @@ const DataTable = ({ delay = DATA_TABLE_DELAY }) => {
                         <thead className="text-xs uppercase dark:text-gray-300 text-gray-700 w-full border-gray-700 dark:border-gray-50 bg-gray-100 dark:bg-gray-800 sticky top-0 z-10">
                             <tr>
                                 {TABLE_HEADERS[1].map((value, index) => {
-                                    let isReplicaDetailCol = value === 'Replica Details' ? true : false;
+                                    let isReplicaDetailCol = value === 'Replica Details';
                                     return (
                                         <th scope="col" className={classNames("px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50", { 'border-r-0': isReplicaDetailCol })} rowSpan={!isReplicaDetailCol && '2'} colSpan={isReplicaDetailCol && '4'} key={index}>
                                             {value}

@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
+import { dummyData } from "../Components/Pages/Visualizer/Data/data";
 
 export const VizDataHistoryContext = createContext({
     messageHistory: {},
@@ -10,7 +11,7 @@ export const VizDataHistoryContext = createContext({
 
 export const VizDataHistoryProvider = ({ children }) => {
     const { Provider } = VizDataHistoryContext;
-    const [messageHistory, setMessageHistory] = useState({});
+    const [messageHistory, setMessageHistory] = useState(dummyData);
     const [currentTransaction, setCurrentTransaction] = useState(17);
     const [replicaStatus, setReplicaStatus] = useState([false, false, false, false])
 
@@ -22,11 +23,6 @@ export const VizDataHistoryProvider = ({ children }) => {
     const changeCurrentTransaction = (value) => {
         setCurrentTransaction(value)
     }
-
-    const onMessage = (newData, txn_number) => {
-        changeMessageHistory(JSON.parse(JSON.stringify(newData)));
-        changeCurrentTransaction(txn_number);
-    };
 
     const fetchWithTimeout = (url, options, timeout = 5000) => {
         return Promise.race([
@@ -77,7 +73,7 @@ export const VizDataHistoryProvider = ({ children }) => {
     }, []);
 
     return (
-        <Provider value={{ messageHistory, changeMessageHistory, changeCurrentTransaction, replicaStatus }}>
+        <Provider value={{ messageHistory, changeMessageHistory, changeCurrentTransaction, replicaStatus, currentTransaction }}>
             {children}
         </Provider>
     )

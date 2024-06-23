@@ -13,8 +13,7 @@ import { generateConnections, generateLabels, generateLines, generatePoints } fr
 import GraphContainer from "../GraphContainer";
 import { VizDataHistoryContext } from "../../../../../Context/visualizer";
 
-const PBFT = ({
-}) => {
+const PBFT = () => {
     const { speed, changeSpeed } = useContext(PbftAnimationSpeedContext);
 
     const { messageHistory, currentTransaction } = useContext(VizDataHistoryContext)
@@ -44,7 +43,6 @@ const PBFT = ({
     const colorMode = !theme ? 'black' : "#c4c4c4";
     const pointColorMode = theme ? '#edf0f5' : '#464747';
 
-    const [transactionNumber, setTransactionNumber] = useState(currentTransaction);
     const [playing, setPlaying] = useState(true);
 
     const graphRef = useRef(null);

@@ -1,11 +1,27 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
+import { VizDataHistoryContext } from "../Context/visualizer";
+import { dummyData } from "../Components/Pages/Visualizer/Data/data";
 
-export const WebSocket = ({onMessage}) => {
-  //Public API that will echo messages sent to it back to the client
+export const WebSocket = () => {
+
+  const { messageHistory, changeMessageHistory, changeCurrentTransaction } = useContext(VizDataHistoryContext);
+
   const transactionCount = useRef(0);
   const allMessages = useRef({});
   const keyList = useRef([[], [], [], []]);
   let updatedMessageList;
+
+  const onMessage = (newData, txn_number) => {
+    if (messageHistory) {
+      let incomingData = JSON.parse(JSON.stringify(newData))
+      changeMessageHistory({
+        ...messageHistory,
+        ...incomingData
+      })
+    } else {
+      changeMessageHistory(JSON.parse(JSON.stringify(newData)));
+    }
+  };
 
   const addMessage = (receivedMessage) => {
     if(receivedMessage===null){

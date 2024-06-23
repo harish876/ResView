@@ -1,11 +1,9 @@
 import { DATA_TABLE_NO_PRIMARY_EXISTS } from "../../../../Constants";
-import { dummyData } from "../Data/data";
 import { computeDataDetails } from "./CompPbft";
-
-let FAULTY_REPLICAS_DEFAULT = [false, false, false, false]
 
 const TOTAL_NUMBER_OF_REPLICAS = 4;
 
+let REPLICA_STATUS = [false, false, false, false];
 
 const generateReplicaStatus = (data, defaultResult) => {
     for (let [key, _] of Object.entries(data)) {
@@ -14,19 +12,12 @@ const generateReplicaStatus = (data, defaultResult) => {
     return defaultResult;
 };
 
-let REPLICA_STATUS = [false, false, false, false];
-
-export const computeTransInfo = (messageHistory, transactionNumber = 17, status) => {
-    let currentStatus = status;
-    let currentData = messageHistory[transactionNumber];
-
-    if (!currentData) {
-        currentData = dummyData[17];
-        currentStatus = generateReplicaStatus(currentData, FAULTY_REPLICAS_DEFAULT);
-    }
-
+export const computeTransInfo = (messageHistory, transactionNumber, status) => {
+    const currentData = messageHistory[transactionNumber];
     const { primaryIndex, transactions } =
         computeDataDetails(currentData);
+
+    const currentStatus = generateReplicaStatus(currentData, status); 
 
     const faultReplicas = Math.abs(TOTAL_NUMBER_OF_REPLICAS - transactions.size)
 
