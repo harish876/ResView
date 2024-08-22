@@ -102,10 +102,32 @@ const TableValues = ({ srNo, transaction, replicaDetailsKeys, loading, goToPbftG
 
 const DataTable = ({ goToPbftGraph, delay }) => {
 
-    const { data, loading } = useContext(VizDataHistoryContext)
+    const { data, loading, messageHistory } = useContext(VizDataHistoryContext)
+    const [tableLoading, setTableLoading] = useState(false);
+    const [tableData, setTableData] = useState({});
+
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
+
+    useEffect(() => {
+        setTableLoading(true)
+        const timeoutId = setTimeout(() => {
+            if (Object.keys(messageHistory).length > 0) {
+                const { data } = computeTableData(messageHistory);
+                setTableData(data)
+                console.log('TABLE DATA', data)
+            } else {
+                setTableData(tableDataDummy)
+            }
+            setTableLoading(false)
+        }, delay);
+
+        return () => clearTimeout(timeoutId);
+    }, [messageHistory, delay]);
+
+    console.log('DATA DATA', data)
+
 
     const totalPages = data ? Math.ceil(Object.keys(data).length / itemsPerPage) : 1;
 

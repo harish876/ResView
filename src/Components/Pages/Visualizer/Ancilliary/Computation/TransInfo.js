@@ -43,7 +43,6 @@ export const computeTableData = (messageHistory) => {
             primary,
             faultReplicas: `${faultReplicas}`,
             replicaDetails: {}, 
-            percentFaulty: percentFaulty
         }
 
         totalSumFaulty += percentFaulty;
