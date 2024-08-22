@@ -13,7 +13,7 @@ import { generateConnections, generateLabels, generateLines, generatePoints } fr
 import GraphContainer from "../Components/GraphContainer";
 import { VizDataHistoryContext } from "../../../../../Context/visualizer";
 
-const PBFT = () => {
+const Pbft = () => {
     const { speed, changeSpeed } = useContext(PbftAnimationSpeedContext);
 
     const { messageHistory, currentTransaction } = useContext(VizDataHistoryContext)
@@ -401,4 +401,11 @@ const PBFT = () => {
     );
 };
 
-export default PBFT;
+const index = () => {
+    return (
+        <Pbft />
+    );
+};
+
+
+export default index;

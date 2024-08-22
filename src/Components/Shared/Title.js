@@ -37,7 +37,7 @@ export const Subtitle = ({ subtitle }) => {
 export const FontVarTitle = ({ title, fontClass }) => {
     const varFont = fontClass ? fontClass : 'text-18p';
     return (
-        <div className={`dark:text-gray-300 text-gray-700 font-bold text-center ${varFont} mb-[-1em]`}>
+        <div className={`dark:text-gray-300 text-gray-700 font-bold text-center ${varFont} flex items-center justify-center`}>
             {title}
         </div>
     );

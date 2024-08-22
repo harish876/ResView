@@ -122,5 +122,11 @@ const Mvt = () => {
     );
 };
 
+const index = () => {
+    return (
+        <Mvt />
+    );
+};  
 
-export default Mvt;
+
+export default index;

@@ -102,32 +102,15 @@ const TableValues = ({ srNo, transaction, replicaDetailsKeys, loading, goToPbftG
 
 const DataTable = ({ goToPbftGraph, delay }) => {
 
-    const { messageHistory } = useContext(VizDataHistoryContext)
+    const { data, loading } = useContext(VizDataHistoryContext)
 
-    const [tableLoading, setTableLoading] = useState(false);
-    const [tableData, setTableData] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
 
-    useEffect(() => {
-        setTableLoading(true)
-        const timeoutId = setTimeout(() => {
-            if (Object.keys(messageHistory).length > 0) {
-                const { data } = computeTableData(messageHistory);
-                setTableData(data)
-            } else {
-                setTableData(tableDataDummy)
-            }
-            setTableLoading(false)
-        }, delay);
-
-        return () => clearTimeout(timeoutId);
-    }, [messageHistory, delay]);
-
-    const totalPages = tableData ? Math.ceil(Object.keys(tableData).length / itemsPerPage) : 1;
+    const totalPages = data ? Math.ceil(Object.keys(data).length / itemsPerPage) : 1;
 
     const startRecord = (currentPage - 1) * itemsPerPage + 1;
-    const endRecord = Math.min(currentPage * itemsPerPage, tableData ? Object.keys(tableData).length : 0);
+    const endRecord = Math.min(currentPage * itemsPerPage, data ? Object.keys(data).length : 0);
 
     const handleChangePage = (direction) => {
         setCurrentPage((prevPage) => {
@@ -140,7 +123,7 @@ const DataTable = ({ goToPbftGraph, delay }) => {
         });
     };
 
-    const currentTableData = tableData ? Object.keys(tableData).slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage) : [];
+    const currentTableData = data ? Object.keys(data).slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage) : [];
 
     return (
         <>
@@ -172,7 +155,7 @@ const DataTable = ({ goToPbftGraph, delay }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {tableLoading ? (
+                            {loading ? (
                                 <>
                                     {Object.keys(tableDataDummy).map((transactionKey, index) => {
                                         const transaction = tableDataDummy[transactionKey];
@@ -183,7 +166,7 @@ const DataTable = ({ goToPbftGraph, delay }) => {
                                                 key={transactionKey}
                                                 srNo={index + 1}
                                                 transaction={transaction} replicaDetailsKeys={replicaDetailsKeys}
-                                                loading={tableLoading}
+                                                loading={loading}
                                                 goToPbftGraph={goToPbftGraph}
                                             />
                                         );
@@ -192,7 +175,7 @@ const DataTable = ({ goToPbftGraph, delay }) => {
                             ) : (
                                 <>
                                     {currentTableData.map((transactionKey, index) => {
-                                        const transaction = tableData[transactionKey];
+                                        const transaction = data[transactionKey];
                                         const replicaDetailsKeys = Object.keys(transaction.replicaDetails);
                                         return (
                                             <TableValues
@@ -213,9 +196,7 @@ const DataTable = ({ goToPbftGraph, delay }) => {
                     onPrev={() => handleChangePage('prev')} onNext={() => handleChangePage('next')} nextDisabled={currentPage === totalPages} prevDisabled={currentPage === 1}
                     startRecord={startRecord}
                     endRecord={endRecord}
-                    data={tableData}
                     currentData={currentTableData}
-                    loading={tableLoading}
                 />
             </div>
         </>

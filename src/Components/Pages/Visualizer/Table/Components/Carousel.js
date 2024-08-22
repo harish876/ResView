@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { NormalButton } from '../../../../Shared/Buttons'
+import { VizDataHistoryContext } from '../../../../../Context/visualizer'
 
-const Carousel = ({ onNext, onPrev, nextDisabled, prevDisabled, data, currentData, startRecord, endRecord, loading }) => {
+const Carousel = ({ onNext, onPrev, nextDisabled, prevDisabled, currentData, startRecord, endRecord }) => {
+
+  const { loading, totalHistoryLength } = useContext(VizDataHistoryContext)
+
 
   return (
       <div className="flex items-center justify-between px-8 border-t-1p border-gray-700 dark:border-gray-50 h-40p" aria-label="Table navigation">
@@ -10,7 +14,7 @@ const Carousel = ({ onNext, onPrev, nextDisabled, prevDisabled, data, currentDat
         ) : (
           <div className='flex items-center justify-center h-full'>
             <span className="text-sm font-normal text-gray-500 dark:text-gray-400 block w-full md:inline md:w-auto">Showing <span className="font-semibold text-gray-900 dark:text-white">{`${startRecord}-${endRecord}`}</span> of <span className="font-semibold text-gray-900 dark:text-white">
-              {Object.keys(data).length ?? 'N/A'}
+              {totalHistoryLength ?? 'N/A'}
             </span></span>
           </div>
         )}

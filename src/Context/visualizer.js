@@ -102,7 +102,8 @@ export const VizDataHistoryProvider = ({ children }) => {
                 data, 
                 totalPercentFaulty,
                 totalHistoryLength,
-                noPrimaryCount
+                noPrimaryCount,
+                loading
             }
         }>
             {children}

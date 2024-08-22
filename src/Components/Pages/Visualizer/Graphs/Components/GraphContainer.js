@@ -28,7 +28,7 @@ const GraphContainer = ({ children, title, heightBig, disableExpand }) => {
 
     return (
         <div
-            className={classNames('py-2 px-1 flex flex-col justify-center items-center rounded-md border-3p bg-blue-10 dark:border-solid dark:bg-blue-450 relative w-full')}
+            className={classNames('py-2 px-1 flex flex-col justify-center items-center rounded-md border-3p bg-blue-10 border-solid border-gray-700 dark:border-gray-50 dark:bg-blue-450 relative w-full')}
             style={heightBig ? { height: concurrentHeight + 200 } : { height: concurrentHeight }}
         >
             <FontVarTitle title={title} />
