@@ -17,24 +17,36 @@ export const computeTransInfo = (messageHistory, transactionNumber, status) => {
 
     const currentStatus = generateReplicaStatus(currentData, status); 
 
-    const faultReplicas = Math.abs(TOTAL_NUMBER_OF_REPLICAS - transactions.size)
+    const faultReplicas = parseInt(Math.abs(TOTAL_NUMBER_OF_REPLICAS - transactions.size))
 
-    return { primaryIndex, transactions, currentStatus, currentData, faultReplicas };
+    const percentFaulty = (faultReplicas / TOTAL_NUMBER_OF_REPLICAS) ?? 0;
+
+    return { primaryIndex, transactions, currentStatus, currentData, faultReplicas, percentFaulty };
 };
 
 export const computeTableData = (messageHistory) => {
     let data = {}
+    let totalSumFaulty = 0
+    let noPrimaryCnt = 0
     Object.entries(messageHistory).forEach(([key, value]) => {
-        const { primaryIndex, faultReplicas } = computeTransInfo(messageHistory, key, DEFAULT_REPLICA_STATUS)
+        const { primaryIndex, faultReplicas, percentFaulty } = computeTransInfo(messageHistory, key, DEFAULT_REPLICA_STATUS)
 
-        let primary = primaryIndex === -1 ? DATA_TABLE_NO_PRIMARY_EXISTS : `Replica ${primaryIndex}`
+        let primary = '';
+
+        if(primaryIndex === -1) {
+            primary = DATA_TABLE_NO_PRIMARY_EXISTS;
+            noPrimaryCnt += 1;
+        } else primary = `Replica ${primaryIndex}`
 
         data[key] = {
             transactionNumber: key,
             primary,
             faultReplicas: `${faultReplicas}`,
-            replicaDetails: {}
+            replicaDetails: {}, 
+            percentFaulty: percentFaulty
         }
+
+        totalSumFaulty += percentFaulty;
 
         for (let replicaId in messageHistory[key]) {
             const entry = messageHistory[key][replicaId];
@@ -46,5 +58,9 @@ export const computeTableData = (messageHistory) => {
         }
     });
 
-    return { data };
+    const totalHistLength = Object.keys(data).length;
+
+    const totalPctFaulty = (totalSumFaulty / totalHistLength).toFixed(2);
+
+    return { data, totalPctFaulty, totalHistLength, noPrimaryCnt };
 };

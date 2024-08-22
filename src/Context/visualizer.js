@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { dummyData } from "../Components/Pages/Visualizer/Ancilliary/Data/data";
-import { computeTransInfo } from "../Components/Pages/Visualizer/Ancilliary/Computation/TransInfo";
+import { computeTableData, computeTransInfo } from "../Components/Pages/Visualizer/Ancilliary/Computation/TransInfo";
 
 export const VizDataHistoryContext = createContext({
     messageHistory: {},
@@ -16,6 +16,11 @@ export const VizDataHistoryProvider = ({ children }) => {
     const [currentTransaction, setCurrentTransaction] = useState(17);
     const [replicaStatus, setReplicaStatus] = useState([false, false, false, false])
     const [primaryIndexVal, setPrimaryIndexVal] = useState(-1)
+    const [data, setData] = useState({});
+    const [totalPercentFaulty, setTotalPercentFaulty] = useState(0);
+    const [totalHistoryLength, setTotalHistoryLength] = useState(0);
+    const [noPrimaryCount, setNoPrimaryCount] = useState(0);
+    const [loading, setLoading] = useState(false);
 
 
     const changeMessageHistory = (value) => {
@@ -66,20 +71,23 @@ export const VizDataHistoryProvider = ({ children }) => {
             });
     }
 
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         fetchReplicaStatuses();
-    //     }, 3000); // 3000 milliseconds = 3 seconds
-
-    //     return () => clearInterval(interval);
-    // }, []);
 
     useEffect(() => {
+        setLoading(true);
         let results = [false, false, false, false];
         const { primaryIndex, currentStatus } = computeTransInfo(messageHistory, currentTransaction, results)
 
         setReplicaStatus(currentStatus)
         setPrimaryIndexVal(primaryIndex)
+
+        const { data, totalPctFaulty, totalHistLength, noPrimaryCnt } = computeTableData(messageHistory);
+
+        setData(data);
+        setTotalPercentFaulty(totalPctFaulty)
+        setTotalHistoryLength(totalHistLength)
+        setNoPrimaryCount(noPrimaryCnt);
+
+        setLoading(false);
         // ! CHECK THE BELOW DEPENDENCIES WHEN THIS CONNECTED TO THE BE
     }, [currentTransaction, messageHistory])
 
@@ -90,7 +98,11 @@ export const VizDataHistoryProvider = ({ children }) => {
                 changeCurrentTransaction, 
                 replicaStatus, 
                 currentTransaction, 
-                primaryIndexVal, 
+                primaryIndexVal,
+                data, 
+                totalPercentFaulty,
+                totalHistoryLength,
+                noPrimaryCount
             }
         }>
             {children}

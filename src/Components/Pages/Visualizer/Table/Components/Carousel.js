@@ -4,7 +4,6 @@ import { NormalButton } from '../../../../Shared/Buttons'
 const Carousel = ({ onNext, onPrev, nextDisabled, prevDisabled, data, currentData, startRecord, endRecord, loading }) => {
 
   return (
-    <>
       <div className="flex items-center justify-between px-8 border-t-1p border-gray-700 dark:border-gray-50 h-40p" aria-label="Table navigation">
         {loading ? (
           <div className='w-120p h-3 px-4 bg-gray-200 dark:bg-gray-700 animate-pulse rounded' />
@@ -20,7 +19,6 @@ const Carousel = ({ onNext, onPrev, nextDisabled, prevDisabled, data, currentDat
           <NormalButton title={'Next'} onClick={onNext} disabled={nextDisabled || loading} />
         </div>
       </div>
-    </>
   )
 }
 
