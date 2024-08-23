@@ -50,8 +50,8 @@ const Visualizer = () => {
                             height: concurrentHeight
                         }}
                     >
-                        <div className={classNames('flex flex-col justify-between items-center rounded-md border-3p bg-blue-10 border-solid border-gray-700 h-full dark:border-gray-50 dark:bg-blue-450 w-full')}>
-                            <div className="flex items-center justify-center gap-x-2 w-full border-b-2p border-solid border-gray-700 dark:border-gray-50 h-50p">
+                        <div className={classNames('flex flex-col rounded-md bg-blue-10 border-3p border-solid border-gray-700 dark:border-gray-50 dark:bg-blue-450 relative w-full')}>
+                            <div className="flex items-center justify-center gap-x-2 w-full border-b-2p border-solid border-gray-700 dark:border-gray-50 h-100p">
                                 <div>
                                     <Icon
                                         fill={theme ? "rgb(209,213,219)" : "black"}
@@ -65,7 +65,7 @@ const Visualizer = () => {
                             <div className="overflow-y-scroll">
                                 <SmallTable />
                             </div>
-                            <div className='w-full h-50p flex items-center justify-center gap-x-4 border-t-3p border-solid border-gray-700 dark:border-gray-50 cursor-pointer hover:dark:bg-green-80' onClick={() => goToElement("transaction-table")}>
+                            <div className='w-full h-80p flex items-center justify-center gap-x-4 border-t-3p border-solid border-gray-700 dark:border-gray-50 cursor-pointer hover:dark:bg-green-80' onClick={() => goToElement("transaction-table")}>
                                 <Icon path={anglesDownIcon} fill={theme ? "rgb(209,213,219)" : "black"} height={"1.1em"} />
                                 <div className="dark:text-gray-300 text-gray-700 font-bold text-center text-14p">
                                     All Transactions

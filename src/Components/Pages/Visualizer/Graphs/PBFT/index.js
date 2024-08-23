@@ -12,11 +12,15 @@ import { connectionRender, labelFaultyNode, labelPrimaryNode } from "../../Ancil
 import { generateConnections, generateLabels, generateLines, generatePoints } from "../../Ancilliary/Computation/CompPbft";
 import GraphContainer from "../Components/GraphContainer";
 import { VizDataHistoryContext } from "../../../../../Context/visualizer";
+import { useWindowSize } from "@react-hook/window-size";
 
 const Pbft = () => {
     const { speed, changeSpeed } = useContext(PbftAnimationSpeedContext);
 
-    const { messageHistory, currentTransaction } = useContext(VizDataHistoryContext)
+    const { messageHistory, currentTransaction } = useContext(VizDataHistoryContext);
+
+    const [width, height] = useWindowSize()
+
 
     const {
         TRANSDURATION,
@@ -183,7 +187,7 @@ const Pbft = () => {
         labelsX.forEach((label) =>
             svg
                 .append("text")
-                .attr("transform", "translate(" + label.x + " ," + (label.y + relativeLabelYPos - 2) + ")")
+                .attr("transform", "translate(" + label.x + " ," + (label.y + relativeLabelYPos - 3) + ")")
                 .attr("fill", colorMode)
                 .attr("font-size", relativeLabelFont)
                 .style("text-anchor", "middle")
@@ -194,7 +198,7 @@ const Pbft = () => {
         labelsY.forEach((label, _) => {
             const labelText = svg
                 .append("text")
-                .attr("transform", "translate(" + (label.x + relativeLabelXPos) + " ," + label.y + ")")
+                .attr("transform", "translate(" + (label.x + relativeLabelXPos + 10) + " ," + label.y + ")")
                 .attr("font-size", relativeLabelFont)
                 .style("text-anchor", "middle")
                 .text(`${label.title}`)
@@ -339,7 +343,8 @@ const Pbft = () => {
         setTimeout(() => {
             changeClear(false)
         }, 500)
-    }, [speed])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [speed, currentTransaction, height, width])
 
     const onClear = () => {
         changeClear(true);
@@ -357,7 +362,7 @@ const Pbft = () => {
 
     return (
         <GraphContainer title={'Practical Byzantine Fault Tolerance'} heightBig>
-            <div className="flex items-center justify-around w-full flex-row mt-12">
+            <div className="flex items-center justify-around w-full flex-row mt-8">
                 <div className="basis-1/4">
                     {doesPrimaryExist.current === -1 && (
                         <div className="text-amber-600 font-18p border-1p rounded-md p-1 border-amber-600 w-180p flex items-center justify-center ml-8">
@@ -378,14 +383,7 @@ const Pbft = () => {
                 </div>
                 <div className="basis-1/4" />
             </div>
-            <div ref={containerRef} className='relative w-full h-full pl-8 pr-0 pb-1'>
-                {/* {resizing ? (
-                    <div className='loader'>
-                        <div>PBFT</div>
-                        <div className='inner' />
-                    </div>
-                ) : (
-                    <> */}
+            <div ref={containerRef} className='relative w-full h-full pl-5 pr-0 pb-1'>
                 <svg id={'svg-one'} ref={graphRef} className='absolute'></svg>
                 {!clear && (
                     <>
@@ -394,8 +392,6 @@ const Pbft = () => {
                         <svg ref={faultyReplicasLabelRef} className='absolute'></svg>
                     </>
                 )}
-                {/* </>
-                )} */}
             </div>
         </GraphContainer>
     );

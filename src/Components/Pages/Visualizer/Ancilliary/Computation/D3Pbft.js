@@ -5,7 +5,7 @@ export const labelPrimaryNode = (svg, label) => {
  
     svg
         .append("text")
-        .attr("transform", "translate(" + label.x + " ," + (label.y + 15) + ")")
+        .attr("transform", "translate(" + (label.x + 10) + " ," + (label.y + 20) + ")")
         .attr("fill", "#02c415")
         .style("text-anchor", "middle")
         .style("font-size", "12px")
@@ -17,7 +17,7 @@ export const labelPrimaryNode = (svg, label) => {
 export const labelFaultyNode = (svg, label, relativeSpecialLabelFont) => {
     svg
         .append("text")
-        .attr("transform", "translate(" + label.x + " ," + (label.y + 15) + ")")
+        .attr("transform", "translate(" + (label.x + 10) + " ," + (label.y + 20) + ")")
         .attr("fill", "#fc453f")
         .style("font-size", '12px')
         .style("text-anchor", "middle")

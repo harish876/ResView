@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import React, { useContext } from 'react';
 import { DATA_TABLE_NO_PRIMARY_EXISTS } from '../../../../../Constants';
 import { VizDataHistoryContext } from '../../../../../Context/visualizer';
-import { useWindowSize } from '@react-hook/window-size';
 
 const TABLE_HEADERS = [
   'Sr #',
@@ -34,7 +33,7 @@ const TableValues = ({ srNo, transaction, loading }) => {
   }
 
   return (
-    <tr className={classNames('hover:bg-black cursor-pointer', { 'dark:bg-black': transaction.transactionNumber == currentTransaction })} onClick={() => !loading && changeTransaction(transaction.transactionNumber)}>
+    <tr className={classNames('dark:hover:bg-black hover:bg-gray-400 cursor-pointer', { 'dark:bg-black bg-gray-400': transaction.transactionNumber == currentTransaction })} onClick={() => !loading && changeTransaction(transaction.transactionNumber)}>
         <CellValues
           value={srNo}
           loading={loading}

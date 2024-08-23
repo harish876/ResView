@@ -47,7 +47,7 @@ const TableValues = ({ srNo, transaction, replicaDetailsKeys, loading, goToPbftG
 
     return (
         <Fragment>
-            <tr className={classNames({ 'cursor-pointer hover:bg-black': !loading})} onClick={() => !loading && changeTransaction(transaction.transactionNumber)}>
+            <tr className={classNames({ 'cursor-pointer dark:hover:bg-black hover:bg-gray-400': !loading})} onClick={() => !loading && changeTransaction(transaction.transactionNumber)}>
                 <CellValues
                     value={srNo}
                     loading={loading}
