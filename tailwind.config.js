@@ -166,6 +166,7 @@ module.exports = {
         ubuntuBold: ["Ubuntu B"],
       },
       fontSize: {
+        "8p": "8px",
         "9p": "9px",
         "10p": "10px",
         "11p": "11px",
@@ -351,7 +352,9 @@ module.exports = {
         "3-max-content": "repeat(3, minmax(0, max-content))",
         "1.5-1fr": "1.5fr 1fr",
         "1-1.5fr": "1fr 1.5fr",
-        "3f-1f": "3fr 1fr"
+        "3f-1f": "3fr 1fr",
+        "3.5f-1f": "3.5fr 1fr",
+        '4f-1f': '4fr 1fr',
       },
       gridTemplateRows: {
         10: "repeat(10, 1fr);",

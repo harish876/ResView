@@ -124,7 +124,7 @@ const index = () => {
     return (
         <Mvt />
     );
-};  
+};
 
 
 export default index;

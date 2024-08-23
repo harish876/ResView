@@ -2,14 +2,17 @@ import {
     useWindowSize
 } from '@react-hook/window-size';
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { maximizeIcon } from '../../../../../Resources/Icons';
 import { Icon } from '../../../../Shared/Icon';
 import { FontVarTitle } from '../../../../Shared/Title';
 import Modal from './Modal';
+import { ThemeContext } from '../../../../../Context/theme';
 
 const GraphContainer = ({ children, title, heightBig, disableExpand }) => {
     const [_, height] = useWindowSize()
+
+    const { theme } = useContext(ThemeContext)
 
     let concurrentHeight = Math.floor(height / 2)
 
@@ -30,12 +33,12 @@ const GraphContainer = ({ children, title, heightBig, disableExpand }) => {
         >
             <FontVarTitle title={title} />
             {children}
-            {!disableExpand && (
+            {!disableExpand && title !== 'Practical Byzantine Fault Tolerance' && (
                 <div className='absolute top-0 right-0 flex items-center justify-center gap-x-2 border-b-2p border-l-2p border-gray-700 dark:border-gray-50 rounded-bl-md p-1 cursor-pointer transition hover:px-2' onClick={openModal} data-modal-target="popup-modal" data-modal-toggle="popup-modal" type='button'>
-                    <div className='text-14p text-gray-70'>
+                    <div className='text-14p dark:text-gray-300 text-gray-700'>
                         Expand
                     </div>
-                    <Icon path={maximizeIcon} fill={"gray"} height={"1em"} />
+                    <Icon path={maximizeIcon} fill={theme ? "rgb(209,213,219)" : "black"} height={"1em"} />
                 </div>
             )}
             {modalActive && (

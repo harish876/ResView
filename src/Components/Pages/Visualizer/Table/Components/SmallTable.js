@@ -5,18 +5,18 @@ import { VizDataHistoryContext } from '../../../../../Context/visualizer';
 
 const TABLE_HEADERS = [
   'Sr #',
-  'Transaction #',
+  'Transaction',
   'Primary',
   'Faulty Replicas',
 ]
 
 const CellValues = ({ value, loading, primaryDoesNotExist }) => {
   return (
-    <td className={classNames("px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50", { 'animate-pulse': loading }, { 'text-red-50': primaryDoesNotExist === DATA_TABLE_NO_PRIMARY_EXISTS })}>
+    <td className={classNames("px-3 py-3 border-r-1p border-gray-700 dark:border-gray-50", { 'animate-pulse': loading }, { 'text-red-50': primaryDoesNotExist === DATA_TABLE_NO_PRIMARY_EXISTS })}>
       {loading ? (
-        <div className='w-full h-3 px-4 bg-gray-200 dark:bg-gray-700 animate-pulse rounded' />
+        <div className='w-full h-3 px-3 bg-gray-200 dark:bg-gray-700 animate-pulse rounded' />
       ) : (
-        <div className='text-14p'>
+        <div className='text-12p'>
           {value}
         </div>
       )}
@@ -33,7 +33,7 @@ const TableValues = ({ srNo, transaction, loading }) => {
   }
 
   return (
-    <tr className={classNames('dark:hover:bg-black hover:bg-gray-400 cursor-pointer', { 'dark:bg-black bg-gray-400': transaction.transactionNumber == currentTransaction })} onClick={() => !loading && changeTransaction(transaction.transactionNumber)}>
+    <tr className={classNames('dark:hover:bg-gray-700 hover:bg-gray-400 cursor-pointer', { 'dark:bg-gray-700 bg-gray-400': transaction.transactionNumber == currentTransaction })} onClick={() => !loading && changeTransaction(transaction.transactionNumber)}>
         <CellValues
           value={srNo}
           loading={loading}
@@ -63,13 +63,13 @@ const SmallTable = () => {
 
   return (
     <>
-      <table className="w-full text-sm text-center rtl:text-right dark:text-gray-300 text-gray-700 h-full">
-        <thead className="text-xs uppercase dark:text-gray-300 text-gray-700 w-full border-gray-700 dark:border-gray-50 bg-gray-100 dark:bg-gray-800 sticky top-0 z-10">
+      <table className="text-sm text-center rtl:text-right dark:text-gray-300 text-gray-700 h-full">
+        <thead className="text-xs uppercase dark:text-gray-300 text-gray-700 border-b-1p border-solid border-gray-700 dark:border-gray-50">
           <tr className='h-50p'>
             {TABLE_HEADERS.map((value, index) => {
               let isReplicaDetailCol = value === 'Replica Details';
               return (
-                <th scope="col" className={classNames("px-6 py-3 border-r-1p border-gray-700 dark:border-gray-50 text-10p", { 'border-r-0': isReplicaDetailCol })} rowSpan={!isReplicaDetailCol && '2'} colSpan={isReplicaDetailCol && '4'} key={index}>
+                <th scope="col" className={classNames("px-1 py-2 border-r-1p border-gray-700 dark:border-gray-50 text-8p", { 'border-r-0': isReplicaDetailCol })} rowSpan={!isReplicaDetailCol && '2'} colSpan={isReplicaDetailCol && '4'} key={index}>
                   {value}
                 </th>
               )
