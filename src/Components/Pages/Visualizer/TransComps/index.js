@@ -27,9 +27,9 @@ const ReplicaStatTile = ({ replica, status }) => {
     return (
         <div className='flex flex-col justify-center items-center'>
             <div className="">
-                <Icon path={status ? tickIcon : cancelIcon} viewBox={status ? '0 0 448 512' : '0 0 384 512'} height={'20px'} fill={status ? '#0ac24d' : '#ed1123'} />
+                <Icon path={status ? tickIcon : cancelIcon} viewBox={status ? '0 0 448 512' : '0 0 384 512'} height={'18px'} fill={status ? '#0ac24d' : '#ed1123'} />
             </div>
-            <div className='text-16p md:text-14p sm:text-10p pt-2'>
+            <div className='text-14p md:text-12p sm:text-10p pt-2'>
                 {replica}
             </div>
         </div>
@@ -56,11 +56,11 @@ const TransInfo = () => {
 
     const logo = theme ? LOGO_DARK : LOGO_LIGHT;
 
-    const primary = primaryIndexVal === -1 ? 'No Primary' : `Replica ${primaryIndexVal}`;
+    const primary = primaryIndexVal === -1 ? 'No Primary' : `Replica ${primaryIndexVal}`
 
 
     return (
-        <div className="h-full w-220p fixed z-1 top-0 left-0 overflow-x-hidden p-2 py-6 flex flex-col items-center justify-around opacity-1 border-r-3p border-solid border-gray-700 dark:border-gray-50 dark:text-gray-300">
+        <div className="h-full w-220p fixed z-1 top-0 left-0 overflow-x-hidden p-2 py-6 flex flex-col items-center justify-around opacity-1 border-r-3p border-solid border-gray-700 dark:border-gray-50 dark:text-gray-300 gap-y-6">
             <Link to={URL_HOME_PAGE} className='flex items-center justify-center gap-x-2 w-full cursor-pointer'>
                 <img
                     src={logo}
@@ -80,7 +80,7 @@ const TransInfo = () => {
             <div className='w-full px-4'>
                 <HRline />
             </div>
-            <div className='text-17p md:text-14p sm:text-10p font-bold py-1'>
+            <div className='text-16p md:text-14p sm:text-10p font-bold py-1'>
                 Current Transaction
             </div>
             <div>
@@ -95,7 +95,7 @@ const TransInfo = () => {
             <div className='w-full px-4'>
                 <HRline />
             </div>
-            <div className='text-17p md:text-14p sm:text-10p font-bold py-1'>
+            <div className='text-16p md:text-14p sm:text-10p font-bold py-1'>
                 Replica Status
             </div>
             <div className='flex flex-col items-center justify-center gap-y-10'>
