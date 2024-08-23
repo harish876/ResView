@@ -1,5 +1,5 @@
 import React from "react";
-import { GraphResizerProvider, PbftAnimationSpeedProvider, PbftGraphClearProvider } from "./graph";
+import { PbftAnimationSpeedProvider, PbftGraphClearProvider } from "./graph";
 import { NavbarToggleProvider } from "./navbarToggle";
 import { ThemeProvider } from "./theme";
 import { VizDataHistoryProvider } from "./visualizer";
@@ -20,7 +20,6 @@ const CombineProviders = (providers) =>
 
 export const AllProviders = CombineProviders([
   [ThemeProvider],
-  [GraphResizerProvider],
   [NavbarToggleProvider],
   [PbftAnimationSpeedProvider],
   [PbftGraphClearProvider],

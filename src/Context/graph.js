@@ -1,29 +1,5 @@
 import React, { createContext, useState } from "react";
 
-export const GraphResizerContext = createContext({
-  width: 1200,
-  height: 800,
-  resizing: false
-});
-
-export const GraphResizerProvider = ({ children }) => {
-  const { Provider } = GraphResizerContext;
-  const [height, setHeight] = useState(1200)
-  const [width, setWidth] = useState(800)
-
-  const [boxValues, setBoxValues] = useState({
-    width: height ?? 1200,
-    height: width ?? 800,
-  });
-  const [resizing, setResizing] = useState(false);
-
-  return (
-    <Provider value={{ boxValues, setBoxValues, resizing, setResizing, setHeight, setWidth }}>
-      {children}
-    </Provider>
-  );
-};
-
 
 // CONTEXT FOR PBFT GRAPH ANIMATION SPEEDS 
 export const PbftAnimationSpeedContext = createContext({

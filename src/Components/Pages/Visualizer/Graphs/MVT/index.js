@@ -1,6 +1,5 @@
 
 import { useContext, useEffect, useState } from "react";
-import { GraphResizerContext } from "../../../../../Context/graph";
 import { VizDataHistoryContext } from "../../../../../Context/visualizer";
 import { mvtGraphComputation } from "../../Ancilliary/Computation/MVT";
 import ResizableContainer from "../Components/GraphContainer";
@@ -13,7 +12,6 @@ const FAULT_TOGGLES = { "Replica 1": false, "Replica 2": false, "Replica 3": fal
 
 
 const Mvt = () => {
-    const { resizing } = useContext(GraphResizerContext);
     const { messageHistory, currentTransaction, replicaStatus } = useContext(VizDataHistoryContext)
 
     const [messageChartData, setMessageChartData] = useState([]);
@@ -87,7 +85,7 @@ const Mvt = () => {
             <div className="grid grid-cols-2 gap-x-6 w-full">
                 <ResizableContainer title={'Prepare Messages v Time'} >
                     <div className='relative w-full h-full pl-4 pr-2 pb-6'>
-                        {(resizing || isLoading) ? (
+                        {(isLoading) ? (
                             <div className='loader'>
                                 <div>MVT</div>
                                 <div className='inner' />
@@ -99,7 +97,7 @@ const Mvt = () => {
                 </ResizableContainer>
                 <ResizableContainer title={'Commit Messages v Time'}>
                     <div className='relative w-full h-full pl-4 pr-2 pb-6'>
-                        {(resizing || isLoading) ? (
+                        {(isLoading) ? (
                             <div className='loader'>
                                 <div>MVT</div>
                                 <div className='inner' />

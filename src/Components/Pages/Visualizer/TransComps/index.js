@@ -2,11 +2,10 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { LOGO_DARK, LOGO_LIGHT, URL_HOME_PAGE } from '../../../../Constants';
 import { ThemeContext } from '../../../../Context/theme';
+import { VizDataHistoryContext } from '../../../../Context/visualizer';
 import { cancelIcon, tickIcon } from '../../../../Resources/Icons';
 import HRline from '../../../Shared/HRline';
 import { Icon } from '../../../Shared/Icon';
-import { computeTransInfo } from '../Ancilliary/Computation/TransInfo';
-import { VizDataHistoryContext } from '../../../../Context/visualizer';
 
 const LINK_BUTTON_CLASSES = "relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border-3p before:border-blue-500 before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark: before:border-gray-700 dark:before:bg-gray-800 sm:w-max cursor-pointer"
 

@@ -2,16 +2,13 @@ import {
     useWindowSize
 } from '@react-hook/window-size';
 import classNames from 'classnames';
-import React, { useContext, useState } from 'react';
-import { GraphResizerContext } from '../../../../../Context/graph';
+import React, { useState } from 'react';
 import { maximizeIcon } from '../../../../../Resources/Icons';
 import { Icon } from '../../../../Shared/Icon';
 import { FontVarTitle } from '../../../../Shared/Title';
 import Modal from './Modal';
 
 const GraphContainer = ({ children, title, heightBig, disableExpand }) => {
-    // TODO: Remove the below GraphResizerContext Once its done
-    const { boxValues, setBoxValues, setResizing } = useContext(GraphResizerContext);
     const [_, height] = useWindowSize()
 
     let concurrentHeight = Math.floor(height / 2)
