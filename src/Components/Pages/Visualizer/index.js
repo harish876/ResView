@@ -1,24 +1,30 @@
 import classNames from "classnames";
 import React, { useContext } from "react";
+import { DATA_TABLE_DELAY } from "../../../Constants";
 import { ThemeContext } from "../../../Context/theme";
-import { anglesDownIcon, eyeIcon, tableIcon, transactionsIcon } from "../../../Resources/Icons";
+import { VizDataHistoryContext } from "../../../Context/visualizer";
+import { anglesDownIcon, eyeIcon, transactionsIcon } from "../../../Resources/Icons";
+import { WebSocket } from "../../../Socket";
 import Footer from "../../Shared/Footer";
 import HRline from '../../Shared/HRline';
 import { Icon } from "../../Shared/Icon";
 import { FontVarTitle } from "../../Shared/Title";
+import Mvt from "./Graphs/Mvt";
+import Pbft from "./Graphs/Pbft";
 import DataTable from './Table';
 import TransInfo from './TransComps';
 import TransAnalyticsItem from "./TransComps/Components/AnalyticsItem";
-import { WebSocket } from "../../../Socket";
-import Pbft from "./Graphs/Pbft";
-import { DATA_TABLE_DELAY } from "../../../Constants";
-import Mvt from "./Graphs/Mvt";
-import { VizDataHistoryContext } from "../../../Context/visualizer";
+import SmallTable from "./Table/Components/SmallTable";
+import { useWindowSize } from "@react-hook/window-size";
 
 
 const Visualizer = () => {
     const { theme } = useContext(ThemeContext);
     const { totalPercentFaulty, totalHistoryLength, noPrimaryCount } = useContext(VizDataHistoryContext)
+
+    const [_, height] = useWindowSize()
+
+    let concurrentHeight = Math.floor(height / 2) + 200
 
     const goToElement = (id) => {
         const element = document.getElementById(id);
@@ -38,8 +44,13 @@ const Visualizer = () => {
             <div className="ml-[220px] px-8 pt-6 h-full">
                 <div className="grid grid-cols-3f-1f gap-x-6 w-full h-full" id="pbft-graph">
                     <Pbft />
-                    <div className="grid grid-rows-2 gap-y-4">
-                        <div className={classNames('flex flex-col justify-between items-center rounded-md border-3p bg-blue-10 border-solid border-gray-700 dark:border-gray-50 dark:bg-blue-450 w-full')}>
+                    <div 
+                        className="grid grid-rows-2 gap-y-4"
+                        style={{
+                            height: concurrentHeight
+                        }}
+                    >
+                        <div className={classNames('flex flex-col justify-between items-center rounded-md border-3p bg-blue-10 border-solid border-gray-700 h-full dark:border-gray-50 dark:bg-blue-450 w-full')}>
                             <div className="flex items-center justify-center gap-x-2 w-full border-b-2p border-solid border-gray-700 dark:border-gray-50 h-50p">
                                 <div>
                                     <Icon
@@ -51,8 +62,8 @@ const Visualizer = () => {
                                 </div>
                                 <FontVarTitle title={'Overview'} />
                             </div>
-                            <div>
-
+                            <div className="overflow-y-scroll">
+                                <SmallTable />
                             </div>
                             <div className='w-full h-50p flex items-center justify-center gap-x-4 border-t-3p border-solid border-gray-700 dark:border-gray-50 cursor-pointer hover:dark:bg-green-80' onClick={() => goToElement("transaction-table")}>
                                 <Icon path={anglesDownIcon} fill={theme ? "rgb(209,213,219)" : "black"} height={"1.1em"} />

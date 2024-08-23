@@ -10,13 +10,51 @@ export const VizDataHistoryContext = createContext({
     replicaStatus: [false, false, false, false]
 });
 
+const truncData = (data, currentTransaction) => {
+    if (data === null || data === undefined) return {};
+    const filteredData = Object.fromEntries(
+        Object.entries(data).map(([key, value]) => {
+            if (value) {
+                const { replicaDetails, ...rest } = value;
+                return [key, rest];
+            }
+            return undefined;
+        }).filter(entry => entry !== undefined)
+    );
+
+    const entries = Object.entries(filteredData);
+
+    let selectedEntries = [];
+
+    if (filteredData[currentTransaction]) {
+        const currentTransactionEntry = entries.find(([key]) => key == currentTransaction);
+
+        selectedEntries.push(currentTransactionEntry);
+        const remainingEntries = entries.filter(([key]) => key != currentTransaction);
+        selectedEntries = selectedEntries.concat(remainingEntries.sort(() => Math.random() - 0.5).slice(0, 9));
+
+    } else {
+        selectedEntries = entries.sort(() => Math.random() - 0.5).slice(0, 10);
+    }
+    const result = {};
+    selectedEntries.forEach(([key, value]) => {
+        result[key] = value;
+    });
+    return result;
+};
+
+
+
+
+
 export const VizDataHistoryProvider = ({ children }) => {
     const { Provider } = VizDataHistoryContext;
     const [messageHistory, setMessageHistory] = useState(dummyData);
     const [currentTransaction, setCurrentTransaction] = useState(17);
     const [replicaStatus, setReplicaStatus] = useState([false, false, false, false])
     const [primaryIndexVal, setPrimaryIndexVal] = useState(-1)
-    const [data, setData] = useState({});
+    const [data, setData] = useState({});    
+    const [truncatedData, setTruncatedData] = useState({});    
     const [totalPercentFaulty, setTotalPercentFaulty] = useState(0);
     const [totalHistoryLength, setTotalHistoryLength] = useState(0);
     const [noPrimaryCount, setNoPrimaryCount] = useState(0);
@@ -28,7 +66,11 @@ export const VizDataHistoryProvider = ({ children }) => {
     }
 
     const changeCurrentTransaction = (value) => {
+        setLoading(true);
         setCurrentTransaction(value)
+        const smallData = truncData(data, value);
+        setTruncatedData(smallData)
+        setLoading(false);
     }
 
     const fetchWithTimeout = (url, options, timeout = 5000) => {
@@ -82,10 +124,13 @@ export const VizDataHistoryProvider = ({ children }) => {
 
         const { data, totalPctFaulty, totalHistLength, noPrimaryCnt } = computeTableData(messageHistory);
 
+        const smallData = truncData(data, currentTransaction);
+
         setData(data);
         setTotalPercentFaulty(totalPctFaulty)
         setTotalHistoryLength(totalHistLength)
         setNoPrimaryCount(noPrimaryCnt);
+        setTruncatedData(smallData)
 
         setLoading(false);
         // ! CHECK THE BELOW DEPENDENCIES WHEN THIS CONNECTED TO THE BE
@@ -103,7 +148,8 @@ export const VizDataHistoryProvider = ({ children }) => {
                 totalPercentFaulty,
                 totalHistoryLength,
                 noPrimaryCount,
-                loading
+                loading,
+                truncatedData
             }
         }>
             {children}
