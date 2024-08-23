@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { dummyData } from "../Components/Pages/Visualizer/Ancilliary/Data/data";
-import { computeTableData, computeTransInfo } from "../Components/Pages/Visualizer/Ancilliary/Computation/TransInfo";
+import { computeTableData, computeTransInfo, truncData } from "../Components/Pages/Visualizer/Ancilliary/Computation/TransInfo";
 
 export const VizDataHistoryContext = createContext({
     messageHistory: {},
@@ -9,42 +9,6 @@ export const VizDataHistoryContext = createContext({
     changeCurrentTransaction: () => { },
     replicaStatus: [false, false, false, false]
 });
-
-const truncData = (data, currentTransaction) => {
-    if (data === null || data === undefined) return {};
-    const filteredData = Object.fromEntries(
-        Object.entries(data).map(([key, value]) => {
-            if (value) {
-                const { replicaDetails, ...rest } = value;
-                return [key, rest];
-            }
-            return undefined;
-        }).filter(entry => entry !== undefined)
-    );
-
-    const entries = Object.entries(filteredData);
-
-    let selectedEntries = [];
-
-    if (filteredData[currentTransaction]) {
-        const currentTransactionEntry = entries.find(([key]) => key == currentTransaction);
-
-        selectedEntries.push(currentTransactionEntry);
-        const remainingEntries = entries.filter(([key]) => key != currentTransaction);
-        selectedEntries = selectedEntries.concat(remainingEntries.sort(() => Math.random() - 0.5).slice(0, 9));
-
-    } else {
-        selectedEntries = entries.sort(() => Math.random() - 0.5).slice(0, 10);
-    }
-    const result = {};
-    selectedEntries.forEach(([key, value]) => {
-        result[key] = value;
-    });
-    return result;
-};
-
-
-
 
 
 export const VizDataHistoryProvider = ({ children }) => {
