@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import Wrapper from '../../Shared/Wrapper';
-// TODO: Remove the below import and entire components after demo is done
 import { BLOG_LINK, URL_VISUALIZER_PAGE } from '../../../Constants';
 import { LinkButton } from '../../Shared/Buttons';
 import Graphs from './Sections/Graphs';

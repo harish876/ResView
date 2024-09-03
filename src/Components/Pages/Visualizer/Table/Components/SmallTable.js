@@ -62,14 +62,13 @@ const SmallTable = () => {
   const { loading, truncatedData } = useContext(VizDataHistoryContext)
 
   return (
-    <>
-      <table className="text-sm text-center rtl:text-right dark:text-gray-300 text-gray-700 h-full">
+    <table className="text-sm text-center rtl:text-right dark:text-gray-300 text-gray-700 h-full">
         <thead className="text-xs uppercase dark:text-gray-300 text-gray-700 border-b-1p border-solid border-gray-700 dark:border-gray-50">
-          <tr className='h-50p'>
+          <tr className='h-50p min-w-full'>
             {TABLE_HEADERS.map((value, index) => {
               let isReplicaDetailCol = value === 'Replica Details';
               return (
-                <th scope="col" className={classNames("px-1 py-2 border-r-1p border-gray-700 dark:border-gray-50 text-8p", { 'border-r-0': isReplicaDetailCol })} rowSpan={!isReplicaDetailCol && '2'} colSpan={isReplicaDetailCol && '4'} key={index}>
+                <th scope="col" className={classNames("px-1 py-2 border-r-1p border-gray-700 dark:border-gray-50 text-8p w-full", { 'border-r-0': isReplicaDetailCol })} rowSpan={!isReplicaDetailCol && '2'} colSpan={isReplicaDetailCol && '4'} key={index}>
                   {value}
                 </th>
               )
@@ -97,7 +96,6 @@ const SmallTable = () => {
           )}
         </tbody>
       </table>
-    </>
   )
 }
 

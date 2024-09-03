@@ -540,6 +540,7 @@ module.exports = {
         'fade-in': 'fadeIn 0.3s ease-in-out',
         'fade-in-drop': 'fadeInDrop 0.5s ease-in-out',
         'grow-line': 'grow 2s ease-in-out forwards',
+        'border-pulse': 'borderPulse 2s ease-in-out infinite',
       },
       keyframes: {
         pulseLong: {
@@ -567,6 +568,11 @@ module.exports = {
         grow: {
           '0%': { transform: 'scaleX(0)' },
           '100%': { transform: 'scaleX(1)' },
+        },
+        borderPulse: {
+          '0%': { borderColor: 'rgba(0, 255, 0, 1)' },
+          '50%': { borderColor: 'rgba(0, 255, 0, 0.5)' },
+          '100%': { borderColor: 'rgba(0, 255, 0, 1)' },
         },
       },
     },

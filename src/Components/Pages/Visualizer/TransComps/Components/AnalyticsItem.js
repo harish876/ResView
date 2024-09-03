@@ -1,10 +1,10 @@
-import { Icon } from '@mui/material';
 import classNames from 'classnames';
 import React, { useContext } from 'react'
 import { transactionsIcon } from '../../../../../Resources/Icons';
 import { FontVarTitle } from '../../../../Shared/Title';
 import { ThemeContext } from '../../../../../Context/theme';
 import { VizDataHistoryContext } from '../../../../../Context/visualizer';
+import { Icon } from '../../../../Shared/Icon';
 
 const AnalyticsItem = ({ title, value }) => {
   return (
@@ -29,7 +29,7 @@ const Analytics = () => {
         <div>
           <Icon
             fill={theme ? "rgb(209,213,219)" : "black"}
-            height={'1.2em'}
+            height={'1em'}
             path={transactionsIcon}
             viewBox={'0 0 448 512'}
           />
