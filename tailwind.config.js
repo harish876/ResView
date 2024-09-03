@@ -539,6 +539,7 @@ module.exports = {
         pulseLong: "pulseLong 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         'fade-in': 'fadeIn 0.3s ease-in-out',
         'fade-in-drop': 'fadeInDrop 0.5s ease-in-out',
+        'grow-line': 'grow 2s ease-in-out forwards',
       },
       keyframes: {
         pulseLong: {
@@ -562,6 +563,10 @@ module.exports = {
             opacity: 1,
             transform: 'translateY(0)',
           },
+        },
+        grow: {
+          '0%': { transform: 'scaleX(0)' },
+          '100%': { transform: 'scaleX(1)' },
         },
       },
     },

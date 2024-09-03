@@ -1,5 +1,5 @@
 import { useWindowSize } from "@react-hook/window-size";
-import React from "react";
+import React, { useContext } from "react";
 import { DATA_TABLE_DELAY } from "../../../Constants";
 import Footer from "../../Shared/Footer";
 import HRline from '../../Shared/HRline';
@@ -9,9 +9,11 @@ import DataTable from './Table';
 import TransInfo from './TransComps';
 import Overview from "./TransComps/Components/Overview";
 import Analytics from "./TransComps/Components/AnalyticsItem";
+import { VizDataHistoryContext } from "../../../Context/visualizer";
 
 
 const Visualizer = () => {
+    const { loading } = useContext(VizDataHistoryContext)
     const [_, height] = useWindowSize()
 
     let concurrentHeight = Math.floor(height / 2) + 200
@@ -28,9 +30,14 @@ const Visualizer = () => {
     };
 
     return (
-        <div className="py-6 h-full">
+        <div className="h-full">
             <TransInfo />
-            <div className="ml-[220px] px-8 pt-6 h-full">
+            {loading && (
+                <div className="ml-[220px] w-full h-1 bg-gray-700 overflow-hidden relative">
+                    <div className="h-full bg-green-600 animate-grow-line origin-left"></div>
+                </div>
+            )}
+            <div className="ml-[220px] px-8 pt-12 h-full">
                 <div className="grid grid-cols-3.5f-1f gap-x-6 w-full h-full" id="pbft-graph" >
                     <Pbft />
                     <div 

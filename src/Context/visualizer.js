@@ -4,12 +4,18 @@ import { computeTableData, computeTransInfo, truncData } from "../Components/Pag
 
 export const VizDataHistoryContext = createContext({
     messageHistory: {},
-    changeMessageHistory: () => { },
+    changeMessageHistory: (newHistory) => { },
     currentTransaction: 17,
-    changeCurrentTransaction: () => { },
-    replicaStatus: [false, false, false, false]
+    changeCurrentTransaction: (transactionNumber) => { },
+    replicaStatus: [false, false, false, false],
+    primaryIndexVal: -1,
+    data: {},
+    truncatedData: {},
+    totalPercentFaulty: 0,
+    totalHistoryLength: 0,
+    noPrimaryCount: 0,
+    loading: false,
 });
-
 
 export const VizDataHistoryProvider = ({ children }) => {
     const { Provider } = VizDataHistoryContext;
@@ -125,10 +131,15 @@ export const VizDataHistoryProvider = ({ children }) => {
         };
 
         const updateStatus = async () => {
-            for (var i = 0; i < 4; i++) {
-                fetchData(i);
+            setLoading(true); 
+            try {
+                for (let i = 0; i < 4; i++) {
+                    await fetchData(i);
+                }
+            } finally {
+                setLoading(false);
             }
-        }
+        };
 
         updateStatus();
         const interval = setInterval(updateStatus, 20000);
