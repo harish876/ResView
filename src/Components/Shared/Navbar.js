@@ -1,8 +1,9 @@
 import { Tooltip } from "@mui/material";
 import cn from "classnames";
-import _ from "lodash";
-import React, { memo, useContext, useEffect } from "react";
+import React, { memo, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { BLOG_LINK, ICON_DEFAULT_COLOR, LOGO_DARK, LOGO_LIGHT, SUN_COLOR, URL_HOME_PAGE, URL_TEAM_PAGE, URL_VISUALIZER_PAGE } from "../../Constants";
+import { PbftGraphClearContext } from "../../Context/graph";
 import { NavbarToggleContext } from "../../Context/navbarToggle";
 import { ThemeContext } from "../../Context/theme";
 import {
@@ -13,8 +14,6 @@ import {
   teamIcon
 } from "../../Resources/Icons";
 import { Icon } from "./Icon";
-import { BLOG_LINK, ICON_DEFAULT_COLOR, LOGO_DARK, LOGO_LIGHT, SUN_COLOR, URL_HOME_PAGE, URL_TEAM_PAGE, URL_VISUALIZER_PAGE } from "../../Constants";
-import { PbftGraphClearContext } from "../../Context/graph";
 
 const LightOrDark = memo(() => {
   const { theme, toggleLightTheme, toggleDarkTheme } = useContext(ThemeContext);
@@ -73,12 +72,6 @@ const NavComp = ({
             "dark:bg-green-80 bg-green-40 px-2 py-1 rounded-lg": isActive
           }
         )}>
-        {/* <Icon
-        fill={navbarPageActiveColor(currentPage, page)}
-        height={iconHeight}
-        path={icon}
-        viewBox={iconViewBox}
-      /> */}
         <Tooltip title={title} enterDelay={500}>
           {title}
         </Tooltip>
@@ -111,14 +104,14 @@ const Navbar = memo(() => {
         <div className='flex items-center justify-center gap-x-12 w-full'>
           <NavComp
             title={"Home"}
-          page={URL_HOME_PAGE}
+            page={URL_HOME_PAGE}
             icon={homeIcon}
             iconHeight={"1.4em"}
             iconViewBox={"0 0 640 512"}
           />
           <NavComp
             title={"Team"}
-          page={URL_TEAM_PAGE}
+            page={URL_TEAM_PAGE}
             icon={teamIcon}
             iconHeight={"1.4em"}
             iconViewBox={"0 0 640 512"}

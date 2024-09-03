@@ -1,13 +1,13 @@
 import { COLORS_MVT_GRAPH } from "../../../../../Constants";
 
-export const mvtGraphComputation = (transactionData, labelToggle, chartMaxDataUpdate, messageChartDataUpdate) => {
+export const mvtGraphComputation = (transactionData, labelToggle = {}) => {
 
     let startTime = 0;
     let firstPrepareTime = 0;
     let prePrepareTimes = [];
     let prepareTimes = [];
     let allPrepareTimes = [];
-    let allCommitTimes = [];            
+    let allCommitTimes = [];
     let labelList = [];
 
     Object.keys(transactionData).forEach((key) => {
@@ -88,16 +88,18 @@ export const mvtGraphComputation = (transactionData, labelToggle, chartMaxDataUp
     let data = {};
 
     for (let i = 0; i < labelList.length; i++) {
-        if (!labelToggle[labelList[i]]) {
+        const label = labelList[i];
+        const isEnabled = labelToggle.hasOwnProperty(label) ? labelToggle[label] : true;
+
+        if (!isEnabled) {
             data = {
-                id: labelList[i],
+                id: label,
                 color: COLORS_MVT_GRAPH[i],
                 data: [],
             };
-        }
-        else {
+        } else {
             data = {
-                id: labelList[i],
+                id: label,
                 color: COLORS_MVT_GRAPH[i],
                 data: prepareChartData[i],
             };
@@ -108,16 +110,18 @@ export const mvtGraphComputation = (transactionData, labelToggle, chartMaxDataUp
     let commitPoints = [];
 
     for (let i = 0; i < labelList.length; i++) {
-        if (!labelToggle[labelList[i]]) {
+        const label = labelList[i];
+        const isEnabled = labelToggle.hasOwnProperty(label) ? labelToggle[label] : true;
+
+        if (!isEnabled) {
             data = {
-                id: labelList[i],
+                id: label,
                 color: COLORS_MVT_GRAPH[i],
                 data: [],
             };
-        }
-        else {
+        } else {
             data = {
-                id: labelList[i],
+                id: label,
                 color: COLORS_MVT_GRAPH[i],
                 data: commitChartData[i],
             };
@@ -125,10 +129,9 @@ export const mvtGraphComputation = (transactionData, labelToggle, chartMaxDataUp
 
         commitPoints.push(data);
     }
-    //
 
     let pointData = { 1: preparePoints, 2: commitPoints };
     let maxPointData = { 1: maxPrepareTS, 2: maxCommitTS };
-    chartMaxDataUpdate(maxPointData);
-    messageChartDataUpdate(pointData);
+
+    return { pointData, maxPointData };
 };

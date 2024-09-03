@@ -37,7 +37,6 @@ const Mvt = () => {
         });
 
         const setFaulty = async (label) => {
-            console.log(label);
             try {
                 let response = await fetch('http://localhost:1850' + String(label.charAt(label.length - 1)) + '/make_faulty');
 
@@ -67,7 +66,8 @@ const Mvt = () => {
 
     useEffect(() => {
         const transactionData = messageHistory[currentTransaction];
-        setLabelToggleFaulty(FAULT_TOGGLES)
+        setLabelToggleFaulty(replicaStatus)
+        setLabelToggle(replicaStatus)
 
         replicaStatus.length > 0 && replicaStatus.forEach((value, index) => {
             if (!value) {
@@ -76,7 +76,10 @@ const Mvt = () => {
             }
         });
 
-        mvtGraphComputation(transactionData, labelToggle, chartMaxDataUpdate, messageChartDataUpdate)
+        const { pointData, maxPointData } = mvtGraphComputation(transactionData, labelToggle, chartMaxDataUpdate, messageChartDataUpdate)
+
+        chartMaxDataUpdate(maxPointData);
+        messageChartDataUpdate(pointData);
 
     }, [messageHistory, currentTransaction, replicaStatus]);
 

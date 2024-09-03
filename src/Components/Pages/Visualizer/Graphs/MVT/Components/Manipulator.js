@@ -8,6 +8,7 @@ const Manipulator = ({
     toggleFaulty,
     toggleLine,
 }) => {
+    console.log('eifne', labelToggle)
     return (
         <div className='mt-2 rounded-md w-550p py-6 px-2 border-3p border-solid border-gray-700 dark:border-gray-50 flex flex-col gap-y-6 bg-blue-10 dark:bg-blue-450'>
             <div className="flex flex-col gap-y-6">
@@ -30,7 +31,7 @@ const Manipulator = ({
                         <ReplicaButton
                             title={title}
                             onClick={() => toggleLine(title)}
-                            lineActive={labelToggle[title]}
+                            lineActive={!labelToggle[title]}
                             lineToggle={true}
                             key={index}
                         />
