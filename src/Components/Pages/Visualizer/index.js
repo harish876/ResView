@@ -1,7 +1,6 @@
 import { useWindowSize } from "@react-hook/window-size";
 import React from "react";
 import { DATA_TABLE_DELAY } from "../../../Constants";
-import { WebSocket } from "../../../Socket";
 import Footer from "../../Shared/Footer";
 import HRline from '../../Shared/HRline';
 import Mvt from "./Graphs/Mvt";
@@ -31,7 +30,6 @@ const Visualizer = () => {
     return (
         <div className="py-6 h-full">
             <TransInfo />
-            <WebSocket />
             <div className="ml-[220px] px-8 pt-6 h-full">
                 <div className="grid grid-cols-3.5f-1f gap-x-6 w-full h-full" id="pbft-graph" >
                     <Pbft />

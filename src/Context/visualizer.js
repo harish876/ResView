@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useRef, useState } from "react";
 import { dummyData } from "../Components/Pages/Visualizer/Ancilliary/Data/data";
 import { computeTableData, computeTransInfo, truncData } from "../Components/Pages/Visualizer/Ancilliary/Computation/TransInfo";
 
@@ -23,6 +23,10 @@ export const VizDataHistoryProvider = ({ children }) => {
     const [totalHistoryLength, setTotalHistoryLength] = useState(0);
     const [noPrimaryCount, setNoPrimaryCount] = useState(0);
     const [loading, setLoading] = useState(false);
+    const transactionCount = useRef(0);
+    const allMessages = useRef({});
+    const keyList = useRef([[], [], [], []]);
+    let updatedMessageList;
 
 
     const changeMessageHistory = (value) => {
@@ -35,48 +39,50 @@ export const VizDataHistoryProvider = ({ children }) => {
         const smallData = truncData(data, value);
         setTruncatedData(smallData)
         setLoading(false);
-    }
+    }   
 
-    const fetchWithTimeout = (url, options, timeout = 5000) => {
-        return Promise.race([
-            fetch(url, options),
-            new Promise((_, reject) =>
-                setTimeout(() => reject(new Error('Timeout')), timeout)
-            )
-        ]);
-    }
-
-    const fetchReplicaStatuses = () => {
-        let promises = [];
-        let results = [false, false, false, false];
-
-        for (let i = 0; i < 4; i++) {
-            //let port= parseInt(process.env.REACT_APP_DEFAULT_LOCAL_PORT)+i
-            //let url = process.env.REACT_APP_DEFAULT_LOCAL + String(port) + process.env.REACT_APP_REPLICA_STATUS_EP
-            let port = parseInt(18501) + i
-            let url = "http://localhost:" + String(port) + "/get_status"
-            let promise = fetchWithTimeout(url)
-                .then(response => {
-                    return response.text();
-                })
-                .then(body => {
-                    if (body === 'Not Faulty') {
-                        results[i] = true;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-
-            promises.push(promise);
+    const onMessage = (newData, txn_number) => {
+        if (messageHistory) {
+            let incomingData = JSON.parse(JSON.stringify(newData))
+            changeMessageHistory({
+                ...messageHistory,
+                ...incomingData
+            })
+        } else {
+            changeMessageHistory(JSON.parse(JSON.stringify(newData)));
         }
+    };
 
-        Promise.all(promises)
-            .then(() => {
-                setReplicaStatus(results);
-            });
+    const addMessage = (receivedMessage) => {
+        if (receivedMessage === null) {
+            return;
+        }
+        const reply = new Date().getTime();
+        let newMessage = {
+            ...receivedMessage,
+            reply_time: reply,
+        }
+        const txn_number = String(newMessage.txn_number);
+        const replica_number = String(newMessage.replica_id);
+        updatedMessageList = allMessages.current;
+        if (txn_number in updatedMessageList) {
+            let txn_messages = updatedMessageList[txn_number];
+            txn_messages = {
+                ...txn_messages,
+                [replica_number]: newMessage,
+            };
+            updatedMessageList[txn_number] = txn_messages;
+            allMessages.current = updatedMessageList;
+        }
+        else {
+            let txn_messages = {
+                [replica_number]: newMessage,
+            }
+            updatedMessageList[txn_number] = txn_messages;
+            allMessages.current = updatedMessageList;
+            transactionCount.current = transactionCount.current + 1;
+        }
     }
-
 
     useEffect(() => {
         setLoading(true);
@@ -99,6 +105,35 @@ export const VizDataHistoryProvider = ({ children }) => {
         setLoading(false);
         // ! CHECK THE BELOW DEPENDENCIES WHEN THIS CONNECTED TO THE BE
     }, [currentTransaction, messageHistory])
+
+    useEffect(() => {
+        const fetchData = async (replicaPort) => {
+            try {
+                let port = parseInt(18501) + replicaPort
+                const response = await fetch("http://localhost:" + String(port) + "/consensus_data");
+                const newData = await response.json();
+                Object.keys(newData).map(key => {
+                    if (!keyList.current[replicaPort].includes(key)) {
+                        keyList.current[replicaPort].push(key);
+                        addMessage(newData[key]);
+                        onMessage(allMessages.current, key);
+                    }
+                })
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        const updateStatus = async () => {
+            for (var i = 0; i < 4; i++) {
+                fetchData(i);
+            }
+        }
+
+        updateStatus();
+        const interval = setInterval(updateStatus, 20000);
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <Provider value={
