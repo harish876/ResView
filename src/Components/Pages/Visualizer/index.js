@@ -32,11 +32,9 @@ const Visualizer = () => {
     return (
         <div className="h-full">
             <TransInfo />
-            {loading && (
-                <div className="ml-[220px] w-full h-1 bg-gray-700 overflow-hidden relative">
-                    <div className="h-full bg-green-600 animate-grow-line origin-left"></div>
-                </div>
-            )}
+            <div className="ml-[220px] w-full h-1 bg-gray-700 overflow-hidden relative">
+                {loading && <div className="h-full bg-green-600 animate-grow-line origin-left"></div>}
+            </div>
             <div className="ml-[220px] px-8 pt-12 h-full">
                 <div className="grid grid-cols-3.5f-1f gap-x-6 w-full h-full" id="pbft-graph" >
                     <Pbft />
