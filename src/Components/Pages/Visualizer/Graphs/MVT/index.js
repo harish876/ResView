@@ -1,4 +1,3 @@
-
 import { useContext, useEffect, useState } from "react";
 import { VizDataHistoryContext } from "../../../../../Context/visualizer";
 import { mvtGraphComputation } from "../../Ancilliary/Computation/MVT";
@@ -6,20 +5,39 @@ import ResizableContainer from "../Components/GraphContainer";
 import MvtGraph from "./Components/Graph";
 import Manipulator from "./Components/Manipulator";
 
-const LABEL_TOGGLES = { "Replica 1": true, "Replica 2": true, "Replica 3": true, "Replica 4": true }
+const LABEL_TOGGLES = { "Replica 1": true, "Replica 2": true, "Replica 3": true, "Replica 4": true };
+const FAULT_TOGGLES = { "Replica 1": false, "Replica 2": false, "Replica 3": false, "Replica 4": false };
 
-const FAULT_TOGGLES = { "Replica 1": false, "Replica 2": false, "Replica 3": false, "Replica 4": false }
+const updateLabelToggles = (status) => {
+    let updatedLabel = {};
+    status.forEach((value, index) => {
+        let str = `Replica ${index + 1}`;
+        updatedLabel = {
+            ...updatedLabel,
+            [str]: value
+        };
+    });
+    return updatedLabel;
+}
 
+const updateFaultToggles = (status) => {
+    let updatedFaultToggles = {};
+    status.forEach((value, index) => {
+        let str = `Replica ${index + 1}`;
+        updatedFaultToggles = {
+            ...updatedFaultToggles,
+            [str]: !value 
+        };
+    });
+    return updatedFaultToggles;
+}
 
 const Mvt = () => {
-    const { messageHistory, currentTransaction, replicaStatus } = useContext(VizDataHistoryContext)
-
+    const { messageHistory, currentTransaction, replicaStatus } = useContext(VizDataHistoryContext);
     const [messageChartData, setMessageChartData] = useState([]);
     const [chartMaxData, setChartMaxData] = useState({});
-
     const [labelToggle, setLabelToggle] = useState(LABEL_TOGGLES);
     const [labelToggleFaulty, setLabelToggleFaulty] = useState(FAULT_TOGGLES);
-
     const [resetGraph, setResetGraph] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -27,7 +45,7 @@ const Mvt = () => {
         let value = resetGraph;
         value = value + 1;
         setResetGraph(value);
-    }
+    };
 
     const toggleFaulty = (label) => {
         setLabelToggleFaulty((prevLabels) => {
@@ -39,16 +57,13 @@ const Mvt = () => {
         const setFaulty = async (label) => {
             try {
                 let response = await fetch('http://localhost:1850' + String(label.charAt(label.length - 1)) + '/make_faulty');
-
-
                 console.log(response.body());
             } catch (error) {
-                //console.error('Error toggling faulty:', error);
+                console.error('Error toggling faulty:', error);
             }
-        }
+        };
 
         setFaulty(label);
-
         updateGraph();
     };
 
@@ -56,27 +71,24 @@ const Mvt = () => {
         setLabelToggle((prevLabels) => {
             const updatedLabels = { ...prevLabels };
             updatedLabels[label] = !updatedLabels[label];
-            return updatedLabels;
+            return updatedLabels; 
         });
-        updateGraph();
     };
+
 
     const chartMaxDataUpdate = (value) => setChartMaxData(value);
     const messageChartDataUpdate = (value) => setMessageChartData(value);
 
     useEffect(() => {
         const transactionData = messageHistory[currentTransaction];
-        setLabelToggleFaulty(replicaStatus)
-        setLabelToggle(replicaStatus)
 
-        replicaStatus.length > 0 && replicaStatus.forEach((value, index) => {
-            if (!value) {
-                toggleFaulty(`Replica ${index + 1}`)
-                toggleLine(`Replica ${index + 1}`)
-            }
-        });
+        const updatedLabelToggles = updateLabelToggles(replicaStatus);
+        const updatedFaultToggles = updateFaultToggles(replicaStatus);
 
-        const { pointData, maxPointData } = mvtGraphComputation(transactionData, labelToggle, chartMaxDataUpdate, messageChartDataUpdate)
+        setLabelToggle(updatedLabelToggles);
+        setLabelToggleFaulty(updatedFaultToggles);
+
+        const { pointData, maxPointData } = mvtGraphComputation(transactionData, updatedLabelToggles, chartMaxDataUpdate, messageChartDataUpdate);
 
         chartMaxDataUpdate(maxPointData);
         messageChartDataUpdate(pointData);
@@ -88,7 +100,7 @@ const Mvt = () => {
             <div className="grid grid-cols-2 gap-x-6 w-full">
                 <ResizableContainer title={'Prepare Messages v Time'} >
                     <div className='relative w-full h-full pl-4 pr-2 pb-6'>
-                        {(isLoading) ? (
+                        {isLoading ? (
                             <div className='loader'>
                                 <div>MVT</div>
                                 <div className='inner' />
@@ -100,7 +112,7 @@ const Mvt = () => {
                 </ResizableContainer>
                 <ResizableContainer title={'Commit Messages v Time'}>
                     <div className='relative w-full h-full pl-4 pr-2 pb-6'>
-                        {(isLoading) ? (
+                        {isLoading ? (
                             <div className='loader'>
                                 <div>MVT</div>
                                 <div className='inner' />
@@ -123,11 +135,4 @@ const Mvt = () => {
     );
 };
 
-const index = () => {
-    return (
-        <Mvt />
-    );
-};
-
-
-export default index;
+export default Mvt;

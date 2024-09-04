@@ -112,7 +112,6 @@ const themeObj = {
 }
 
 const MvtGraph = ({ chartData, chartMaxData, mvtGraphNo }) => {
-    console.log('CHART DATA', chartData)
     const { theme } = useContext(ThemeContext)
 
     const graphTheme = theme ? themeObj : {
