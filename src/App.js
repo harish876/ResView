@@ -41,13 +41,21 @@ const PreSynthApp = () => {
   }
 
   useEffect(() => {
+    setIsLoading(true);
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);
-    }).then(() => {
-      setInit(true);
-      setIsLoading(false);
-    });
+    })
+      .then(() => {
+        setInit(true);
+      })
+      .catch((error) => {
+        console.error("Initialization failed:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
+
 
   return (
     <>
