@@ -3,6 +3,7 @@ import { atomIcon } from '../../../../../Resources/Icons'
 import Title, { Subtitle } from '../../../../Shared/Title'
 import Timeline from './Timeline'
 import { WHAT_IST_PBFT_SUBTITLE } from '../../../../../Constants'
+import Wrapper from '../../../../Shared/Wrapper'
 
 const index = () => {
     return (
@@ -13,8 +14,10 @@ const index = () => {
             <div>
                 <Subtitle subtitle={WHAT_IST_PBFT_SUBTITLE} />
             </div>
-            <div className='mt-16'>
-                <Timeline />
+            <div className=''>
+                <Wrapper>
+                    <Timeline />
+                </Wrapper>
             </div>
         </div>
     )

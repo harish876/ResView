@@ -1,31 +1,43 @@
-
 import { useContext, useEffect, useState } from "react";
-import { GraphResizerContext, GraphViewContext } from "../../../../../Context/graph";
-import { anglesRightIcon } from "../../../../../Resources/Icons";
-import { MvTSelectButton } from "../../../../Shared/Buttons";
-import { Icon } from "../../../../Shared/Icon";
-import { FontVarTitle } from "../../../../Shared/Title";
-import ResizableContainer from "../../ResizableContainer";
-import Manipulator from "./Manipulator";
-import MvtGraph from "./Graph";
-import { dummyData } from "../data";
-import { mvtGraphComputation } from "../Computation/MVT";
+import { VizDataHistoryContext } from "../../../../../Context/visualizer";
+import { mvtGraphComputation } from "../../Ancilliary/Computation/MVT";
+import ResizableContainer from "../Components/GraphContainer";
+import MvtGraph from "./Components/Graph";
+import Manipulator from "./Components/Manipulator";
 
-const LABEL_TOGGLES = { "Replica 1": true, "Replica 2": true, "Replica 3": true, "Replica 4": true }
+const LABEL_TOGGLES = { "Replica 1": true, "Replica 2": true, "Replica 3": true, "Replica 4": true };
+const FAULT_TOGGLES = { "Replica 1": false, "Replica 2": false, "Replica 3": false, "Replica 4": false };
 
-const FAULT_TOGGLES = { "Replica 1": false, "Replica 2": false, "Replica 3": false, "Replica 4": false }
+const updateLabelToggles = (status) => {
+    let updatedLabel = {};
+    status.forEach((value, index) => {
+        let str = `Replica ${index + 1}`;
+        updatedLabel = {
+            ...updatedLabel,
+            [str]: value
+        };
+    });
+    return updatedLabel;
+}
 
+const updateFaultToggles = (status) => {
+    let updatedFaultToggles = {};
+    status.forEach((value, index) => {
+        let str = `Replica ${index + 1}`;
+        updatedFaultToggles = {
+            ...updatedFaultToggles,
+            [str]: !value 
+        };
+    });
+    return updatedFaultToggles;
+}
 
-const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
-    const { resizing } = useContext(GraphResizerContext);
-    const { toggleMvtGraphNoChange } = useContext(GraphViewContext);
-
+const Mvt = () => {
+    const { messageHistory, currentTransaction, replicaStatus } = useContext(VizDataHistoryContext);
     const [messageChartData, setMessageChartData] = useState([]);
     const [chartMaxData, setChartMaxData] = useState({});
-
     const [labelToggle, setLabelToggle] = useState(LABEL_TOGGLES);
     const [labelToggleFaulty, setLabelToggleFaulty] = useState(FAULT_TOGGLES);
-
     const [resetGraph, setResetGraph] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -33,7 +45,7 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
         let value = resetGraph;
         value = value + 1;
         setResetGraph(value);
-    }
+    };
 
     const toggleFaulty = (label) => {
         setLabelToggleFaulty((prevLabels) => {
@@ -43,19 +55,15 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
         });
 
         const setFaulty = async (label) => {
-            console.log(label);
             try {
                 let response = await fetch('http://localhost:1850' + String(label.charAt(label.length - 1)) + '/make_faulty');
-
-
                 console.log(response.body());
             } catch (error) {
-                //console.error('Error toggling faulty:', error);
+                console.error('Error toggling faulty:', error);
             }
-        }
+        };
 
         setFaulty(label);
-
         updateGraph();
     };
 
@@ -63,44 +71,59 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
         setLabelToggle((prevLabels) => {
             const updatedLabels = { ...prevLabels };
             updatedLabels[label] = !updatedLabels[label];
-            return updatedLabels;
+            return updatedLabels; 
         });
-        updateGraph();
     };
+
 
     const chartMaxDataUpdate = (value) => setChartMaxData(value);
     const messageChartDataUpdate = (value) => setMessageChartData(value);
 
     useEffect(() => {
-        const transactionData = Object.keys(messageHistory).length !== 0 ? messageHistory[currentTransaction] : dummyData[17];
+        const transactionData = messageHistory[currentTransaction];
 
-        mvtGraphComputation(transactionData, labelToggle, chartMaxDataUpdate, messageChartDataUpdate)
+        const updatedLabelToggles = updateLabelToggles(replicaStatus);
+        const updatedFaultToggles = updateFaultToggles(replicaStatus);
 
-    }, [messageHistory, currentTransaction, labelToggle, resetGraph]);
+        setLabelToggle(updatedLabelToggles);
+        setLabelToggleFaulty(updatedFaultToggles);
+
+        const { pointData, maxPointData } = mvtGraphComputation(transactionData, updatedLabelToggles, chartMaxDataUpdate, messageChartDataUpdate);
+
+        chartMaxDataUpdate(maxPointData);
+        messageChartDataUpdate(pointData);
+
+    }, [messageHistory, currentTransaction, replicaStatus]);
 
     return (
         <div className="flex flex-col">
-            <FontVarTitle title={'Messages vs Time Graph'} />
-            <div className="flex items-center justify-center gap-x-16 mt-8 mb-10">
-                <MvTSelectButton title={'Prepare Messages'} onClick={() => toggleMvtGraphNoChange(1)} graphNo={1} />
-                <MvTSelectButton title={'Commit Messages'} onClick={() => toggleMvtGraphNoChange(2)} graphNo={2} />
+            <div className="grid grid-cols-2 gap-x-6 w-full">
+                <ResizableContainer title={'Prepare Messages v Time'} >
+                    <div className='relative w-full h-full pl-4 pr-2 pb-6'>
+                        {isLoading ? (
+                            <div className='loader'>
+                                <div>MVT</div>
+                                <div className='inner' />
+                            </div>
+                        ) : (
+                            <MvtGraph chartData={messageChartData} chartMaxData={chartMaxData} mvtGraphNo={1} />
+                        )}
+                    </div>
+                </ResizableContainer>
+                <ResizableContainer title={'Commit Messages v Time'}>
+                    <div className='relative w-full h-full pl-4 pr-2 pb-6'>
+                        {isLoading ? (
+                            <div className='loader'>
+                                <div>MVT</div>
+                                <div className='inner' />
+                            </div>
+                        ) : (
+                            <MvtGraph chartData={messageChartData} chartMaxData={chartMaxData} mvtGraphNo={2} />
+                        )}
+                    </div>
+                </ResizableContainer>
             </div>
-            <ResizableContainer>
-                <div className='relative w-full h-full pl-4 pr-2 pb-6'>
-                    {(resizing || isLoading) ? (
-                        <div class='loader'>
-                            <div>MVT</div>
-                            <div class='inner' />
-                        </div>
-                    ) : (
-                        <MvtGraph chartData={messageChartData} chartMaxData={chartMaxData} />
-                    )}
-                </div>
-                <div className='absolute bottom-0 right-0 rotate-45'>
-                    <Icon path={anglesRightIcon} fill={"gray"} height={"0.8em"} />
-                </div>
-            </ResizableContainer>
-            <div className='mt-10 mb-4 flex items-center justify-center'>
+            <div className='mt-12 mb-4 flex items-center justify-center'>
                 <Manipulator
                     toggleFaulty={toggleFaulty}
                     toggleLine={toggleLine}
@@ -111,6 +134,5 @@ const Mvt = ({ messageHistory, currentTransaction = 17 }) => {
         </div>
     );
 };
-
 
 export default Mvt;

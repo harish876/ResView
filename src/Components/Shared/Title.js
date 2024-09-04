@@ -28,16 +28,16 @@ const Title = ({ title, icon, iconHeight, iconViewBox }) => {
 
 export const Subtitle = ({ subtitle }) => {
     return (
-        <div className='text-16p text-center dark:text-white text-gray-170 w-750p'>
+        <div className='text-18p text-center dark:text-white text-gray-170 w-750p'>
             {subtitle}
         </div>
     );
 };
 
 export const FontVarTitle = ({ title, fontClass }) => {
-    const varFont = fontClass ? fontClass : 'text-22p';
+    const varFont = fontClass ? fontClass : 'text-18p';
     return (
-        <div className={`dark:text-gray-300 text-gray-700 font-bold text-center ${varFont}`}>
+        <div className={`dark:text-gray-300 text-gray-700 font-bold text-center ${varFont} flex items-center justify-center`}>
             {title}
         </div>
     );

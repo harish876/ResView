@@ -1,20 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { teamIcon } from '../../../Resources/Icons';
-import Title from '../../Shared/Title';
+import Title, { Subtitle } from '../../Shared/Title';
 import Wrapper from '../../Shared/Wrapper';
-import { CurrentTeamCard, PastMembersCard } from './Card';
-import { currentTeam, pastMembers } from './data';
+import { CurrentTeamCard, PastMembersCard } from './Ancilliary/Components/Card';
+import { currentTeam, pastMembers } from './Ancilliary/Data/data';
+import { NavbarToggleContext } from '../../../Context/navbarToggle';
+import Navbar from '../../Shared/Navbar';
+import { BorderToggleRef } from '../../../App';
+import Footer from '../../Shared/Footer';
 
 const Team = () => {
   return (
     <Wrapper>
-      <div className="mt-8 mb-16">
+      <div className="mt-8">
         <Title title={'Team'} icon={teamIcon} iconViewBox={'0 0 640 512'} titleFontSize={''} />
+      </div>
+      <div className='mt-6 mb-16'>
+        <Subtitle subtitle={'Designed and developed at the Exploratory Systems Lab @ UC Davis'} />
       </div>
       <div className='mt-4 mb-4 mx-8 grid grid-cols-2 gap-24 w-full h-full'>
         {currentTeam.length > 0 &&
           currentTeam.map((element, index) => (
-            <div key={index} data-aos='fade-in' data-aos-delay={100*index}>
+            <div key={index} data-aos='fade-in' data-aos-delay={100 * index}>
               <CurrentTeamCard element={element} />
             </div>
           ))}
@@ -35,10 +42,16 @@ const Team = () => {
   );
 }
 
-const index = () => {
+const Index = () => {
+  const { borderToggle } = useContext(NavbarToggleContext);
   return (
-    <Team />
+    <>
+      <Navbar borderToggle={borderToggle} />
+      <BorderToggleRef />
+      <Team />
+      <Footer />
+    </>
   );
 }
 
-export default index;
+export default Index

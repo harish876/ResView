@@ -1,23 +1,27 @@
-
 import * as d3 from "d3";
 import { line } from "d3-shape";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import throttle from 'lodash/throttle';
 import { ACTION_TYPE_PBFT_GRAPH, COLORS_PBFT_GRAPH, NUMBER_OF_STEPS_PBFT_GRAPH, PBFT_ANIMATION_SPEEDS, PBFT_ANIMATION_SPEEDS_NO_PRIMARY } from "../../../../../Constants";
-import { GraphResizerContext, PbftAnimationSpeedContext, PbftGraphClearContext } from "../../../../../Context/graph";
+import { PbftAnimationSpeedContext, PbftGraphClearContext } from "../../../../../Context/graph";
 import { ThemeContext } from "../../../../../Context/theme";
 import { cancelIcon, pauseIcon, playIcon } from "../../../../../Resources/Icons";
 import { DropDownButtons, IconButtons } from "../../../../Shared/Buttons";
 import { Icon } from "../../../../Shared/Icon";
-import { connectionRender, labelFaultyNode, labelPrimaryNode } from "../Computation/D3Pbft";
-import { generateConnections, generateLabels, generateLines, generatePoints, generateTransactionIds } from "../Computation/CompPbft";
+import { connectionRender, labelFaultyNode, labelPrimaryNode } from "../../Ancilliary/Computation/D3Pbft";
+import { generateConnections, generateLabels, generateLines, generatePoints } from "../../Ancilliary/Computation/CompPbft";
+import GraphContainer from "../Components/GraphContainer";
+import { VizDataHistoryContext } from "../../../../../Context/visualizer";
+import { useWindowSize } from "@react-hook/window-size";
 
-
-
-const PBFT = ({
-    messageHistory,
-    realTransactionNumber
-}) => {
+const Pbft = () => {
     const { speed, changeSpeed } = useContext(PbftAnimationSpeedContext);
+
+    const { messageHistory, currentTransaction } = useContext(VizDataHistoryContext);
+
+    const [width, height] = useWindowSize()
+
+
     const {
         TRANSDURATION,
         REQUEST_BUFFER,
@@ -36,10 +40,6 @@ const PBFT = ({
         REPLY_BUFFER_NP
     } = PBFT_ANIMATION_SPEEDS_NO_PRIMARY[speed];
 
-    const { boxValues, resizing } = useContext(GraphResizerContext);
-
-    const { width, height } = boxValues;
-
     const { theme } = useContext(ThemeContext);
 
     const { clear, changeClear } = useContext(PbftGraphClearContext);
@@ -47,20 +47,47 @@ const PBFT = ({
     const colorMode = !theme ? 'black' : "#c4c4c4";
     const pointColorMode = theme ? '#edf0f5' : '#464747';
 
-    // TODO: Comment the below two lines after connecting to the BE
-    //const { transactionIds } = generateTransactionIds(dummyData);
-    const [transactionNumber, setTransactionNumber] = useState(realTransactionNumber);
     const [playing, setPlaying] = useState(true);
 
     const graphRef = useRef(null);
     const lineRef = useRef(null);
     const primaryLabelRef = useRef(null);
     const faultyReplicasLabelRef = useRef(null);
+    const containerRef = useRef(null);
     const doesPrimaryExist = useRef(1);
     const yCoordToReplicasMap = useRef({});
     const transactionsSet = useRef({});
+    const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+    useEffect(() => {
+        const updateDimensions = throttle(() => {
+            if (containerRef.current) {
+                const { clientWidth, clientHeight } = containerRef.current;
+                setDimensions({ width: clientWidth, height: clientHeight });
+            }
+        }, 200);
+
+        updateDimensions();
+
+        window.addEventListener("resize", updateDimensions);
+        return () => {
+            window.removeEventListener("resize", updateDimensions);
+            updateDimensions.cancel();
+        };
+    }, []);
+
+    const clearSVGs = () => {
+        d3.select(graphRef.current).selectAll("*").remove();
+        d3.select(lineRef.current).selectAll("*").remove();
+        d3.select(primaryLabelRef.current).selectAll("*").remove();
+        d3.select(faultyReplicasLabelRef.current).selectAll("*").remove();
+    };
 
     const debouncedRender = useCallback(() => {
+        clearSVGs();
+
+        const { width, height } = dimensions;
+
         const data = generatePoints(
             width,
             height,
@@ -81,7 +108,7 @@ const PBFT = ({
             xCoords,
             yCoords,
             messageHistory,
-            realTransactionNumber,
+            currentTransaction,
             theme
         );
 
@@ -106,7 +133,7 @@ const PBFT = ({
             .append("circle")
             .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
-            .attr("r", 2)
+            .attr("r", '1.5')
             .attr("fill", `${!theme ? "black" : "white"}`);
 
         const lineGen = line()
@@ -122,8 +149,8 @@ const PBFT = ({
                 .attr("viewBox", "0 0 10 10")
                 .attr("refX", 10)
                 .attr("refY", 5)
-                .attr("markerWidth", 6)
-                .attr("markerHeight", 6)
+                .attr("markerWidth", 5)
+                .attr("markerHeight", 5)
                 .attr("orient", "auto-start-reverse")
                 .append("path")
                 .attr("fill", `${COLORS_PBFT_GRAPH[index]}`)
@@ -152,12 +179,17 @@ const PBFT = ({
                 .attr("stroke-dasharray", "5,10")
         );
 
+        const relativeLabelFont = Math.floor((height + width) / 120)
+        const relativeLabelYPos = Math.floor(relativeLabelFont / 2)
+        const relativeLabelXPos = relativeLabelYPos - 4
+
         // LABELS FOR EACH ACTION
         labelsX.forEach((label) =>
             svg
                 .append("text")
-                .attr("transform", "translate(" + label.x + " ," + label.y + ")")
+                .attr("transform", "translate(" + label.x + " ," + (label.y + relativeLabelYPos - 3) + ")")
                 .attr("fill", colorMode)
+                .attr("font-size", relativeLabelFont)
                 .style("text-anchor", "middle")
                 .text(`${label.title}`)
         );
@@ -166,7 +198,8 @@ const PBFT = ({
         labelsY.forEach((label, _) => {
             const labelText = svg
                 .append("text")
-                .attr("transform", "translate(" + label.x + " ," + label.y + ")")
+                .attr("transform", "translate(" + (label.x + relativeLabelXPos + 10) + " ," + label.y + ")")
+                .attr("font-size", relativeLabelFont)
                 .style("text-anchor", "middle")
                 .text(`${label.title}`)
                 .attr("fill", colorMode)
@@ -182,7 +215,7 @@ const PBFT = ({
                 .attr("width", width)
                 .attr("height", height)
 
-            if(primaryIndex !== -1) {
+            if (primaryIndex !== -1) {
                 primaryLabelSVG = d3
                     .select(primaryLabelRef.current)
                     .attr("width", width)
@@ -204,12 +237,14 @@ const PBFT = ({
                 if (!transactionsSet.current.has(value)) faultyReplicaIndices.add(value)
             }
 
+            const relativeSpecialLabelFont = Math.floor((height + width) / 120)
+
             labelsY.forEach((label, index) => {
-                if (faultyReplicaIndices.has(index)) return labelFaultyNode(faultyReplicasLabelSVG, label);
+                if (faultyReplicaIndices.has(index)) return labelFaultyNode(faultyReplicasLabelSVG, label, relativeSpecialLabelFont);
             })
 
             // IF PRIMARY DOES NOT EXIST AND VICEVERSA
-            if(primaryIndex === -1) {
+            if (primaryIndex === -1) {
 
                 // REQUEST LINES
                 points.request.end[0].points.length > 0 && points.request.end[0].points.forEach((end, i) => {
@@ -251,10 +286,9 @@ const PBFT = ({
                 });
 
             } else {
-                
+
                 labelsY.forEach((label, index) => {
                     if (index === primaryIndex) return labelPrimaryNode(primaryLabelSVG, label);
-                    if (faultyReplicaIndices.has(index)) return labelFaultyNode(faultyReplicasLabelSVG, label);
                 })
 
                 points.request.end.length > 0 && points.request.end.forEach((end, i) => {
@@ -297,7 +331,8 @@ const PBFT = ({
             }
         }
 
-    }, [theme, width, height, clear]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [theme, dimensions, messageHistory, currentTransaction, clear]);
 
     useEffect(() => {
         debouncedRender();
@@ -308,7 +343,8 @@ const PBFT = ({
         setTimeout(() => {
             changeClear(false)
         }, 500)
-    }, [speed])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [speed, currentTransaction, height, width])
 
     const onClear = () => {
         changeClear(true);
@@ -325,49 +361,47 @@ const PBFT = ({
     const color = theme && clear ? 'gray' : theme && !clear ? 'white' : !theme && clear ? 'gray' : 'black';
 
     return (
-        <>
-            <div className="flex items-center justify-around w-full flex-row mb-[-1em] mt-2">
+        <GraphContainer title={'Practical Byzantine Fault Tolerance'} heightBig>
+            <div className="flex items-center justify-around w-full flex-row mt-8">
                 <div className="basis-1/4">
                     {doesPrimaryExist.current === -1 && (
                         <div className="text-amber-600 font-18p border-1p rounded-md p-1 border-amber-600 w-180p flex items-center justify-center ml-8">
-                            !No Primary Exists&#161;
+                            No Primary Exists
                         </div>
                     )}
                 </div>
                 <div className="flex items-center justify-center gap-x-16 basis-1/2">
                     <IconButtons title={!clear ? 'Playing' : 'Play'} onClick={() => onPlay()} disabled={!clear}>
-                        <Icon path={!clear ? pauseIcon : playIcon} viewBox={'0 0 384 512'} height={'13px'} fill={color} />
+                        <Icon path={!clear ? pauseIcon : playIcon} viewBox={'0 0 384 512'} height={'11px'} fill={color} />
                     </IconButtons>
                     {playing && (
                         <DropDownButtons selected={speed} elements={['1x', '0.5x', '2x']} onClick={animationSpeedChange} />
                     )}
                     <IconButtons title={'Clear'} onClick={() => onClear()} disabled={clear}>
-                        <Icon path={cancelIcon} viewBox={'0 0 384 512'} height={'14px'} fill={color} />
+                        <Icon path={cancelIcon} viewBox={'0 0 384 512'} height={'12px'} fill={color} />
                     </IconButtons>
                 </div>
                 <div className="basis-1/4" />
             </div>
-            <div className='relative w-full h-full pl-4 pr-2 pb-6'>
-                {resizing ? (
-                    <div class='loader'>
-                        <div>PBFT</div>
-                        <div class='inner' />
-                    </div>
-                ) : (
+            <div ref={containerRef} className='relative w-full h-full pl-5 pr-0 pb-1'>
+                <svg id={'svg-one'} ref={graphRef} className='absolute'></svg>
+                {!clear && (
                     <>
-                        <svg id={'svg-one'} ref={graphRef} className='absolute'></svg>
-                        {!clear && (
-                            <>
-                                <svg ref={lineRef} className='absolute'></svg>
-                                <svg ref={primaryLabelRef} className='absolute'></svg>
-                                <svg ref={faultyReplicasLabelRef} className='absolute'></svg>
-                            </>
-                        )}
+                        <svg ref={lineRef} className='absolute'></svg>
+                        <svg ref={primaryLabelRef} className='absolute'></svg>
+                        <svg ref={faultyReplicasLabelRef} className='absolute'></svg>
                     </>
                 )}
             </div>
-        </>
+        </GraphContainer>
     );
 };
 
-export default PBFT;
+const index = () => {
+    return (
+        <Pbft />
+    );
+};
+
+
+export default index;

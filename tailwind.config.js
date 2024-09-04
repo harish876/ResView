@@ -144,7 +144,8 @@ module.exports = {
           500: "#0f172a",
           550: "#025888",
           600: "#002071",
-          20: "#eef3fa"
+          20: "#eef3fa",
+          700: '#0a0f1c'
         },
         yellow: {
           10: "#fffbec",
@@ -165,6 +166,7 @@ module.exports = {
         ubuntuBold: ["Ubuntu B"],
       },
       fontSize: {
+        "8p": "8px",
         "9p": "9px",
         "10p": "10px",
         "11p": "11px",
@@ -349,7 +351,10 @@ module.exports = {
         "16p-1fr": "16px 1fr",
         "3-max-content": "repeat(3, minmax(0, max-content))",
         "1.5-1fr": "1.5fr 1fr",
-        "1-1.5fr": "1fr 1.5fr"
+        "1-1.5fr": "1fr 1.5fr",
+        "3f-1f": "3fr 1fr",
+        "3.5f-1f": "3.5fr 1fr",
+        '4f-1f': '4fr 1fr',
       },
       gridTemplateRows: {
         10: "repeat(10, 1fr);",
@@ -483,13 +488,19 @@ module.exports = {
         "150p": "150px",
         "200p": "200px",
         "360p": "360px",
-        "800p": "800px",
         "450p": "450px",
         "550p": "550px",
-        "720p": "720px"
+        "650p": "650px",
+        "720p": "720px",
+        "800p": "800px",
+        "60per": "60%",
+        "70per": "70%",
+        "80per": "80%",
       },
       width: {
         "95per": "95%",
+        "60per": "60%",
+        "80per": "80%",
         "72p": "72px",
         "95p": "95px",
         "96p": "96px",
@@ -510,10 +521,12 @@ module.exports = {
         "420p": "420px",
         "455p": "455px",
         "460p": "460px",
+        "550p": "550px",
         "700p": "700px",
         "750p": "750px",
         "880p": "880px",
-        "920p": "920px"
+        "920p": "920px",
+        "1028p": "1028px"
       },
       zIndex: {
         "neg-1": "-1",
@@ -524,6 +537,10 @@ module.exports = {
       },
       animation: {
         pulseLong: "pulseLong 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        'fade-in': 'fadeIn 0.3s ease-in-out',
+        'fade-in-drop': 'fadeInDrop 0.5s ease-in-out',
+        'grow-line': 'grow 2s ease-in-out forwards',
+        'border-pulse': 'borderPulse 2s ease-in-out infinite',
       },
       keyframes: {
         pulseLong: {
@@ -533,6 +550,29 @@ module.exports = {
           "50%": {
             opacity: 1,
           },
+        },
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+        fadeInDrop: {
+          '0%': {
+            opacity: 0,
+            transform: 'translateY(-20px)',
+          },
+          '100%': {
+            opacity: 1,
+            transform: 'translateY(0)',
+          },
+        },
+        grow: {
+          '0%': { transform: 'scaleX(0)' },
+          '100%': { transform: 'scaleX(1)' },
+        },
+        borderPulse: {
+          '0%': { borderColor: 'rgba(0, 255, 0, 1)' },
+          '50%': { borderColor: 'rgba(0, 255, 0, 0.5)' },
+          '100%': { borderColor: 'rgba(0, 255, 0, 1)' },
         },
       },
     },

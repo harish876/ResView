@@ -1,26 +1,25 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-    --main-dark-color: #189788;
-    --main-light-color: #26D8C4;
-    --background-color: linear-gradient(160deg, rgba(240, 242, 245, 1) 0%,
+  --main-dark-color: #189788;
+  --main-light-color: #26D8C4;
+  --background-color: linear-gradient(160deg, rgba(240, 242, 245, 1) 0%,
       rgba(209, 223, 255, 1) 51%,
       rgba(213, 225, 255, 1) 100%);
-    --card-color: rgb(255, 255, 255);
-    --light-dark-font-color: rgb(51, 51, 51);
-    --grey-color: grey;
-    --logo-color:rgb(0, 145, 255);
+  --card-color: rgb(255, 255, 255);
+  --light-dark-font-color: rgb(51, 51, 51);
+  --grey-color: grey;
+  --logo-color: rgb(0, 145, 255);
 }
 
 [data-theme="dark"] {
-  --background-color: linear-gradient(160deg,rgba(23, 46, 84, 1) 0%,
-    rgba(17, 26, 49, 1) 31%,
-    rgba(15, 23, 42, 1) 100%);
-    --card-color: rgb(35, 35, 35);
-    --light-dark-font-color: rgb(204, 204, 204);
+  --background-color: linear-gradient(160deg, rgba(23, 46, 84, 1) 0%,
+      rgba(17, 26, 49, 1) 31%,
+      rgba(15, 23, 42, 1) 100%);
+  --card-color: rgb(35, 35, 35);
+  --light-dark-font-color: rgb(204, 204, 204);
 }
 
 body {
@@ -36,10 +35,6 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-}
-
-svg:hover {
-  fill: #26D8C4;
 }
 
 .loader {
@@ -107,5 +102,53 @@ svg:hover {
 
   100% {
     transform: rotate(405deg);
+  }
+}
+
+@layer utilities {
+  .scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #b3b3b3 transparent;
+  }
+
+  .scrollbar::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    border: 5px solid #b3b3b3;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #bbbbbb;
+  }
+
+  .scrollbar-lg {
+    scrollbar-width: thin;
+    scrollbar-color: #b3b3b3 transparent;
+  }
+
+  .scrollbar-lg::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-lg::-webkit-scrollbar-thumb {
+    border-radius: 9px;
+    border: 9px solid transparent;
+  }
+
+  .scrollbar-lg::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  .scrollbar-lg::-webkit-scrollbar-thumb:hover {
+    background-color: #bbbbbb;
   }
 }
