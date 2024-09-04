@@ -845,6 +845,9 @@ video {
 .w-screen {
   width: 100vw;
 }
+.min-w-full {
+  min-width: 100%;
+}
 .max-w-200p {
   max-width: 200px;
 }
