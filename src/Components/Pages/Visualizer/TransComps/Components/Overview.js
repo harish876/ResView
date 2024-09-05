@@ -20,7 +20,7 @@ const Overview = ({ goToElement }) => {
           />
         <FontVarTitle title={'Overview'} />
       </div>
-      <div className="overflow-y-scroll h-full">
+      <div className="overflow-y-scroll h-full scrollbar">
         <SmallTable />
       </div>
       <div className='w-full flex items-center justify-center gap-x-2 border-t-3p border-solid border-gray-700 dark:border-gray-50 cursor-pointer hover:dark:bg-green-80 h-60p' onClick={() => goToElement("transaction-table")}>
