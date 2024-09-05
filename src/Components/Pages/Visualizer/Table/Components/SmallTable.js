@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, { useContext } from 'react';
 import { DATA_TABLE_NO_PRIMARY_EXISTS } from '../../../../../Constants';
 import { VizDataHistoryContext } from '../../../../../Context/visualizer';
+import { truncatedDummyData } from '../../Ancilliary/Data/data';
 
 const TABLE_HEADERS = [
   'Sr #',
@@ -26,6 +27,8 @@ const CellValues = ({ value, loading, primaryDoesNotExist }) => {
 
 const TableValues = ({ srNo, transaction, loading }) => {
 
+  const { transactionNumber } = transaction;
+
   const { changeCurrentTransaction, currentTransaction } = useContext(VizDataHistoryContext)
 
   const changeTransaction = (value) => {
@@ -33,26 +36,37 @@ const TableValues = ({ srNo, transaction, loading }) => {
   }
 
   return (
-    <tr className={classNames('dark:hover:bg-gray-700 hover:bg-gray-400 cursor-pointer', { 'dark:bg-gray-700 bg-gray-400': transaction.transactionNumber == currentTransaction })} onClick={() => !loading && changeTransaction(transaction.transactionNumber)}>
-        <CellValues
-          value={srNo}
-          loading={loading}
-          transaction={transaction}
-          primaryDoesNotExist={transaction.primary}
-        />
-        {Object.keys(transaction).length > 0 && (
-          Object.keys(transaction).map((value, idx) => {
-            if (value !== 'replicaDetails') return (
+    <tr
+    className={classNames({
+    'dark:bg-gray-700 bg-gray-400': transactionNumber == currentTransaction && !loading,
+    'cursor-pointer dark:hover:bg-gray-700 hover:bg-gray-400': !loading,
+    'cursor-not-allowed': loading
+      })}
+      onClick={() => !loading && changeTransaction(transactionNumber ?? 17)}
+    >
+      <CellValues
+        value={srNo}
+        loading={loading}
+        transaction={transaction}
+        primaryDoesNotExist={transaction.primary}
+      />
+      {Object.keys(transaction).length > 0 &&
+        Object.keys(transaction).map((value, idx) => {
+          if (value !== 'replicaDetails') {
+            return (
               <CellValues
                 value={transaction[value]}
                 loading={loading}
                 primaryDoesNotExist={transaction.primary}
                 key={idx}
               />
-            )
-          })
-        )}
-      </tr>
+            );
+          }
+          return null;
+        })
+      }
+    </tr>
+
   );
 }
 
@@ -65,19 +79,45 @@ const SmallTable = () => {
     <table className="text-sm text-center rtl:text-right dark:text-gray-300 text-gray-700 h-full">
         <thead className="text-xs uppercase dark:text-gray-300 text-gray-700 border-b-1p border-solid border-gray-700 dark:border-gray-50">
           <tr className='h-50p min-w-full'>
-            {TABLE_HEADERS.map((value, index) => {
-              let isReplicaDetailCol = value === 'Replica Details';
-              return (
-                <th scope="col" className={classNames("px-1 py-2 border-r-1p border-gray-700 dark:border-gray-50 text-8p w-full", { 'border-r-0': isReplicaDetailCol })} rowSpan={!isReplicaDetailCol && '2'} colSpan={isReplicaDetailCol && '4'} key={index}>
-                  {value}
-                </th>
-              )
-            })}
+          {TABLE_HEADERS.map((value, index) => {
+            let isReplicaDetailCol = value === 'Replica Details';
+            return (
+              <th
+                scope="col"
+                className={classNames(
+                  "px-1 py-2 border-r-1p border-gray-700 dark:border-gray-50 text-8p",
+                  {
+                    'w-[20%]': index === 0 || index === 3,
+                    'w-[30%]': index === 1 || index === 2,
+                    'border-r-0': isReplicaDetailCol,
+                  }
+                )}
+                rowSpan={!isReplicaDetailCol && '2'}
+                colSpan={isReplicaDetailCol && '4'}
+                key={index}
+              >
+                {value}
+              </th>
+            );
+          })}
           </tr>
         </thead>
         <tbody>
           {loading ? (
-            <></>
+            <>
+            {Object.keys(truncatedDummyData).length > 0 && Object.keys(truncatedDummyData).map((transactionKey, index) => {
+              const transaction = truncatedDummyData[transactionKey];
+              return (
+                <TableValues
+                  className='cursor-pointer'
+                  key={transactionKey}
+                  srNo={index + 1}
+                  transaction={transaction}
+                  loading={true}
+                />
+              );
+            })}
+            </>
           ) : (
             <>
                 {Object.keys(truncatedData).length > 0 && Object.keys(truncatedData).map((transactionKey, index) => {

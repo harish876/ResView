@@ -115,26 +115,39 @@ export const VizDataHistoryProvider = ({ children }) => {
     useEffect(() => {
         const fetchData = async (replicaPort) => {
             try {
-                let port = parseInt(18501) + replicaPort
+                let port = parseInt(18501) + replicaPort;
                 const response = await fetch("http://localhost:" + String(port) + "/consensus_data");
                 const newData = await response.json();
-                Object.keys(newData).map(key => {
+                Object.keys(newData).map((key) => {
                     if (!keyList.current[replicaPort].includes(key)) {
                         keyList.current[replicaPort].push(key);
                         addMessage(newData[key]);
                         onMessage(allMessages.current, key);
                     }
-                })
+                });
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error("Error fetching data:", error);
             }
         };
 
         const updateStatus = async () => {
-            setLoading(true); 
+            setLoading(true);
+            const fetchStartTime = Date.now();
+
             try {
+                const fetchPromises = [];
                 for (let i = 0; i < 4; i++) {
-                    await fetchData(i);
+                    fetchPromises.push(fetchData(i));
+                }
+
+                await Promise.all(fetchPromises); 
+
+                const elapsedTime = Date.now() - fetchStartTime;
+
+                const remainingTime = 1000 - elapsedTime;
+
+                if (remainingTime > 0) {
+                    await new Promise((resolve) => setTimeout(resolve, remainingTime));
                 }
             } finally {
                 setLoading(false);
@@ -143,8 +156,10 @@ export const VizDataHistoryProvider = ({ children }) => {
 
         updateStatus();
         const interval = setInterval(updateStatus, 20000);
+
         return () => clearInterval(interval);
     }, []);
+
 
     return (
         <Provider value={

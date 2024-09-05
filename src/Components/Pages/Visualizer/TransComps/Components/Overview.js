@@ -1,13 +1,14 @@
 import classNames from 'classnames'
 import React, { useContext } from 'react'
+import { ThemeContext } from '../../../../../Context/theme'
+import { anglesDownIcon, eyeIcon } from '../../../../../Resources/Icons'
+import { Icon } from '../../../../Shared/Icon'
 import { FontVarTitle } from '../../../../Shared/Title'
 import SmallTable from '../../Table/Components/SmallTable'
-import { anglesDownIcon, eyeIcon } from '../../../../../Resources/Icons'
-import { ThemeContext } from '../../../../../Context/theme'
-import { Icon } from '../../../../Shared/Icon'
 
 const Overview = ({ goToElement }) => {
   const { theme } = useContext(ThemeContext);
+
   return (
     <div className={classNames('flex flex-col rounded-md bg-blue-10 border-3p border-solid border-gray-700 dark:border-gray-50 dark:bg-blue-450 relative w-full')}>
       <div className="flex items-center justify-center gap-x-2 w-full border-b-2p border-solid border-gray-700 dark:border-gray-50 h-60p">

@@ -1006,3 +1006,36 @@ export const tableDataDummy = {
         }
     }
 }
+
+export const truncatedDummyData = {
+    "17": {
+        "transactionNumber": "17",
+        "primary": "Replica 2",
+        "faultReplicas": "1"
+    },
+    "18": {
+        "transactionNumber": "18",
+        "primary": "Replica 1",
+        "faultReplicas": "0"
+    },
+    "19": {
+        "transactionNumber": "19",
+        "primary": "Replica 4",
+        "faultReplicas": "0"
+    },
+    "20": {
+        "transactionNumber": "20",
+        "primary": "Replica 2",
+        "faultReplicas": "1"
+    },
+    "21": {
+        "transactionNumber": "21",
+        "primary": "No Primary Selected",
+        "faultReplicas": "1"
+    },
+    "22": {
+        "transactionNumber": "22",
+        "primary": "Replica 1",
+        "faultReplicas": "1"
+    }
+}
