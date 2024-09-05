@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
+import { BorderToggleRef } from '../../../App';
+import { NavbarToggleContext } from '../../../Context/navbarToggle';
 import { teamIcon } from '../../../Resources/Icons';
+import Footer from '../../Shared/Footer';
+import Loader from '../../Shared/Loader';
+import Navbar from '../../Shared/Navbar';
 import Title, { Subtitle } from '../../Shared/Title';
 import Wrapper from '../../Shared/Wrapper';
 import { CurrentTeamCard, PastMembersCard } from './Ancilliary/Components/Card';
 import { currentTeam, pastMembers } from './Ancilliary/Data/data';
-import { NavbarToggleContext } from '../../../Context/navbarToggle';
-import Navbar from '../../Shared/Navbar';
-import { BorderToggleRef } from '../../../App';
-import Footer from '../../Shared/Footer';
 
 const Team = () => {
   return (
@@ -42,13 +43,18 @@ const Team = () => {
   );
 }
 
-const Index = () => {
+const Index = ({ loading }) => {
   const { borderToggle } = useContext(NavbarToggleContext);
+
   return (
     <>
-      <Navbar borderToggle={borderToggle} />
+      <Navbar borderToggle = { borderToggle } />
       <BorderToggleRef />
-      <Team />
+      {loading ? (
+          <Loader />
+      ) : (
+        <Team />
+      )}
       <Footer />
     </>
   );

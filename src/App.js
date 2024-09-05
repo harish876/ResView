@@ -25,7 +25,7 @@ export const BorderToggleRef = () => {
 }
 
 const PreSynthApp = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isParticleLoading, setIsParticleLoading] = useState(false);
   const [init, setInit] = useState(false);
   const { toggleLightTheme, toggleDarkTheme } = useContext(ThemeContext);
 
@@ -40,7 +40,7 @@ const PreSynthApp = () => {
   useEffect(() => {
     const initEngine = async () => {
       try {
-        setIsLoading(true);
+        setIsParticleLoading(true);
         await initParticlesEngine(async (engine) => {
           await loadSlim(engine);
         });
@@ -48,41 +48,34 @@ const PreSynthApp = () => {
       } catch (error) {
         console.error("Initialization failed:", error);
       } finally {
-        setIsLoading(false);
+        setIsParticleLoading(false);
       }
     };
     initEngine();
   }, []);
 
-  const particlesLoaded = (container) => {
-  };
+  const particlesLoaded = (container) => {};
 
 
 
   return (
     <>
-      {isMobile ? (
+      {false ? (
         <OnlyDesktop />
       ) : (
-          <>
-            {false ? (
-              <Loader />
-            ) : (
-              <Router>
-                <Routes>
-                    <Route index element={<Navigate to={`${URL_REROUTE_PAGE}`} />} />
+        <Router>
+          <Routes>
+              <Route index element={<Navigate to={`${URL_REROUTE_PAGE}`} />} />
 
-                    <Route path={`${URL_TEAM_PAGE}`} element={<Team />} />
-                    <Route path={`${URL_HOME_PAGE}`} element={<Home />} />
-                    <Route path={`${URL_VISUALIZER_PAGE}`} element={<Visualizer />} />
-                    
-                  <Route path='*' element={<NotFound />} />
-                </Routes>
-              </Router>
-            )}
-            <ParticleWrapper init={init} particlesLoaded={particlesLoaded} />
-          </>
+              <Route path={`${URL_TEAM_PAGE}`} element={<Team loading={isParticleLoading} />} />
+              <Route path={`${URL_HOME_PAGE}`} element={<Home />} />
+              <Route path={`${URL_VISUALIZER_PAGE}`} element={<Visualizer />} />
+              
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </Router>
       )}
+      <ParticleWrapper init={init} particlesLoaded={particlesLoaded} />
     </>
   );
 }
