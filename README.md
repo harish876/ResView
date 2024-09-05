@@ -48,7 +48,7 @@ With these 2 services running, the ResView front end can now send transactions t
 
 Clone this repository and open in a new folder.
 ```bash
-git clone https://github.com/aunshx/resview-pvt
+git clone https://github.com/ResilientApp/ResView
 ```
 
 Create a .env file in the root directory with the following contents.
@@ -81,8 +81,6 @@ Send transactions to backend using Set and Get fields, display a transaction's c
 Pull requests are welcome.
 
 ALWAYS update your changes to a branch and drop a PR.
-
-DO NOT MERGE unless approved by me.
 
 ## Authors
 
