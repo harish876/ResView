@@ -12,7 +12,7 @@ const AnalyticsItem = ({ title, value }) => {
           <div className={`dark:text-gray-300 text-gray-700 font-semibold text-center text-20p`}>
               {value}
           </div>
-      <div className='dark:text-gray-300 text-gray-700 text-14p'>
+      <div className='dark:text-gray-300 text-gray-700 text-14p text-center'>
             {title}
           </div>
     </div>
