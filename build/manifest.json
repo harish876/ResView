@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "resview",
+  "name": "ResView - A graphical visualizer for ResilientDB",
   "icons": [
     {
       "src": "favicon.ico",
