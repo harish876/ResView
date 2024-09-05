@@ -28,7 +28,6 @@ const Manipulator = ({
                 <div className='flex gap-x-7 justify-center'>
                     {MVT_GRAPH_LABELS.length > 0 && MVT_GRAPH_LABELS.map((title, index) => (
                         <>
-                            {console.log('HELLO', title, labelToggle)}
                             <ReplicaButton
                                 title={title}
                                 onClick={() => toggleLine(title)}

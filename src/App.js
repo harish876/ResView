@@ -55,7 +55,6 @@ const PreSynthApp = () => {
   }, []);
 
   const particlesLoaded = (container) => {
-    console.log(container);
   };
 
 
