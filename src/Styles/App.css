@@ -623,9 +623,6 @@ video {
 .mb-8 {
   margin-bottom: 2rem;
 }
-.mb-\[-2em\] {
-  margin-bottom: -2em;
-}
 .me-2 {
   margin-inline-end: 0.5rem;
 }
