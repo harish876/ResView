@@ -3,11 +3,8 @@ import { isMobile } from 'react-device-detect';
 import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from './Components/Pages/Home';
 import Team from './Components/Pages/Team';
-// TODO: Change the below from index2 to index for Visualizer
 import Visualizer from './Components/Pages/Visualizer';
-import Footer from './Components/Shared/Footer';
 import Loader from './Components/Shared/Loader';
-import Navbar from './Components/Shared/Navbar';
 import NotFound from './Components/Shared/NotFound';
 import OnlyDesktop from './Components/Shared/OnlyDesktop';
 import ParticleWrapper from './Components/Shared/ParticleWrapper';
@@ -41,31 +38,36 @@ const PreSynthApp = () => {
   }
 
   useEffect(() => {
-    setIsLoading(true);
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine);
-    })
-      .then(() => {
+    const initEngine = async () => {
+      try {
+        setIsLoading(true);
+        await initParticlesEngine(async (engine) => {
+          await loadSlim(engine);
+        });
         setInit(true);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Initialization failed:", error);
-      })
-      .finally(() => {
+      } finally {
         setIsLoading(false);
-      });
+      }
+    };
+    initEngine();
   }, []);
+
+  const particlesLoaded = (container) => {
+    console.log(container);
+  };
+
 
 
   return (
     <>
-      <ParticleWrapper init={init} />
-      {isLoading ? (
-        <Loader />
+      {isMobile ? (
+        <OnlyDesktop />
       ) : (
           <>
-            {isMobile ? (
-              <OnlyDesktop />
+            {false ? (
+              <Loader />
             ) : (
               <Router>
                 <Routes>
@@ -77,6 +79,7 @@ const PreSynthApp = () => {
                 </Routes>
               </Router>
             )}
+            <ParticleWrapper init={init} particlesLoaded={particlesLoaded} />
           </>
       )}
     </>

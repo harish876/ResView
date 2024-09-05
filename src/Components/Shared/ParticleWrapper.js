@@ -80,7 +80,7 @@ const themeObj = {
     },
 }
 
-const ParticleWrapper = ({ setIsLoading, init }) => {
+const ParticleWrapper = ({ init, particlesLoaded }) => {
     const { theme } = useContext(ThemeContext);
     const options = useMemo(() => {
         const currentThemeObj = theme ? {
@@ -97,7 +97,10 @@ const ParticleWrapper = ({ setIsLoading, init }) => {
                 ...themeObj.particles,
                 color: {
                     value: "#0d98db",
-                }
+                },
+                collisions: {
+                    enable: false,
+                },
             }
         };
         return currentThemeObj;
@@ -107,7 +110,7 @@ const ParticleWrapper = ({ setIsLoading, init }) => {
         return (
             <Particles
                 id="tsparticles"
-                particlesLoaded={() => {}}
+                particlesLoaded={particlesLoaded}
                 options={options}
             />
         );

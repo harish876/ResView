@@ -61,7 +61,7 @@ const Visualizer = () => {
                 <div className="mt-10 mb-24 px-24 w-full">
                     <HRline />
                 </div>
-                <div className="mb-[-2em]">
+                <div className="mb-4">
                     <Footer />
                 </div>
             </div>
