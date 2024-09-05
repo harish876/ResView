@@ -71,11 +71,13 @@ const PreSynthApp = () => {
             ) : (
               <Router>
                 <Routes>
+                    <Route index element={<Navigate to={`${URL_REROUTE_PAGE}`} />} />
+
                     <Route path={`${URL_TEAM_PAGE}`} element={<Team />} />
                     <Route path={`${URL_HOME_PAGE}`} element={<Home />} />
                     <Route path={`${URL_VISUALIZER_PAGE}`} element={<Visualizer />} />
+                    
                   <Route path='*' element={<NotFound />} />
-                    <Route index element={<Navigate to={`${URL_REROUTE_PAGE}`} />} />
                 </Routes>
               </Router>
             )}
