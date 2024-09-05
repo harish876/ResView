@@ -1231,10 +1231,6 @@ video {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
 }
-.px-16 {
-  padding-left: 4rem;
-  padding-right: 4rem;
-}
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -1266,6 +1262,10 @@ video {
 .px-8 {
   padding-left: 2rem;
   padding-right: 2rem;
+}
+.px-\[22rem\] {
+  padding-left: 22rem;
+  padding-right: 22rem;
 }
 .px-\[2em\] {
   padding-left: 2em;
@@ -2173,6 +2173,11 @@ code {
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+
+  .lg\:px-\[20rem\] {
+    padding-left: 20rem;
+    padding-right: 20rem;
   }
 
   .lg\:py-4 {
