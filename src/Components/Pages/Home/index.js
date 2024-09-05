@@ -24,7 +24,7 @@ const Home = () => {
             <div className="w-full mt-20 flex items-center justify-center flex-col" >
               <div className="text-gray-900 dark:text-white font-bold text-8xl md:text-6xl xl:text-7xl px-[2em]">Visualizer for New Age Blockchain Fabrics</div>
 
-              <div className="mt-10 px-16 text-gray-700 dark:text-gray-300 text-20p">A novel graphical visualizer for the ResDB blockchain fabric, offering new users and learners a clear visualization of a complex technology.
+              <div className="mt-10 px-[22rem] lg:px-[20rem] text-gray-700 dark:text-gray-300 text-20p">A novel graphical visualizer for the ResDB blockchain fabric, offering new users and learners a clear visualization of a complex technology.
               </div>
             </div>
             <div className="mt-14 flex items-center justify-center gap-y-4 gap-x-[4em]">
