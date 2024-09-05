@@ -89,7 +89,7 @@ paths:
     post:
       summary: Make replica faulty if enable faulty flag is set
       responses:
-        '200':    # status code
+        '200': 
           description: Success message
           content:
             application/json:
