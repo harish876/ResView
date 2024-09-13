@@ -1,16 +1,16 @@
 import React, { useContext } from 'react';
-import Wrapper from '../../Shared/Wrapper';
+import { BorderToggleRef } from '../../../App';
 import { BLOG_LINK, URL_VISUALIZER_PAGE } from '../../../Constants';
+import { NavbarToggleContext } from '../../../Context/navbarToggle';
 import { LinkButton } from '../../Shared/Buttons';
+import Footer from '../../Shared/Footer';
+import Navbar from '../../Shared/Navbar';
+import Wrapper from '../../Shared/Wrapper';
 import Graphs from './Sections/Graphs';
 import PbftIntro from './Sections/PbftIntro';
-import Navbar from '../../Shared/Navbar';
-import { NavbarToggleContext } from '../../../Context/navbarToggle';
-import { BorderToggleRef } from '../../../App';
-import Footer from '../../Shared/Footer';
 
 const Home = () => {
-  
+
   return (
     <>
       <div aria-hidden="true" className="absolute inset-0 grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20">
@@ -29,8 +29,8 @@ const Home = () => {
             </div>
             <div className="mt-14 flex items-center justify-center gap-y-4 gap-x-[4em]">
               <LinkButton title={'Visualizer'} link={URL_VISUALIZER_PAGE} external={true} />
-                  <LinkButton title={'Learn More'} link={BLOG_LINK} external={true} />
-                </div>
+              <LinkButton title={'Learn More'} link={BLOG_LINK} external={true} />
+            </div>
             <Wrapper>
               <div className="py-8 mt-2 px-2 border-y-3p border-gray-900 dark:border-white sm:flex flex items-center justify-between w-full">
                 <div className="text-center">
@@ -47,15 +47,15 @@ const Home = () => {
                 </div>
               </div>
             </Wrapper>
-            </div>
-            <div className="mt-20">
+          </div>
+          <div className="mt-20">
             <PbftIntro />
-            </div>
-            <div className="mt-6 mb-16">
-              <Graphs />
-            </div>
+          </div>
+          <div className="mt-6 mb-16">
+            <Graphs />
+          </div>
         </div>
-    </div>
+      </div>
     </>
   );
 };
@@ -66,7 +66,9 @@ const Index = () => {
     <>
       <Navbar borderToggle={borderToggle} />
       <BorderToggleRef />
-      <Home />
+      <div className="flex items-center justify-center w-full">
+        <Home />
+      </div>
       <Footer />
     </>
   );
