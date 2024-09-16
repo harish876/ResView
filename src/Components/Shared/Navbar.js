@@ -59,9 +59,6 @@ const LightOrDark = memo(() => {
 const NavComp = ({
   title,
   page,
-  icon,
-  iconHeight,
-  iconViewBox,
 }) => {
   return (
       <NavLink 

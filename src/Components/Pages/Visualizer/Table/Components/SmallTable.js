@@ -76,9 +76,9 @@ const SmallTable = () => {
   const { loading, truncatedData } = useContext(VizDataHistoryContext)
 
   return (
-    <table className="text-sm text-center rtl:text-right dark:text-gray-300 text-gray-700 h-full">
+    <table className="text-sm text-center rtl:text-right dark:text-gray-300 text-gray-700 h-full w-full">
         <thead className="text-xs uppercase dark:text-gray-300 text-gray-700 border-b-1p border-solid border-gray-700 dark:border-gray-50">
-          <tr className='h-50p min-w-full'>
+          <tr className='h-50p'>
           {TABLE_HEADERS.map((value, index) => {
             let isReplicaDetailCol = value === 'Replica Details';
             return (
