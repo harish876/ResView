@@ -156,7 +156,7 @@ export const VizDataHistoryProvider = ({ children }) => {
         };
 
         updateStatus();
-        const interval = setInterval(updateStatus, 3000);
+        const interval = setInterval(updateStatus, 20000);
 
         return () => clearInterval(interval);
     }, []);
