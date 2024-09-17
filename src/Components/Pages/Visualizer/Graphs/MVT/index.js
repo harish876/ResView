@@ -125,13 +125,17 @@ const Mvt = () => {
                 </ResizableContainer>
             </div>
             <div className='mt-12 mb-4 flex items-center justify-center gap-x-16'>
-                <Form />
-                <Manipulator
-                    toggleFaulty={toggleFaulty}
-                    toggleLine={toggleLine}
-                    labelToggleFaulty={labelToggleFaulty}
-                    labelToggle={labelToggle}
-                />
+                <div className="">
+                    <Form />
+                </div>
+                <div className="">
+                    <Manipulator
+                        toggleFaulty={toggleFaulty}
+                        toggleLine={toggleLine}
+                        labelToggleFaulty={labelToggleFaulty}
+                        labelToggle={labelToggle}
+                    />
+                </div>
             </div>
         </div>
     );

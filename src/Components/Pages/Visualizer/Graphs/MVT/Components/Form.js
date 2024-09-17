@@ -39,8 +39,8 @@ const Form = () => {
     };
 
     return (
-        <div className='mt-2 rounded-md w-550p py-4 px-2 border-3p border-solid border-gray-700 dark:border-gray-50 flex flex-col gap-y-6 bg-blue-10 dark:bg-blue-450'>
-            <div className="flex items-center justify-center gap-x-2">
+        <div className='mt-2 rounded-md w-550p py-4 px-2 border-3p border-solid border-gray-700 dark:border-gray-50 flex flex-col items-center justify-center gap-y-6 bg-blue-10 dark:bg-blue-450 h-320p'>
+            <div className="flex items-center justify-center gap-x-2 w-full">
                 <Icon
                     fill={theme ? "rgb(209,213,219)" : "black"}
                     height={'1em'}
@@ -49,7 +49,7 @@ const Form = () => {
                 />
                 <FontVarTitle title={'Send Transaction'} />
             </div>
-            <div className="flex flex-col gap-y-2">
+            <div className="flex flex-col gap-y-2 w-full">
                 <FontVarTitle title={'Key'} fontClass={'text-15p'} />
                 <div className='px-8'>
                     <input
@@ -62,7 +62,7 @@ const Form = () => {
                     />
                 </div>
             </div>
-            <div className="flex flex-col gap-y-2">
+            <div className="flex flex-col gap-y-2 w-full">
                 <FontVarTitle title={'Value'} fontClass={'text-15p'} />
                 <div className='px-8'>
                     <input
@@ -75,7 +75,7 @@ const Form = () => {
                     />
                 </div>
             </div>
-            <div className="flex items-center justify-center gap-x-8 my-1">
+            <div className="flex items-center justify-center gap-x-8 my-1 w-full">
                 <ReplicaButton
                     title={'Get'}
                     onClick={submitGet}
