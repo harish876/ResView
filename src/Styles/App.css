@@ -722,6 +722,9 @@ video {
 .h-32 {
   height: 8rem;
 }
+.h-320p {
+  height: 320px;
+}
 .h-35p {
   height: 35px;
 }
@@ -991,6 +994,9 @@ video {
 }
 .gap-y-10 {
   row-gap: 2.5rem;
+}
+.gap-y-16 {
+  row-gap: 4rem;
 }
 .gap-y-2 {
   row-gap: 0.5rem;
