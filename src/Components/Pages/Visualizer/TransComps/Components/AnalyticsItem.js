@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { useContext } from 'react'
-import { transactionsIcon } from '../../../../../Resources/Icons';
+import { linearGraphIcon, transactionsIcon } from '../../../../../Resources/Icons';
 import { FontVarTitle } from '../../../../Shared/Title';
 import { ThemeContext } from '../../../../../Context/theme';
 import { VizDataHistoryContext } from '../../../../../Context/visualizer';
@@ -30,11 +30,11 @@ const Analytics = () => {
           <Icon
             fill={theme ? "rgb(209,213,219)" : "black"}
             height={'1em'}
-            path={transactionsIcon}
+            path={linearGraphIcon}
             viewBox={'0 0 448 512'}
           />
         </div>
-        <FontVarTitle title={' Analytics'} />
+        <FontVarTitle title={'Analytics'} />
       </div>
       <div className="grid grid-rows-2 h-full w-full">
         <div className="flex items-center justify-center w-full border-b-2p border-solid border-gray-700 dark:border-gray-50">

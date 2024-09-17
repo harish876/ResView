@@ -4,6 +4,7 @@ import { mvtGraphComputation } from "../../Ancilliary/Computation/MVT";
 import ResizableContainer from "../Components/GraphContainer";
 import MvtGraph from "./Components/Graph";
 import Manipulator from "./Components/Manipulator";
+import Form from "./Components/Form";
 
 const LABEL_TOGGLES = { "Replica 1": true, "Replica 2": true, "Replica 3": true, "Replica 4": true };
 const FAULT_TOGGLES = { "Replica 1": false, "Replica 2": false, "Replica 3": false, "Replica 4": false };
@@ -123,13 +124,18 @@ const Mvt = () => {
                     </div>
                 </ResizableContainer>
             </div>
-            <div className='mt-12 mb-4 flex items-center justify-center'>
-                <Manipulator
-                    toggleFaulty={toggleFaulty}
-                    toggleLine={toggleLine}
-                    labelToggleFaulty={labelToggleFaulty}
-                    labelToggle={labelToggle}
-                />
+            <div className='mt-12 mb-4 flex items-center justify-center gap-x-16'>
+                <div className="">
+                    <Form />
+                </div>
+                <div className="">
+                    <Manipulator
+                        toggleFaulty={toggleFaulty}
+                        toggleLine={toggleLine}
+                        labelToggleFaulty={labelToggleFaulty}
+                        labelToggle={labelToggle}
+                    />
+                </div>
             </div>
         </div>
     );
