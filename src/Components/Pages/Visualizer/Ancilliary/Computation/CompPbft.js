@@ -40,7 +40,7 @@ export const generateConnections = (
 ) => {
     let points = {};
 
-    console.log(transactionNumber)
+    console.log(transactionNumber, messageHistory)
 
     let currentData = messageHistory[transactionNumber];
 
