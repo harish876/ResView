@@ -11,6 +11,7 @@ const generateReplicaStatus = (data, defaultResult) => {
 };
 
 export const computeTransInfo = (messageHistory, transactionNumber, status) => {
+    console.log(transactionNumber)
     const currentData = messageHistory[transactionNumber];
     const { primaryIndex, transactions } =
         computeDataDetails(currentData);

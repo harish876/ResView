@@ -4,6 +4,7 @@ import { Icon } from '../../../../../Shared/Icon';
 import { transactionsIcon } from '../../../../../../Resources/Icons';
 import { ThemeContext } from '../../../../../../Context/theme';
 import { ReplicaButton } from '../../../../../Shared/Buttons';
+import axios from "axios";
 
 const Form = () => {
     const { theme } = useContext(ThemeContext);
@@ -20,18 +21,42 @@ const Form = () => {
         });
     };
 
-    const submitGet = () => {
+    const submitGet = async () => {
         // ! CALL GET API HERE 
-        console.log('GET', formData.formKey);
+        let url = "http://127.0.0.1:18000/v1/transactions/" + formData.formKey;
+        try {
+            const response = await axios.get(url);
+            // console.log("Get response: ", response.data);
+        }
+        catch (error) {
+            // console.error("Error: ", error);
+        }
         setFormData({
             formKey: '',
             value: ''
         });
     };
 
-    const submitCommit = () => {
+    const submitCommit = async () => {
         // ! CALL COMMIT API HERE 
-        console.log('COMMIT', formData);
+        let data = { "id": formData.formKey, "value": formData.value };
+        //let url = process.env.REACT_APP_SEND_POST_URL;
+        let url = "http://127.0.0.1:18000/v1/transactions/commit";
+        try {
+            const response = await axios.post(
+                url,
+                JSON.stringify(data),
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }
+            );
+            // console.log("Get response: ", response.data);
+        }
+        catch (error) {
+            // console.error("Error: ", error);
+        }
         setFormData({
             formKey: '',
             value: ''

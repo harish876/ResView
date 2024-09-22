@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { LOGO_DARK, LOGO_LIGHT, URL_HOME_PAGE } from '../../../../Constants';
 import { ThemeContext } from '../../../../Context/theme';
@@ -56,6 +56,8 @@ const TransInfo = () => {
     const logo = theme ? LOGO_DARK : LOGO_LIGHT;
 
     const primary = primaryIndexVal === -1 ? 'No Primary' : `Replica ${primaryIndexVal}`
+
+    const {replica_current_status, setReplicaStatus} = useState([false, false, false, false])
 
 
     return (

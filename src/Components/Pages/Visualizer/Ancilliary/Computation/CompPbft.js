@@ -11,6 +11,8 @@ export const computeDataDetails = (data) => {
     let transactions = new Set();
     let primaryInd = -1;
 
+    console.log(data)
+
     for (const property in data) {
         transactions.add(parseInt(property));
     }
@@ -37,6 +39,8 @@ export const generateConnections = (
     theme
 ) => {
     let points = {};
+
+    console.log(transactionNumber)
 
     let currentData = messageHistory[transactionNumber];
 
