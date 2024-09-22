@@ -40,9 +40,13 @@ export const generateConnections = (
 ) => {
     let points = {};
 
-    console.log(transactionNumber, messageHistory)
+    if(!(transactionNumber in messageHistory)){
+        transactionNumber=Object.keys(messageHistory)[0]
+    }
 
     let currentData = messageHistory[transactionNumber];
+
+    console.log("Current Data", transactionNumber, messageHistory, currentData)
 
     const lineColors = theme ? COLORS_PBFT_GRAPH : COLORS_PBFT_GRAPH_LIGHT;
 

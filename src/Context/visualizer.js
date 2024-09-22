@@ -48,8 +48,15 @@ export const VizDataHistoryProvider = ({ children }) => {
     }   
 
     const onMessage = (newData, txn_number) => {
-        let incomingData = JSON.parse(JSON.stringify(newData))
-        setMessageHistory(incomingData)
+        if (messageHistory) {
+            let incomingData = JSON.parse(JSON.stringify(newData))
+            changeMessageHistory({
+                ...messageHistory,
+                ...incomingData
+            })
+        } else {
+            changeMessageHistory(JSON.parse(JSON.stringify(newData)));
+        }
     };
 
     const addMessage = (receivedMessage) => {
@@ -112,13 +119,15 @@ export const VizDataHistoryProvider = ({ children }) => {
                 const response = await fetch("http://localhost:" + String(port) + "/consensus_data");
                 const newData = await response.json();
                 //if(newData) setMessageHistory({});
-                Object.keys(newData).map((key) => {
-                    if (!keyList.current[replicaPort].includes(key)) {
-                        keyList.current[replicaPort].push(key);
-                        addMessage(newData[key]);
-                        onMessage(allMessages.current, key);
-                    }
-                });
+                if(newData!==null){
+                    Object.keys(newData).map((key) => {
+                        if (!keyList.current[replicaPort].includes(key)) {
+                            keyList.current[replicaPort].push(key);
+                            addMessage(newData[key]);
+                            onMessage(allMessages.current, key);
+                        }
+                    });
+                }
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
