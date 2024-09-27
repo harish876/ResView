@@ -95,6 +95,7 @@ export const truncData = (data, currentTransaction) => {
             .sort(([keyA], [keyB]) => parseInt(keyA) - parseInt(keyB))
             .slice(0, 10);
     }
+
     const result = {};
     selectedEntries.forEach(([key, value]) => {
         result[key] = value;

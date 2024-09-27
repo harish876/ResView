@@ -93,8 +93,7 @@ const TableValues = ({ srNo, transaction, loading }) => {
 
 const SmallTable = () => {
   const { loading, truncatedData } = useContext(VizDataHistoryContext)
-
-  console.log('TRUNC DATA', truncatedData)
+  
 
   return (
     <table className="text-sm text-center rtl:text-right dark:text-gray-300 text-gray-700 h-full w-full">

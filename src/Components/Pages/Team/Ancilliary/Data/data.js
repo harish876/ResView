@@ -2,7 +2,7 @@
 export const currentTeam = [
   {
     name: "Aunsh Bandivadekar",
-    title: "Architect & Developer",
+    title: "Dev",
     socials: [
       "https://instagram.com/aunsh___",
       "https://linkedin.com/in/aunsh",
@@ -13,7 +13,7 @@ export const currentTeam = [
   },
   {
     name: "Saipranav Kotamreddy",
-    title: "Architect & Developer",
+    title: "Dev",
     socials: {
       ig: "https://instagram.com/aunsh___",
       linkedIn: "https://instagram.com/in/aunsh",
