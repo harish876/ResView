@@ -118,14 +118,16 @@ export const VizDataHistoryProvider = ({ children }) => {
                 let port = parseInt(18501) + replicaPort;
                 const response = await fetch("http://localhost:" + String(port) + "/consensus_data");
                 const newData = await response.json();
-                if(newData) setMessageHistory({});
-                Object.keys(newData).map((key) => {
-                    if (!keyList.current[replicaPort].includes(key)) {
-                        keyList.current[replicaPort].push(key);
-                        addMessage(newData[key]);
-                        onMessage(allMessages.current, key);
-                    }
-                });
+                //if(newData) setMessageHistory({});
+                if(newData!==null){
+                    Object.keys(newData).map((key) => {
+                        if (!keyList.current[replicaPort].includes(key)) {
+                            keyList.current[replicaPort].push(key);
+                            addMessage(newData[key]);
+                            onMessage(allMessages.current, key);
+                        }
+                    });
+                }
             } catch (error) {
                 console.error("Error fetching data:", error);
             }

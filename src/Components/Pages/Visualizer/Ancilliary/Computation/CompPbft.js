@@ -11,6 +11,7 @@ export const computeDataDetails = (data) => {
     let transactions = new Set();
     let primaryInd = -1;
 
+
     for (const property in data) {
         transactions.add(parseInt(property));
     }
@@ -38,7 +39,12 @@ export const generateConnections = (
 ) => {
     let points = {};
 
+    if(!(transactionNumber in messageHistory)){
+        transactionNumber=Object.keys(messageHistory)[0]
+    }
+
     let currentData = messageHistory[transactionNumber];
+
 
     const lineColors = theme ? COLORS_PBFT_GRAPH : COLORS_PBFT_GRAPH_LIGHT;
 

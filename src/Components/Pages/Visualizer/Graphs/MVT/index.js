@@ -81,6 +81,7 @@ const Mvt = () => {
     const messageChartDataUpdate = (value) => setMessageChartData(value);
 
     useEffect(() => {
+
         const transactionData = messageHistory[currentTransaction];
 
         const updatedLabelToggles = updateLabelToggles(replicaStatus);

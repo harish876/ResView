@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { LOGO_DARK, LOGO_LIGHT, URL_HOME_PAGE } from '../../../../Constants';
 import { ThemeContext } from '../../../../Context/theme';
@@ -57,6 +57,54 @@ const TransInfo = () => {
 
     const primary = primaryIndexVal === -1 ? 'No Primary' : `Replica ${primaryIndexVal}`
 
+    const [replica_current_status, setReplicaStatus] = useState([false, false, false, false])
+
+    function fetchWithTimeout(url, options, timeout = 5000) {
+        return Promise.race([
+            fetch(url, options),
+            new Promise((_, reject) =>
+                setTimeout(() => reject(new Error('Timeout')), timeout)
+            )
+        ]);
+    }
+
+    function fetchReplicaStatuses() {
+        let promises = [];
+        let results = [false, false, false, false];
+
+        for (let i = 0; i < 4; i++) {
+            //let port= parseInt(process.env.REACT_APP_DEFAULT_LOCAL_PORT)+i
+            //let url = process.env.REACT_APP_DEFAULT_LOCAL + String(port) + process.env.REACT_APP_REPLICA_STATUS_EP
+            let port = parseInt(18501) + i
+            let url = "http://localhost:" + String(port) + "/get_status"
+            let promise = fetchWithTimeout(url)
+                .then(response => {
+                    return response.text();
+                })
+                .then(body => {
+                    if (body === 'Not Faulty') {
+                        results[i] = true;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+            promises.push(promise);
+        }
+
+        Promise.all(promises)
+            .then(() => {
+                setReplicaStatus(results);
+            });
+    }
+    useEffect(() => {
+        const interval = setInterval(() => {
+            fetchReplicaStatuses();
+        }, 3000); // 3000 milliseconds = 3 seconds
+
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <div className="h-full w-220p fixed z-1 top-0 left-0 overflow-x-hidden p-2 py-6 flex flex-col items-center justify-around opacity-1 border-r-3p border-solid border-gray-700 dark:border-gray-50 dark:text-gray-300 gap-y-6 scrollbar">
@@ -98,7 +146,7 @@ const TransInfo = () => {
                 Replica Status
             </div>
             <div className='flex flex-col items-center justify-center gap-y-10'>
-                {replicaStatus.length > 0 && replicaStatus.map((value, index) => (
+                {replica_current_status.length > 0 && replica_current_status.map((value, index) => (
                     <ReplicaStatTile
                         key={index}
                         replica={`Replica ${index + 1}`}
