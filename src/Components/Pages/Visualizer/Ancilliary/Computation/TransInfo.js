@@ -82,13 +82,18 @@ export const truncData = (data, currentTransaction) => {
 
     if (filteredData[currentTransaction]) {
         const currentTransactionEntry = entries.find(([key]) => key == currentTransaction);
-
         selectedEntries.push(currentTransactionEntry);
-        const remainingEntries = entries.filter(([key]) => key != currentTransaction);
-        selectedEntries = selectedEntries.concat(remainingEntries.sort(() => Math.random() - 0.5).slice(0, 9));
 
+        const remainingEntries = entries
+            .filter(([key]) => key != currentTransaction)
+            .sort(([keyA], [keyB]) => parseInt(keyA) - parseInt(keyB))
+            .slice(0, 9);
+
+        selectedEntries = selectedEntries.concat(remainingEntries);
     } else {
-        selectedEntries = entries.sort(() => Math.random() - 0.5).slice(0, 10);
+        selectedEntries = entries
+            .sort(([keyA], [keyB]) => parseInt(keyA) - parseInt(keyB))
+            .slice(0, 10);
     }
     const result = {};
     selectedEntries.forEach(([key, value]) => {
@@ -96,5 +101,3 @@ export const truncData = (data, currentTransaction) => {
     });
     return result;
 };
-
-
