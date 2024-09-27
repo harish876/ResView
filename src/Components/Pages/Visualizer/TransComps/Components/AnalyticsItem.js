@@ -42,7 +42,7 @@ const Analytics = () => {
         </div>
         <div className="grid grid-cols-2 flex-items-center-justify-center w-full">
           <div className="border-r-2p border-solid border-gray-700 dark:border-gray-50 flex items-center justify-center">
-            <AnalyticsItem title={'Avg. Faultiness'} value={`${totalPercentFaulty * 100}%`} />
+            <AnalyticsItem title={'Avg. Faultiness'} value={`${(totalPercentFaulty * 100).toFixed(2)}%`} />
           </div>
           <div className="flex items-center justify-center">
             <AnalyticsItem title={'No Primary'} value={noPrimaryCount} />

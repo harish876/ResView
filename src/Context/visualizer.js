@@ -5,7 +5,7 @@ import { computeTableData, computeTransInfo, truncData } from "../Components/Pag
 export const VizDataHistoryContext = createContext({
     messageHistory: {},
     changeMessageHistory: (newHistory) => { },
-    currentTransaction: 17,
+    currentTransaction: -1,
     changeCurrentTransaction: (transactionNumber) => { },
     replicaStatus: [false, false, false, false],
     primaryIndexVal: -1,
@@ -20,7 +20,7 @@ export const VizDataHistoryContext = createContext({
 export const VizDataHistoryProvider = ({ children }) => {
     const { Provider } = VizDataHistoryContext;
     const [messageHistory, setMessageHistory] = useState(dummyData);
-    const [currentTransaction, setCurrentTransaction] = useState(17);
+    const [currentTransaction, setCurrentTransaction] = useState(-1);
     const [replicaStatus, setReplicaStatus] = useState([false, false, false, false])
     const [primaryIndexVal, setPrimaryIndexVal] = useState(-1)
     const [data, setData] = useState({});    

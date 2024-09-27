@@ -5,6 +5,7 @@ import { VizDataHistoryContext } from '../../../../Context/visualizer';
 import { FontVarTitle } from '../../../Shared/Title';
 import { tableDataDummy } from '../Ancilliary/Data/data';
 import Carousel from './Components/Carousel';
+import { Tooltip } from '@mui/material';
 
 const TABLE_HEADERS = {
     1: [
@@ -40,34 +41,53 @@ const TableValues = ({ srNo, transaction, replicaDetailsKeys, loading, goToPbftG
 
     const { changeCurrentTransaction } = useContext(VizDataHistoryContext)
 
+    const [open, setOpen] = useState(false);
+
+    const handleClose = () => {
+        if (transaction.transactionNumber < 0) setOpen(false);
+    };
+
+    const handleOpen = () => {
+        if (transaction.transactionNumber < 0) setOpen(true);
+    };
+
     const changeTransaction = (value) => {
         changeCurrentTransaction(value)
         goToPbftGraph();
     }
 
     return (
-        <Fragment>
-            <tr className={classNames({ 'cursor-pointer dark:hover:bg-gray-700 hover:bg-gray-400': !loading})} onClick={() => !loading && changeTransaction(transaction.transactionNumber)}>
-                <CellValues
-                    value={srNo}
-                    loading={loading}
-                    replicaDetailsKeys={replicaDetailsKeys} transaction={transaction}
-                    primaryDoesNotExist={transaction.primary}
-                />
-                {Object.keys(transaction).length > 0 && (
-                    Object.keys(transaction).map((value, idx) => {
-                        if (value !== 'replicaDetails') return (
-                            <CellValues
-                                value={transaction[value]}
-                                loading={loading}
-                                replicaDetailsKeys={replicaDetailsKeys}
-                                primaryDoesNotExist={transaction.primary}
-                                key={idx}
-                            />
-                        )
-                    })
-                )}
-            </tr>
+        <>
+            <Tooltip
+                arrow
+                placement="top-start"
+                open={open}
+                onClose={handleClose}
+                onOpen={handleOpen}
+                title='SYNTHETIC DATA'
+            >
+                <tr className={classNames({ 'cursor-pointer dark:hover:bg-gray-700 hover:bg-gray-400': !loading })} onClick={() => !loading && changeTransaction(transaction.transactionNumber)}>
+                    <CellValues
+                        value={srNo}
+                        loading={loading}
+                        replicaDetailsKeys={replicaDetailsKeys} transaction={transaction}
+                        primaryDoesNotExist={transaction.primary}
+                    />
+                    {Object.keys(transaction).length > 0 && (
+                        Object.keys(transaction).map((value, idx) => {
+                            if (value !== 'replicaDetails') return (
+                                <CellValues
+                                    value={transaction[value]}
+                                    loading={loading}
+                                    replicaDetailsKeys={replicaDetailsKeys}
+                                    primaryDoesNotExist={transaction.primary}
+                                    key={idx}
+                                />
+                            )
+                        })
+                    )}
+                </tr>
+            </Tooltip>
             {replicaDetailsKeys.map((replicaKey, index) => {
                 const replica = transaction.replicaDetails[replicaKey];
                 return (
@@ -95,7 +115,7 @@ const TableValues = ({ srNo, transaction, replicaDetailsKeys, loading, goToPbftG
                     </tr>
                 );
             })}
-        </Fragment>
+        </>
     );
 }
 

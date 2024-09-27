@@ -90,6 +90,13 @@ export const generateConnections = (
             points.prePrepare.start.push(points.request.end[0].points[i])
         }
 
+        for (let i = 1; i < yCoords.length; i++) {
+            yCoordToReplicas = {
+                ...yCoordToReplicas,
+                [yCoords[i]]: i,
+            };
+        }
+
         for (const element of points.prePrepare.start) points.prePrepare.end.push([]);
 
         for (let i = 0; i < points.prePrepare.start.length; i++) {
@@ -104,13 +111,6 @@ export const generateConnections = (
                     });
                 }
             }
-        }
-
-        for (let i = 1; i < yCoords.length; i++) {
-            yCoordToReplicas = {
-                ...yCoordToReplicas,
-                [yCoords[i]]: i,
-            };
         }
 
         // PREPARE OBJECT 

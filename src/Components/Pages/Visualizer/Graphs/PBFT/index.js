@@ -255,7 +255,7 @@ const Pbft = () => {
                 points.prePrepare.start.length > 0 && points.prePrepare.start.map((start, index) =>
                     points.prePrepare.end[index].map((end, i) => {
                         return (
-                            end.flag && connectionRender([start, end.points], points.prePrepare.color, pointColorMode, TRANSDURATION_NP, i * 1 + PREPREPARE_BUFFER_NP, lineGen, lineSVG, 'prepare')
+                            end.flag && connectionRender([start, end.points], points.prePrepare.color, pointColorMode, TRANSDURATION_NP, i * 1 + PREPREPARE_BUFFER_NP, lineGen, lineSVG, 'prePrepare')
                         );
                     })
                 );
