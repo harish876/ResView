@@ -1,8 +1,9 @@
 import classNames from 'classnames';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { DATA_TABLE_NO_PRIMARY_EXISTS } from '../../../../../Constants';
 import { VizDataHistoryContext } from '../../../../../Context/visualizer';
 import { truncatedDummyData } from '../../Ancilliary/Data/data';
+import { Tooltip } from '@mui/material';
 
 const TABLE_HEADERS = [
   'Sr #',
@@ -31,42 +32,60 @@ const TableValues = ({ srNo, transaction, loading }) => {
 
   const { changeCurrentTransaction, currentTransaction } = useContext(VizDataHistoryContext)
 
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    if(transactionNumber < 0) setOpen(false);
+  };
+
+  const handleOpen = () => {
+    if(transactionNumber < 0) setOpen(true);
+  };
+
   const changeTransaction = (value) => {
     changeCurrentTransaction(value)
   }
 
   return (
-    <tr
-    className={classNames({
-    'dark:bg-gray-700 bg-gray-400': transactionNumber == currentTransaction && !loading,
-    'cursor-pointer dark:hover:bg-gray-700 hover:bg-gray-400': !loading,
-    'cursor-not-allowed': loading
-      })}
-      onClick={() => !loading && changeTransaction(transactionNumber ?? 17)}
+    <Tooltip 
+      arrow
+      placement="left"
+      open={open} 
+      onClose={handleClose} 
+      onOpen={handleOpen} 
+      title='SYNTHETIC DATA'
     >
-      <CellValues
-        value={srNo}
-        loading={loading}
-        transaction={transaction}
-        primaryDoesNotExist={transaction.primary}
-      />
-      {Object.keys(transaction).length > 0 &&
-        Object.keys(transaction).map((value, idx) => {
-          if (value !== 'replicaDetails') {
-            return (
-              <CellValues
-                value={transaction[value]}
-                loading={loading}
-                primaryDoesNotExist={transaction.primary}
-                key={idx}
-              />
-            );
-          }
-          return null;
-        })
-      }
-    </tr>
-
+      <tr
+        className={classNames({
+          'dark:bg-gray-700 bg-gray-400': transactionNumber == currentTransaction && !loading,
+          'cursor-pointer dark:hover:bg-gray-700 hover:bg-gray-400': !loading,
+          'cursor-not-allowed': loading
+        })}
+        onClick={() => !loading && changeTransaction(transactionNumber ?? -1)}
+      >
+        <CellValues
+          value={srNo}
+          loading={loading}
+          transaction={transaction}
+          primaryDoesNotExist={transaction.primary}
+        />
+        {Object.keys(transaction).length > 0 &&
+          Object.keys(transaction).map((value, idx) => {
+            if (value !== 'replicaDetails') {
+              return (
+                <CellValues
+                  value={transaction[value]}
+                  loading={loading}
+                  primaryDoesNotExist={transaction.primary}
+                  key={idx}
+                />
+              );
+            }
+            return null;
+          })
+        }
+      </tr>
+    </Tooltip>
   );
 }
 
@@ -74,6 +93,7 @@ const TableValues = ({ srNo, transaction, loading }) => {
 
 const SmallTable = () => {
   const { loading, truncatedData } = useContext(VizDataHistoryContext)
+  
 
   return (
     <table className="text-sm text-center rtl:text-right dark:text-gray-300 text-gray-700 h-full w-full">

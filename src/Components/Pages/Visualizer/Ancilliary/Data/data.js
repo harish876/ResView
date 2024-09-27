@@ -297,7 +297,7 @@ export const ccData = [
 
 // !!!! DO NOT DELETE THE BELOW DUMMY DATA
 export const dummyData = {
-    17: {
+    '-1': {
         1: {
             commit_message_timestamps: [
                 1701956096777352000, 1701956096782048300, 1701956096786494200,
@@ -390,7 +390,7 @@ export const dummyData = {
             reply_time: 1702001829630,
         },
     },
-    18: {
+    '-2': {
         1: {
             commit_message_timestamps: [
                 1701956096777352000, 1701956096782048300, 1701956096786494200,
@@ -483,7 +483,7 @@ export const dummyData = {
             reply_time: 1702001829630,
         },
     },
-    19: {
+    '-3': {
         1: {
             commit_message_timestamps: [
                 1701956096777352000, 1701956096782048300, 1701956096786494200,
@@ -576,7 +576,7 @@ export const dummyData = {
             reply_time: 1702001829630,
         },
     },
-    20: {
+    '-4': {
         1: {
             commit_message_timestamps: [
                 1701956096777352000, 1701956096782048300, 1701956096786494200,
@@ -669,7 +669,7 @@ export const dummyData = {
         //     reply_time: 1702001829630,
         // },
     },
-    21: {
+    '-5': {
         // 1: {
         //     commit_message_timestamps: [
         //         1701956096777352000, 1701956096782048300, 1701956096786494200,
@@ -762,7 +762,7 @@ export const dummyData = {
             reply_time: 1702001829630,
         },
     },
-    22: {
+    '-6': {
         1: {
             commit_message_timestamps: [
                 1701956096777352000, 1701956096782048300, 1701956096786494200,
