@@ -698,6 +698,9 @@ video {
 .grid {
   display: grid;
 }
+.hidden {
+  display: none;
+}
 .h-0 {
   height: 0px;
 }
@@ -781,9 +784,6 @@ video {
 }
 .w-120p {
   width: 120px;
-}
-.w-150p {
-  width: 150px;
 }
 .w-180p {
   width: 180px;
@@ -1230,9 +1230,6 @@ video {
 .to-sky-300 {
   --tw-gradient-to: #7dd3fc var(--tw-gradient-to-position);
 }
-.object-contain {
-  object-fit: contain;
-}
 .object-fill {
   object-fit: fill;
 }
@@ -1244,6 +1241,9 @@ video {
 }
 .p-4 {
   padding: 1rem;
+}
+.p-6 {
+  padding: 1.5rem;
 }
 .px-1 {
   padding-left: 0.25rem;

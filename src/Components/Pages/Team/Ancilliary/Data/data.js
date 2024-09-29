@@ -4,7 +4,7 @@ export const currentTeam = [
     name: "Aunsh Bandivadekar",
     title: "Dev",
     socials: [
-      "https://instagram.com/aunsh___",
+      "https://deploy-preview-5--helpful-hamster-a151d8.netlify.app/",
       "https://linkedin.com/in/aunsh",
       "https://github.com/aunshx",
     ],
