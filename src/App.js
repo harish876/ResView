@@ -60,7 +60,7 @@ const PreSynthApp = () => {
 
   return (
     <>
-      {isMobile ? (
+      {false ? (
         <OnlyDesktop />
       ) : (
         <Router>
