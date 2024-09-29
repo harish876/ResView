@@ -788,6 +788,9 @@ video {
 .w-180p {
   width: 180px;
 }
+.w-2\/3 {
+  width: 66.666667%;
+}
 .w-220p {
   width: 220px;
 }
@@ -1278,13 +1281,9 @@ video {
   padding-left: 2rem;
   padding-right: 2rem;
 }
-.px-\[22rem\] {
-  padding-left: 22rem;
-  padding-right: 22rem;
-}
-.px-\[2em\] {
-  padding-left: 2em;
-  padding-right: 2em;
+.px-\[8rem\] {
+  padding-left: 8rem;
+  padding-right: 8rem;
 }
 .py-1 {
   padding-top: 0.25rem;
@@ -2206,18 +2205,9 @@ code {
 
 @media (max-width: 1080px) {
 
-  .lg\:w-2\/3 {
-    width: 66.666667%;
-  }
-
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
-  }
-
-  .lg\:px-\[20rem\] {
-    padding-left: 20rem;
-    padding-right: 20rem;
   }
 
   .lg\:py-4 {
