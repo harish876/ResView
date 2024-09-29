@@ -57,7 +57,7 @@ const TransInfo = () => {
 
     const primary = primaryIndexVal === -1 ? 'No Primary' : `Replica ${primaryIndexVal}`
 
-    const [replica_current_status, setReplicaStatus] = useState([false, false, false, false])
+    const [replicaCurrentStatus, setReplicaStatus] = useState([false, false, false, false])
 
     function fetchWithTimeout(url, options, timeout = 5000) {
         return Promise.race([
@@ -100,11 +100,15 @@ const TransInfo = () => {
     }
     useEffect(() => {
         const interval = setInterval(() => {
-            fetchReplicaStatuses();
+            if(currentTransaction < 0) {
+                setReplicaStatus(replicaStatus);
+            } else {
+                fetchReplicaStatuses();
+            }
         }, 3000); // 3000 milliseconds = 3 seconds
 
         return () => clearInterval(interval);
-    }, []);
+    }, [replicaStatus]);
 
     return (
         <div className="h-full w-220p fixed z-1 top-0 left-0 overflow-x-hidden p-2 py-6 flex flex-col items-center justify-around opacity-1 border-r-3p border-solid border-gray-700 dark:border-gray-50 dark:text-gray-300 gap-y-6 scrollbar">
@@ -146,7 +150,7 @@ const TransInfo = () => {
                 Replica Status
             </div>
             <div className='flex flex-col items-center justify-center gap-y-10'>
-                {replica_current_status.length > 0 && replica_current_status.map((value, index) => (
+                {replicaCurrentStatus.length > 0 && replicaCurrentStatus.map((value, index) => (
                     <ReplicaStatTile
                         key={index}
                         replica={`Replica ${index + 1}`}

@@ -1,20 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import {Icon} from '../../../../Shared/Icon'
-import { linkedinIcon, githubIcon, instagramIcon } from '../../../../../Resources/Icons'
+import { linkedinIcon, githubIcon, instagramIcon, userIcon } from '../../../../../Resources/Icons'
 import {ICON_DEFAULT_COLOR} from '../../../../../Constants'
 import defaultProfileImage from '../../../../../Resources/Images/defaultProfileImage.png'
+import { CircularProgress } from '@mui/material'
+import cn from 'classnames'
 
 const linkToIcon = {
   github: githubIcon,
   linkedin: linkedinIcon,
-  ig: instagramIcon
+  portfolio: userIcon
 };
 
 const indexToSocial = {
   1: 'linkedin',
   2: 'github',
-  0: 'ig'
+  0: 'portfolio'
 };
 
 const LinkIcon = ({ link, social }) => {
@@ -31,13 +33,37 @@ const LinkIcon = ({ link, social }) => {
 
 export const CurrentTeamCard = ({ element }) => {
   const { name, title, socials, profilePic, quote } = element;
+
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
+  const handleImageError = () => {
+    setImageLoaded(true);
+  };
+
   return (
     <div className='w-full h-250p text-black rounded-md border-3p border-gray-700 grid grid-cols-2 gap-x-4 dark:border-solid dark:border-gray-50 bg-blue-10 dark:bg-blue-500 dark:text-white px-4 py-6 hover:scale-105 transition'>
       <div className='w-full h-full flex items-center justify-center'>
+        <CircularProgress
+          size={30}
+          className={cn({
+            'hidden': imageLoaded
+          })}
+        />
         <img
           src={profilePic ?? defaultProfileImage}
           alt={`Profile pic of ${name}`}
-          className='object-fit rounded-md w-full'
+          className={cn(
+            'object-fit rounded-md w-full',
+            {
+              'hidden': !imageLoaded
+            }
+          )}
+          onLoad={handleImageLoad}
+          onError={handleImageError}
         />
       </div>
       <div className='py-10p flex flex-col items-center justify-evenly gap-y-4'>
@@ -63,13 +89,37 @@ export const CurrentTeamCard = ({ element }) => {
 
 export const PastMembersCard = ({ element }) => {
   const { name, profilePic, title, socials } = element;
+
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
+  const handleImageError = () => {
+    setImageLoaded(true);
+  };
+
   return (
     <div className='w-full h-auto text-black rounded-md  border-3p border-gray-700 flex flex-col gap-x-2 dark:border-solid dark:border-gray-50 dark:bg-blue-500 dark:text-white px-2 py-4 hover:scale-105 transition'>
-      <div className='w-full h-full flex items-center justify-center rounded-lg'>
+      <div className='w-full h-full flex items-center justify-center'>
+        <CircularProgress
+          size={30}
+          className={cn({
+            'hidden': imageLoaded
+          })}
+        />
         <img
-          src={profilePic || defaultProfileImage}
+          src={profilePic ?? defaultProfileImage}
           alt={`Profile pic of ${name}`}
-          className='object-contain rounded-lg h-135p w-150p'
+          className={cn(
+            'object-fit rounded-md w-full p-6',
+            {
+              'hidden': !imageLoaded
+            }
+          )}
+          onLoad={handleImageLoad}
+          onError={handleImageError}
         />
       </div>
       <div className='py-10p flex flex-col items-center justify-evenly gap-y-4 mt-4'>

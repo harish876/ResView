@@ -698,6 +698,9 @@ video {
 .grid {
   display: grid;
 }
+.hidden {
+  display: none;
+}
 .h-0 {
   height: 0px;
 }
@@ -782,11 +785,11 @@ video {
 .w-120p {
   width: 120px;
 }
-.w-150p {
-  width: 150px;
-}
 .w-180p {
   width: 180px;
+}
+.w-2\/3 {
+  width: 66.666667%;
 }
 .w-220p {
   width: 220px;
@@ -1227,9 +1230,6 @@ video {
 .to-sky-300 {
   --tw-gradient-to: #7dd3fc var(--tw-gradient-to-position);
 }
-.object-contain {
-  object-fit: contain;
-}
 .object-fill {
   object-fit: fill;
 }
@@ -1241,6 +1241,9 @@ video {
 }
 .p-4 {
   padding: 1rem;
+}
+.p-6 {
+  padding: 1.5rem;
 }
 .px-1 {
   padding-left: 0.25rem;
@@ -1278,13 +1281,9 @@ video {
   padding-left: 2rem;
   padding-right: 2rem;
 }
-.px-\[22rem\] {
-  padding-left: 22rem;
-  padding-right: 22rem;
-}
-.px-\[2em\] {
-  padding-left: 2em;
-  padding-right: 2em;
+.px-\[8rem\] {
+  padding-left: 8rem;
+  padding-right: 8rem;
 }
 .py-1 {
   padding-top: 0.25rem;
@@ -2206,18 +2205,9 @@ code {
 
 @media (max-width: 1080px) {
 
-  .lg\:w-2\/3 {
-    width: 66.666667%;
-  }
-
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
-  }
-
-  .lg\:px-\[20rem\] {
-    padding-left: 20rem;
-    padding-right: 20rem;
   }
 
   .lg\:py-4 {

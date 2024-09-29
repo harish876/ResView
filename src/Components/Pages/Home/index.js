@@ -19,12 +19,12 @@ const Home = () => {
       </div>
       <div className='flex flex-col items-center justify-center text-gray dark:text-white'>
         <div className="relative pt-20 ml-auto">
-          <div className="lg:w-2/3 text-center mx-auto">
+          <div className=" w-2/3 text-center mx-auto">
 
-            <div className="w-full mt-20 flex items-center justify-center flex-col" >
-              <div className="text-gray-900 dark:text-white font-bold text-8xl md:text-6xl xl:text-7xl px-[2em]">Visualizer for New Age Blockchain Fabrics</div>
+            <div className="w-full mt-20 flex items-center justify-center flex-col">
+              <div className="text-gray-900 dark:text-white font-bold text-8xl md:text-6xl xl:text-7xl ">Visualizer for New Age Blockchain Fabrics</div>
 
-              <div className="mt-10 px-[22rem] lg:px-[20rem] text-gray-700 dark:text-gray-300 text-20p">A novel graphical visualizer for the ResDB blockchain fabric, offering new users and learners a clear visualization of a complex technology.
+              <div className="mt-10 px-[8rem] text-gray-700 dark:text-gray-300 text-20p">A novel graphical visualizer for the ResDB blockchain fabric, offering new users and learners a clear visualization of a complex technology.
               </div>
             </div>
             <div className="mt-14 flex items-center justify-center gap-y-4 gap-x-[4em]">
@@ -34,16 +34,16 @@ const Home = () => {
             <Wrapper>
               <div className="py-8 mt-2 px-2 border-y-3p border-gray-900 dark:border-white sm:flex flex items-center justify-between w-full">
                 <div className="text-center">
-                  <h6 className="text-lg font-semibold text-gray-700 dark:text-white">Super Fast & Cheap</h6>
-                  <p className="mt-2 text-gray-500">Intensively optimized computation</p>
+                  <h6 className="text-lg font-semibold text-gray-700 dark:text-white">Super Fast</h6>
+                  <p className="mt-2 text-gray-500">Intensively optimized</p>
                 </div>
                 <div className="text-center">
                   <h6 className="text-lg font-semibold text-gray-700 dark:text-white">Wide range integration</h6>
-                  <p className="mt-2 text-gray-500">All the blocks no fuss!</p>
+                  <p className="mt-2 text-gray-500">Includes all the blocks</p>
                 </div>
                 <div className="text-center">
                   <h6 className="text-lg font-semibold text-gray-700 dark:text-white">Seeing is believing</h6>
-                  <p className="mt-2 text-gray-500">Check out all BC actions</p>
+                  <p className="mt-2 text-gray-500">Check out actions</p>
                 </div>
               </div>
             </Wrapper>
