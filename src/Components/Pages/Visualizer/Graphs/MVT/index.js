@@ -27,7 +27,7 @@ const updateFaultToggles = (status) => {
         let str = `Replica ${index + 1}`;
         updatedFaultToggles = {
             ...updatedFaultToggles,
-            [str]: !value 
+            [str]: !value
         };
     });
     return updatedFaultToggles;
@@ -72,30 +72,29 @@ const Mvt = () => {
         setLabelToggle((prevLabels) => {
             const updatedLabels = { ...prevLabels };
             updatedLabels[label] = !updatedLabels[label];
-            return updatedLabels; 
+            return updatedLabels;
         });
     };
 
-
-    const chartMaxDataUpdate = (value) => setChartMaxData(value);
-    const messageChartDataUpdate = (value) => setMessageChartData(value);
-
     useEffect(() => {
-
         const transactionData = messageHistory[currentTransaction];
-
         const updatedLabelToggles = updateLabelToggles(replicaStatus);
         const updatedFaultToggles = updateFaultToggles(replicaStatus);
 
         setLabelToggle(updatedLabelToggles);
         setLabelToggleFaulty(updatedFaultToggles);
 
-        const { pointData, maxPointData } = mvtGraphComputation(transactionData, updatedLabelToggles, chartMaxDataUpdate, messageChartDataUpdate);
+        const { pointData, maxPointData } = mvtGraphComputation(transactionData, updatedLabelToggles);
 
-        chartMaxDataUpdate(maxPointData);
-        messageChartDataUpdate(pointData);
-
+        setChartMaxData(maxPointData);
+        setMessageChartData(pointData);
     }, [messageHistory, currentTransaction, replicaStatus]);
+
+    // Filter the chart data based on labelToggle
+    const filteredChartData = {
+        1: messageChartData[1]?.filter(item => labelToggle[item.id]) || [],
+        2: messageChartData[2]?.filter(item => labelToggle[item.id]) || []
+    };
 
     return (
         <div className="flex flex-col">
@@ -108,7 +107,7 @@ const Mvt = () => {
                                 <div className='inner' />
                             </div>
                         ) : (
-                            <MvtGraph chartData={messageChartData} chartMaxData={chartMaxData} mvtGraphNo={1} />
+                            <MvtGraph chartData={filteredChartData} chartMaxData={chartMaxData} mvtGraphNo={1} />
                         )}
                     </div>
                 </ResizableContainer>
@@ -120,7 +119,7 @@ const Mvt = () => {
                                 <div className='inner' />
                             </div>
                         ) : (
-                            <MvtGraph chartData={messageChartData} chartMaxData={chartMaxData} mvtGraphNo={2} />
+                            <MvtGraph chartData={filteredChartData} chartMaxData={chartMaxData} mvtGraphNo={2} />
                         )}
                     </div>
                 </ResizableContainer>
