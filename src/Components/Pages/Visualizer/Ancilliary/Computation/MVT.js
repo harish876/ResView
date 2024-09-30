@@ -1,7 +1,6 @@
 import { COLORS_MVT_GRAPH } from "../../../../../Constants";
 
 export const mvtGraphComputation = (transactionData, labelToggle = {}) => {
-
     let startTime = 0;
     let firstPrepareTime = 0;
     let prePrepareTimes = [];
@@ -11,7 +10,6 @@ export const mvtGraphComputation = (transactionData, labelToggle = {}) => {
     let labelList = [];
 
     Object.keys(transactionData).forEach((key) => {
-
         labelList.push("Replica " + key);
         if (transactionData[key].primary_id !== transactionData[key].replica_id) {
             prePrepareTimes.push(Math.floor(transactionData[key].propose_pre_prepare_time / 10000));
@@ -85,49 +83,25 @@ export const mvtGraphComputation = (transactionData, labelToggle = {}) => {
     }
 
     let preparePoints = [];
-    let data = {};
-
-    for (let i = 0; i < labelList.length; i++) {
-        const label = labelList[i];
-        const isEnabled = labelToggle.hasOwnProperty(label) ? labelToggle[label] : true;
-
-        if (!isEnabled) {
-            data = {
-                id: label,
-                color: COLORS_MVT_GRAPH[i],
-                data: [],
-            };
-        } else {
-            data = {
-                id: label,
-                color: COLORS_MVT_GRAPH[i],
-                data: prepareChartData[i],
-            };
-        }
-        preparePoints.push(data);
-    }
-
     let commitPoints = [];
 
     for (let i = 0; i < labelList.length; i++) {
         const label = labelList[i];
         const isEnabled = labelToggle.hasOwnProperty(label) ? labelToggle[label] : true;
 
-        if (!isEnabled) {
-            data = {
+        if (isEnabled) {
+            preparePoints.push({
                 id: label,
                 color: COLORS_MVT_GRAPH[i],
-                data: [],
-            };
-        } else {
-            data = {
+                data: prepareChartData[i],
+            });
+
+            commitPoints.push({
                 id: label,
                 color: COLORS_MVT_GRAPH[i],
                 data: commitChartData[i],
-            };
+            });
         }
-
-        commitPoints.push(data);
     }
 
     let pointData = { 1: preparePoints, 2: commitPoints };
