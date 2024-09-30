@@ -1,6 +1,5 @@
 import React, { createContext, useState } from "react";
 
-// CONTEXT FOR THE THEME
 export const ThemeContext = createContext({
   theme: false,
   toggleTheme: () => {},

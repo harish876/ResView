@@ -90,7 +90,6 @@ const Mvt = () => {
         setMessageChartData(pointData);
     }, [messageHistory, currentTransaction, replicaStatus]);
 
-    // Filter the chart data based on labelToggle
     const filteredChartData = {
         1: messageChartData[1]?.filter(item => labelToggle[item.id]) || [],
         2: messageChartData[2]?.filter(item => labelToggle[item.id]) || []

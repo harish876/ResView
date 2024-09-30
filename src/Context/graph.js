@@ -1,7 +1,5 @@
 import React, { createContext, useState } from "react";
 
-
-// CONTEXT FOR PBFT GRAPH ANIMATION SPEEDS 
 export const PbftAnimationSpeedContext = createContext({
   speed: '1x',
 });
@@ -19,7 +17,6 @@ export const PbftAnimationSpeedProvider = ({ children }) => {
   );
 };
 
-// CONTEXT FOR PBFT GRAPH CLEARING
 export const PbftGraphClearContext = createContext({
   clear: false,
 });
