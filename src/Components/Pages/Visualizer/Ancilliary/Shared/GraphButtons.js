@@ -3,18 +3,10 @@ import cn from "classnames";
 import { Tooltip } from "@mui/material";
 import { GraphViewContext } from "../../../../../Context/graph";
 
-// TODO: Change the arrow below once the name of the third graph is known
 const GraphbuttonRow = ["Set Transaction", "Get Transaction"];
 
-// TODO: Fill the below ? with appropriate title and its full form
-const abbreviationToFullform = {
-  PBFT: "Practical Byzantine Fault Tolerance Graph",
-  MvT: "Message vs Time Graph",
-  "?": "",
-};
-
 const Button = ({ title }) => {
-  const { graph, toggleGraphChange } = useContext(GraphViewContext);
+  const { graph } = useContext(GraphViewContext);
   
   return (
     <Tooltip enterDelay={800}>
@@ -40,32 +32,5 @@ const GraphButtonRow = () => {
     </div>
   );
 };
-
-// TODO: DO the below code later
-// export const RadialButtons = ({ title }) => {
-//   const { graph, toggleGraphChange } = useContext(GraphViewContext);
-
-//   return (
-//     <div
-//       className={cn(
-//         "text-22p border border-2p border-blue-190 text-blue-190 font-sans h-40p w-80p cursor-pointer rounded-full flex items-center justify-center hover:bg-blue-200 hover:text-white hover:border-blue-200",
-//         { "bg-blue-190 text-white": graph === title }
-//       )}
-//       onClick={() => toggleGraphChange(title || "PBFT")}
-//     >
-//       {title || ''}
-//     </div>
-//   );
-// };
-
-// const RadialButtonRow = () => {
-//   const [whichGraph, setWhichGraph] = useState('one');
-
-//   return (
-//     <div>
-
-//     </div>
-//   );
-// };
 
 export default GraphButtonRow;

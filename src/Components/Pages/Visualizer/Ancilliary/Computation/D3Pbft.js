@@ -39,7 +39,6 @@ export const connectionRender = (lineData, lineColor, dotColor, duration, delay,
         .attr("marker-end", `url(#arrow-&${arrow})`)
         .style("opacity", 0)
 
-    // Define the tooltip div
     var tooltip = svg.append("foreignObject")
         .append("div")
         .attr("id", `#${divID}`)
@@ -47,7 +46,6 @@ export const connectionRender = (lineData, lineColor, dotColor, duration, delay,
         .style("opacity", 0)
         .attr("class", "absolute")
 
-    // Append tooltip text
     var tooltipText = "Tooltip text here";
 
     line.transition()

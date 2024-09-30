@@ -22,7 +22,6 @@ const Form = () => {
     };
 
     const submitGet = async () => {
-        // ! CALL GET API HERE 
         let url = "http://127.0.0.1:18000/v1/transactions/" + formData.formKey;
         try {
             const response = await axios.get(url);
@@ -38,7 +37,6 @@ const Form = () => {
     };
 
     const submitCommit = async () => {
-        // ! CALL COMMIT API HERE 
         let data = { "id": formData.formKey, "value": formData.value };
         //let url = process.env.REACT_APP_SEND_POST_URL;
         let url = "http://127.0.0.1:18000/v1/transactions/commit";

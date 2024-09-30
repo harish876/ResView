@@ -109,7 +109,6 @@ export const VizDataHistoryProvider = ({ children }) => {
         setTruncatedData(smallData)
 
         setLoading(false);
-        // ! CHECK THE BELOW DEPENDENCIES WHEN THIS CONNECTED TO THE BE
     }, [currentTransaction, messageHistory])
 
     useEffect(() => {
@@ -118,7 +117,6 @@ export const VizDataHistoryProvider = ({ children }) => {
                 let port = parseInt(18501) + replicaPort;
                 const response = await fetch("http://localhost:" + String(port) + "/consensus_data");
                 const newData = await response.json();
-                //if(newData) setMessageHistory({});
                 if(newData!==null){
                     Object.keys(newData).map((key) => {
                         if (!keyList.current[replicaPort].includes(key)) {

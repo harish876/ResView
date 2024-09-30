@@ -1,6 +1,5 @@
 import React, { createContext, useState, useRef, useCallback } from "react";
 
-// CONTEXT FOR THE NAVBAR BORDER TOGGLE FOR THE REACT OBSERVER
 export const NavbarToggleContext = createContext({
   borderToggle: false,
   toggleBorderTrue: () => {},

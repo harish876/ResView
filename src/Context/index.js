@@ -4,8 +4,6 @@ import { NavbarToggleProvider } from "./navbarToggle";
 import { ThemeProvider } from "./theme";
 import { VizDataHistoryProvider } from "./visualizer";
 
-
-// COMBINED PROVIDER FOR ALL CONTEXT
 const CombineProviders = (providers) =>
   providers.reduce(
     (AccumulatedProviders, [Provider, props = {}]) =>
