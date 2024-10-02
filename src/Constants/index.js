@@ -17,6 +17,8 @@ export const TOGGLE_CHANGE_HOME = 'https://i.postimg.cc/vHpMzwgJ/Screenshot-2024
 
 export const BLOG_LINK = 'https://medium.com/@aunsh/resview-a-pbft-visualizer-based-on-the-resilientdb-blockchain-fabric-3ffaeb2aaee5'
 
+export const REPO_LINK = 'https://github.com/ResilientApp/ResView'
+
 export const CARD_BG_GRAD = 'border-3p border-gray-170 dark:bg-gradient-to-r dark:from-blue-600 dark:via-blue dark:to-blue-550 dark:border-none';
 
 

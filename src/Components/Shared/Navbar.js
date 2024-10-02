@@ -2,7 +2,7 @@ import { Tooltip } from "@mui/material";
 import cn from "classnames";
 import React, { memo, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { BLOG_LINK, ICON_DEFAULT_COLOR, LOGO_DARK, LOGO_LIGHT, SUN_COLOR, URL_HOME_PAGE, URL_TEAM_PAGE, URL_VISUALIZER_PAGE } from "../../Constants";
+import { BLOG_LINK, ICON_DEFAULT_COLOR, LOGO_DARK, LOGO_LIGHT, REPO_LINK, SUN_COLOR, URL_HOME_PAGE, URL_TEAM_PAGE, URL_VISUALIZER_PAGE } from "../../Constants";
 import { PbftGraphClearContext } from "../../Context/graph";
 import { NavbarToggleContext } from "../../Context/navbarToggle";
 import { ThemeContext } from "../../Context/theme";
@@ -117,6 +117,11 @@ const Navbar = memo(() => {
             'cursor-pointer font-bold text-gray-900 dark:text-white'
           )}>
             Blog
+          </a>
+          <a href={REPO_LINK} target="_blank" rel="noreferrer nofollow" className={cn(
+            'cursor-pointer font-bold text-gray-900 dark:text-white'
+          )}>
+            Code
           </a>
           <NavComp
             title={"Visualizer"}
