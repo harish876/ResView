@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-
-import {Icon} from '../../../../Shared/Icon'
-import { linkedinIcon, githubIcon, instagramIcon, userIcon } from '../../../../../Resources/Icons'
-import {ICON_DEFAULT_COLOR} from '../../../../../Constants'
-import defaultProfileImage from '../../../../../Resources/Images/defaultProfileImage.png'
 import { CircularProgress } from '@mui/material'
 import cn from 'classnames'
+import { ICON_DEFAULT_COLOR } from '../../../../../Constants'
+import { githubIcon, linkedinIcon, userIcon } from '../../../../../Resources/Icons'
+import defaultProfileImage from '../../../../../Resources/Images/defaultProfileImage.png'
+import { Icon } from '../../../../Shared/Icon'
 
 const linkToIcon = {
   github: githubIcon,
@@ -103,12 +102,15 @@ export const PastMembersCard = ({ element }) => {
   return (
     <div className='w-full h-auto text-black rounded-md  border-3p border-gray-700 flex flex-col gap-x-2 dark:border-solid dark:border-gray-50 dark:bg-blue-500 dark:text-white px-2 py-4 hover:scale-105 transition'>
       <div className='w-full h-full flex items-center justify-center'>
-        <CircularProgress
-          size={30}
-          className={cn({
-            'hidden': imageLoaded
+        <div
+          className={cn('h-250p flex items-center justify-center', {
+            'hidden': imageLoaded,
           })}
-        />
+        >
+          <CircularProgress
+            size={30}
+          />
+        </div>
         <img
           src={profilePic ?? defaultProfileImage}
           alt={`Profile pic of ${name}`}
