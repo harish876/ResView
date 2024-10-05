@@ -8,6 +8,7 @@ import Navbar from '../../Shared/Navbar';
 import Wrapper from '../../Shared/Wrapper';
 import Graphs from './Sections/Graphs';
 import PbftIntro from './Sections/PbftIntro';
+import { LinearProgress } from '@mui/material';
 
 const Home = () => {
 
@@ -60,10 +61,11 @@ const Home = () => {
   );
 };
 
-const Index = () => {
+const Index = ({ loading }) => {
   const { borderToggle } = useContext(NavbarToggleContext);
   return (
     <>
+      {loading && <LinearProgress />}
       <Navbar borderToggle={borderToggle} />
       <BorderToggleRef />
       <div className="flex items-center justify-center w-full">
