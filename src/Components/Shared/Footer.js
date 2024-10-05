@@ -4,7 +4,7 @@ import ucDavisLogo from '../../Resources/Images/ucDavisLogo.svg'
 import expolabLogo from '../../Resources/Images/expolabIcon.png'
 import apacheIncubatorLogo from '../../Resources/Images/apacheIncubatorLogo.png'
 import resdbLogo from '../../Resources/Images/resdbLogo.svg'
-import { APACHE_LINK, AUNSH_PORTFOLIO_LINK, EXPOLAB_LINK, RELEASE_NOTES_LINK, REPO_LINK, RESDB_LINK, SP_PORTFOLIO_LINK, UCDAVS_LINK, URL_HOME_PAGE, URL_TEAM_PAGE, URL_VISUALIZER_PAGE } from '../../Constants';
+import { APACHE_LINK, AUNSH_PORTFOLIO_LINK, EXPOLAB_LINK, RELEASE_NOTES_LINK, RELEASE_VERSION, REPO_LINK, RESDB_LINK, SP_PORTFOLIO_LINK, UCDAVS_LINK, URL_HOME_PAGE, URL_TEAM_PAGE, URL_VISUALIZER_PAGE } from '../../Constants';
 
 export const DetailedFooter = () => {
   return (
@@ -41,7 +41,7 @@ export const DetailedFooter = () => {
               <li><a href={SP_PORTFOLIO_LINK} className="text-gray-900 dark:text-white dark:hover:text-gray-300 hover:text-blue-190 transition duration-200">saipranav</a></li>
             </ul>
             <div className="text-16p font-bold mt-6 mb-2 text-gray-900 dark:text-white">Release</div>
-				<a href={RELEASE_NOTES_LINK} className="text-gray-900 dark:text-white dark:hover:text-gray-300 hover:text-blue-190 transition duration-200">v3.2.5</a>
+					  <a href={RELEASE_NOTES_LINK} className="text-gray-900 dark:text-white dark:hover:text-gray-300 hover:text-blue-190 transition duration-200">{`${RELEASE_VERSION}`}</a>
           </div>
           <div>
             <div className="text-16p font-bold mb-6 text-gray-900 dark:text-white">Contact Us</div>
@@ -92,7 +92,7 @@ const Footer = () => {
           </span>
         </div>
         <div className='text-12p text-gray-100 bold'>
-        v3.2.4 &middot; &copy; 2023-2024 &middot; All rights reserved
+			{`${RELEASE_VERSION}`} &middot; &copy; 2023-2024 &middot; All rights reserved
         </div>
     </div>
     </div>
