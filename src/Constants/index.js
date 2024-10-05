@@ -33,6 +33,8 @@ export const APACHE_LINK = 'https://incubator.apache.org/'
 
 export const UCDAVS_LINK = 'https://ucdavis.edu'
 
+export const RELEASE_VERSION = 'v3.2.5'
+
 export const CARD_BG_GRAD = 'border-3p border-gray-170 dark:bg-gradient-to-r dark:from-blue-600 dark:via-blue dark:to-blue-550 dark:border-none';
 
 
