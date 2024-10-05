@@ -57,7 +57,7 @@ export const DetailedFooter = () => {
           Handcrafted with &#10084; in Davis, CA
         </div>
         <div className="text-gray-100 text-center">
-          v3.2.5 &middot; &copy; 2023-2024 &middot; All rights reserved
+			{`${RELEASE_VERSION}`} &middot; &copy; 2023-2024 &middot; All rights reserved
         </div>
         <div />
       </div>
