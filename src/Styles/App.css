@@ -1856,11 +1856,6 @@ code {
   color: rgb(10 15 28 / var(--tw-text-opacity));
 }
 
-.hover\:text-gray-300:hover {
-  --tw-text-opacity: 1;
-  color: rgb(209 213 219 / var(--tw-text-opacity));
-}
-
 .hover\:text-gray-900:hover {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
@@ -2148,6 +2143,11 @@ code {
 :is([data-theme="dark"] .hover\:dark\:bg-green-80):hover {
   --tw-bg-opacity: 1;
   background-color: rgb(7 132 102 / var(--tw-bg-opacity));
+}
+
+:is([data-theme="dark"] .dark\:hover\:text-gray-300:hover) {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 
 :is([data-theme="dark"] .dark\:hover\:text-white:hover) {
