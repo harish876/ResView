@@ -50,11 +50,7 @@ const Index = ({ loading }) => {
     <>
       <Navbar borderToggle = { borderToggle } />
       <BorderToggleRef />
-      {loading ? (
-          <Loader />
-      ) : (
-        <Team />
-      )}
+      <Team />
       <Footer />
     </>
   );

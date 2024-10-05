@@ -1,4 +1,4 @@
-# ResView - (ResilientDB Visualizer)
+# ResView - ResilientDB Visualizer
 
 ![Logo](https://i.postimg.cc/jd6PkhDs/Res-View-Logo-Dark.png)
 
@@ -65,7 +65,7 @@ REACT_APP_REPLICA_STATUS_EP = "/get_status"
 Run the below command to install all required packages
 
 ```bash
-npm install
+npm install --force
 ```
 
 Run the below code to start the app and load the script.

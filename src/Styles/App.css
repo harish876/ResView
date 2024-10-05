@@ -587,6 +587,10 @@ video {
   margin-top: 1px;
   margin-bottom: 1px;
 }
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
 .my-24 {
   margin-top: 6rem;
   margin-bottom: 6rem;
@@ -661,6 +665,9 @@ video {
 }
 .mt-20 {
   margin-top: 5rem;
+}
+.mt-28 {
+  margin-top: 7rem;
 }
 .mt-2p {
   margin-top: 2px;
@@ -962,6 +969,12 @@ video {
 .justify-evenly {
   justify-content: space-evenly;
 }
+.gap-1 {
+  gap: 0.25rem;
+}
+.gap-12 {
+  gap: 3rem;
+}
 .gap-16 {
   gap: 4rem;
 }
@@ -1017,6 +1030,11 @@ video {
   --tw-space-x-reverse: 0;
   margin-right: calc(-13rem * var(--tw-space-x-reverse));
   margin-left: calc(-13rem * calc(1 - var(--tw-space-x-reverse)));
+}
+.space-y-5 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
 }
 .overflow-x-auto {
   overflow-x: auto;
@@ -1102,6 +1120,9 @@ video {
 }
 .border-t-1p {
   border-top-width: 1px;
+}
+.border-t-2 {
+  border-top-width: 2px;
 }
 .border-t-3p {
   border-top-width: 3px;
@@ -1336,6 +1357,9 @@ video {
 .pb-1 {
   padding-bottom: 0.25rem;
 }
+.pb-2 {
+  padding-bottom: 0.5rem;
+}
 .pb-6 {
   padding-bottom: 1.5rem;
 }
@@ -1368,6 +1392,9 @@ video {
 }
 .pt-3 {
   padding-top: 0.75rem;
+}
+.pt-8 {
+  padding-top: 2rem;
 }
 .text-left {
   text-align: left;
@@ -1557,6 +1584,9 @@ video {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+.duration-200 {
+  transition-duration: 200ms;
 }
 .scrollbar {
     scrollbar-width: thin;
@@ -1824,6 +1854,11 @@ code {
 .hover\:text-blue-700:hover {
   --tw-text-opacity: 1;
   color: rgb(10 15 28 / var(--tw-text-opacity));
+}
+
+.hover\:text-gray-300:hover {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 
 .hover\:text-gray-900:hover {
@@ -2183,6 +2218,10 @@ code {
 
   .md\:w-auto {
     width: auto;
+  }
+
+  .md\:flex-row {
+    flex-direction: row;
   }
 
   .md\:p-5 {

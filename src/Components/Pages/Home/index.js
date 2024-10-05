@@ -3,7 +3,7 @@ import { BorderToggleRef } from '../../../App';
 import { BLOG_LINK, URL_VISUALIZER_PAGE } from '../../../Constants';
 import { NavbarToggleContext } from '../../../Context/navbarToggle';
 import { LinkButton } from '../../Shared/Buttons';
-import Footer from '../../Shared/Footer';
+import Footer, { DetailedFooter } from '../../Shared/Footer';
 import Navbar from '../../Shared/Navbar';
 import Wrapper from '../../Shared/Wrapper';
 import Graphs from './Sections/Graphs';
@@ -69,7 +69,7 @@ const Index = () => {
       <div className="flex items-center justify-center w-full">
         <Home />
       </div>
-      <Footer />
+      <DetailedFooter />
     </>
   );
 }
