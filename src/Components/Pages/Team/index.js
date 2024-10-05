@@ -22,7 +22,7 @@ const Team = () => {
       <div className='mt-4 mb-4 mx-8 grid grid-cols-2 gap-24 w-full h-full'>
         {currentTeam.length > 0 &&
           currentTeam.map((element, index) => (
-            <div key={index} data-aos='fade-in' data-aos-delay={100 * index}>
+            <div key={index}>
               <CurrentTeamCard element={element} />
             </div>
           ))}
@@ -30,7 +30,7 @@ const Team = () => {
       <div className='my-24 mx-8 grid grid-cols-3 gap-16 w-full h-full'>
         {pastMembers.length > 0 &&
           pastMembers.map((element, index) => (
-            <div key={index} data-aos='fade-in' data-aos-delay={100 * index}>
+            <div key={index}>
               {index === 1 ? (
                 <PastMembersCard element={element} />
               ) : (
@@ -43,7 +43,7 @@ const Team = () => {
   );
 }
 
-const Index = ({ loading }) => {
+const Index = () => {
   const { borderToggle } = useContext(NavbarToggleContext);
 
   return (

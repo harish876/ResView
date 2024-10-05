@@ -26,28 +26,28 @@ export const DetailedFooter = () => {
         </div>
         <div className="grid grid-cols-3 gap-12">
           <div>
-            <div className="text-16p font-bold mb-4 text-white">Site Links</div>
+            <div className="text-16p font-bold mb-4 text-gray-900 dark:text-white">Site Links</div>
             <ul className="space-y-5">
-              <li><a href={URL_HOME_PAGE} className="text-white hover:text-gray-300 transition duration-200">Home</a></li>
-              <li><a href={URL_TEAM_PAGE} className="text-white hover:text-gray-300 transition duration-200">Team</a></li>
-              <li><a href={REPO_LINK} className="text-white hover:text-gray-300 transition duration-200">Code</a></li>
-              <li><a href={URL_VISUALIZER_PAGE} className="text-white hover:text-gray-300 transition duration-200">Visualizer</a></li>
+              <li><a href={URL_HOME_PAGE} className="text-gray-900 dark:text-white dark:hover:text-gray-300 hover:text-blue-190 transition duration-200">Home</a></li>
+              <li><a href={URL_TEAM_PAGE} className="text-gray-900 dark:text-white dark:hover:text-gray-300 hover:text-blue-190 transition duration-200">Team</a></li>
+              <li><a href={REPO_LINK} className="text-gray-900 dark:text-white dark:hover:text-gray-300 hover:text-blue-190 transition duration-200">Code</a></li>
+              <li><a href={URL_VISUALIZER_PAGE} className="text-gray-900 dark:text-white dark:hover:text-gray-300 hover:text-blue-190 transition duration-200">Visualizer</a></li>
             </ul>
           </div>
           <div>
-            <div className="text-16p font-bold mb-6 text-white">Authors</div>
+            <div className="text-16p font-bold mb-6 text-gray-900 dark:text-white">Authors</div>
             <ul className="space-y-5">
-              <li><a href={AUNSH_PORTFOLIO_LINK} className="text-white hover:text-gray-300 transition duration-200">aunshx</a></li>
-              <li><a href={SP_PORTFOLIO_LINK} className="text-white hover:text-gray-300 transition duration-200">saipranav</a></li>
+				<li><a href={AUNSH_PORTFOLIO_LINK} className="text-gray-900 dark:text-white dark:hover:text-gray-300 hover:text-blue-190 transition duration-200">aunshx</a></li>
+              <li><a href={SP_PORTFOLIO_LINK} className="text-gray-900 dark:text-white dark:hover:text-gray-300 hover:text-blue-190 transition duration-200">saipranav</a></li>
             </ul>
-            <div className="text-16p font-bold mt-6 mb-2 text-white">Release</div>
-				<a href={RELEASE_NOTES_LINK} className="text-white hover:text-gray-300 transition duration-200">v3.2.5</a>
+            <div className="text-16p font-bold mt-6 mb-2 text-gray-900 dark:text-white">Release</div>
+				<a href={RELEASE_NOTES_LINK} className="text-gray-900 dark:text-white dark:hover:text-gray-300 hover:text-blue-190 transition duration-200">v3.2.5</a>
           </div>
           <div>
-            <div className="text-16p font-bold mb-6 text-white">Contact Us</div>
+            <div className="text-16p font-bold mb-6 text-gray-900 dark:text-white">Contact Us</div>
             <ul className="space-y-5">
-              <li><a href="mailto:aunsh@ucdavis.edu" className="text-white hover:text-gray-300 transition duration-200">Mail Us</a></li>
-              <li><a href={UCDAVS_LINK} className="text-white hover:text-gray-300 transition duration-200">UC Davis Site</a></li>
+              <li><a href="mailto:aunsh@ucdavis.edu" className="text-gray-900 dark:text-white dark:hover:text-gray-300 hover:text-blue-190 transition duration-200">Mail Us</a></li>
+              <li><a href={UCDAVS_LINK} className="text-gray-900 dark:text-white dark:hover:text-gray-300 hover:text-blue-190 transition duration-200">UC Davis Site</a></li>
             </ul>
           </div>
         </div>
