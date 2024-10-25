@@ -1,22 +1,33 @@
-# ResView - ResilientDB Visualizer
+<h1>
+  <img src="https://i.postimg.cc/jd6PkhDs/Res-View-Logo-Dark.png" alt="Logo" width="50" height="50" style="vertical-align: middle; margin-right: 10px;">
+  <span style="vertical-align: middle;">ResView: The ResilientDB Visualizer</span>
+</h1>
 
-![Logo](https://i.postimg.cc/jd6PkhDs/Res-View-Logo-Dark.png)
+ResView is a visualizer based on the ResilientDb fabric to show transaction visualizations.
 
-ResView is a visualizer based on the Resilient Db fabric to show transaction visualizations.
+#### Check out the [blog](https://aunsh.medium.com/resview-a-pbft-visualizer-based-on-the-resilientdb-blockchain-fabric-3ffaeb2aaee5) to know more
 
-#### Check out the [blog](https://aunsh.medium.com/resview-a-pbft-visualizer-based-on-the-resilientdb-blockchain-fabric-3ffaeb2aaee5) to know more!
 
+## Table of Contents
+
+- [Get Prepared](#get-prepared)
+- [Installation and Usage](#installation)
+- [Contributing](#contributing)
+- [Authors and Contact](#authors-and-contact)
+- [License](#license)
 
 ## Get Prepared
 
 Before running the ResView application, there are a few other services which need to be ran.
 
 Git clone the ResilientDB backend repository and follow the instructions to set it up:
+
 ```bash
 git clone https://github.com/apache/incubator-resilientdb
 ```
 
-To enable different ResView api endpoints and view change service locally, go to service/tools/config/server/server.config in the ResilientDB repository and set: 
+To enable different ResView api endpoints and view change service locally, go to service/tools/config/server/server.config in the ResilientDB repository and set:
+
 ```bash
 enable_resview:true
 enable_faulty_switch:true
@@ -24,6 +35,7 @@ enable_viewchange:true
 ```
 
 Setup KV Service to run the backend:
+
 ```bash
 ./service/tools/kv/server_tools/start_kv_service.sh
 ```
@@ -31,11 +43,13 @@ Setup KV Service to run the backend:
 Git clone the GraphQL Repository and follow the instructions on the ReadMe to set it up:
 
 Install GraphQL:
+
 ```bash
 git clone https://github.com/ResilientApp/ResilientDB-GraphQL
 ```
 
 Setup SDK:
+
 ```bash
 bazel build service/http_server:crow_service_main
 
@@ -47,6 +61,7 @@ With these 2 services running, the ResView front end can now send transactions t
 ## Installation
 
 Clone this repository and open in a new folder.
+
 ```bash
 git clone https://github.com/ResilientApp/ResView
 ```
@@ -80,9 +95,9 @@ Send transactions to backend using Set and Get fields, display a transaction's c
 
 Pull requests are welcome.
 
-ALWAYS update your changes to a branch and drop a PR.
+Please update your changes to a branch and drop a PR.
 
-## Authors
+## Authors and Contact
 
 [aunshx](https://github.com/aunshx/)
 
@@ -90,4 +105,4 @@ ALWAYS update your changes to a branch and drop a PR.
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[Attribution-NonCommercial 4.0 International](https://creativecommons.org/licenses/by-nc/4.0/)
