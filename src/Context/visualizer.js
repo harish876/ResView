@@ -115,7 +115,8 @@ export const VizDataHistoryProvider = ({ children }) => {
         const fetchData = async (replicaPort) => {
             try {
                 let port = parseInt(18501) + replicaPort;
-                const response = await fetch("http://localhost:" + String(port) + "/consensus_data");
+                console.log("Visualizer port", port)
+                const response = await fetch("https://www.memlensapi.publicvm.com/replica1/consensus_data");
                 const newData = await response.json();
                 if(newData!==null){
                     Object.keys(newData).map((key) => {

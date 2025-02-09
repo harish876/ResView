@@ -76,7 +76,7 @@ const TransInfo = () => {
             //let port= parseInt(process.env.REACT_APP_DEFAULT_LOCAL_PORT)+i
             //let url = process.env.REACT_APP_DEFAULT_LOCAL + String(port) + process.env.REACT_APP_REPLICA_STATUS_EP
             let port = parseInt(18501) + i
-            let url = "http://localhost:" + String(port) + "/get_status"
+            let url = "http://64.23.201.175:" + String(port) + "/get_status"
             let promise = fetchWithTimeout(url)
                 .then(response => {
                     return response.text();
@@ -112,7 +112,7 @@ const TransInfo = () => {
 
     return (
         <div className="h-full w-220p fixed z-1 top-0 left-0 overflow-x-hidden p-2 py-6 flex flex-col items-center justify-around opacity-1 border-r-3p border-solid border-gray-700 dark:border-gray-50 dark:text-gray-300 gap-y-6 scrollbar">
-            <Link to={URL_HOME_PAGE} className='flex items-center justify-center gap-x-2 w-full cursor-pointer'>
+            {/* <Link to={URL_HOME_PAGE} className='flex items-center justify-center gap-x-2 w-full cursor-pointer'>
                 <img
                     src={logo}
                     alt='ResDb View Logo'
@@ -127,10 +127,10 @@ const TransInfo = () => {
             </div>
             <div className='px-6 w-full'>
                 <LinkButton title={'Home'} link={URL_HOME_PAGE} external={false} />
-            </div>
+            </div> 
             <div className='w-full px-4'>
                 <HRline />
-            </div>
+            </div>*/}
             <div className='text-16p md:text-14p sm:text-10p font-bold py-1'>
                 Current Transaction
             </div>
