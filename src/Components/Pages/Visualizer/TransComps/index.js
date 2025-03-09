@@ -76,7 +76,7 @@ const TransInfo = () => {
             //let port= parseInt(process.env.REACT_APP_DEFAULT_LOCAL_PORT)+i
             //let url = process.env.REACT_APP_DEFAULT_LOCAL + String(port) + process.env.REACT_APP_REPLICA_STATUS_EP
             let port = parseInt(18501) + i
-            let url = "http://64.23.201.175:" + String(port) + "/get_status"
+            let url = "http://localhost:" + String(port) + "/get_status"
             let promise = fetchWithTimeout(url)
                 .then(response => {
                     return response.text();
